@@ -233,3 +233,125 @@ python tools/train.py --cfg_file cfgs/models/uavdet_3d/mav6d/centerdet.yaml \
    **直接迁 `rot` 头等于把旋转轴接错**。
 4. **内参差异。** MAV6D 是 1920×1080、fx≈1979 的长焦，源域是 1280×720、fx=480。
    模型从图像回归米制深度，焦距变化直接改变"表观大小↔距离"的关系。
+
+---
+
+# 跨域对齐：模态 / 内外参 / 坐标系
+
+迁移到 MAV6D 之前必须先确认三件事对齐了。`tools/align_audit.py` 会用**真实样本和真实模型**把它们全部量化出来：
+
+```bash
+python tools/align_audit.py --dst-data <MAV6D_ROOT>        # 完整审计
+python tools/align_audit.py --no-samples                   # 只看配置和权重（快）
+python tools/align_audit.py --ckpt <源域ckpt>.pth           # 实测能载入多少
+```
+
+## 1. 模态对齐
+
+源域原本是 5 模态（rgb + ir + dvs + LiDAR 世界坐标图 + Radar 速度图，`K=5`，骨干
+`ResNet8xAttention`），MAV6D 只有单目 RGB（`K=1`，骨干 `ResNet8x`）。两者第一层
+通道与每层宽度都不同，**直接迁几乎没有权重能对上**。
+
+为此 `LAAM6D_Det_Dataset` 的模态改成可配置（`MODALITIES`，默认仍是全部 5 个，
+行为不变），并新增对齐后的源域配置
+`cfgs/models/uavdet_3d/laam6d/centerdet_rgb_resnet8x.yaml`：
+
+| | 原 5 模态配置 | RGB-only 对齐配置 | MAV6D |
+|---|---|---|---|
+| image 张量 | `(5,3,560,960)` | `(1,3,560,960)` | `(1,3,256,512)` |
+| 骨干 | ResNet8xAttention `[32,64,128,128]` | ResNet8x `[64,128,256,512]` | ResNet8x `[64,128,256,512]` |
+| 检测头 | CenterHeadLaam6d（吃 4D） | CenterHead（吃 5D） | CenterHead |
+
+> `MODALITIES` 只决定往 image 张量里堆哪几个模态；rgb/ir/dvs 的三模态配准
+> （`register_images_by_center`，其输出的 aligned RGB 内参会影响下游几何）照常执行，
+> 保证 RGB 在两种配置下的处理完全一致。
+
+**实测权重可迁移性**：
+
+| 源域 ckpt | 能载入目标模型的比例 |
+|---|---|
+| 原 5 模态 `centerdet.yaml` | **41/178 张量，2.97M，15.3%**（135 个 key 目标模型里根本没有）|
+| RGB-only `centerdet_rgb_resnet8x.yaml` | **177/178 张量，19.43M，100.0%**（只差 `hm` 层 7 类 vs 2 类）|
+
+## 2. 内外参对齐
+
+| | 源域 LAAM6D | MAV6D |
+|---|---|---|
+| 原始分辨率 | 1280×720 | 1920×1080 |
+| 训练分辨率 / stride | 960×560 / 8 → 热图 120×70 | 512×256 / 8 → 热图 64×32 |
+| 实测内参 | fx=480.0 fy=502.8（已按 IM_RESIZE 缩放过）| fx=1979.4 fy=1979.1（原始分辨率）|
+| 折回原分辨率 | fx=640.0 fy=646.4 | fx=1979.4 |
+| FOV | 90.0° × 58.2° | 51.7° × 30.5° |
+| 畸变 | 全零 | k1=−0.23（不可忽略）|
+| 外参 | 非单位阵（世界↔相机）| 单位阵 |
+| MAX_DIS / MAX_SIZE | 150 / 4 | 8 / 1 |
+
+**两套内参缩放约定不同，都各自自洽，但绝不能混用**：
+
+- 源域：编码器拿到的是**已缩放**的内参，投影后只乘 `1/stride`
+- MAV6D：编码器拿到的是**原始**内参，投影后乘 `new/raw/stride`
+
+目标表观大小（网络就是靠这个回归距离的）：
+
+| 域 | 目标 | 距离 | 原图像素 | 热图像素 |
+|---|---|---|---|---|
+| 源域 | 1.30 m | 10 / 50 / 150 m | 83.2 / 16.6 / 5.5 px | 7.80 / 1.56 / 0.52 px |
+| MAV6D | 0.24 m | 2 / 5 / 8 m | 237.5 / 95.0 / 59.4 px | 7.92 / 3.17 / 1.98 px |
+
+深度归一化差 **18.8 倍**（`center_dis` 学的是 `Z / MAX_DIS`）：同一个归一化输出，
+源域代表 150 m 量级、MAV6D 代表 8 m 量级。
+
+## 3. 坐标系对齐
+
+| | 源域 LAAM6D | MAV6D |
+|---|---|---|
+| GT 存储 | **世界系**（`convert_box_opencv_to_world`）| **相机系**（`read_truth_Rt` 已用 camera→VICON 外参转好）|
+| 送进编码器前 | `pre_processor_laam6d` 用 `inv(extrinsic)` 转回相机系 | 不转换 |
+| 检测头学到的 | 相机系深度 `Z / MAX_DIS` | 相机系深度 `Z / MAX_DIS` |
+| 解码器输出 | 再转回**世界系** | 留在**相机系** |
+
+**结论：两边检测头学的是同一种东西**（相机系深度 + 图像平面中心），世界/相机的
+差异只发生在编码前和解码后。所以 head 权重可迁移，不必为坐标系改网络，
+但**解码器必须各用各的**：
+
+- 源域 → `center_point_decoder_laam6d`
+- MAV6D → `center_point_decoder_mav6d`
+- `object_encoder.py` 里同名的那个带 CARLA 轴置换，对 MAV6D 与其编码器并不互逆
+
+### 欧拉角
+
+`rot` 头是 6 通道 `[cos a1, sin a1, cos a2, sin a2, cos a3, sin a3]`：
+
+- 源域 `zyx`：a1=绕 z，a2=绕 y，a3=绕 x
+- MAV6D `xyz`：a1=绕 x，a2=绕 y，a3=绕 z
+
+**通道 0/1 与 4/5 的物理含义在两边是对调的**，直接迁 `rot` 头等于把第一和第三个
+旋转轴接反。把同一组角按两种顺序解释，实测旋转差异 **中位 134°、90 分位 175°** ——
+这也是修 `eval.py` 之前角度指标的误差量级，不是小偏差。
+
+## 4. 迁移操作建议
+
+```bash
+# 第一步：用对齐后的配置训源域，产出可迁移的 ckpt
+python tools/train.py --cfg_file cfgs/models/uavdet_3d/laam6d/centerdet_rgb_resnet8x.yaml
+
+# 第二步：迁到 MAV6D
+python tools/train.py --cfg_file cfgs/models/uavdet_3d/mav6d/centerdet.yaml \
+    --pretrained_model output/models/uavdet_3d/laam6d/centerdet_rgb_resnet8x/default/ckpt/checkpoint_epoch_30.pth \
+    --set DATA_CONFIG.DATA_PATH <MAV6D_ROOT>
+```
+
+逐层建议：
+
+| 层 | 建议 | 原因 |
+|---|---|---|
+| backbone | **直接迁**，主要收益来源 | 对齐后 100% 可载入 |
+| `hm` | 必然重初始化 | 类别数 7 vs 2 |
+| `rot` | 建议重初始化 | 通道语义对调 |
+| `center_dis` | 建议重初始化，或前几轮只训这层 | MAX_DIS 差 18.8 倍 |
+| `dim` | 迁不迁都行 | MAV6D 目标尺寸恒定，该头没什么信息量 |
+
+> `load_params_from_file` 已改为**先按 名字+形状 过滤再载入**。
+> `strict=False` 只放过多余/缺失的 key，**形状不符依然会抛 `RuntimeError`** ——
+> 跨域必然有几层形状不同，不过滤的话 `--pretrained_model` 直接崩。
+> 现在它会打印实际载入了多少、跳过了哪些、哪些保持随机初始化。

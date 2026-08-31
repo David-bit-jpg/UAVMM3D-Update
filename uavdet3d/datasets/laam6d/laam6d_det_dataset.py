@@ -38,7 +38,23 @@ class LAAM6D_Det_Dataset(DatasetTemplate):
         self.radar_offset = dataset_cfg.RADAR_OFFSET
 
         self.sequence_frames = {}
-        self.modalities = ['rgb', 'ir', 'dvs']
+
+        # 模态可配置。默认 5 模态，与改动前的行为完全一致。
+        # 做跨域迁移时把它设成 ['rgb']，让源域和只有单目 RGB 的 MAV6D 对齐。
+        # 图像栈的顺序固定为 rgb, ir, dvs, lidar(世界坐标图), radar(速度图)。
+        all_modalities = ['rgb', 'ir', 'dvs', 'lidar', 'radar']
+        sel = list(dataset_cfg.get('MODALITIES', all_modalities))
+        unknown = [m for m in sel if m not in all_modalities]
+        assert not unknown, 'MODALITIES 里有未知模态: %s，可选 %s' % (unknown, all_modalities)
+        assert 'rgb' in sel, "MODALITIES 必须含 'rgb'：标注和内外参都取自 RGB 相机"
+
+        # 三模态配准始终要跑（见 include_CARLA_data 里建路径的注释），
+        # 所以图像路径按 all_image_modalities 建，而 modalities 只管往张量里堆哪些
+        self.all_image_modalities = ['rgb', 'ir', 'dvs']
+        self.modalities = [m for m in self.all_image_modalities if m in sel]
+        self.use_lidar_modal = 'lidar' in sel
+        self.use_radar_modal = 'radar' in sel
+        self.num_modalities = len(self.modalities) + int(self.use_lidar_modal) + int(self.use_radar_modal)
         self.intrinsics = {}
         self.extrinsics = {}
         self.distortions = {}
@@ -70,19 +86,23 @@ class LAAM6D_Det_Dataset(DatasetTemplate):
         seq_id = each_info['seq_id']
         frame_id = each_info['frame_id']
 
-        lidar_path = each_info.get('lidar_path', None)
-        if lidar_path is not None and os.path.exists(lidar_path):
-            lidar_data = np.load(lidar_path)  # (N, 5): x, y, z, intensity, tag
-            assert lidar_data.shape[1] == 5, f"{lidar_data.shape} is not (N,5)"
-        else:
-            self.logger.warning(f"LiDAR file missing for frame: {frame_id}")
-            lidar_data = np.empty((0, 5), dtype=np.float32)
-        radar_path = each_info.get('radar_path', None)
-        if radar_path is not None and os.path.exists(radar_path):
-            radar_data = np.load(radar_path)  # (N, 5)
-        else:
-            self.logger.warning(f"Radar file missing for frame: {frame_id}")
-            radar_data = np.empty((0, 5), dtype=np.float32)
+        # 关掉对应模态时连文件都不读，省 IO 也不会刷 warning
+        lidar_data = np.empty((0, 5), dtype=np.float32)
+        if self.use_lidar_modal:
+            lidar_path = each_info.get('lidar_path', None)
+            if lidar_path is not None and os.path.exists(lidar_path):
+                lidar_data = np.load(lidar_path)  # (N, 5): x, y, z, intensity, tag
+                assert lidar_data.shape[1] == 5, f"{lidar_data.shape} is not (N,5)"
+            else:
+                self.logger.warning(f"LiDAR file missing for frame: {frame_id}")
+
+        radar_data = np.empty((0, 5), dtype=np.float32)
+        if self.use_radar_modal:
+            radar_path = each_info.get('radar_path', None)
+            if radar_path is not None and os.path.exists(radar_path):
+                radar_data = np.load(radar_path)  # (N, 5)
+            else:
+                self.logger.warning(f"Radar file missing for frame: {frame_id}")
 
         with open(im_info_path, 'rb') as f:
             camera_info = pickle.load(f)
@@ -229,46 +249,48 @@ class LAAM6D_Det_Dataset(DatasetTemplate):
 
             image_modal_stack.append(img)
 
-        lidar_proj_info = project_lidar_and_get_uvz_rgb_tag(
-            lidar_data,
-            lidar_extrinsic=np.array(each_info['lidar_extrinsic']),
-            camera_extrinsic=extrinsic,
-            camera_intrinsic=intrinsic,
-            image=rgb_image
-        )  # shape (M, 10): [u, v, z, x_world, y_world, z_world, r, g, b, tag]
+        if self.use_lidar_modal:
+            lidar_proj_info = project_lidar_and_get_uvz_rgb_tag(
+                lidar_data,
+                lidar_extrinsic=np.array(each_info['lidar_extrinsic']),
+                camera_extrinsic=extrinsic,
+                camera_intrinsic=intrinsic,
+                image=rgb_image
+            )  # shape (M, 10): [u, v, z, x_world, y_world, z_world, r, g, b, tag]
 
-        world_coords_map = generate_world_coords_map(
-            lidar_proj_info,
-            image_shape=rgb_image.shape[:2]
-        )
-        world_coords_resized = cv2.resize(
-            world_coords_map,
-            (self.new_im_width, self.new_im_hight),
-            interpolation=cv2.INTER_NEAREST
-        )
-        world_coords_tensor = world_coords_resized.transpose(2, 0, 1)  # (3, H, W)
-        world_coords_tensor = world_coords_tensor.astype(np.float32)
+            world_coords_map = generate_world_coords_map(
+                lidar_proj_info,
+                image_shape=rgb_image.shape[:2]
+            )
+            world_coords_resized = cv2.resize(
+                world_coords_map,
+                (self.new_im_width, self.new_im_hight),
+                interpolation=cv2.INTER_NEAREST
+            )
+            world_coords_tensor = world_coords_resized.transpose(2, 0, 1)  # (3, H, W)
+            world_coords_tensor = world_coords_tensor.astype(np.float32)
 
-        image_modal_stack.append(world_coords_tensor)
+            image_modal_stack.append(world_coords_tensor)
 
-        radar_mask = radar_to_velocity_heatmap(
-            radar_data=radar_data,
-            radar_extrinsic=np.array(each_info['radar_extrinsic']),
-            camera_extrinsic=extrinsic,
-            camera_intrinsic=intrinsic,
-            image_shape=rgb_image.shape[:2]
-        )
-        radar_mask_resized = cv2.resize(
-            radar_mask[0],
-            (self.new_im_width, self.new_im_hight),
-            interpolation=cv2.INTER_NEAREST
-        )[np.newaxis, :, :]
+        if self.use_radar_modal:
+            radar_mask = radar_to_velocity_heatmap(
+                radar_data=radar_data,
+                radar_extrinsic=np.array(each_info['radar_extrinsic']),
+                camera_extrinsic=extrinsic,
+                camera_intrinsic=intrinsic,
+                image_shape=rgb_image.shape[:2]
+            )
+            radar_mask_resized = cv2.resize(
+                radar_mask[0],
+                (self.new_im_width, self.new_im_hight),
+                interpolation=cv2.INTER_NEAREST
+            )[np.newaxis, :, :]
 
-        radar_mask_tensor = np.repeat(radar_mask_resized, 3, axis=0)
+            radar_mask_tensor = np.repeat(radar_mask_resized, 3, axis=0)
 
-        image_modal_stack.append(radar_mask_tensor)
+            image_modal_stack.append(radar_mask_tensor)
 
-        image = np.stack(image_modal_stack, axis=0)  # shape: (5, 3, H, W)
+        image = np.stack(image_modal_stack, axis=0)  # (K, 3, H, W)，K = len(MODALITIES)
 
         with open(im_info_path, 'rb') as f:
             camera_info = pickle.load(f)
@@ -384,8 +406,12 @@ class LAAM6D_Det_Dataset(DatasetTemplate):
                 lidar_frame = frame_list[i + self.lidar_offset]
                 radar_frame = frame_list[i + self.radar_offset]
 
+                # 路径永远按 rgb/ir/dvs 全建：__getitem__ 里的 register_images_by_center
+                # 需要三个模态一起做配准，且返回的 aligned RGB 内参会影响下游几何。
+                # MODALITIES 只决定最后往 image 张量里堆哪几个，不改变这段预处理，
+                # 这样 RGB-only 和五模态两种配置下 RGB 的处理完全一致。
                 im_paths = {}
-                for mode_name in self.modalities:
+                for mode_name in self.all_image_modalities:
                     image_dir = f'images_{mode_name}'
                     image_path = os.path.join(base_path, image_dir, curr_frame)
                     if not os.path.exists(image_path):
@@ -393,7 +419,7 @@ class LAAM6D_Det_Dataset(DatasetTemplate):
                     im_paths[mode_name] = image_path
 
                 label_paths = {}
-                for mode_name in self.modalities:
+                for mode_name in self.all_image_modalities:
                     label_dir = f'boxes_{mode_name}'
                     label_path = os.path.join(base_path, label_dir, curr_frame.replace('.png', '.pkl'))
                     if not os.path.exists(label_path):

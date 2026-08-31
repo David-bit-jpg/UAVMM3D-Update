@@ -94,11 +94,46 @@ class DetectorTemplate(nn.Module):
     def post_processing(self, batch_dict):
         raise NotImplementedError
 
-    def load_params_from_file(self, filename, to_cpu):
+    def load_params_from_file(self, filename, to_cpu, logger=None):
+        """载入权重；形状对不上的张量会被跳过而不是报错。
+
+        注意 strict=False 只容忍「多出来 / 缺失的 key」，**形状不匹配依然会抛
+        RuntimeError**。跨域迁移时（例如源域 hm 是 7 类、目标域 2 类）必然有几层
+        形状不同，所以这里先按 名字+形状 过滤再载入，并把跳过的层打印出来 ——
+        迁移最怕的就是以为加载成功、实际大半没载上。
+        """
         loc_type = torch.device('cpu') if to_cpu else None
         dict_sta = torch.load(filename, map_location=loc_type, weights_only=False)
-        print('loading weights')
-        self.load_state_dict(dict_sta['model_state'],strict=False)
+        src_sd = dict_sta['model_state'] if 'model_state' in dict_sta else dict_sta
+
+        model_sd = self.state_dict()
+        filtered, shape_bad, unexpected = {}, [], []
+        for k, v in src_sd.items():
+            if k not in model_sd:
+                unexpected.append(k)
+            elif tuple(model_sd[k].shape) != tuple(v.shape):
+                shape_bad.append('%s: ckpt%s vs model%s'
+                                 % (k, tuple(v.shape), tuple(model_sd[k].shape)))
+            else:
+                filtered[k] = v
+
+        self.load_state_dict(filtered, strict=False)
+
+        n_loaded = sum(int(v.numel()) for v in filtered.values())
+        n_total = sum(int(v.numel()) for v in model_sd.values())
+        not_init = [k for k in model_sd if k not in filtered]
+
+        log = logger.info if logger is not None else print
+        log('loading weights: 载入 %d/%d 个张量, %.2fM/%.2fM 参数 (%.1f%%)'
+            % (len(filtered), len(model_sd), n_loaded / 1e6, n_total / 1e6,
+               100.0 * n_loaded / max(n_total, 1)))
+        if shape_bad:
+            log('  形状不符已跳过 (%d): %s' % (len(shape_bad), shape_bad[:8]))
+        if unexpected:
+            log('  ckpt 有、模型没有 (%d): %s' % (len(unexpected), unexpected[:8]))
+        if not_init:
+            log('  未初始化、保持随机 (%d): %s' % (len(not_init), not_init[:8]))
+        return len(filtered), len(model_sd)
 
     def load_params_with_optimizer(self, filename, to_cpu=False, optimizer=None, logger=None):
         if not os.path.isfile(filename):

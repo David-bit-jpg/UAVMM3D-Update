@@ -520,3 +520,14 @@ from uavdet3d.utils.object_encoder_mav6d import (  # noqa: E402
 
 all_object_encoders['center_point_encoder_mav6d'] = center_point_encoder_mav6d
 all_object_encoders['center_point_decoder_mav6d'] = center_point_decoder_mav6d
+
+# LAAM6D(源域) 那一对本来只有 pre_processor_laam6d 能取到。CenterDet 是从本模块的
+# all_object_encoders 里查 DECONDER 的，所以这里一并注册，
+# 让 RGB-only 的源域配置（ResNet8x + CenterHead + CenterDet）也能用到正确的解码器。
+from uavdet3d.utils.object_encoder_laam6d import (  # noqa: E402
+    center_point_encoder as center_point_encoder_laam6d,
+    center_point_decoder as center_point_decoder_laam6d,
+)
+
+all_object_encoders['center_point_encoder_laam6d'] = center_point_encoder_laam6d
+all_object_encoders['center_point_decoder_laam6d'] = center_point_decoder_laam6d
