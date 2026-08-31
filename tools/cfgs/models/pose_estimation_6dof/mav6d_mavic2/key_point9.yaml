@@ -1,0 +1,73 @@
+ObjectNum: 1
+
+DATA_CONFIG:
+    _BASE_CONFIG_: cfgs/dataset_configs/pose_estimation_6dof/mav6d_mavic2.yaml
+    DATA_PRE_PROCESSOR:
+        - NAME: convert_box9d_to_heatmap
+          OFFSET: [-0.5, 0.1,0]
+          ENCODER: key_point_encoder
+          ENCODER_CORNER:
+            - [0.0, 0.0, 0.0]
+            - [-0.5, -0.5, -0.5]
+            - [0.5, -0.5, -0.5]
+            - [0.5, 0.5, -0.5]
+            - [-0.5, 0.5, -0.5]
+            - [-0.5, -0.5, 0.5]
+            - [0.5, -0.5, 0.5]
+            - [0.5, 0.5, 0.5]
+            - [-0.5, 0.5, 0.5]
+        - NAME: image_normalization
+
+MODEL:
+    NAME: KeyPoint2Pose
+
+    BACKBONE_2D:
+      NAME: ResNet8x
+      NUM_FILTERS: [64,128,256,512]
+      INPUT_CHANNELS: 3
+      OUT_CHANNELS: 512
+
+    DENSE_HEAD_2D:
+      NAME: KeyPoint
+      RADIUS: 2
+      INPUT_CHANNELS: 512
+      OUTPUT_CHANNELS: 9
+      OBJ_NUM: 1
+
+    POST_PROCESSING:
+      DECONDER: key_point_decoder
+      OFFSET: [-0.5, 0.1,0]
+      DECODER_CORNER:
+        - [0.0, 0.0, 0.0]
+        - [-0.5, -0.5, -0.5]
+        - [0.5, -0.5, -0.5]
+        - [0.5, 0.5, -0.5]
+        - [-0.5, 0.5, -0.5]
+        - [-0.5, -0.5, 0.5]
+        - [0.5, -0.5, 0.5]
+        - [0.5, 0.5, 0.5]
+        - [-0.5, 0.5, 0.5]
+      PnP_ALGO: SOLVEPNP_EPNP
+      SCORE_THRESH: 0.1
+
+
+OPTIMIZATION:
+    BATCH_SIZE_PER_GPU: 4
+    NUM_EPOCHS: 20
+
+    OPTIMIZER: adam_onecycle
+    LR: 0.001
+    WEIGHT_DECAY: 0.01
+    MOMENTUM: 0.9
+
+    MOMS: [0.95, 0.85]
+    PCT_START: 0.4
+    DIV_FACTOR: 10
+    DECAY_STEP_LIST: [35, 45]
+    LR_DECAY: 0.1
+    LR_CLIP: 0.0000001
+
+    LR_WARMUP: False
+    WARMUP_EPOCH: 1
+
+    GRAD_NORM_CLIP: 10

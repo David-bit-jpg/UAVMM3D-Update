@@ -1,0 +1,50 @@
+DATA_PATH: 'D:\dataset\MAV6D'
+
+DATASET: 'MAV6D_Det_Dataset'
+
+CLASS_NAMES: ['mavic2', 'phantom4']
+
+DATA_SPLIT: {
+    'train': train,
+    'test': test
+}
+
+SAMPLED_INTERVAL: {
+    'train': 1,
+    'test': 1
+}
+
+OB_SIZE: [[.240, .240, .230]]
+
+IM_SIZE: [1920, 1080]
+IM_RESIZE: [512, 256]
+
+IM_NUM: 1
+
+
+CENTER_RAD: 2
+
+STRIDE: 8
+
+MAX_DIS: 8
+# convert_box9d_to_centermap 会用 dim / MAX_SIZE 做归一化，之前这里缺这一项，
+# 走中心点路径会 AttributeError。MAV6D 目标本体约 0.24 m，取 1 留足余量。
+MAX_SIZE: 1
+
+
+DATA_PRE_PROCESSOR:
+    - NAME: convert_box9d_to_heatmap
+      OFFSET: [0.0,0.0,0]
+      ENCODER: key_point_encoder
+      ENCODER_CORNER: [[-0.5, -0.5, 0],[0.5, -0.5, 0],[0.5, 0.5, 0],[-0.5, 0.5, 0]]
+    - NAME: image_normalization
+
+DATA_AUGMENTOR:
+  AUG_CONFIG_LIST:
+        - NAME: image_flip
+          DATA_LIST: ['image', 'heatmap']
+          ALONG_AXIS_LIST: ['x']
+
+        - NAME: image_rot
+          DATA_LIST: ['image', 'heatmap']
+          ROT_RANGE: [-0.78539816, 0.78539816]

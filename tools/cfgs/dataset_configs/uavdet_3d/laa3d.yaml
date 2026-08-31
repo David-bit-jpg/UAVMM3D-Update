@@ -1,0 +1,72 @@
+DATA_PATH: '/userhome/zoulk/project/LAA3D'
+
+DATASET: 'LAA3D_Det_Dataset'
+
+CLASS_NAMES: ['MAV','EVTOL','Helicopter']
+
+LAA3D_ADS_METRIC:
+    DisMax: {'MAV': 100, 'EVTOL': 150, 'Helicopter': 300}
+    DisMin: {'MAV': 0, 'EVTOL': 0, 'Helicopter': 0}
+    MinPixel: 16
+    AP2D:
+        IoUThresh: {'MAV': [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9],
+                    'EVTOL': [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9],
+                    'Helicopter': [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9]}
+        RecallNum: 101
+    AP3D:
+        DisThresh: {'MAV': [1, 2, 4, 6],'EVTOL': [1, 2, 4, 6], 'Helicopter': [1, 2, 4, 8, 16]}
+        RecallNum: 101
+    Dof6:
+        DisNormMax: {'MAV': 8, 'EVTOL': 16, 'Helicopter': 64}
+        OriNormMax: {'MAV': 30, 'EVTOL': 30, 'Helicopter': 30}
+        SizeNormMax: {'MAV': 1, 'EVTOL': 5, 'Helicopter': 10}
+
+MetricPrivate:
+    SetttingMask: []
+    WheatherMask: []
+    DropRain: False
+    BrightnessMask: [0, 250]
+
+DiffLevel: 6 # 5: 4, 4: 8, 3: 16
+
+DATA_SPLIT: {
+    'train': train4,
+    'test': test
+}
+
+SAMPLED_INTERVAL: {
+    'train': 20,
+    'test': 200
+}
+
+IM_SIZE: [1280, 720]
+IM_RESIZE: [1024, 512]
+
+IM_NUM: 1
+OBJ_NUM: 100
+
+CENTER_RAD: 2
+
+STRIDE: 8
+
+MAX_DIS: 300
+MAX_SIZE: 20
+
+
+DATA_PRE_PROCESSOR:
+    - NAME: filter_box_outside
+    - NAME: convert_box9d_to_heatmap
+      OFFSET: [0.0,0.0,0]
+      ENCODER: key_point_encoder
+      ENCODER_CORNER: [[-0.5, -0.5, 0],[0.5, -0.5, 0],[0.5, 0.5, 0],[-0.5, 0.5, 0]]
+    - NAME: image_normalization
+
+DATA_AUGMENTOR:
+  AUG_CONFIG_LIST:
+        - NAME: image_flip
+          DATA_LIST: ['image', 'heatmap']
+          ALONG_AXIS_LIST: ['x']
+
+        - NAME: image_rot
+          DATA_LIST: ['image', 'heatmap']
+          ROT_RANGE: [-0.78539816, 0.78539816]

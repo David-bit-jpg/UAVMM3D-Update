@@ -1,0 +1,75 @@
+DATA_PATH: 'E:/data_collect'
+DATASET: 'LAAM6D_Det_Dataset'
+
+CLASS_NAMES: ['DJI-avata2','DJI-phantom4','drone-unk3','m210-rtk','DJI-mavic-mini','Matrice-600-Pro', 'matrix-300-RTK']
+
+LAA3D_ADS_METRIC:
+    DisMax: 150
+    DisMin: 0
+    MinPixel: 16
+    AP2D:
+        IoUThresh: [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9]
+        RecallNum: 101
+    AP3D:
+        DisThresh: [1, 2, 4, 6]
+        RecallNum: 101
+    Dof6:
+        DisNormMax: 8
+        OriNormMax: 30
+        SizeNormMax: 1
+
+MetricPrivate:
+    SetttingMask: []
+    WheatherMask: []
+    DropRain: False
+    BrightnessMask: [0, 250]
+
+DiffLevel: 6 # 5: 4, 4: 8, 3: 16
+
+DATA_SPLIT: {
+    'train': train,
+    'test': test
+}
+SAMPLED_INTERVAL: {
+    'train': 1,
+    'test': 1
+}
+
+OB_SIZE: [[1.3, 1.3, 1.3]]
+IM_SIZE: [1280, 720]
+IM_RESIZE: [960, 560]
+IM_NUM: 1
+CENTER_RAD: 2
+STRIDE: 8
+MAX_DIS: 150
+MAX_SIZE: 4
+LIDAR_OFFSET: 6
+RADAR_OFFSET: 8
+
+DATA_PRE_PROCESSOR:
+    - NAME: filter_box_outside
+    # - NAME: convert_box9d_to_heatmap
+    #   OFFSET: [0.0,0.0,0]
+    #   ENCODER: key_point_encoder
+    #   ENCODER_CORNER: [[-0.5, -0.5, 0],[0.5, -0.5, 0],[0.5, 0.5, 0],[-0.5, 0.5, 0]]
+    - NAME: convert_box9d_to_centermap
+      OFFSET: [0.0,0.0,0]
+      ENCODER: center_point_encoder
+    - NAME: image_normalization
+
+DATA_AUGMENTOR:
+  AUG_CONFIG_LIST:
+    - NAME: image_flip
+      DATA_LIST: ['image', 'heatmap']
+      ALONG_AXIS_LIST: ['x']
+
+    - NAME: image_rot
+      DATA_LIST: ['image', 'heatmap']
+      ROT_RANGE: [-0.78539816, 0.78539816]
+
+    - NAME: image_brightness
+      DATA_LIST: ['image']
+
+    - NAME: image_gaussian_noise
+      DATA_LIST: ['image']
+      STDDEV: 8

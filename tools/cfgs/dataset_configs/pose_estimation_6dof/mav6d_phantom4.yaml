@@ -1,0 +1,47 @@
+DATA_PATH: 'D:\dataset\MAV6D\phantom4'
+
+DATASET: 'MAV6D_Pose_Dataset'
+
+DATA_SPLIT: {
+    'train': train,
+    'test': test
+}
+
+SAMPLED_INTERVAL: {
+    'train': 1,
+    'test': 1
+}
+
+OB_SIZE: [[.240, .240, .230]]
+
+IM_SIZE: [1920, 1080]
+IM_RESIZE: [512, 256]
+
+IM_NUM: 1
+
+OBJ_NUM: 1
+
+CENTER_RAD: 2
+
+STRIDE: 8
+
+MAX_DIS: 8
+
+
+DATA_PRE_PROCESSOR:
+    - NAME: convert_box9d_to_heatmap
+      OFFSET: [0.0,0.0,0]
+      ENCODER: key_point_encoder
+      ENCODER_CORNER: [[-0.5, -0.5, 0],[0.5, -0.5, 0],[0.5, 0.5, 0],[-0.5, 0.5, 0]]
+    - NAME: image_normalization
+
+DATA_AUGMENTOR:
+  AUG_CONFIG_LIST:
+        - NAME: image_flip
+          DATA_LIST: ['image', 'heatmap']
+          ALONG_AXIS_LIST: ['x']
+
+        - NAME: image_rot
+          DATA_LIST: ['image', 'heatmap']
+          ROT_RANGE: [-0.78539816, 0.78539816]
+
