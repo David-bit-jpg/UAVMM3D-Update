@@ -36,6 +36,10 @@ DATA_CONFIG:
         'test': 'cfgs/subsets/near8/near_test.txt'
     }
 
+    # 与 near15 保持一致，便于两者之间做迁移对照实验（见 README）。
+    # 理由同 centerdet_rgb_near15.yaml：对齐目标的表观像素大小 + 控制显存。
+    IM_RESIZE: [640, 384]
+
     # 关键：深度归一化尺度跟着子集一起改，否则 center_dis 学到的值全挤在 0.05 附近
     MAX_DIS: 8
 
