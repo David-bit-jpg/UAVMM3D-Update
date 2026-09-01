@@ -26,6 +26,13 @@ def parse_config():
     parser.add_argument('--extra_tag', type=str, default='default', help='extra tag for this experiment')
     parser.add_argument('--ckpt', type=str, default=None, help='checkpoint to start from')
     parser.add_argument('--pretrained_model', type=str, default=None, help='pretrained_model')
+    parser.add_argument('--pretrained_skip', type=str, nargs='*', default=None,
+                        help='跨域迁移时主动不加载的层，按名字子串匹配。'
+                             '例如 --pretrained_skip hm rot '
+                             '（类别数不同的 hm、旋转约定不同的 rot）')
+    parser.add_argument('--pretrained_src_max_dis', type=float, default=None,
+                        help='源域 ckpt 训练时的 MAX_DIS。给了就把 center_dis 输出层'
+                             '按 src/dst 缩放，米制深度预测原样保持')
     parser.add_argument('--launcher', choices=['none', 'pytorch', 'slurm'], default='none')
     parser.add_argument('--tcp_port', type=int, default=18888, help='tcp port for distrbuted training')
     parser.add_argument('--sync_bn', action='store_true', default=False, help='whether to use sync bn')
@@ -135,7 +142,16 @@ def main():
     start_epoch = it = 0
     last_epoch = -1
     if args.pretrained_model is not None:
-        model.load_params_from_file(filename=args.pretrained_model, to_cpu=dist_train)
+        dis_rescale = None
+        if args.pretrained_src_max_dis is not None:
+            dst_max_dis = float(cfg.DATA_CONFIG.MAX_DIS)
+            dis_rescale = float(args.pretrained_src_max_dis) / dst_max_dis
+            logger.info('center_dis 归一化尺度换算: 源域 MAX_DIS=%s -> 目标域 %s，比例 %.4f'
+                        % (args.pretrained_src_max_dis, dst_max_dis, dis_rescale))
+        model.load_params_from_file(filename=args.pretrained_model, to_cpu=dist_train,
+                                    logger=logger,
+                                    skip_patterns=args.pretrained_skip,
+                                    dis_rescale=dis_rescale)
 
     if args.ckpt is not None:
         it, start_epoch = model.load_params_with_optimizer(args.ckpt, to_cpu=dist_train, optimizer=optimizer, logger=logger)

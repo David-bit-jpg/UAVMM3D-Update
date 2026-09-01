@@ -94,7 +94,8 @@ class DetectorTemplate(nn.Module):
     def post_processing(self, batch_dict):
         raise NotImplementedError
 
-    def load_params_from_file(self, filename, to_cpu, logger=None):
+    def load_params_from_file(self, filename, to_cpu, logger=None,
+                              skip_patterns=None, dis_rescale=None):
         """载入权重；形状对不上的张量会被跳过而不是报错。
 
         注意 strict=False 只容忍「多出来 / 缺失的 key」，**形状不匹配依然会抛
@@ -106,10 +107,30 @@ class DetectorTemplate(nn.Module):
         dict_sta = torch.load(filename, map_location=loc_type, weights_only=False)
         src_sd = dict_sta['model_state'] if 'model_state' in dict_sta else dict_sta
 
+        # center_dis 头输出的是【归一化】深度，米制深度 = 输出 x MAX_DIS。
+        # 源域和目标域的 MAX_DIS 不同时（例如源域 15 m、MAV6D 8 m），
+        # 把该头最后一层的 weight/bias 乘上 src/dst，米制预测就原样保持
+        # （最后一层是线性的，所以这个换算是精确的，不是近似）。
+        if dis_rescale is not None and abs(dis_rescale - 1.0) > 1e-9:
+            dis_keys = [k for k in src_sd
+                        if k.startswith('dense_head_2d.center_dis.') and
+                        (k.endswith('.weight') or k.endswith('.bias'))]
+            # 只缩放最后一个卷积（输出层），中间层缩了会改变非线性前的分布
+            if dis_keys:
+                last_idx = max(int(k.split('.')[2]) for k in dis_keys
+                               if k.split('.')[2].isdigit())
+                src_sd = dict(src_sd)
+                for k in dis_keys:
+                    if k.split('.')[2] == str(last_idx):
+                        src_sd[k] = src_sd[k] * float(dis_rescale)
+
         model_sd = self.state_dict()
-        filtered, shape_bad, unexpected = {}, [], []
+        filtered, shape_bad, unexpected, skipped_by_name = {}, [], [], []
+        pats = list(skip_patterns or [])
         for k, v in src_sd.items():
-            if k not in model_sd:
+            if any(p in k for p in pats):
+                skipped_by_name.append(k)
+            elif k not in model_sd:
                 unexpected.append(k)
             elif tuple(model_sd[k].shape) != tuple(v.shape):
                 shape_bad.append('%s: ckpt%s vs model%s'
@@ -127,6 +148,11 @@ class DetectorTemplate(nn.Module):
         log('loading weights: 载入 %d/%d 个张量, %.2fM/%.2fM 参数 (%.1f%%)'
             % (len(filtered), len(model_sd), n_loaded / 1e6, n_total / 1e6,
                100.0 * n_loaded / max(n_total, 1)))
+        if dis_rescale is not None and abs(dis_rescale - 1.0) > 1e-9:
+            log('  center_dis 输出层已按 x%.4f 缩放 (源域/目标域 MAX_DIS 之比)' % dis_rescale)
+        if skipped_by_name:
+            log('  按 --pretrained_skip 主动跳过 (%d): %s'
+                % (len(skipped_by_name), skipped_by_name[:8]))
         if shape_bad:
             log('  形状不符已跳过 (%d): %s' % (len(shape_bad), shape_bad[:8]))
         if unexpected:
