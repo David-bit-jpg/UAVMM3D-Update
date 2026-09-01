@@ -1,5 +1,6 @@
 import glob
 import os
+import time
 
 import torch
 import tqdm
@@ -10,7 +11,8 @@ import copy
 
 
 def train_one_epoch(model, optimizer, train_loader, model_func, lr_scheduler, accumulated_iter, optim_cfg,
-                    rank, tbar, total_it_each_epoch, dataloader_iter, tb_log=None, leave_pbar=False):
+                    rank, tbar, total_it_each_epoch, dataloader_iter, tb_log=None, leave_pbar=False,
+                    logger=None, log_interval=50):
     if total_it_each_epoch == len(train_loader):
         dataloader_iter = iter(train_loader)
 
@@ -18,6 +20,7 @@ def train_one_epoch(model, optimizer, train_loader, model_func, lr_scheduler, ac
         pbar = tqdm.tqdm(total=total_it_each_epoch, leave=leave_pbar, desc='train', dynamic_ncols=True)
 
     accus = 1
+    _t_start = time.time()
 
     for cur_it in range(total_it_each_epoch):
         try:
@@ -62,6 +65,17 @@ def train_one_epoch(model, optimizer, train_loader, model_func, lr_scheduler, ac
                 tb_log.add_scalar('train/loss', loss, accumulated_iter)
                 tb_log.add_scalar('meta_data/learning_rate', cur_lr, accumulated_iter)
 
+            # 定期往日志文件里写一行。原来只有 tqdm 写 stderr，重定向到文件时
+            # 被 Python 缓冲住，后台跑的时候完全看不到进度，也没法判断是慢还是卡死。
+            if logger is not None and (cur_it % log_interval == 0 or cur_it + 1 == total_it_each_epoch):
+                elapsed = time.time() - _t_start
+                done = cur_it + 1
+                ips = done / max(elapsed, 1e-6)
+                eta = (total_it_each_epoch - done) / max(ips, 1e-9)
+                logger.info('  iter %d/%d  loss %.3f  lr %.2e  %.2f it/s  本轮剩余 %.1f 分钟'
+                            % (done, total_it_each_epoch, loss.item() * accus, cur_lr,
+                               ips, eta / 60.0))
+
     if rank == 0:
         pbar.close()
     return accumulated_iter
@@ -69,7 +83,8 @@ def train_one_epoch(model, optimizer, train_loader, model_func, lr_scheduler, ac
 
 def train_model(model, optimizer, train_loader, model_func, lr_scheduler, optim_cfg,
                 start_epoch, total_epochs, start_iter, rank, tb_log, ckpt_save_dir, train_sampler=None,
-                lr_warmup_scheduler=None, ckpt_save_interval=1, max_ckpt_save_num=50):
+                lr_warmup_scheduler=None, ckpt_save_interval=1, max_ckpt_save_num=50,
+                logger=None, log_interval=50):
     accumulated_iter = start_iter
     with tqdm.trange(start_epoch, total_epochs, desc='epochs', dynamic_ncols=True, leave=(rank == 0)) as tbar:
         total_it_each_epoch = len(train_loader)
@@ -91,7 +106,8 @@ def train_model(model, optimizer, train_loader, model_func, lr_scheduler, optim_
                 rank=rank, tbar=tbar, tb_log=tb_log,
                 leave_pbar=(cur_epoch + 1 == total_epochs),
                 total_it_each_epoch=total_it_each_epoch,
-                dataloader_iter=dataloader_iter
+                dataloader_iter=dataloader_iter,
+                logger=logger, log_interval=log_interval
             )
 
             # save trained model

@@ -25,6 +25,14 @@ DATA_CONFIG:
         'test': 'cfgs/subsets/near15/near_test.txt'
     }
 
+    # 从基配置的 960x560 降到 640x384。两个理由，不只是为了快：
+    #  1) 对齐表观大小。源域目标 1.3 m @15 m 在 960x560 下热图约 5.2 px，
+    #     MAV6D 目标 0.34 m @8 m 在 512x256 下只有 2.8 px —— 源域目标反而更大。
+    #     降到 640x384 后源域是 3.4 px，和 MAV6D 接近。
+    #  2) 960x560 batch 8 时显存 23.5/24.5 GB 濒临 OOM，算力也吃满。
+    # 640/8=80、384/8=48 都能整除 stride。内参会随 IM_RESIZE 自动缩放，无需手改。
+    IM_RESIZE: [640, 384]
+
     MAX_DIS: 15
     MAX_SIZE: 2
 
