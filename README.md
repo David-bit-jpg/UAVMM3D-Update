@@ -446,3 +446,83 @@ python tools/train.py --cfg_file cfgs/models/uavdet_3d/mav6d/centerdet.yaml \
 
 > 放宽阈值时记得把配置里的 `MAX_DIS` 改成同一个数，否则 `center_dis` 的
 > 归一化尺度又和子集对不上了。
+
+---
+
+# 在服务器上跑（给协作者的最短路径）
+
+配置文件里的 `DATA_PATH` 是开发机上的 Windows 路径，**服务器上一律用 `--set` 覆盖**，
+不用改文件。
+
+## 1. 环境
+
+在以下组合验证通过：Python 3.10 / PyTorch 2.11.0+cu128 / torchvision 0.26 /
+OpenCV 4.11 / numpy 1.26。
+
+```bash
+pip install easydict tensorboardX transforms3d
+pip install -e . --no-deps          # --no-deps 必须加
+export PYTHONPATH=$(pwd)            # 脚本里是 from tools.train_utils... 的绝对导入
+cd tools                            # 所有命令都在 tools/ 下跑，配置里的相对路径以此为基准
+```
+
+> `--no-deps` 不能省：`setup.py` 的 `install_requires` 里有 `torch`，不加会让 pip
+> 重装 torch、破坏服务器上已配好的 CUDA 版本。
+
+## 2. 源域预训练（近距离 + 单目 RGB，与 MAV6D 对齐）
+
+```bash
+python train.py \
+    --cfg_file cfgs/models/uavdet_3d/laam6d/centerdet_rgb_near15.yaml \
+    --batch_size 8 --workers 4 --epochs 30 \
+    --logger_iter_interval 20 \
+    --set DATA_CONFIG.DATA_PATH /你的路径/data_collect
+```
+
+帧子集 `cfgs/subsets/near15/near_{train,test}.txt` 已随仓库提供，**不需要重新扫描**，
+只要 `data_collect` 是同一份即可。想自己重新生成：
+
+```bash
+python build_near_subset.py build --root /你的路径/data_collect \
+    --max-dist 15 --mode all --out-dir cfgs/subsets/near15
+```
+
+单卡参考性能（RTX 5090 Laptop，640×384，batch 8，workers 4）：
+**0.89 it/s，1097 iter/轮 ≈ 20 分钟/轮**，显存 14 GB。
+
+## 3. 迁移到 MAV6D
+
+```bash
+python train.py \
+    --cfg_file cfgs/models/uavdet_3d/mav6d/centerdet.yaml \
+    --batch_size 8 --workers 4 \
+    --pretrained_model <上一步的 ckpt>.pth \
+    --pretrained_skip hm rot \
+    --pretrained_src_max_dis 15 \
+    --set DATA_CONFIG.DATA_PATH /你的路径/MAV6D
+```
+
+- `--pretrained_skip hm rot`：`hm` 类别数不同（源域 7、MAV6D 2）；`rot` 通道语义
+  在两个欧拉约定下含义不同
+- `--pretrained_src_max_dis 15`：把 `center_dis` 输出层按 15/8 缩放，米制深度预测
+  原样保持（输出层是线性的，精确换算）
+
+MAV6D 需要先整理成本仓库的布局，见上文「MAV6D 数据准备」一节的
+`mav6d_prepare.py organize / check / split`。
+
+## 4. 跑得动多大
+
+- 显存：640×384 + batch 8 约 14 GB。80G 卡可以直接把 batch 开到 32 以上，
+  相应地把 `OPTIMIZATION.LR` 按比例调大
+- 分辨率：`IM_RESIZE` 在两个 near 配置里都是 `[640, 384]`。改大能提精度但要注意
+  显存（960×560 + batch 8 就到 23.5 GB 了），且会拉开与 MAV6D 的表观尺度差
+- 多卡：`tools/dist_train.sh` 在仓库里，但本轮没有验证过
+
+## 5. 两个已知的坑
+
+- **`--use_amp` 是空开关**：`train.py` 接受这个参数，但 `train_utils.py` 里没有
+  `autocast` / `GradScaler`，实际不生效。别指望它省显存
+- **进度只在日志里**：训练循环用 tqdm 写 stderr，重定向到文件会被 Python 缓冲住。
+  已额外加了每 `--logger_iter_interval` 步往 logger 写一行
+  （`iter / loss / lr / it·s⁻¹ / 本轮剩余分钟`），看进度请 tail 输出目录下的
+  `train_*.log`，不要看 stdout

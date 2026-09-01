@@ -14,8 +14,8 @@ import matplotlib
 try:
     # 尝试用 tkAGG（有界面环境可用）
     matplotlib.use('tkAGG')  
-except ImportError:
-    # 无界面环境 fallback 到 Agg
+except Exception:
+    # 无界面环境 fallback 到 Agg（服务器上 tkAgg 缺 tkinter 时抛的不一定是 ImportError）
     matplotlib.use('Agg')
 
 class MAV6D_Pose_Dataset(DatasetTemplate):

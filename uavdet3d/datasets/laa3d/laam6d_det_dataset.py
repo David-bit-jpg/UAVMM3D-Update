@@ -20,7 +20,7 @@ from PIL import Image
 try:
     # 尝试用 tkAGG（有界面环境可用）
     matplotlib.use('tkAGG')
-except ImportError:
+except Exception:  # 服务器无 tkinter 时抛的不一定是 ImportError
     # 无界面环境 fallback 到 Agg
     matplotlib.use('Agg')
 

@@ -20,8 +20,8 @@ from .dataset_utils import convert_9params_to_9points, convert_box_opencv_to_wor
 try:
     # 尝试用 tkAGG（有界面环境可用）
     matplotlib.use('tkAGG')
-except ImportError:
-    # 无界面环境 fallback 到 Agg
+except Exception:
+    # 无界面环境 fallback 到 Agg（服务器上 tkAgg 缺 tkinter 时抛的不一定是 ImportError）
     matplotlib.use('Agg')
 
 
