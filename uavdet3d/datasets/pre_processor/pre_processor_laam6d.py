@@ -1,6 +1,7 @@
 import numpy as np
 from uavdet3d.utils.object_encoder_laam6d import all_object_encoders, center_point_decoder
 from uavdet3d.utils.centernet_utils import draw_gaussian_to_heatmap, draw_res_to_heatmap
+from uavdet3d.utils import frame_convention
 import torch
 import cv2
 from functools import partial
@@ -18,6 +19,13 @@ class DataPreProcessorLAAm6d():
         self.training = training
         self.data_processor_queue = []
         self.class_name_config = self.dataset_cfg.CLASS_NAMES
+
+        # 欧拉角顺序。默认 'zyx' 与改动前完全一致；做迁移到 MAV6D 的实验时设成
+        # 'xyz'，rot 头学到的通道语义才和 MAV6D 一致（否则第一个和第三个旋转轴
+        # 是反的，那个头就迁不了）。详见 uavdet3d/utils/frame_convention.py。
+        # 存成实例属性而不是模块全局：dataloader 用 spawn，实例会被 pickle 传给
+        # worker，模块全局不会。
+        self.euler_seq = self.dataset_cfg.get('EULER_SEQ', frame_convention.LAAM6D_EULER_SEQ)
 
         # 初始化数据处理器队列
         for cur_cfg in self.dataset_cfg.DATA_PRE_PROCESSOR:
@@ -641,13 +649,13 @@ class DataPreProcessorLAAm6d():
             if np.linalg.det(orthogonal_rot) < 0:
                 orthogonal_rot[:, 2] *= -1
 
-            # 3. 从旋转矩阵计算欧拉角（zyx顺序）
+            # 3. 从旋转矩阵计算欧拉角（顺序由 EULER_SEQ 决定，默认 zyx）
             r = R.from_matrix(orthogonal_rot)
-            angles = r.as_euler('zyx')  # (a1, a2, a3) 对应z,y,x轴旋转
+            angles = r.as_euler(self.euler_seq)
             angle1, angle2, angle3 = angles
 
             # 4. 用欧拉角重构旋转矩阵（确保与解码时逻辑一致）
-            rotation_matrix = R.from_euler('zyx', [angle1, angle2, angle3]).as_matrix()
+            rotation_matrix = R.from_euler(self.euler_seq, [angle1, angle2, angle3]).as_matrix()
 
             # 5. 计算物体自身坐标系下的角点和尺寸
             corners_self = np.dot(corners_local, rotation_matrix)  # (8, 3) 物体坐标系下的坐标

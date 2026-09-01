@@ -108,7 +108,7 @@ class MAV6D_Det_Dataset(DatasetTemplate):
 
             each_im_path = os.path.join(root_path, cls_name, self.im_path_name, scene_name, seq_name, frame_name)
             each_label_path = os.path.join(root_path, cls_name, self.label_path_name, scene_name, seq_name,
-                                           frame_name.replace('jpg', 'txt'))
+                                           os.path.splitext(frame_name)[0] + '.txt')
 
             data_info = {'im_path': each_im_path, 'label_path': each_label_path, 'cls_name': cls_name, 'scene_id': scene_name,
                          'seq_id': seq_name, 'frame_id': frame_name}

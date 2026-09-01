@@ -11,6 +11,7 @@ import random
 from glob import glob
 from PIL import Image
 from .ads_metric_laam6d import LAA3D_ADS_Metric
+from uavdet3d.utils import frame_convention
 from .dataset_utils import convert_9params_to_9points, convert_box_opencv_to_world, xyz_to_uv, \
     register_images_by_center, project_lidar_and_get_uvz_rgb_tag, generate_world_coords_map, \
     radar_to_velocity_heatmap, evaluation_by_name, draw_box9d_on_image_gt, visualize_multi_modal_align
@@ -64,6 +65,15 @@ class LAAM6D_Det_Dataset(DatasetTemplate):
         self.use_lidar_modal = 'lidar' in sel
         self.use_radar_modal = 'radar' in sel
         self.num_modalities = len(self.modalities) + int(self.use_lidar_modal) + int(self.use_radar_modal)
+
+        # 欧拉角顺序写进进程级默认值，供主进程里的度量函数使用。
+        # 编码侧不依赖这个全局（走 pre_processor 的实例属性），因为 dataloader
+        # 用 spawn，模块全局传不到 worker 里。
+        self.euler_seq = frame_convention.set_default_euler_seq(
+            dataset_cfg.get('EULER_SEQ', frame_convention.LAAM6D_EULER_SEQ))
+        if logger is not None:
+            logger.info('欧拉角顺序 EULER_SEQ = %s (MAV6D 用的是 %s)'
+                        % (self.euler_seq, frame_convention.MAV6D_EULER_SEQ))
         self.intrinsics = {}
         self.extrinsics = {}
         self.distortions = {}
@@ -402,7 +412,11 @@ class LAAM6D_Det_Dataset(DatasetTemplate):
         for seq_name, frame_list in seq_groups.items():
             total_frames_in_seq = len(frame_list)
 
-            valid_end = total_frames_in_seq - max(self.lidar_offset, self.radar_offset)
+            # 末尾要留出 lidar/radar 的时间偏移量；但这两个模态都关掉时（RGB-only
+            # 迁移配置就是这样）没必要裁 —— 近距离子集本身帧数就少，白丢 7%。
+            need_offset = self.use_lidar_modal or self.use_radar_modal
+            valid_end = (total_frames_in_seq - max(self.lidar_offset, self.radar_offset)
+                         if need_offset else total_frames_in_seq)
             if valid_end <= 0:
                 self.logger.warning(
                     f"序列 {seq_name} 帧数量不足（共{total_frames_in_seq}帧，偏移量{max(self.lidar_offset, self.radar_offset)}），跳过该序列")
@@ -420,8 +434,11 @@ class LAAM6D_Det_Dataset(DatasetTemplate):
                 if keep_this_seq is not None and curr_frame not in keep_this_seq:
                     continue
 
-                lidar_frame = frame_list[i + self.lidar_offset]
-                radar_frame = frame_list[i + self.radar_offset]
+                # need_offset=False 时 valid_end 不再预留偏移量，这里要夹住防越界
+                # （夹住也无所谓：那两个模态关着，这两个路径不会被读）
+                last = total_frames_in_seq - 1
+                lidar_frame = frame_list[min(i + self.lidar_offset, last)]
+                radar_frame = frame_list[min(i + self.radar_offset, last)]
 
                 # 路径永远按 rgb/ir/dvs 全建：__getitem__ 里的 register_images_by_center
                 # 需要三个模态一起做配准，且返回的 aligned RGB 内参会影响下游几何。

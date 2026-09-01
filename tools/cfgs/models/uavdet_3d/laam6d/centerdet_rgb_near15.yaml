@@ -28,6 +28,9 @@ DATA_CONFIG:
     MAX_DIS: 15
     MAX_SIZE: 2
 
+    # 与 MAV6D 对齐的旋转约定，理由见 centerdet_rgb_near8.yaml
+    EULER_SEQ: 'xyz'
+
     DATA_PRE_PROCESSOR:
         - NAME: filter_box_outside
         - NAME: convert_box9d_to_centermap

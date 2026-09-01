@@ -216,10 +216,8 @@ def cmd_check(args):
         print('  场景 %d  序列 %d  帧 %d' % (n_scene, n_seq, n_frame))
         print('  标签: 可用 %d / 缺失 %d / 解析失败 %d' % (n_lbl_ok, n_lbl_missing, n_lbl_bad))
         if non_jpg:
-            problems.append(
-                '%s: 有 %d 张图不是 .jpg。dataset 里用 '
-                "frame_name.replace('jpg','txt') 推标签名，非 jpg 会推错"
-                % (cls, non_jpg))
+            print('  提示: 有 %d 张图不是 .jpg。dataset 推标签名已改用 splitext，'
+                  '可以正常读取；仅与官方说明的 JPEGImages 命名略有出入。' % non_jpg)
 
         if n_lbl_ok == 0:
             problems.append('%s: 没有一条标签能解析成功' % cls)
@@ -390,9 +388,149 @@ def cmd_vis(args):
     return 0
 
 
+# --------------------------------------------------------------------------- #
+# organize：把官方下载解压后的目录整理成本仓库期望的布局
+# --------------------------------------------------------------------------- #
+KNOWN_CLASSES = ['phantom4', 'mavic2', 'mavic3', 'avata', 'm300', 'mavicmini', 'mavic']
+
+
+def _looks_like_mav6d_label(path):
+    """判断一个 txt 是不是 MAV6D 标签：单行 16 个浮点数。"""
+    try:
+        if os.path.getsize(path) == 0 or os.path.getsize(path) > 4096:
+            return False
+        with open(path, 'r', errors='ignore') as f:
+            vals = f.readline().strip().split()
+        if len(vals) < 16:
+            return False
+        [float(x) for x in vals[:16]]
+        return True
+    except Exception:
+        return False
+
+
+def _infer_class(rel_parts, default):
+    """从路径片段里猜目标型号。"""
+    for p in rel_parts:
+        low = p.lower().replace('-', '').replace('_', '')
+        for c in KNOWN_CLASSES:
+            if c in low:
+                return c
+    return default
+
+
+def cmd_organize(args):
+    src, dst = args.src, args.dst
+    if not os.path.isdir(src):
+        print('!! 源目录不存在: %s' % src)
+        return 1
+
+    # 1) 收集所有图像，以及所有像 MAV6D 标签的 txt（按 stem 建索引）
+    images = []          # (绝对路径, 相对 src 的片段列表)
+    labels = {}          # stem -> [绝对路径...]
+    for dirpath, _dirnames, filenames in os.walk(src):
+        rel = os.path.relpath(dirpath, src).replace('\\', '/')
+        parts = [] if rel == '.' else rel.split('/')
+        low_parts = [p.lower() for p in parts]
+        is_mask_dir = any('mask' in p for p in low_parts)
+        for fn in filenames:
+            stem, ext = os.path.splitext(fn)
+            ap_ = os.path.join(dirpath, fn)
+            if ext.lower() in IMG_EXTS:
+                if is_mask_dir:          # mask 图本流水线用不到，跳过
+                    continue
+                images.append((ap_, parts, stem, ext))
+            elif ext.lower() == '.txt' and _looks_like_mav6d_label(ap_):
+                labels.setdefault(stem, []).append(ap_)
+
+    print('扫描 %s' % src)
+    print('  图像 %d 张（已跳过 mask 目录）' % len(images))
+    print('  MAV6D 格式标签 %d 个 stem' % len(labels))
+    if not images or not labels:
+        print('!! 没找到成对的图像/标签，检查一下解压出来的目录')
+        return 1
+
+    # 2) 为每张图配标签、推型号与 scene/seq
+    plan = []            # (src_img, src_lbl, cls, scene, seq, stem, ext)
+    n_nolabel = 0
+    cls_count = {}
+    for ap_, parts, stem, ext in images:
+        cands = labels.get(stem)
+        if not cands:
+            n_nolabel += 1
+            continue
+        # 同 stem 有多个标签时，选路径前缀与图像最接近的那个
+        best = max(cands, key=lambda p: len(os.path.commonprefix([p, ap_])))
+        cls = _infer_class(parts, args.default_class)
+        # scene / seq 取图像所在目录的上两级；不足则补 default
+        tail = [p for p in parts if p.lower() not in IMG_DIR_CANDIDATES_LOWER]
+        seq = tail[-1] if len(tail) >= 1 else 'seq01'
+        scene = tail[-2] if len(tail) >= 2 else 'scene01'
+        plan.append((ap_, best, cls, scene, seq, stem, ext))
+        cls_count[cls] = cls_count.get(cls, 0) + 1
+
+    print('\n配对成功 %d 张，缺标签 %d 张' % (len(plan), n_nolabel))
+    print('型号分布: %s' % cls_count)
+    if not plan:
+        return 1
+
+    # 3) 打印计划
+    print('\n目标布局: <dst>/<型号>/JPEGImages/<scene>/<seq>/<stem><ext>')
+    print('          <dst>/<型号>/labels/<scene>/<seq>/<stem>.txt')
+    print('\n前几条：')
+    for ap_, lb, cls, scene, seq, stem, ext in plan[:5]:
+        print('  %s' % os.path.relpath(ap_, src))
+        print('    -> %s' % os.path.join(cls, 'JPEGImages', scene, seq, stem + ext))
+    exts = sorted({e.lower() for _, _, _, _, _, _, e in plan})
+    if exts != ['.jpg']:
+        print('\n注意: 图像扩展名为 %s。dataset 里推标签名已改用 splitext，'
+              '所以非 .jpg 也能跑；如需严格贴合官方说明可自行转成 jpg。' % exts)
+
+    if not args.apply:
+        print('\n[dry-run] 以上仅为计划。确认无误后加 --apply 执行。')
+        return 0
+
+    # 4) 执行
+    import shutil
+    op = shutil.move if args.mode == 'move' else shutil.copy2
+    n = 0
+    for ap_, lb, cls, scene, seq, stem, ext in plan:
+        im_dir = os.path.join(dst, cls, 'JPEGImages', scene, seq)
+        lb_dir = os.path.join(dst, cls, 'labels', scene, seq)
+        os.makedirs(im_dir, exist_ok=True)
+        os.makedirs(lb_dir, exist_ok=True)
+        di = os.path.join(im_dir, stem + ext)
+        dl = os.path.join(lb_dir, stem + '.txt')
+        if not os.path.exists(di):
+            op(ap_, di)
+        if not os.path.exists(dl):
+            op(lb, dl)
+        n += 1
+        if n % 2000 == 0:
+            print('  已处理 %d/%d' % (n, len(plan)))
+
+    print('\n完成，%d 帧已整理到 %s' % (n, dst))
+    print('接下来：')
+    print('  python tools/mav6d_prepare.py check --root %s' % dst)
+    print('  python tools/mav6d_prepare.py split --root %s --train-ratio 0.8' % dst)
+    return 0
+
+
+IMG_DIR_CANDIDATES_LOWER = {c.lower() for c in IMG_DIR_CANDIDATES} | {'label', 'labels', 'mask', 'masks'}
+
+
 def main():
-    ap = argparse.ArgumentParser(description='MAV6D 数据体检 / split 生成 / 可视化')
+    ap = argparse.ArgumentParser(description='MAV6D 数据整理 / 体检 / split 生成 / 可视化')
     sub = ap.add_subparsers(dest='cmd', required=True)
+
+    p = sub.add_parser('organize', help='把官方下载解压后的目录整理成本仓库期望的布局')
+    p.add_argument('--src', required=True, help='解压后的 MAV6D 目录')
+    p.add_argument('--dst', required=True, help='整理到哪里，例如 F:/dataset/MAV6D')
+    p.add_argument('--apply', action='store_true', help='不加则只打印计划(dry-run)')
+    p.add_argument('--mode', choices=['copy', 'move'], default='copy')
+    p.add_argument('--default-class', default='phantom4',
+                   help='路径里认不出型号时用这个名字')
+    p.set_defaults(func=cmd_organize)
 
     p = sub.add_parser('check', help='体检数据集结构与几何一致性')
     p.add_argument('--root', required=True)

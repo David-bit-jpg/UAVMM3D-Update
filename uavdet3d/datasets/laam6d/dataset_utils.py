@@ -8,6 +8,7 @@ import matplotlib
 from scipy.spatial.transform import Rotation as R
 from scipy.optimize import linear_sum_assignment
 from scipy.spatial.distance import cdist
+from uavdet3d.utils import frame_convention
 
 
 def project_lidar_and_get_uvz_rgb_tag(
@@ -338,7 +339,7 @@ def convert_9params_to_9points(box9d_params):
         ], dtype=np.float32)
 
         # 2) 旋转矩阵（zyx）
-        Rm = R.from_euler('zyx', [a1, a2, a3], degrees=False).as_matrix().astype(np.float32)
+        Rm = R.from_euler(frame_convention.get_default_euler_seq(), [a1, a2, a3], degrees=False).as_matrix().astype(np.float32)
         # 保持右手系（健壮性处理）
         if np.linalg.det(Rm) < 0:
             Rm[:, 2] *= -1
@@ -672,8 +673,8 @@ def val_rotation_euler(pred_euler, gt_euler):  # 改对函数名，明确输入�
     try:
         # 1. 欧拉角→旋转对象（关键：确认单位！若输入是角度，degrees=True）
         # 若模型输出的是弧度（范围≈[-3.14,3.14]），用degrees=False；若是角度（≈[-180,180]），用True
-        rotation_pred = R.from_euler('zyx', pred_euler, degrees=False)  # 注意旋转顺序是否和GT一致
-        rotation_gt = R.from_euler('zyx', gt_euler, degrees=False)
+        rotation_pred = R.from_euler(frame_convention.get_default_euler_seq(), pred_euler, degrees=False)  # 注意旋转顺序是否和GT一致
+        rotation_gt = R.from_euler(frame_convention.get_default_euler_seq(), gt_euler, degrees=False)
 
         # 2. 转换为四元数（整体代表旋转，不是分量）
         pred_q = rotation_pred.as_quat()
