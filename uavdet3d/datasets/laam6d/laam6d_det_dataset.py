@@ -24,6 +24,15 @@ except ImportError:
     matplotlib.use('Agg')
 
 
+def _frame_sort_key(name):
+    """帧名（秒数时间戳，如 '9.7944.png'）的数值排序键，解析不了就退回字符串。"""
+    stem = os.path.splitext(name)[0]
+    try:
+        return (0, float(stem), '')
+    except ValueError:
+        return (1, 0.0, stem)
+
+
 class LAAM6D_Det_Dataset(DatasetTemplate):
     def __init__(self, dataset_cfg, training, root_path, logger):
         super(LAAM6D_Det_Dataset, self).__init__(dataset_cfg=dataset_cfg, training=training, root_path=root_path,
@@ -400,8 +409,16 @@ class LAAM6D_Det_Dataset(DatasetTemplate):
                 continue
 
             base_path = os.path.join(self.root_path, seq_name)
+            keep = getattr(self, 'frame_filter', None)
+            keep_this_seq = keep.get(seq_name) if keep is not None else None
+
             for i in range(0, valid_end, self.dataset_cfg.SAMPLED_INTERVAL[mode]):
                 curr_frame = frame_list[i]
+
+                # 帧子集只在这里过滤：frame_list 仍是完整有序列表，
+                # 下面两行的 lidar/radar 偏移才不会指错帧
+                if keep_this_seq is not None and curr_frame not in keep_this_seq:
+                    continue
 
                 lidar_frame = frame_list[i + self.lidar_offset]
                 radar_frame = frame_list[i + self.radar_offset]
@@ -508,6 +525,40 @@ class LAAM6D_Det_Dataset(DatasetTemplate):
             self.logger.info(f"Test Sequences: {len(val_list)}")
             return val_list
 
+    def _load_frame_subset(self, mode):
+        """读取由 tools/build_near_subset.py 生成的帧子集文件。
+
+        每行: <seq_name> <frame.png> [其它列忽略]
+        seq_name 形如 Town01_Opt/carla_data/00001/clear_day/DJI-avata2
+
+        返回 {seq_name: set(frame_name)}；未配置 FRAME_SUBSET 时返回 None。
+        注意子集只用来【筛选发射哪些帧】，每条序列的完整有序帧列表照旧构建 ——
+        include_CARLA_data 靠 frame_list[i + lidar_offset] 取 LiDAR/Radar 帧，
+        直接把帧列表抽稀会让偏移量指到错误的帧上。
+        """
+        cfg_sub = self.dataset_cfg.get('FRAME_SUBSET', None)
+        if not cfg_sub:
+            return None
+        path = cfg_sub[mode] if isinstance(cfg_sub, dict) else cfg_sub
+        if not path:
+            return None
+        if not os.path.isabs(path):
+            path = os.path.join(os.getcwd(), path)
+        if not os.path.exists(path):
+            raise FileNotFoundError('FRAME_SUBSET 文件不存在: %s' % path)
+
+        keep = defaultdict(set)
+        with open(path, 'r') as f:
+            for line in f:
+                line = line.strip()
+                if not line or line.startswith('#'):
+                    continue
+                parts = line.split()
+                if len(parts) < 2:
+                    continue
+                keep[parts[0]].add(parts[1])
+        return dict(keep)
+
     def set_split(self, split_ratio):
         super(LAAM6D_Det_Dataset, self).__init__(
             dataset_cfg=self.dataset_cfg,
@@ -518,7 +569,15 @@ class LAAM6D_Det_Dataset(DatasetTemplate):
 
         self.sample_scene_list = []
 
-        self.seq_list = self._build_seq_list_all_maps(split_ratio=split_ratio)
+        # FRAME_SUBSET 给定时，序列和帧都由子集文件决定，不再按比例扫全库
+        self.frame_filter = self._load_frame_subset(self.mode)
+        if self.frame_filter is not None:
+            self.seq_list = sorted(self.frame_filter.keys())
+            n_keep = sum(len(v) for v in self.frame_filter.values())
+            self.logger.info('FRAME_SUBSET[%s]: %d 条序列, %d 帧'
+                             % (self.mode, len(self.seq_list), n_keep))
+        else:
+            self.seq_list = self._build_seq_list_all_maps(split_ratio=split_ratio)
 
         for seq_name in self.seq_list:
             seq_path = os.path.join(str(self.root_path), seq_name, 'images_rgb')
@@ -526,7 +585,13 @@ class LAAM6D_Det_Dataset(DatasetTemplate):
                 self.logger.warning(f"No image path: {seq_path}")
                 continue
 
-            all_frames = sorted([f for f in os.listdir(seq_path) if f.endswith('.png')])
+            # 必须按【数值】排序，不能用字典序。帧名是秒数时间戳（如 9.7944.png /
+            # 10.0612.png），字典序会把 "10.x" 排到 "9.x" 前面 —— 实测约 8% 的序列
+            # 会因此时间顺序错乱，而 include_CARLA_data 是用 frame_list[i + lidar_offset]
+            # 去取 LiDAR/Radar 帧的，顺序一错，多模态就对不上时间了。
+            all_frames = sorted(
+                [f for f in os.listdir(seq_path) if f.endswith('.png')],
+                key=lambda x: _frame_sort_key(x))
             for frame in all_frames:
                 self.sample_scene_list.append([seq_name, frame])
 

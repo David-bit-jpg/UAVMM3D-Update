@@ -1,0 +1,100 @@
+# 近距离 + 单目 RGB 的源域配置 —— 与 MAV6D 在【模态、骨干、检测头、深度尺度】
+# 四个维度上全部对齐，专门用来产出可迁移到 MAV6D 的预训练权重。
+#
+# 相对 centerdet_rgb_resnet8x.yaml 只多做一件事：把源域的深度尺度也拉到 MAV6D 量级。
+#
+#   原始源域   : 深度中位 42 m，MAX_DIS=150  —— 与 MAV6D 的 8 m 差 18.8 倍
+#   本配置     : 只用 Z ∈ [0.5, 8] m 的帧，MAX_DIS=8 —— 与 MAV6D 同量级
+#
+# 帧子集由 tools/build_near_subset.py 生成：
+#     python tools/build_near_subset.py build --root E:/data_collect \
+#         --max-dist 8 --mode all --out-dir cfgs/subsets/near8 --verify 300
+#
+#   mode=all  : 整帧【所有】目标都在范围内。若用 any，画面里仍会有几十米外的目标，
+#               深度分布就拉不回来了。
+#   metric=z  : 两阶段筛选。distance_info.txt 给的是欧氏距离，实测存在
+#               欧氏距离很小但相机系 Z 为负（目标在相机后方）的帧 ——
+#               编码器遇到 Z<=0 直接跳过，留着就是一张空监督图。
+#
+# 实测规模: 69 条序列 / 1188 帧 (train 985 / test 203)，
+#           Z: min 0.55  中位 4.89  95% 7.64  max 7.99 m
+#
+# 数据量偏小是这个阈值的固有结果（全库 394209 帧里 all<=8m 的只占 0.29%）。
+# 想要更多帧就放宽阈值，代价是与 MAV6D 的尺度差变大：
+#     all<=15m ->  7685 帧      all<=20m -> 20529 帧      all<=30m -> 68037 帧
+# 放宽时记得把下面的 MAX_DIS 一并改成同一个数。
+
+DATA_CONFIG:
+    _BASE_CONFIG_: cfgs/dataset_configs/uavdet_3d/laam6d.yaml
+    MAX_OBJ_PER_SAMPLE: 7
+
+    MODALITIES: ['rgb']
+
+    # 帧子集（路径相对 tools/ 目录，即运行 train.py 时的工作目录）
+    FRAME_SUBSET: {
+        'train': 'cfgs/subsets/near8/near_train.txt',
+        'test': 'cfgs/subsets/near8/near_test.txt'
+    }
+
+    # 关键：深度归一化尺度跟着子集一起改，否则 center_dis 学到的值全挤在 0.05 附近
+    MAX_DIS: 8
+
+    # 目标尺寸上限也收一收（源域机型最大约 1.3 m）
+    MAX_SIZE: 2
+
+    DATA_PRE_PROCESSOR:
+        - NAME: filter_box_outside
+        - NAME: convert_box9d_to_centermap
+          OFFSET: [0.0,0.0,0]
+          ENCODER: center_point_encoder
+        - NAME: image_normalization
+
+MODEL:
+    NAME: CenterDet
+
+    # 与 mav6d/centerdet.yaml 逐字相同
+    BACKBONE_2D:
+      NAME: ResNet8x
+      NUM_FILTERS: [64,128,256,512]
+      INPUT_CHANNELS: 3
+      OUT_CHANNELS: 512
+
+    DENSE_HEAD_2D:
+      NAME: CenterHead
+      INPUT_CHANNELS: 512
+      SEPARATE_HEAD_CFG:
+          HEAD_ORDER: [ 'hm', 'center_res', 'center_dis', 'dim', 'rot' ]
+          HEAD_DICT: {
+              'hm': { 'out_channels': 7, 'conv_dim': 128},   # 源域 7 类；MAV6D 2 类，仅此层不可迁
+              'center_res': { 'out_channels': 2, 'conv_dim': 128},
+              'center_dis': { 'out_channels': 1, 'conv_dim': 128},
+              'dim': { 'out_channels': 3, 'conv_dim': 128},
+              'rot': { 'out_channels': 6, 'conv_dim': 128},
+          }
+
+    POST_PROCESSING:
+      DECONDER: center_point_decoder_laam6d
+      MAX_OBJ: 7
+      SCORE_THRESH: 0.0
+
+
+OPTIMIZATION:
+    BATCH_SIZE_PER_GPU: 4
+    NUM_EPOCHS: 60          # 帧数少，多跑几轮
+
+    OPTIMIZER: adam_onecycle
+    LR: 0.001
+    WEIGHT_DECAY: 0.01
+    MOMENTUM: 0.9
+
+    MOMS: [0.95, 0.85]
+    PCT_START: 0.4
+    DIV_FACTOR: 10
+    DECAY_STEP_LIST: [40, 55]
+    LR_DECAY: 0.1
+    LR_CLIP: 0.0000001
+
+    LR_WARMUP: False
+    WARMUP_EPOCH: 1
+
+    GRAD_NORM_CLIP: 10

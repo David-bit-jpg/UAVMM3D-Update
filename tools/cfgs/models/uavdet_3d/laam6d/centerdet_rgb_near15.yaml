@@ -1,0 +1,85 @@
+# centerdet_rgb_near8.yaml 的放宽版：Z <= 15 m。
+#
+# near8 与 MAV6D 尺度最贴（Z 中位 4.9 m），但全库只有 1188 帧太少；
+# 这一版把阈值放到 15 m，换来 11134 帧（train 8773 / test 2361），
+# 深度仍比原始源域（中位 42 m、MAX_DIS=150）近一个数量级。
+#
+# 完整的设计说明见 centerdet_rgb_near8.yaml，这里只改三处：
+#   FRAME_SUBSET -> near15、MAX_DIS -> 15、NUM_EPOCHS 相应减少。
+#
+# 子集生成：
+#     python tools/build_near_subset.py build --root E:/data_collect \
+#         --max-dist 15 --mode all --out-dir cfgs/subsets/near15
+#
+# 实测: 粗筛(欧氏<=22.5m) 534 条序列 / 28939 帧
+#       -> 精筛(15m >= Z >= 0.5m) 310 条序列 / 11134 帧
+
+DATA_CONFIG:
+    _BASE_CONFIG_: cfgs/dataset_configs/uavdet_3d/laam6d.yaml
+    MAX_OBJ_PER_SAMPLE: 7
+
+    MODALITIES: ['rgb']
+
+    FRAME_SUBSET: {
+        'train': 'cfgs/subsets/near15/near_train.txt',
+        'test': 'cfgs/subsets/near15/near_test.txt'
+    }
+
+    MAX_DIS: 15
+    MAX_SIZE: 2
+
+    DATA_PRE_PROCESSOR:
+        - NAME: filter_box_outside
+        - NAME: convert_box9d_to_centermap
+          OFFSET: [0.0,0.0,0]
+          ENCODER: center_point_encoder
+        - NAME: image_normalization
+
+MODEL:
+    NAME: CenterDet
+
+    BACKBONE_2D:
+      NAME: ResNet8x
+      NUM_FILTERS: [64,128,256,512]
+      INPUT_CHANNELS: 3
+      OUT_CHANNELS: 512
+
+    DENSE_HEAD_2D:
+      NAME: CenterHead
+      INPUT_CHANNELS: 512
+      SEPARATE_HEAD_CFG:
+          HEAD_ORDER: [ 'hm', 'center_res', 'center_dis', 'dim', 'rot' ]
+          HEAD_DICT: {
+              'hm': { 'out_channels': 7, 'conv_dim': 128},
+              'center_res': { 'out_channels': 2, 'conv_dim': 128},
+              'center_dis': { 'out_channels': 1, 'conv_dim': 128},
+              'dim': { 'out_channels': 3, 'conv_dim': 128},
+              'rot': { 'out_channels': 6, 'conv_dim': 128},
+          }
+
+    POST_PROCESSING:
+      DECONDER: center_point_decoder_laam6d
+      MAX_OBJ: 7
+      SCORE_THRESH: 0.0
+
+
+OPTIMIZATION:
+    BATCH_SIZE_PER_GPU: 4
+    NUM_EPOCHS: 30
+
+    OPTIMIZER: adam_onecycle
+    LR: 0.001
+    WEIGHT_DECAY: 0.01
+    MOMENTUM: 0.9
+
+    MOMS: [0.95, 0.85]
+    PCT_START: 0.4
+    DIV_FACTOR: 10
+    DECAY_STEP_LIST: [20, 27]
+    LR_DECAY: 0.1
+    LR_CLIP: 0.0000001
+
+    LR_WARMUP: False
+    WARMUP_EPOCH: 1
+
+    GRAD_NORM_CLIP: 10

@@ -355,3 +355,94 @@ python tools/train.py --cfg_file cfgs/models/uavdet_3d/mav6d/centerdet.yaml \
 > `strict=False` 只放过多余/缺失的 key，**形状不符依然会抛 `RuntimeError`** ——
 > 跨域必然有几层形状不同，不过滤的话 `--pretrained_model` 直接崩。
 > 现在它会打印实际载入了多少、跳过了哪些、哪些保持随机初始化。
+
+---
+
+# 近距离源域子集（与 MAV6D 深度尺度对齐）
+
+## 动机
+
+上一节量化出的最大域差是**深度尺度差 18.8 倍**：源域是室外几十米（中位 42 m，
+`MAX_DIS=150`），MAV6D 是室内 ≤8 m，而 `center_dis` 头学的正是 `Z / MAX_DIS`。
+
+仿真数据里本来就有近距离的帧，把它们单独抽出来，就得到一个**深度尺度与 MAV6D
+同量级、但仍带完整 6-DoF 标注**的源域——迁移时不必再跨这个数量级。
+
+## 全库距离分布（实测 1493 条序列 / 394,209 帧 / 131 万目标样本）
+
+单目标欧氏距离：min 0.20 m，中位 41.89 m，max 205.08 m
+每帧目标数：1 个 55,305 帧；2 个 99,572；3 个 73,652；…；7 个 14,321
+
+| 阈值 | any（至少一个在范围内） | all（全部在范围内）|
+|---|---|---|
+| ≤5 m | 9,949 (2.52%) | 514 (0.13%) |
+| ≤8 m | 19,440 (4.93%) | 1,137 (0.29%) |
+| ≤15 m | 56,782 (14.40%) | 7,685 (1.95%) |
+| ≤20 m | 96,758 (24.54%) | 20,529 (5.21%) |
+| ≤30 m | 181,812 (46.12%) | 68,037 (17.26%) |
+
+**用 `all` 而不是 `any`**：`any` 只要求有一个目标近，画面里仍会留着几十米外的
+目标，深度分布拉不回来。
+
+## 两个坑
+
+**1. 欧氏距离 ≠ 相机系深度。** 每个序列的 `distance_info.txt` 已存好逐帧距离
+（读它比逐帧读 `boxes_rgb/*.pkl` 快几百倍：19 个/秒 → 全量要 5 个多小时），
+但它给的是**欧氏距离**，而 `center_dis` 学的是**相机系 Z**。实测存在欧氏距离
+只有几米、但 **Z 为负（目标在相机后方）** 的帧 —— 编码器遇到 `Z<=0` 直接跳过，
+留着就是一张空监督图。
+
+所以工具用**两阶段**：欧氏距离粗筛（放宽 1.5 倍）→ 读 pkl 按真实 Z 精筛。
+实测 8 m 档粗筛 3,413 帧，精筛后只剩 1,188 帧（34.8%）。
+
+**2. 帧名必须按数值排序。** 帧名是秒数时间戳（`9.7944.png` / `10.0612.png`），
+`set_split` 原本用 `sorted()` 字典序，会把 `10.x` 排到 `9.x` 前面 —— 实测约
+**8% 的序列时间顺序错乱**。而 `include_CARLA_data` 是用 `frame_list[i + lidar_offset]`
+取 LiDAR/Radar 帧的，顺序一错多模态就对不上时间。已改为数值排序。
+
+## 生成子集
+
+```bash
+# 扫描 + 看分布（结果缓存，后续 build 秒出）
+python tools/build_near_subset.py scan --root E:/data_collect
+
+# 生成（默认 <=8m、mode=all、metric=z、按序列切 train/test）
+python tools/build_near_subset.py build --root E:/data_collect \
+    --max-dist 8 --mode all --out-dir cfgs/subsets/near8 --verify 300
+```
+
+| 子集 | 阈值 | 序列 | 帧数（train/test）| 实测 Z |
+|---|---|---|---|---|
+| `near8` | Z ≤ 8 m | 69 | 1,188（985 / 203）| min 0.55，中位 4.89，max 7.99 |
+| `near15` | Z ≤ 15 m | 310 | 11,134（8,773 / 2,361）| ≤15 |
+
+`near8` 与 MAV6D 尺度最贴但只有 1,188 帧；`near15` 帧数实用得多，深度仍比原始
+源域近一个数量级。**切分一律按序列**，避免相邻帧泄漏。
+
+## 数据集侧的接法
+
+配置项 `FRAME_SUBSET: {'train': ..., 'test': ...}`，指向生成的帧列表。
+
+> 实现上**只在发射样本时按帧过滤，不动每条序列的完整有序帧列表**。
+> 因为 `include_CARLA_data` 靠 `frame_list[i + lidar_offset]` 取 LiDAR/Radar 帧，
+> 直接把帧列表抽稀会让偏移量指到错误的帧上。
+
+## 训练与迁移
+
+```bash
+# 1) 训近距离对齐源域
+python tools/train.py --cfg_file cfgs/models/uavdet_3d/laam6d/centerdet_rgb_near8.yaml
+#    帧多一些的版本：centerdet_rgb_near15.yaml
+
+# 2) 迁到 MAV6D
+python tools/train.py --cfg_file cfgs/models/uavdet_3d/mav6d/centerdet.yaml \
+    --pretrained_model output/models/uavdet_3d/laam6d/centerdet_rgb_near8/default/ckpt/checkpoint_epoch_60.pth \
+    --set DATA_CONFIG.DATA_PATH <MAV6D_ROOT>
+```
+
+这两个配置与 `mav6d/centerdet.yaml` 在**模态、骨干、检测头、深度尺度**四个维度
+全部对齐，`center_dis` 头因此也变得可迁（不再像原配置那样必须重初始化）。
+唯一仍不可迁的是 `hm` 层（源域 7 类 vs MAV6D 2 类）。
+
+> 放宽阈值时记得把配置里的 `MAX_DIS` 改成同一个数，否则 `center_dis` 的
+> 归一化尺度又和子集对不上了。
