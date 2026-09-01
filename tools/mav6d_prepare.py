@@ -509,7 +509,24 @@ def cmd_organize(args):
         if n % 2000 == 0:
             print('  已处理 %d/%d' % (n, len(plan)))
 
-    print('\n完成，%d 帧已整理到 %s' % (n, dst))
+    # 官方自带的 train.txt / test.txt 放在 <型号>/ 下，而 dataset 读的是
+    # <型号>/split/{train,test}.txt。存在就搬过去，省得再自己切分。
+    # 官方 split 里是绝对路径，dataset 用 split('/')[-3:] 取 scene/seq/frame，
+    # 所以原样复制即可。
+    n_split = 0
+    for dirpath, _dn, filenames in os.walk(src):
+        for fn in filenames:
+            if fn.lower() not in ('train.txt', 'test.txt', 'val.txt'):
+                continue
+            rel = os.path.relpath(dirpath, src).replace('\\', '/')
+            cls = _infer_class([] if rel == '.' else rel.split('/'), args.default_class)
+            out = os.path.join(dst, cls, 'split')
+            os.makedirs(out, exist_ok=True)
+            shutil.copy2(os.path.join(dirpath, fn), os.path.join(out, fn.lower()))
+            print('  官方 split: %s -> %s' % (fn, os.path.join(cls, 'split', fn.lower())))
+            n_split += 1
+
+    print('\n完成，%d 帧已整理到 %s（另搬运 %d 个官方 split 文件）' % (n, dst, n_split))
     print('接下来：')
     print('  python tools/mav6d_prepare.py check --root %s' % dst)
     print('  python tools/mav6d_prepare.py split --root %s --train-ratio 0.8' % dst)
