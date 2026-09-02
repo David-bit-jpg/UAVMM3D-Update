@@ -273,12 +273,74 @@ def cmd_check(args):
 # --------------------------------------------------------------------------- #
 # split
 # --------------------------------------------------------------------------- #
+def _filter_official_split(cls_root, im_dir, lb_dir, name):
+    """把官方 split 过滤成"图和标签都真实存在"的子集。
+
+    官方 train.txt/test.txt 里是采集机上的绝对路径，且覆盖全量帧；
+    而 OneDrive 打包下载有 1 万文件上限，实际拿到的往往只是其中一部分。
+    直接拿官方 split 去训会大面积找不到文件，所以这里按磁盘实际情况过滤，
+    同时保留官方的 train/test 归属（不重新随机切，保证与论文口径可比）。
+    """
+    p = os.path.join(cls_root, 'split', name + '.txt')
+    if not os.path.exists(p):
+        return None
+    kept, missing = [], 0
+    with open(p, 'r', errors='ignore') as f:
+        for line in f:
+            line = line.strip()
+            if not line:
+                continue
+            parts = line.replace('\\', '/').split('/')[-3:]
+            if len(parts) < 3:
+                continue
+            scene, seq, frame = parts
+            stem = os.path.splitext(frame)[0]
+            ip = os.path.join(cls_root, im_dir, scene, seq, frame)
+            lp = os.path.join(cls_root, lb_dir, scene, seq, stem + '.txt')
+            if os.path.exists(ip) and os.path.exists(lp):
+                kept.append('%s/%s/%s' % (scene, seq, frame))
+            else:
+                missing += 1
+    return kept, missing
+
+
 def cmd_split(args):
     root = args.root
     classes = discover_classes(root)
     if not classes:
         print('!! 没找到型号目录')
         return 1
+
+    # 优先沿用官方划分（过滤到实际存在的帧）
+    if args.use_official:
+        any_official = False
+        for cls in classes:
+            cls_root = os.path.join(root, cls) if cls else root
+            im_dir = _pick_dir(cls_root, IMG_DIR_CANDIDATES)
+            lb_dir = _pick_dir(cls_root, LBL_DIR_CANDIDATES)
+            if im_dir is None or lb_dir is None:
+                continue
+            res = {n: _filter_official_split(cls_root, im_dir, lb_dir, n)
+                   for n in ('train', 'test')}
+            if not any(res.values()):
+                continue
+            any_official = True
+            print('[%s] 沿用官方划分，过滤到实际存在的帧：' % (cls or 'root'))
+            for n in ('train', 'test'):
+                if res[n] is None:
+                    print('  %-5s 官方文件不存在，跳过' % n)
+                    continue
+                kept, missing = res[n]
+                out = os.path.join(cls_root, 'split', n + '.txt')
+                with open(out, 'w') as f:
+                    f.write('\n'.join(kept) + ('\n' if kept else ''))
+                total = len(kept) + missing
+                print('  %-5s 保留 %6d / 官方 %6d 帧 (缺 %6d) -> %s'
+                      % (n, len(kept), total, missing, out))
+        if any_official:
+            print('\n提示: 若想改成按序列重新随机切分，加 --no-use-official')
+            return 0
+        print('未找到任何官方 split，改为按序列重新切分')
 
     rng = np.random.RandomState(args.seed)
 
@@ -553,10 +615,15 @@ def main():
     p.add_argument('--root', required=True)
     p.set_defaults(func=cmd_check)
 
-    p = sub.add_parser('split', help='按序列生成 train/test split')
+    p = sub.add_parser('split', help='生成 train/test split')
     p.add_argument('--root', required=True)
     p.add_argument('--train-ratio', type=float, default=0.8)
     p.add_argument('--seed', type=int, default=0)
+    p.add_argument('--use-official', dest='use_official', action='store_true', default=True,
+                   help='默认开：沿用 <型号>/split/ 下的官方 train/test，'
+                        '只过滤掉磁盘上不存在的帧（保持与论文口径可比）')
+    p.add_argument('--no-use-official', dest='use_official', action='store_false',
+                   help='忽略官方划分，按序列重新随机切分')
     p.set_defaults(func=cmd_split)
 
     p = sub.add_parser('vis', help='把 GT 3D 框投影回图上')
