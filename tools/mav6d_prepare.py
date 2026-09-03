@@ -244,21 +244,33 @@ def cmd_check(args):
                 problems.append('%s: 只有 %.1f%% 的 GT 投影落在画面内，'
                                 '强烈提示外参/内参和这批数据对不上' % (cls, pct))
 
-        # 关键检查：标签里逐帧记录的相机位姿是否恒定
+        # 关键检查：标签里逐帧记录的相机位姿是否恒定。
+        # 判据要用物理量，不能直接卡四元数分量的 std —— 分量 std 1e-3 只相当于
+        # 约 0.1°，属于动捕噪声，卡 1e-3 会把静止相机误判成在动。
         cam_poses = np.array(cam_poses)
-        t_std = cam_poses[:, 0:3].std(axis=0)
-        q_std = cam_poses[:, 3:7].std(axis=0)
-        print('  标签内相机位姿 std: 平移 %s  四元数 %s' %
-              (np.round(t_std, 5), np.round(q_std, 5)))
         if np.all(np.abs(cam_poses) < 1e-9):
-            print('  -> 相机位姿字段全是 0（占位），只能依赖硬编码外参')
-        elif t_std.max() > 1e-3 or q_std.max() > 1e-3:
-            problems.append(
-                '%s: 标签里的相机位姿并非恒定 (平移 std 最大 %.4f)。'
-                'read_truth_Rt 用的是一个写死的 camera->VICON 外参，'
-                '对会动的相机是错的，应改成逐帧用标签里的相机位姿' % (cls, t_std.max()))
+            print('  标签内相机位姿字段全是 0（占位），只能依赖硬编码外参')
         else:
-            print('  -> 相机位姿在整个子集内基本恒定，硬编码外参的前提成立')
+            t_span_mm = 1000.0 * np.linalg.norm(
+                cam_poses[:, 0:3] - cam_poses[:, 0:3].mean(axis=0), axis=1).max()
+            rots = R.from_quat(cam_poses[:, 3:7])
+            mean_rot = R.from_quat(np.mean(cam_poses[:, 3:7], axis=0) /
+                                   np.linalg.norm(np.mean(cam_poses[:, 3:7], axis=0)))
+            ang_span_deg = np.degrees((mean_rot.inv() * rots).magnitude()).max()
+            print('  标签内相机位姿波动: 平移最大偏离 %.3f mm, 旋转最大偏离 %.4f°'
+                  % (t_span_mm, ang_span_deg))
+            # 把角度波动折算成中位深度处的横向位置误差，才好判断要不要管
+            med_z = float(np.median(depths))
+            induced_mm = 1000.0 * med_z * np.tan(np.radians(ang_span_deg)) + t_span_mm
+            print('  -> 折算到中位深度 %.2f m 处，最坏情况位置偏差约 %.1f mm'
+                  % (med_z, induced_mm))
+            if induced_mm > 100.0:
+                problems.append(
+                    '%s: 相机位姿波动折算到 %.2f m 处已达 %.0f mm，超过目标尺寸的 1/3，'
+                    'read_truth_Rt 的写死外参不再够用，应改成逐帧用标签里的相机位姿'
+                    % (cls, med_z, induced_mm))
+            else:
+                print('     相对目标尺寸(约 340 mm)可忽略，沿用官方的写死外参即可')
 
     print('\n' + '=' * 68)
     if problems:
@@ -284,7 +296,8 @@ def _filter_official_split(cls_root, im_dir, lb_dir, name):
     p = os.path.join(cls_root, 'split', name + '.txt')
     if not os.path.exists(p):
         return None
-    kept, missing = [], 0
+    kept, missing, dup = [], 0, 0
+    seen = set()
     with open(p, 'r', errors='ignore') as f:
         for line in f:
             line = line.strip()
@@ -294,14 +307,21 @@ def _filter_official_split(cls_root, im_dir, lb_dir, name):
             if len(parts) < 3:
                 continue
             scene, seq, frame = parts
+            rel = '%s/%s/%s' % (scene, seq, frame)
+            # 官方 mavic2/train.txt 里每帧重复了 3 次（35379 行 / 11793 唯一帧），
+            # 而 phantom4 没有重复。照单全收会让 mavic2 被 3 倍过采样、两类失衡。
+            if rel in seen:
+                dup += 1
+                continue
+            seen.add(rel)
             stem = os.path.splitext(frame)[0]
             ip = os.path.join(cls_root, im_dir, scene, seq, frame)
             lp = os.path.join(cls_root, lb_dir, scene, seq, stem + '.txt')
             if os.path.exists(ip) and os.path.exists(lp):
-                kept.append('%s/%s/%s' % (scene, seq, frame))
+                kept.append(rel)
             else:
                 missing += 1
-    return kept, missing
+    return kept, missing, dup
 
 
 def cmd_split(args):
@@ -330,13 +350,13 @@ def cmd_split(args):
                 if res[n] is None:
                     print('  %-5s 官方文件不存在，跳过' % n)
                     continue
-                kept, missing = res[n]
+                kept, missing, dup = res[n]
                 out = os.path.join(cls_root, 'split', n + '.txt')
                 with open(out, 'w') as f:
                     f.write('\n'.join(kept) + ('\n' if kept else ''))
-                total = len(kept) + missing
-                print('  %-5s 保留 %6d / 官方 %6d 帧 (缺 %6d) -> %s'
-                      % (n, len(kept), total, missing, out))
+                uniq = len(kept) + missing
+                print('  %-5s 保留 %6d / 官方唯一 %6d 帧 (本地缺 %6d, 去重丢弃 %6d) -> %s'
+                      % (n, len(kept), uniq, missing, dup, out))
         if any_official:
             print('\n提示: 若想改成按序列重新随机切分，加 --no-use-official')
             return 0
