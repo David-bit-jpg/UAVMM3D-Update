@@ -760,7 +760,12 @@ class LAAM6D_Det_Dataset(DatasetTemplate):
             pred_boxes9d = convert_9params_to_9points(pred_boxes9d[:, :-1])  # world -> world, (N, 9, 3)
 
             confidence = batch_dict['confidence'][batch_id]  # (N,)
-            sorted_namelist = batch_dict['sorted_namelist'][batch_id]
+            # 这里原本是 sorted_namelist = batch_dict['sorted_namelist'][batch_id]，
+            # 但 collate_batch 里 ret['sorted_namelist'] 存的是整批共用的 CLASS_NAMES
+            # 列表（7 个类名），不是按样本组织的。按 batch_id 去索引，
+            # batch_size > 类别数时直接 IndexError（batch_size=8 必崩），
+            # 小于类别数时也只会取到单个类名字符串。而这个变量赋值后从未被使用，
+            # 故直接删除。
             frame_dict = {
                 'seq_id': seq_id,
                 'frame_id': frame_id,
