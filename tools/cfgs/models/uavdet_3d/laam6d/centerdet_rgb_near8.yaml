@@ -49,8 +49,10 @@ DATA_CONFIG:
     # （实测同一组角按两种顺序解释，旋转差异中位 134°）。
     EULER_SEQ: 'xyz'
 
-    # 目标尺寸上限也收一收（源域机型最大约 1.3 m）
-    MAX_SIZE: 2
+    # MAX_SIZE 必须 >= 数据里最大的 GT 尺寸，否则 dim 的归一化目标会超过 1。
+    # 实测全类别最大 2.63 m（Matrice-600-Pro），详见 centerdet_rgb_near15.yaml 的注释。
+    # 曾误设为 2，导致该类 ADS 只有 27.94。
+    MAX_SIZE: 4
 
     DATA_PRE_PROCESSOR:
         - NAME: filter_box_outside
