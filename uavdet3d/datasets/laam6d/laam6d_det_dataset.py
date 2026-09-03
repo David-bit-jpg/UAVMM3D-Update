@@ -591,8 +591,9 @@ class LAAM6D_Det_Dataset(DatasetTemplate):
         if self.frame_filter is not None:
             self.seq_list = sorted(self.frame_filter.keys())
             n_keep = sum(len(v) for v in self.frame_filter.values())
-            self.logger.info('FRAME_SUBSET[%s]: %d 条序列, %d 帧'
-                             % (self.mode, len(self.seq_list), n_keep))
+            if self.logger is not None:
+                self.logger.info('FRAME_SUBSET[%s]: %d 条序列, %d 帧'
+                                 % (self.mode, len(self.seq_list), n_keep))
         else:
             self.seq_list = self._build_seq_list_all_maps(split_ratio=split_ratio)
 
@@ -941,7 +942,9 @@ class LAAM6D_Det_Dataset(DatasetTemplate):
                                        classes=self.sorted_namelist,
                                        metric_save_path=metric_root_path)
 
-        final_str = laa_ads_fun.eval(annos)
+        # 原来这里传的是 annos，上面按 setting/天气/亮度/雨 过滤出来的 new_annos
+        # 根本没被用上 —— 整个筛选逻辑等于白写，报出来的还是全量指标
+        final_str = laa_ads_fun.eval(new_annos)
 
         return final_str
 

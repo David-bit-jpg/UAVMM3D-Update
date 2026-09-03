@@ -703,7 +703,7 @@ class DataPreProcessorLAAm6d():
             corners_self = local_prototype * np.array([l, w, h])  # (8, 3)
 
             # 4. 生成旋转矩阵（与编码逻辑一致）
-            rot_mat = R.from_euler('zyx', [angle1, angle2, angle3], degrees=False).as_matrix()
+            rot_mat = R.from_euler(self.euler_seq, [angle1, angle2, angle3], degrees=False).as_matrix()
             if np.linalg.det(rot_mat) < 0:
                 rot_mat[:, 2] *= -1  # 确保右手坐标系
 

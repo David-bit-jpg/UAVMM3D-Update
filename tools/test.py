@@ -172,7 +172,8 @@ def main():
     test_set, test_loader, sampler = build_dataloader(
         dataset_cfg=cfg.DATA_CONFIG,
         batch_size=args.batch_size,
-        dist=dist_test, workers=args.workers, training=False
+        dist=dist_test, workers=args.workers, training=False,
+        logger=logger        # 原来没传，dataset 里的 self.logger.* 全部 AttributeError
     )
 
     model = build_network(model_cfg=cfg.MODEL,  dataset=test_set)

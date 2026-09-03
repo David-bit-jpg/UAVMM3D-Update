@@ -71,9 +71,8 @@ class CenterDet(DetectorTemplate):
             raw_im_size = batch_dict['raw_im_size'][batch_id]  # 2,
             new_im_size = batch_dict['new_im_size'][batch_id]  # 2,
             # obj_size = batch_dict['obj_size'][batch_id]  # 3,
-            print(intrinsic)
-            print(extrinsic)
-            print(distortion)
+            # 原来这里有三行 print(intrinsic/extrinsic/distortion)，
+            # 每个样本刷一次，评测几千帧时把真正的输出全冲掉了，删除。
             stride = batch_dict['stride'][batch_id]
 
             this_hm = hm[batch_id]

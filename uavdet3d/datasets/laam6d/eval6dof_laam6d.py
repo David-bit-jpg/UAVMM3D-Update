@@ -3,6 +3,7 @@ import numpy as np
 from scipy.spatial.transform import Rotation as R
 from scipy.spatial.distance import cdist
 from scipy.optimize import linear_sum_assignment
+from uavdet3d.utils import frame_convention
 
 
 def eval_key_points_error(annos):
@@ -248,8 +249,8 @@ def val_rotation_euler(pred_euler, gt_euler):
     try:
         # 1. 欧拉角→旋转对象（关键：确认单位！若输入是角度，degrees=True）
         # 若模型输出的是弧度（范围≈[-3.14,3.14]），用degrees=False；若是角度（≈[-180,180]），用True
-        rotation_pred = R.from_euler('zyx', pred_euler, degrees=False)  # 注意旋转顺序是否和GT一致
-        rotation_gt = R.from_euler('zyx', gt_euler, degrees=False)
+        rotation_pred = R.from_euler(frame_convention.get_default_euler_seq(), pred_euler, degrees=False)  # 注意旋转顺序是否和GT一致
+        rotation_gt = R.from_euler(frame_convention.get_default_euler_seq(), gt_euler, degrees=False)
 
         # 2. 转换为四元数（整体代表旋转，不是分量）
         pred_q = rotation_pred.as_quat()
@@ -380,11 +381,11 @@ def convert_9points_to_9params(box9d_points):
 
         # 3. 从旋转矩阵计算欧拉角（zyx顺序）
         r = R.from_matrix(orthogonal_rot)
-        angles = r.as_euler('zyx')  # (a1, a2, a3) 对应z,y,x轴旋转
+        angles = r.as_euler(frame_convention.get_default_euler_seq())  # (a1, a2, a3) 对应z,y,x轴旋转
         angle1, angle2, angle3 = angles
 
         # 4. 用欧拉角重构旋转矩阵（确保与解码时逻辑一致）
-        rotation_matrix = R.from_euler('zyx', [angle1, angle2, angle3]).as_matrix()
+        rotation_matrix = R.from_euler(frame_convention.get_default_euler_seq(), [angle1, angle2, angle3]).as_matrix()
 
         # 5. 计算物体自身坐标系下的角点和尺寸
         corners_self = np.dot(corners_local, rotation_matrix)  # (8, 3) 物体坐标系下的坐标
@@ -465,7 +466,7 @@ def convert_box9d_to_box_param(boxes_9d):
 
         try:
             r = R.from_matrix(rot_mat)
-            euler = r.as_euler('zyx', degrees=False)
+            euler = r.as_euler(frame_convention.get_default_euler_seq(), degrees=False)
         except:
             print(f"[警告] 旋转矩阵无效，使用默认欧拉角")
             euler = np.zeros(3)

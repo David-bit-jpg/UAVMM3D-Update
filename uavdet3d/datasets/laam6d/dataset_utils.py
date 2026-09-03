@@ -403,7 +403,7 @@ def convert_9points_to_9params(box9d_points):
 
         # 4. 计算欧拉角
         r = R.from_matrix(rotation_matrix)
-        angles = r.as_euler('zyx')
+        angles = r.as_euler(frame_convention.get_default_euler_seq())
         angle1, angle2, angle3 = angles
 
         box_params = np.array([x, y, z, l, w, h, angle1, angle2, angle3])
@@ -453,7 +453,7 @@ def convert_box9d_to_box_param(boxes_9d):
 
         try:
             r = R.from_matrix(rot_mat)
-            euler = r.as_euler('zyx', degrees=False)
+            euler = r.as_euler(frame_convention.get_default_euler_seq(), degrees=False)
         except:
             print(f"[警告] 旋转矩阵无效，使用默认欧拉角")
             euler = np.zeros(3)
