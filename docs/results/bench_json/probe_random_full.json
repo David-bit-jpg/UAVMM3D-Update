@@ -1,0 +1,23 @@
+{
+  "tag": "probe_random_full",
+  "ckpt": "E:/Open3DUAVDet/output/models/uavdet_3d/mav6d/centerdet/probe_random_full/ckpt/checkpoint_epoch_6.pth",
+  "n_valid": 4635,
+  "n_total": 4800,
+  "decode_max_dis": 8.0,
+  "pos_median": 0.2561609975856269,
+  "pos_mean": 0.3284488535773596,
+  "pos_p90": 0.6747695984594972,
+  "z_median": 0.24861574172973633,
+  "z_mean": 0.3141713464915945,
+  "z_p90": 0.6533867359161379,
+  "ang_median": 63.968134429379084,
+  "ang_mean": 78.41118285929944,
+  "ang_p90": 159.2603938224723,
+  "acc_0.1": 0.1965480043149946,
+  "acc_0.2": 0.4002157497303128,
+  "acc_0.5": 0.7866235167206042,
+  "acc_1": 0.9713052858683927,
+  "acc_5deg": 0.004314994606256742,
+  "acc_10deg": 0.025674217907227615,
+  "acc_20deg": 0.10658036677454154
+}

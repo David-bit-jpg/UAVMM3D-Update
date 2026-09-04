@@ -75,6 +75,8 @@ def main():
     ap.add_argument('--workers', type=int, default=4)
     ap.add_argument('--vis', type=int, default=0, help='额外画 N 张预测 vs GT 对比图')
     ap.add_argument('--vis-out', default=None)
+    ap.add_argument('--json', default=None,
+                    help='把指标写成 JSON，便于把多次评测汇总成曲线')
     args = ap.parse_args()
 
     logger = common_utils.create_logger()
@@ -162,6 +164,25 @@ def main():
           % (min(z_gt_all), max(z_gt_all), np.median(z_gt_all)))
     for t in [0.1, 0.2, 0.5, 1.0]:
         print('  位置误差 < %.1f m 的比例: %5.1f%%' % (t, 100.0 * (pos_err < t).mean()))
+
+    if args.json:
+        import json
+        res = {
+            'tag': args.tag, 'ckpt': args.ckpt, 'n_valid': int(len(pos_err)),
+            'n_total': int(len(ds)), 'decode_max_dis': float(cfg.DATA_CONFIG.MAX_DIS),
+        }
+        for nm, a in (('pos', pos_err), ('z', z_err), ('ang', ang_err)):
+            res[nm + '_median'] = float(np.median(a))
+            res[nm + '_mean'] = float(a.mean())
+            res[nm + '_p90'] = float(np.percentile(a, 90))
+        for t in (0.1, 0.2, 0.5, 1.0):
+            res['acc_%g' % t] = float((pos_err < t).mean())
+        for t in (5, 10, 20):
+            res['acc_%ddeg' % t] = float((ang_err < t).mean())
+        os.makedirs(os.path.dirname(os.path.abspath(args.json)), exist_ok=True)
+        with open(args.json, 'w') as f:
+            json.dump(res, f, indent=2)
+        print('  指标写出 %s' % args.json)
 
     if vis_pool:
         out = args.vis_out or os.path.join('..', 'output', 'eval_vis_' + args.tag)

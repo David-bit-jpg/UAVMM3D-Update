@@ -109,6 +109,52 @@ def box_center_z(pkl_path):
     return zs
 
 
+def box_z_and_angsize(pkl_path):
+    """读一帧的 boxes_rgb，返回每个目标的 (相机系 Z, 角尺度 rad)。
+
+    角尺度 = 物体最大外接尺寸 / 深度，等于它在像平面上张开的角度。
+    这是【与内参无关】的量：同一个角尺度，换任何相机都能算出对应的像素大小。
+    按角尺度筛源域，才能和目标域在「表观大小」上真正对齐 ——
+    按欧氏距离或 Z 筛只对齐了深度，机型尺寸一变表观大小就又跑了。
+    """
+    with open(pkl_path, 'rb') as f:
+        raw = pickle.load(f)
+    out = []
+    for row in raw:
+        pts = np.array(row[1:] if isinstance(row[0], str) else row,
+                       dtype=np.float32).reshape(8, 3)
+        c = ((pts[0] + pts[6]) + (pts[1] + pts[7]) +
+             (pts[2] + pts[4]) + (pts[3] + pts[5])) / 8.0
+        z = float(c[2])
+        if z <= 1e-3:
+            out.append((z, 0.0))
+            continue
+        d = float(np.max(pts.max(axis=0) - pts.min(axis=0)))
+        out.append((z, d / z))
+    return out
+
+
+def _angsize_worker(task):
+    """多进程精筛的单帧任务：(root, seq, frame, n_obj, mode, lo, hi, min_z)。"""
+    root, seq, fr, nb, mode, lo, hi, min_z = task
+    p = os.path.join(root, seq, 'boxes_rgb', fr.replace('.png', '.pkl'))
+    if not os.path.exists(p):
+        return None
+    try:
+        za = box_z_and_angsize(p)
+    except Exception:
+        return None
+    if not za:
+        return None
+    zs = np.array([x[0] for x in za], dtype=np.float32)
+    an = np.array([x[1] for x in za], dtype=np.float32)
+    ok = (zs >= min_z) & (an >= lo) & (an <= hi)
+    good = ok.all() if mode == 'all' else ok.any()
+    if not good:
+        return None
+    return (seq, fr, nb, float(an.min()), float(an.max()))
+
+
 # --------------------------------------------------------------------------- #
 def scan(root, cache_path, quiet=False):
     """扫描全库，返回 {seq_name: {'frames': [...], 'dist': (n_obj, L) 数组}}。"""
@@ -183,7 +229,8 @@ def report(table):
 
 
 def build(table, root, max_dist, mode, max_objects, train_ratio, seed,
-          out_dir, verify, metric='z', prefilter_scale=1.5, min_z=0.5):
+          out_dir, verify, metric='z', prefilter_scale=1.5, min_z=0.5,
+          min_ang=0.0724, max_ang=0.2005, workers=8):
     # --- 第一阶段：用 distance_info 的欧氏距离粗筛（快） ---
     # 卡一个放宽的阈值，避免漏掉"深度不远但横向偏得多"的帧
     coarse_thresh = max_dist * (prefilter_scale if metric == 'z' else 1.0)
@@ -241,6 +288,26 @@ def build(table, root, max_dist, mode, max_objects, train_ratio, seed,
         print('精筛后(%.1f m >= Z >= %.1f m): %d 条序列, %d 帧 (粗筛的 %.1f%%，读失败 %d)'
               % (max_dist, min_z, len(picked), n_frames,
                  100.0 * n_frames / max(n_coarse, 1), n_read_fail))
+    elif metric == 'angsize':
+        # 按角尺度精筛。粗筛只能按欧氏距离，所以这里要读的帧比 metric=z 多得多，
+        # 用进程池并行（读 pkl 是 IO+反序列化，单进程约 19 帧/秒）。
+        import multiprocessing as mp
+        tasks = [(root, seq, fr, nb, mode, min_ang, max_ang, min_z)
+                 for seq, items in picked.items() for fr, nb, _, _ in items]
+        print('精筛中（按角尺度 [%.4f, %.4f] rad 读 %d 个 boxes_rgb，%d 进程）...'
+              % (min_ang, max_ang, len(tasks), workers))
+        refined = {}
+        with mp.Pool(workers) as pool:
+            for i, r in enumerate(pool.imap_unordered(_angsize_worker, tasks, chunksize=64)):
+                if r is not None:
+                    refined.setdefault(r[0], []).append(r[1:])
+                if (i + 1) % 20000 == 0:
+                    print('   ...%d/%d' % (i + 1, len(tasks)))
+        picked = {k: sorted(v, key=lambda x: frame_sort_key(x[0]))
+                  for k, v in refined.items()}
+        n_frames = sum(len(x) for x in picked.values())
+        print('精筛后: %d 条序列, %d 帧 (粗筛的 %.1f%%)'
+              % (len(picked), n_frames, 100.0 * n_frames / max(n_coarse, 1)))
     else:
         n_frames = n_coarse
     print('最终: %d 条序列, %d 帧' % (len(picked), n_frames))
@@ -262,7 +329,10 @@ def build(table, root, max_dist, mode, max_objects, train_ratio, seed,
     meta = {'root': root, 'max_dist': max_dist, 'mode': mode, 'metric': metric,
             'min_z': min_z, 'max_objects': max_objects,
             'train_ratio': train_ratio, 'seed': seed}
-    col = 'zmin> <zmax' if metric == 'z' else 'dmin> <dmax'
+    if metric == 'angsize':
+        meta['min_ang'] = min_ang
+        meta['max_ang'] = max_ang
+    col = {'z': 'zmin> <zmax', 'angsize': 'angmin> <angmax'}.get(metric, 'dmin> <dmax')
     for name, sel in [('train', train_seqs), ('test', test_seqs)]:
         p = os.path.join(out_dir, 'near_%s.txt' % name)
         n = 0
@@ -327,11 +397,18 @@ def main():
     p.add_argument('--out-dir', default='cfgs/subsets/near8')
     p.add_argument('--verify', type=int, default=0,
                    help='抽 N 帧读 boxes_rgb 核对真实相机系深度 Z')
-    p.add_argument('--metric', choices=['z', 'euclid'], default='z',
+    p.add_argument('--metric', choices=['z', 'euclid', 'angsize'], default='z',
                    help='z=两阶段(欧氏粗筛+真实相机系深度精筛，推荐)；'
                         'euclid=只用 distance_info 的欧氏距离(快，但会混进相机后方的目标)')
     p.add_argument('--prefilter-scale', type=float, default=1.5,
                    help='metric=z 时粗筛阈值相对 --max-dist 的放宽倍数')
+    p.add_argument('--min-ang', type=float, default=0.0724,
+                   help='metric=angsize 的角尺度下限(rad)。默认取 MAV6D 实测 5%% 分位 '
+                        '(0.34 m / 4.70 m)')
+    p.add_argument('--max-ang', type=float, default=0.2005,
+                   help='角尺度上限(rad)。默认 MAV6D 实测 95%% 分位 (0.34 m / 1.70 m)')
+    p.add_argument('--workers', type=int, default=8,
+                   help='metric=angsize 精筛的进程数')
     p.add_argument('--min-z', type=float, default=0.5,
                    help='相机系深度下限(米)。实测存在 Z 为负的帧(目标在相机后方)，'
                         '编码器遇到 Z<=0 会跳过，留着就是空监督')
@@ -346,6 +423,7 @@ def main():
     return build(table, args.root, args.max_dist, args.mode, args.max_objects,
                  args.train_ratio, args.seed, args.out_dir, args.verify,
                  metric=args.metric, prefilter_scale=args.prefilter_scale,
+                 min_ang=args.min_ang, max_ang=args.max_ang, workers=args.workers,
                  min_z=args.min_z)
 
 

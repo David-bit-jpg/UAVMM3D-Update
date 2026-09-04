@@ -30,6 +30,12 @@ def parse_config():
                         help='跨域迁移时主动不加载的层，按名字子串匹配。'
                              '例如 --pretrained_skip hm rot '
                              '（类别数不同的 hm、旋转约定不同的 rot）')
+    parser.add_argument('--freeze', type=str, nargs='*', default=None,
+                        help='冻结名字里含这些子串的参数（如 backbone_2d）。'
+                             '用于「线性探针」诊断：只训检测头，看预训练特征本身能用到什么程度')
+    parser.add_argument('--freeze_bn_stats', action='store_true',
+                        help='被冻结的模块同时锁在 eval 模式，BN 的 running_mean/var 也不更新。'
+                             '不加则允许 BN 统计量适应目标域（相当于 AdaBN，对迁移更有利）')
     parser.add_argument('--pretrained_src_max_dis', type=float, default=None,
                         help='源域 ckpt 训练时的 MAX_DIS。给了就把 center_dis 输出层'
                              '按 src/dst 缩放，米制深度预测原样保持')
@@ -135,6 +141,28 @@ def main():
     if args.sync_bn:
         model = torch.nn.SyncBatchNorm.convert_sync_batchnorm(model)
     model.cuda()
+
+    # 冻结必须发生在 build_optimizer 之前：OptimWrapper.create 内部用
+    # trainable_params() 按 requires_grad 过滤，之后再改就进不了参数组了。
+    if args.freeze:
+        n_frozen = n_total = 0
+        for name, param in model.named_parameters():
+            n_total += param.numel()
+            if any(pat in name for pat in args.freeze):
+                param.requires_grad = False
+                n_frozen += param.numel()
+        logger.info('冻结参数: 模式 %s -> %d / %d (%.1f%%) 不参与训练'
+                    % (args.freeze, n_frozen, n_total, 100.0 * n_frozen / max(n_total, 1)))
+        if args.freeze_bn_stats:
+            # requires_grad=False 只挡梯度，挡不住 BN 更新 running stats。
+            # 把这些子模块永久钉在 eval：覆盖它们的 train()，让上层的 model.train() 无效。
+            n_mod = 0
+            for name, mod in model.named_modules():
+                if name and any(pat in name for pat in args.freeze):
+                    mod.eval()
+                    mod.train = (lambda mode=True, _m=mod: _m)
+                    n_mod += 1
+            logger.info('  另有 %d 个子模块锁定在 eval 模式（BN 统计量也冻结）' % n_mod)
 
     optimizer = build_optimizer(model, cfg.OPTIMIZATION)
 
