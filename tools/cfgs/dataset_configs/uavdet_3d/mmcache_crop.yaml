@@ -1,0 +1,7 @@
+# 尺度对齐的多模态缓存（tools/build_mm_cache.py --crop-to-mav6d）：
+# 在 1280x720 原图上裁 621x349 的窗口（含最近合格目标）再缩到 512x288，等效焦距 527.7 ≈ MAV6D，
+# 目标表观大小与 MAV6D 同量级（原 mm20 缓存里目标中位只有 11 px，MAV6D 是 56 px）。
+# 每帧的 K_raw / raw_wh 已按窗口平移，其余字段与 mmcache.yaml 相同。
+_BASE_CONFIG_: cfgs/dataset_configs/uavdet_3d/mmcache.yaml
+DATA_PATH: 'E:/mmcache/mm20c'
+IM_SIZE: [621, 349]            # 裁剪窗口分辨率，内参按它给（每帧 raw_wh 也是它）

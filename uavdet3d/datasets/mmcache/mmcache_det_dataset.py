@@ -65,6 +65,21 @@ class MMCache_Det_Dataset(DatasetTemplate):
             self.valid_idx = self.valid_idx[vis[self.valid_idx] >= min_vis]
             if self.logger is not None:
                 self.logger.info('MMCache[%s]: RGB 可见度 >= %.1f 过滤 %d -> %d 帧' % (self.mode, min_vis, n0, len(self.valid_idx)))
+        # 翻译缓存（tools/sim2real_bg_translate.py）：只用翻译过的帧，translated.npy 是每帧 bool
+        if bool(dataset_cfg.get('REQUIRE_TRANSLATED', False)):
+            tp = os.path.join(self.split_dir, 'translated.npy')
+            assert os.path.exists(tp), 'REQUIRE_TRANSLATED 需要 %s（由 tools/sim2real_bg_translate.py 生成）' % tp
+            tr = np.load(tp)
+            n0 = len(self.valid_idx)
+            self.valid_idx = self.valid_idx[tr[self.valid_idx]]
+            if self.logger is not None:
+                self.logger.info('MMCache[%s]: 只保留已翻译帧 %d -> %d' % (self.mode, n0, len(self.valid_idx)))
+        # 教师看【原始】RGB：TEACHER_RGB_DIR 指向源缓存根目录，其 rgb.npy 作为额外 3 通道接在 image 最后，
+        # 布局 [rgb(3) | ir | depth | tag | rgb_teacher(3)]；学生只取前 3 通道，CenterDetKD 给教师重排成 6 通道。
+        trd = dataset_cfg.get('TEACHER_RGB_DIR', None)
+        self.teacher_rgb_path = os.path.join(str(trd), self.mode, 'rgb.npy') if trd else None
+        if self.teacher_rgb_path:
+            assert os.path.exists(self.teacher_rgb_path), self.teacher_rgb_path
         interval = int(dataset_cfg.SAMPLED_INTERVAL[self.mode]) if 'SAMPLED_INTERVAL' in dataset_cfg else 1
         self.valid_idx = self.valid_idx[::max(interval, 1)]
         self._mm = None           # memmap 在 worker 里懒打开（spawn 后重新映射）
@@ -83,6 +98,9 @@ class MMCache_Det_Dataset(DatasetTemplate):
         if self._mm is None:
             self._mm = {k: np.load(os.path.join(self.split_dir, k + '.npy'), mmap_mode='r')
                         for k in ('rgb', 'ir', 'depth', 'tag')}
+            if self.teacher_rgb_path:
+                self._mm['rgb_t'] = np.load(self.teacher_rgb_path, mmap_mode='r')
+                assert self._mm['rgb_t'].shape == self._mm['rgb'].shape, '教师 RGB 缓存与本缓存帧数/分辨率不一致'
         return self._mm
 
     def __len__(self):
@@ -104,6 +122,8 @@ class MMCache_Det_Dataset(DatasetTemplate):
                 chans.append(np.clip(d / self.depth_max, 0.0, 1.0)[None])
             elif m == 'tag':
                 chans.append(np.ascontiguousarray(mm['tag'][i]).astype(np.float32)[None])
+        if self.teacher_rgb_path:
+            chans.append(np.ascontiguousarray(mm['rgb_t'][i]).astype(np.float32).transpose(2, 0, 1) / 255.0)
         image = np.concatenate(chans, axis=0)            # (C, H, W)
         boxes = meta['boxes9d'].astype(np.float32).copy()
         names = list(meta['names'])
@@ -116,6 +136,8 @@ class MMCache_Det_Dataset(DatasetTemplate):
             # 按本域自身统计量归一化 rgb 三通道（其余通道已在 [0,1]）。源域亮度中位 66、目标域 118，
             # 只除 255 的话两域第一层卷积看到的分布差很多。
             image[:3] = (image[:3] - self.norm_mean[:, None, None]) / self.norm_std[:, None, None]
+            if self.teacher_rgb_path:
+                image[-3:] = (image[-3:] - self.norm_mean[:, None, None]) / self.norm_std[:, None, None]
         image = image[None]                              # (1, C, H, W)
 
         data_dict = {
@@ -170,7 +192,9 @@ class MMCache_Det_Dataset(DatasetTemplate):
             if abs(s - 1.0) > 1e-3:
                 nh, nw = max(8, int(round(H * s))), max(8, int(round(W * s)))
                 out = np.zeros_like(image)
-                res = np.stack([cv2.resize(image[c], (nw, nh), interpolation=cv2.INTER_LINEAR if c < 4 else cv2.INTER_NEAREST)
+                tc0 = C - 3 if self.teacher_rgb_path else C          # 教师 RGB 通道也用线性插值；depth/tag 用最近邻
+                res = np.stack([cv2.resize(image[c], (nw, nh),
+                                           interpolation=cv2.INTER_LINEAR if (c < 4 or c >= tc0) else cv2.INTER_NEAREST)
                                 for c in range(C)], 0)
                 if s >= 1.0:          # 放大后随机裁一块 (H,W)
                     oy, ox = rng.randint(0, nh - H + 1), rng.randint(0, nw - W + 1)

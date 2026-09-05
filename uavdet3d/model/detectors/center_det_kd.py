@@ -32,6 +32,7 @@ class CenterDetKD(CenterDet):
         d = model_cfg.get('DISTILL', None) or {}
         self.kd_w = {k: float(d.get(k, 0.0)) for k in ('W_FEAT', 'W_CENTER_COS', 'W_HM', 'W_REG', 'W_CROSS')}
         self.student_channels = int(d.get('STUDENT_CHANNELS', 3))
+        self.teacher_channels = int(d.get('TEACHER_CHANNELS', 6))
         self._teacher = []          # 用 list 藏起来：不注册为子模块，不进 state_dict / parameters()
         if any(v > 0 for v in self.kd_w.values()):
             self._build_teacher(d)
@@ -71,6 +72,15 @@ class CenterDetKD(CenterDet):
         sb['image'] = batch_dict['image'][:, :, :self.student_channels]
         return sb
 
+    def _teacher_batch(self, batch_dict):
+        """翻译缓存时 image 布局是 [rgb_翻译(3) | ir | depth | tag | rgb_原始(3)]（数据集 TEACHER_RGB_DIR），
+        教师要看原始 RGB + 其它模态，重排成 [rgb_原始 | ir | depth | tag]；普通缓存原样透传。"""
+        img = batch_dict['image']
+        tb = dict(batch_dict)
+        if img.shape[2] > self.teacher_channels:
+            tb['image'] = torch.cat([img[:, :, -3:], img[:, :, 3:-3]], dim=2)
+        return tb
+
     def forward(self, batch_dict):
         sb = self._student_batch(batch_dict)
         for cur_module in self.module_list:
@@ -84,7 +94,7 @@ class CenterDetKD(CenterDet):
             return {'loss': loss}
 
         with torch.no_grad():
-            tb = dict(batch_dict)
+            tb = self._teacher_batch(batch_dict)
             for cur_module in self.teacher.module_list:
                 tb = cur_module(tb)
             t_feat = tb['features_2d']                       # (B,K,C,h,w)

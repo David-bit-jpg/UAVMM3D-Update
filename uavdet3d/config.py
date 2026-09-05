@@ -55,7 +55,11 @@ def merge_new_config(config, new_config):
                 yaml_config = yaml.load(f, Loader=yaml.FullLoader)
             except:
                 yaml_config = yaml.load(f)
-        config.update(EasyDict(yaml_config))
+        if isinstance(yaml_config, dict) and '_BASE_CONFIG_' in yaml_config:
+            # 支持多层 _BASE_CONFIG_（如 mmcache_crop_bgx -> mmcache_crop -> mmcache）；单层时行为与原来完全一致
+            merge_new_config(config, yaml_config)
+        else:
+            config.update(EasyDict(yaml_config))
 
     for key, val in new_config.items():
         if not isinstance(val, dict):

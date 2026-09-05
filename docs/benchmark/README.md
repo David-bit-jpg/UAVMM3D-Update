@@ -388,3 +388,30 @@ train **21,092 帧 / 50,346 框（合格 30,300）**，test **5,634 帧 / 13,844
 
 两个曾经"未通过"的项都是**检查指标写错**而非链路错误：S1 逐槽位比较把顺序差异当成几何误差；
 S4a 用整个框多边形取中位数会被框内几十米外的背景点淹没（框比无人机剪影大得多）。
+
+### 8.7 背景翻译管线（`tools/sim2real_bg_translate.py`，用户 2026-09-06 定的规则）
+
+只翻译 RGB 的**背景**，无人机像素一个不动。规则与实现：
+
+1. **抠出无人机**：帧内全部有标签目标（index 的 `boxes9d`，40 m 内）的 8 角点投影凸包，外扩 5 px 再羽化 3 px
+   （缓存分辨率 512×288）。多目标帧只保护挑出的那个是错的——8 帧样例里 4 帧有 2–4 个目标。
+2. **还原背景**：凸包区域用周围像素抹成模糊背景（归一化卷积，σ=12），得到没有无人机的底图。
+3. **每帧最多 2 架**：`boxes9d` 多于 2 的帧不翻译；RGB 可见度 < 5 的帧也不翻译（`--min-vis`，与训练过滤一致）。
+4. **只翻译背景**：底图放大到 1024×576 送本地 SDXL img2img（强度 0.6、20 步、batch 4，≈2.7 s/帧），
+   提示词只写场景 + 天气、不写 drone（写了会把路灯画成无人机），负面词含 drone/aircraft；结果缩回 512×288。
+5. **贴回**：凸包内像素 = 缓存原像素（逐帧 `assert np.array_equal`），只有凸包外 5 px 环里是羽化过渡。
+
+输出是与源缓存同布局的新目录（`rgb.npy` 逐帧替换，`ir/depth/tag/index.pkl/vis_score.npy` 原样复制），
+外加 `translated.npy`（每帧 bool，断点续跑用）、`bgx_meta.json`，跑完写 `READY`。
+
+**训练接线**（`mmcache_det_dataset.py`、`center_det_kd.py`）：
+- 数据集 `REQUIRE_TRANSLATED: true` 只保留已翻译帧；`TEACHER_RGB_DIR` 指向源缓存，把【原始】RGB 作为额外 3 通道接在最后，
+  布局 `[rgb_翻译(3) | ir | depth | tag | rgb_原始(3)]`；几何增广作用于全部通道，光度增广只动学生的 3 通道，归一化两组 RGB 同参。
+- `CenterDetKD._teacher_batch`：通道数 > `TEACHER_CHANNELS`(6) 时给教师重排成 `[rgb_原始 | ir | depth | tag]`，学生仍取前 3。
+- 配置：`mmcache_crop.yaml`（尺度对齐缓存 `E:/mmcache/mm20c`）→ `mmcache_crop_bgx.yaml`（翻译缓存 + TEACHER_RGB_DIR）→
+  `student_kd_bgx.yaml`。配置加载器现在支持多层 `_BASE_CONFIG_`（原来只认一层）。
+- 自检（`smoke_crop` 24 帧）：样本 `(1, 9, 288, 512)`；凸包内两组 RGB 最大差 0.000000、凸包外均值差 0.40；
+  KD 前向出全部 `kd_*` 项，教师入 6 通道、学生入 3 通道，反向正常。
+
+小样结论见 `docs/results/README.md` 的「扩散翻译」一节：整图 img2img 在任何强度都会重画机身（框内边缘 IoU 0.07–0.14），
+只回贴不抹除在强度 0.6 会留框外鬼影；本管线（先抹除再翻译再贴回）IoU 0.90–1.00 且无鬼影。

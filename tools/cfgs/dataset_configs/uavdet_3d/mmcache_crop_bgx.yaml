@@ -1,0 +1,9 @@
+# 尺度对齐缓存的「背景翻译」版本（tools/sim2real_bg_translate.py）：
+# rgb.npy 里已翻译帧 = 无人机原像素 + SDXL 翻译过的背景；ir/depth/tag/标签与 mm20c 完全一致。
+# REQUIRE_TRANSLATED 只保留 translated.npy 为 True 的帧（<=2 个有标签目标、RGB 可见、已跑完）。
+# TEACHER_RGB_DIR 让数据集把源缓存的【原始】RGB 作为额外 3 通道接在最后，
+# CenterDetKD 用它喂教师（教师是在原始 RGB+IR+LiDAR 上训的），学生只看翻译 RGB。
+_BASE_CONFIG_: cfgs/dataset_configs/uavdet_3d/mmcache_crop.yaml
+DATA_PATH: 'E:/mmcache/mm20c_bgx'
+REQUIRE_TRANSLATED: true
+TEACHER_RGB_DIR: 'E:/mmcache/mm20c'
