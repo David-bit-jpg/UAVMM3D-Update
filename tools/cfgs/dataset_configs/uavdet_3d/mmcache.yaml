@@ -1,0 +1,46 @@
+# 多模态缓存数据集（tools/build_mm_cache.py 产出，放 SSD）。
+# 源域 = UAV-MM3D 的 mm20 子集：任一目标 <= 20 m 且整框可见，保留全部天气/批次/多目标。
+DATA_PATH: 'C:/mmcache/mm20'
+DATASET: 'MMCache_Det_Dataset'
+
+CLASS_NAMES: ['DJI-avata2','DJI-phantom4','drone-unk3','m210-rtk','DJI-mavic-mini','Matrice-600-Pro','matrix-300-RTK']
+
+DATA_SPLIT: {
+    'train': train,
+    'test': test
+}
+SAMPLED_INTERVAL: {
+    'train': 1,
+    'test': 1
+}
+
+# 通道顺序固定 rgb, ir, depth, tag；蒸馏时学生只切前 3 个通道，所以 rgb 必须排第一
+MODALITIES: ['rgb']
+DEPTH_MAX: 40          # depth 通道 = 米 / DEPTH_MAX，截断到 1
+
+OB_SIZE: [[1.0, 1.0, 1.0]]     # 只是透传的元数据，dim 真值来自标注（见 results 文档）
+IM_SIZE: [1280, 720]           # 原始分辨率，内参按它给
+IM_RESIZE: [512, 288]          # 必须等于缓存分辨率
+IM_NUM: 1
+CENTER_RAD: 2
+STRIDE: 8
+
+# 标签里最远的框 40 m（build_mm_cache --max-label-range），归一化深度不会超 1
+MAX_DIS: 40
+# 最大机型 Matrice-600-Pro 边长 2.63 m，4 留足余量（曾误设 2 导致该类失准）
+MAX_SIZE: 4
+
+ROT_REPR: 'euler6'
+EULER_SEQ: 'xyz'
+
+DATA_PRE_PROCESSOR:
+    - NAME: convert_box9d_to_centermap
+      OFFSET: [0.0,0.0,0]
+      ENCODER: center_point_encoder_mav6d    # 相机系 + 内参，与解码严格互逆；畸变为 0
+
+# 仓库里增广从未被调用（见 benchmark 文档 §7.3），这里只是为了满足 DatasetTemplate 的字段要求
+DATA_AUGMENTOR:
+  AUG_CONFIG_LIST:
+        - NAME: image_flip
+          DATA_LIST: ['image', 'heatmap']
+          ALONG_AXIS_LIST: ['x']

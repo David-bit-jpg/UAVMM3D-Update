@@ -8,6 +8,7 @@ from .mav6d.mav6d_pose_dataset import MAV6D_Pose_Dataset
 from .carla.carla_det_dataset import CARLA_Det_Dataset
 from .laa3d.laa3d_det_dataset import LAA3D_Det_Dataset
 from .laam6d.laam6d_det_dataset import LAAM6D_Det_Dataset
+from .mmcache.mmcache_det_dataset import MMCache_Det_Dataset
 
 import torch
 from functools import partial
@@ -21,7 +22,8 @@ __all__ = {
     'MAV6D_Pose_Dataset': MAV6D_Pose_Dataset,
     'CARLA_Det_Dataset': CARLA_Det_Dataset,
     'LAA3D_Det_Dataset': LAA3D_Det_Dataset,
-    'LAAM6D_Det_Dataset': LAAM6D_Det_Dataset
+    'LAAM6D_Det_Dataset': LAAM6D_Det_Dataset,
+    'MMCache_Det_Dataset': MMCache_Det_Dataset,
 }
 
 

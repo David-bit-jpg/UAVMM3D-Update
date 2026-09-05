@@ -22,7 +22,7 @@ class DatasetTemplate(torch_data.Dataset):
             self.data_pre_processor = DataPreProcessor(self.dataset_cfg, training=self.training)
         elif self.dataset_cfg.DATASET == 'LAAM6D_Det_Dataset':
             self.data_pre_processor = DataPreProcessorLAAm6d(self.dataset_cfg, training=self.training)
-        elif self.dataset_cfg.DATASET in ('MAV6D_Det_Dataset', 'MAV6D_Pose_Dataset'):
+        elif self.dataset_cfg.DATASET in ('MAV6D_Det_Dataset', 'MAV6D_Pose_Dataset', 'MMCache_Det_Dataset'):
             # MAV6D 的两个 dataset 在 __getitem__ 里都会调用 self.data_pre_processor，
             # 但之前这里没有对应分支，data_pre_processor 根本不会被创建 -> AttributeError。
             # 用普通的 DataPreProcessor：它配套的 object_encoder 走 'xyz' 欧拉角约定，
