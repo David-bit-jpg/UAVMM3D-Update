@@ -35,8 +35,8 @@ sim() {  # tag cfg extra...
   local tag=$1 cfg=$2; shift 2
   say "START $tag"
   "$PY" train.py --cfg_file $cfg --batch_size 8 --workers 2 --fix_random_seed --max_ckpt_save_num 2 \
-      --epochs 8 --logger_iter_interval 200 --extra_tag "$tag" "$@" > "$LOG/$tag.log" 2>&1
-  # ↑ 8 轮而非配置里的 16：两作业并行各 1.8 it/s、2637 it/轮，16 轮要 6.5 小时、整条线 ~19 小时；
+      --epochs 12 --logger_iter_interval 200 --extra_tag "$tag" "$@" > "$LOG/$tag.log" 2>&1
+  # ↑ 12 轮（RGB 可见度过滤后帧数减半以上，每轮更短）。此前 8 轮而非配置里的 16：两作业并行各 1.8 it/s、2637 it/轮，16 轮要 6.5 小时、整条线 ~19 小时；
   #   8 轮 ≈ 17 万样本，与 near15 那版 30 轮的样本量相当。
   say "DONE  $tag rc=$?"
 }

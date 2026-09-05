@@ -17,6 +17,11 @@ SAMPLED_INTERVAL: {
 
 # 通道顺序固定 rgb, ir, depth, tag；蒸馏时学生只切前 3 个通道，所以 rgb 必须排第一
 MODALITIES: ['rgb']
+
+# 只用 RGB 里看得见目标的帧（最近合格目标处的局部对比度 >= 该灰度级；0 = 不过滤）。
+# 实测 mm20 夜间帧目标对比度中位 2.3-2.9、白天 8.5-15.4；目标域 MAV6D 是明亮室内。
+# 教师、学生、蒸馏都用同一批帧，保证可比。分数文件 vis_score.npy 由 tools/mm_vis_score.py 生成。
+MIN_RGB_VIS: 5.0
 DEPTH_MAX: 40          # depth 通道 = 米 / DEPTH_MAX，截断到 1
 
 OB_SIZE: [[1.0, 1.0, 1.0]]     # 只是透传的元数据，dim 真值来自标注（见 results 文档）

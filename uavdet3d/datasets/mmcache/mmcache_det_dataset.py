@@ -51,6 +51,18 @@ class MMCache_Det_Dataset(DatasetTemplate):
         self.new_im_width, self.new_im_hight = int(dataset_cfg.IM_RESIZE[0]), int(dataset_cfg.IM_RESIZE[1])
         assert (self.new_im_width, self.new_im_hight) == (self.W, self.H), \
             'IM_RESIZE %s 与缓存分辨率 %s 不一致' % (dataset_cfg.IM_RESIZE, (self.W, self.H))
+        # RGB 可见度过滤：vis_score.npy 是每帧「最近合格目标处 RGB 局部对比度」(灰度级)。
+        # mm20 有 61% 是夜间帧，夜间目标对比度中位只有 2.3-2.9（亮度 3-21/255），对 RGB 学生
+        # 就是不可见的纯噪声；白天中位 8.5-15.4。按对比度筛而不按天气标签：有路灯的夜景能留下。
+        min_vis = float(dataset_cfg.get('MIN_RGB_VIS', 0.0))
+        if min_vis > 0:
+            vp = os.path.join(self.split_dir, 'vis_score.npy')
+            assert os.path.exists(vp), 'MIN_RGB_VIS 需要 %s（由 tools/mm_vis_score.py 生成）' % vp
+            vis = np.load(vp)
+            n0 = len(self.valid_idx)
+            self.valid_idx = self.valid_idx[vis[self.valid_idx] >= min_vis]
+            if self.logger is not None:
+                self.logger.info('MMCache[%s]: RGB 可见度 >= %.1f 过滤 %d -> %d 帧' % (self.mode, min_vis, n0, len(self.valid_idx)))
         interval = int(dataset_cfg.SAMPLED_INTERVAL[self.mode]) if 'SAMPLED_INTERVAL' in dataset_cfg else 1
         self.valid_idx = self.valid_idx[::max(interval, 1)]
         self._mm = None           # memmap 在 worker 里懒打开（spawn 后重新映射）
