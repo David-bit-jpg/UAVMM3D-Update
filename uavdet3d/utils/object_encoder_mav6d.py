@@ -26,6 +26,8 @@ import numpy as np
 import torch
 
 from uavdet3d.utils.centernet_utils import draw_gaussian_to_heatmap, draw_res_to_heatmap
+from uavdet3d.utils.frame_convention import get_default_euler_seq
+from uavdet3d.utils.rotation_repr import euler_to_vec, vec_to_euler
 
 
 def project_points(xyz, intrinsic_mat, distortion_matrix, use_distortion=True):
@@ -85,7 +87,9 @@ def center_point_encoder(gt_box9d_with_cls,
                          im_num=None,
                          class_name_config=None,
                          center_rad=None,
-                         use_distortion=True):
+                         use_distortion=True,
+                         rot_repr='euler6',
+                         euler_seq=None):
     """把 (N, 10) 的 [x,y,z,l,w,h,a1,a2,a3,cls] 编码成 CenterNet 风格监督图。
 
     返回 (hm, center_res, center_dis, dim, rot)，形状依次为
@@ -152,12 +156,8 @@ def center_point_encoder(gt_box9d_with_cls,
                 this_size_map[1, h_idx, w_idx] = w
                 this_size_map[2, h_idx, w_idx] = h
 
-                this_angle_map[0, h_idx, w_idx] = np.cos(a1)
-                this_angle_map[1, h_idx, w_idx] = np.sin(a1)
-                this_angle_map[2, h_idx, w_idx] = np.cos(a2)
-                this_angle_map[3, h_idx, w_idx] = np.sin(a2)
-                this_angle_map[4, h_idx, w_idx] = np.cos(a3)
-                this_angle_map[5, h_idx, w_idx] = np.sin(a3)
+                this_angle_map[:, h_idx, w_idx] = euler_to_vec(
+                    (a1, a2, a3), euler_seq or get_default_euler_seq(), rot_repr)
 
         gt_hm.append(this_heat_map.cpu().numpy())
         gt_center_res.append(this_res_map)
@@ -211,7 +211,9 @@ def center_point_decoder(hm,
                          stride=None,
                          im_num=None,
                          max_num=10,
-                         use_distortion=True):
+                         use_distortion=True,
+                         rot_repr='euler6',
+                         euler_seq=None):
     """center_point_encoder 的逆过程，输出 (N, 10) 的 [x,y,z,l,w,h,a1,a2,a3,cls]。
 
     坐标系为 OpenCV 相机系，与 MAV6D 的 gt_box9d 一致
@@ -256,12 +258,16 @@ def center_point_decoder(hm,
         w = this_dim[1, rows, cols].detach().cpu().numpy().reshape(-1, 1)
         h = this_dim[2, rows, cols].detach().cpu().numpy().reshape(-1, 1)
 
-        a1 = torch.atan2(this_rot[1, rows, cols], this_rot[0, rows, cols])
-        a2 = torch.atan2(this_rot[3, rows, cols], this_rot[2, rows, cols])
-        a3 = torch.atan2(this_rot[5, rows, cols], this_rot[4, rows, cols])
-        a1 = a1.detach().cpu().numpy().reshape(-1, 1)
-        a2 = a2.detach().cpu().numpy().reshape(-1, 1)
-        a3 = a3.detach().cpu().numpy().reshape(-1, 1)
+        # rot 头的 6 个通道按 rot_repr 解释，必须与 encoder 用的一致
+        rot_vec = this_rot[:, rows, cols].detach().cpu().numpy().T      # (N, 6)
+        if len(rot_vec) == 0:
+            eul = np.zeros((0, 3), dtype=np.float64)
+        else:
+            eul = vec_to_euler(rot_vec, euler_seq or get_default_euler_seq(), rot_repr)
+        eul = np.asarray(eul, dtype=np.float64).reshape(-1, 3)
+        a1 = eul[:, 0:1]
+        a2 = eul[:, 1:2]
+        a3 = eul[:, 2:3]
 
         cls = cls_map[rows, cols].detach().cpu().numpy().reshape(-1, 1).astype(np.float64)
 

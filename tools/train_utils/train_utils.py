@@ -72,9 +72,15 @@ def train_one_epoch(model, optimizer, train_loader, model_func, lr_scheduler, ac
                 done = cur_it + 1
                 ips = done / max(elapsed, 1e-6)
                 eta = (total_it_each_epoch - done) / max(ips, 1e-9)
-                logger.info('  iter %d/%d  loss %.3f  lr %.2e  %.2f it/s  本轮剩余 %.1f 分钟'
+                # 顺带打印各头的分项损失。实测总损失里 hm 一项就占 88.8% 且近乎常数，
+                # 只看总损失基本看不出旋转、深度这些真正在学的头有没有进展。
+                terms = getattr(getattr(model, 'dense_head_2d', None), 'loss_terms', None)
+                term_str = ''
+                if terms:
+                    term_str = '  [' + ' '.join('%s %.3f' % (k, v) for k, v in terms.items()) + ']'
+                logger.info('  iter %d/%d  loss %.3f  lr %.2e  %.2f it/s  本轮剩余 %.1f 分钟%s'
                             % (done, total_it_each_epoch, loss.item() * accus, cur_lr,
-                               ips, eta / 60.0))
+                               ips, eta / 60.0, term_str))
 
     if rank == 0:
         pbar.close()
@@ -84,13 +90,16 @@ def train_one_epoch(model, optimizer, train_loader, model_func, lr_scheduler, ac
 def train_model(model, optimizer, train_loader, model_func, lr_scheduler, optim_cfg,
                 start_epoch, total_epochs, start_iter, rank, tb_log, ckpt_save_dir, train_sampler=None,
                 lr_warmup_scheduler=None, ckpt_save_interval=1, max_ckpt_save_num=50,
-                logger=None, log_interval=50):
+                logger=None, log_interval=50, on_epoch_start=None):
     accumulated_iter = start_iter
     with tqdm.trange(start_epoch, total_epochs, desc='epochs', dynamic_ncols=True, leave=(rank == 0)) as tbar:
         total_it_each_epoch = len(train_loader)
 
         dataloader_iter = iter(train_loader)
         for cur_epoch in tbar:
+            # 渐进解冻等按轮次生效的调整挂在这里
+            if on_epoch_start is not None:
+                on_epoch_start(cur_epoch)
             if train_sampler is not None:
                 train_sampler.set_epoch(cur_epoch)
 

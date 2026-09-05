@@ -75,6 +75,9 @@ def main():
     ap.add_argument('--workers', type=int, default=4)
     ap.add_argument('--vis', type=int, default=0, help='额外画 N 张预测 vs GT 对比图')
     ap.add_argument('--vis-out', default=None)
+    ap.add_argument('--rot-repr', default=None,
+                    help="该权重训练时用的旋转表示（'euler6' / 'r6d'）。"
+                         '不给就用 MAV6D 配置里的值。解码必须与编码一致')
     ap.add_argument('--json', default=None,
                     help='把指标写成 JSON，便于把多次评测汇总成曲线')
     args = ap.parse_args()
@@ -85,6 +88,8 @@ def main():
     cfg.DATA_CONFIG.DATA_PATH = args.data_path
     if args.decode_max_dis is not None:
         cfg.DATA_CONFIG.MAX_DIS = args.decode_max_dis
+    if args.rot_repr is not None:
+        cfg.DATA_CONFIG.ROT_REPR = args.rot_repr
 
     # 只按 ckpt 调模型的 hm 通道数；CLASS_NAMES 必须保持 MAV6D 的真实型号，
     # 因为 dataset 要用它去找 <型号>/split/ 目录。

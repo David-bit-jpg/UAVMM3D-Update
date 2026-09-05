@@ -2,6 +2,8 @@ import numpy as np
 from scipy.spatial.transform import Rotation as R
 import cv2
 import torch
+from uavdet3d.utils.frame_convention import get_default_euler_seq
+from uavdet3d.utils.rotation_repr import euler_to_vec, vec_to_euler
 from uavdet3d.utils.centernet_utils import draw_gaussian_to_heatmap, draw_res_to_heatmap
 import copy
 import time
@@ -271,7 +273,9 @@ def center_point_encoder(gt_box9d_with_cls,
                          stride=None,
                          im_num=None,
                          class_name_config=None,
-                         center_rad=None):
+                         center_rad=None,
+                         rot_repr='euler6',
+                         euler_seq=None):
     # intrinsic_mat = np.array(intrinsic_mat[0])
     cls_num = len(class_name_config)
     gt_hm, gt_center_res, gt_center_dis, gt_dim, gt_rot = [], [], [], [], []
@@ -328,12 +332,8 @@ def center_point_encoder(gt_box9d_with_cls,
                     this_size_map[1, h_idx, w_idx] = w
                     this_size_map[2, h_idx, w_idx] = h
                     
-                    this_angle_map[0, h_idx, w_idx] = np.cos(a1)
-                    this_angle_map[1, h_idx, w_idx] = np.sin(a1)
-                    this_angle_map[2, h_idx, w_idx] = np.cos(a2)
-                    this_angle_map[3, h_idx, w_idx] = np.sin(a2)
-                    this_angle_map[4, h_idx, w_idx] = np.cos(a3)
-                    this_angle_map[5, h_idx, w_idx] = np.sin(a3)
+                    this_angle_map[:, h_idx, w_idx] = euler_to_vec(
+                        (a1, a2, a3), euler_seq or get_default_euler_seq(), rot_repr)
 
             except Exception as e:
                 print(f"处理目标 {obj_i} 时出错: {e}")
@@ -424,7 +424,9 @@ def center_point_decoder(hm,
                          raw_im_hight=None,  
                          stride=None,
                          im_num=None,
-                         max_num=10):
+                         max_num=10,
+                         rot_repr='euler6',
+                         euler_seq=None):
     pred_boxes9d = []
     all_confidence = []
 
@@ -463,9 +465,16 @@ def center_point_decoder(hm,
         w = this_dim[1, rows_ind, cols_ind].cpu().numpy().reshape(-1, 1)
         h = this_dim[2, rows_ind, cols_ind].cpu().numpy().reshape(-1, 1)
 
-        a1 = torch.atan2(this_rot[1, rows_ind, cols_ind], this_rot[0, rows_ind, cols_ind]).cpu().numpy().reshape(-1, 1)
-        a2 = torch.atan2(this_rot[3, rows_ind, cols_ind], this_rot[2, rows_ind, cols_ind]).cpu().numpy().reshape(-1, 1)
-        a3 = torch.atan2(this_rot[5, rows_ind, cols_ind], this_rot[4, rows_ind, cols_ind]).cpu().numpy().reshape(-1, 1)
+        # rot 头的 6 个通道按 rot_repr 解释，必须与 encoder 用的一致
+        rot_vec = this_rot[:, rows_ind, cols_ind].detach().cpu().numpy().T   # (N, 6)
+        if len(rot_vec) == 0:
+            eul = np.zeros((0, 3), dtype=np.float64)
+        else:
+            eul = vec_to_euler(rot_vec, euler_seq or get_default_euler_seq(), rot_repr)
+        eul = np.asarray(eul, dtype=np.float64).reshape(-1, 3)
+        a1 = eul[:, 0:1]
+        a2 = eul[:, 1:2]
+        a3 = eul[:, 2:3]
 
         # 1. 从热力图索引和残差还原 u_heatmap 和 v_heatmap
         u_heatmap = cols.float() + res_x  # 对应编码器的 u_heatmap = u * (1/stride)

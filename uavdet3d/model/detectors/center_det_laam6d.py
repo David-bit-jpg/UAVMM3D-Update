@@ -1,3 +1,4 @@
+import inspect
 import torch
 import numpy as np
 from uavdet3d.model.detectors.detector_template import DetectorTemplate
@@ -15,6 +16,16 @@ class CenterDetLaam6d(DetectorTemplate):
 
         self.max_num = self.model_cfg.POST_PROCESSING.MAX_OBJ
         self.score_thresh = self.model_cfg.POST_PROCESSING.SCORE_THRESH
+
+        # 解码用的旋转表示必须与编码一致，所以【只从 DATA_CONFIG 读一处】，
+        # 不在 MODEL 下再放一个同名开关，避免两边写岔。
+        rot_repr = self.dataset.dataset_cfg.get('ROT_REPR', 'euler6')
+        self.dec_kwargs = {}
+        if 'rot_repr' in inspect.signature(self.center_decoder).parameters:
+            self.dec_kwargs['rot_repr'] = rot_repr
+        elif rot_repr != 'euler6':
+            raise ValueError('解码器 %s 还不支持 ROT_REPR=%s'
+                             % (self.model_cfg.POST_PROCESSING.DECONDER, rot_repr))
 
     def forward(self, batch_dict):
 
@@ -104,7 +115,8 @@ class CenterDetLaam6d(DetectorTemplate):
                                                            raw_im_size[1],
                                                            stride,
                                                            im_num,
-                                                           self.max_num)
+                                                           self.max_num,
+                                                           **self.dec_kwargs)
             # data_dict = {}
             # for key in batch_dict:
             #     # 跳过不需要处理的键

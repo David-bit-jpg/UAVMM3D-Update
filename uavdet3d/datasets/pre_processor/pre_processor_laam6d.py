@@ -1,3 +1,4 @@
+import inspect
 import numpy as np
 from uavdet3d.utils.object_encoder_laam6d import all_object_encoders, center_point_decoder
 from uavdet3d.utils.centernet_utils import draw_gaussian_to_heatmap, draw_res_to_heatmap
@@ -124,6 +125,16 @@ class DataPreProcessorLAAm6d():
         distortion = data_dict['distortion'][0]
         center_point_encoder = all_object_encoders[config.ENCODER]
 
+        # 旋转表示：'euler6' = (cos,sin)x3（缺省，与历史行为一致）；
+        # 'r6d' = 旋转矩阵前两列的 6D 连续表示。两者都占 6 个通道，网络结构不变。
+        # 换 r6d 的理由见 uavdet3d/utils/rotation_repr.py 的说明与自检。
+        rot_repr = self.dataset_cfg.get('ROT_REPR', 'euler6')
+        enc_kwargs = {}
+        if 'rot_repr' in inspect.signature(center_point_encoder).parameters:
+            enc_kwargs['rot_repr'] = rot_repr
+        elif rot_repr != 'euler6':
+            raise ValueError('编码器 %s 还不支持 ROT_REPR=%s' % (config.ENCODER, rot_repr))
+
         if len(gt_box9d) == 0:
             H, W = new_im_size[1] // stride, new_im_size[0] // stride
             data_dict['hm'] = np.zeros((len(self.class_name_config), H, W), dtype=np.float32)
@@ -159,7 +170,8 @@ class DataPreProcessorLAAm6d():
             stride,
             im_num=self.dataset_cfg.IM_NUM,
             class_name_config=self.class_name_config,
-            center_rad=center_rad
+            center_rad=center_rad,
+            **enc_kwargs
         )
 
         data_dict['hm'] = gt_hm

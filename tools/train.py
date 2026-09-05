@@ -33,6 +33,12 @@ def parse_config():
     parser.add_argument('--freeze', type=str, nargs='*', default=None,
                         help='冻结名字里含这些子串的参数（如 backbone_2d）。'
                              '用于「线性探针」诊断：只训检测头，看预训练特征本身能用到什么程度')
+    parser.add_argument('--freeze_epochs', type=int, default=0,
+                        help='配合 --freeze 使用：前 N 轮冻结，第 N 轮开始解冻（渐进解冻）。'
+                             '0 表示全程冻结')
+    parser.add_argument('--backbone_lr_mult', type=float, default=1.0,
+                        help='骨干的学习率倍率（分层学习率）。微调时设 0.1 左右，'
+                             '避免大学习率把预训练权重冲掉')
     parser.add_argument('--freeze_bn_stats', action='store_true',
                         help='被冻结的模块同时锁在 eval 模式，BN 的 running_mean/var 也不更新。'
                              '不加则允许 BN 统计量适应目标域（相当于 AdaBN，对迁移更有利）')
@@ -142,8 +148,16 @@ def main():
         model = torch.nn.SyncBatchNorm.convert_sync_batchnorm(model)
     model.cuda()
 
-    # 冻结必须发生在 build_optimizer 之前：OptimWrapper.create 内部用
-    # trainable_params() 按 requires_grad 过滤，之后再改就进不了参数组了。
+    optimizer = build_optimizer(model, cfg.OPTIMIZATION,
+                                backbone_lr_mult=args.backbone_lr_mult)
+    if args.backbone_lr_mult != 1.0:
+        logger.info('分层学习率: 骨干 lr x %.3f，检测头 lr x 1.0' % args.backbone_lr_mult)
+
+    # 冻结要放在 build_optimizer【之后】：OptimWrapper.create 用 trainable_params()
+    # 按 requires_grad 过滤参数组，先冻结的话这些参数根本进不了优化器，
+    # 后面 --freeze_epochs 想解冻也解不了。放在后面则它们留在参数组里，
+    # Adam 遇到 grad=None 会跳过，OptimWrapper.step 的权重衰减也显式跳过 requires_grad=False。
+    unfreeze_hook = None
     if args.freeze:
         n_frozen = n_total = 0
         for name, param in model.named_parameters():
@@ -151,8 +165,9 @@ def main():
             if any(pat in name for pat in args.freeze):
                 param.requires_grad = False
                 n_frozen += param.numel()
-        logger.info('冻结参数: 模式 %s -> %d / %d (%.1f%%) 不参与训练'
-                    % (args.freeze, n_frozen, n_total, 100.0 * n_frozen / max(n_total, 1)))
+        logger.info('冻结参数: 模式 %s -> %d / %d (%.1f%%) 不参与训练%s'
+                    % (args.freeze, n_frozen, n_total, 100.0 * n_frozen / max(n_total, 1),
+                       '，第 %d 轮解冻' % args.freeze_epochs if args.freeze_epochs > 0 else '（全程冻结）'))
         if args.freeze_bn_stats:
             # requires_grad=False 只挡梯度，挡不住 BN 更新 running stats。
             # 把这些子模块永久钉在 eval：覆盖它们的 train()，让上层的 model.train() 无效。
@@ -164,7 +179,21 @@ def main():
                     n_mod += 1
             logger.info('  另有 %d 个子模块锁定在 eval 模式（BN 统计量也冻结）' % n_mod)
 
-    optimizer = build_optimizer(model, cfg.OPTIMIZATION)
+        if args.freeze_epochs > 0:
+            if args.freeze_bn_stats:
+                logger.warning('  --freeze_bn_stats 会把子模块永久钉在 eval，'
+                               '解冻后 BN 统计量仍然不更新')
+
+            def unfreeze_hook(cur_epoch, _m=model, _pats=list(args.freeze),
+                              _at=args.freeze_epochs, _lg=logger):
+                if cur_epoch != _at:
+                    return
+                n = 0
+                for name, param in _m.named_parameters():
+                    if any(pat in name for pat in _pats) and not param.requires_grad:
+                        param.requires_grad = True
+                        n += param.numel()
+                _lg.info('第 %d 轮：解冻 %s，%d 个参数重新参与训练' % (cur_epoch, _pats, n))
 
     # load checkpoint if it is possible
     start_epoch = it = 0
@@ -228,6 +257,7 @@ def main():
         max_ckpt_save_num=args.max_ckpt_save_num,
         logger=logger,
         log_interval=args.logger_iter_interval,
+        on_epoch_start=unfreeze_hook,
     )
 
     if hasattr(train_set, 'use_shared_memory') and train_set.use_shared_memory:

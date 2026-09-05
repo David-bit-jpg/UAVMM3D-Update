@@ -36,6 +36,17 @@ MAX_DIS: 8
 # 走中心点路径会 AttributeError。MAV6D 目标本体约 0.24 m，取 1 留足余量。
 MAX_SIZE: 1
 
+# 旋转的回归表示：
+#   'euler6' —— (cos,sin) x 三个欧拉角，历史行为
+#   'r6d'    —— 旋转矩阵前两列的 6D 连续表示（Zhou et al. CVPR19），Gram-Schmidt 解码
+# 两者都占 rot 头的 6 个通道，网络结构不用改。
+# 换 r6d 的理由：as_euler 在中间角接近 ±90° 时万向锁，(a1,a3) 不唯一。
+# MAV6D 训练集实测 |a2|>80° 占 9.5%、>85° 占 3.4%，这部分监督是自相矛盾的。
+# 实测（uavdet3d/utils/rotation_repr.py 自检）：姿态扰动 0.5° 时，
+# 近万向锁处 euler6 的目标最大跳变 0.2037，r6d 只有 0.0122，差 17 倍。
+ROT_REPR: 'euler6'
+
+
 
 DATA_PRE_PROCESSOR:
     - NAME: convert_box9d_to_heatmap

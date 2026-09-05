@@ -169,7 +169,14 @@ class OptimWrapper():
 
     @lr.setter
     def lr(self, val: float) -> None:
-        self._lr = self.set_val('lr', listify(val, self._lr))
+        vals = listify(val, self._lr)
+        # 分层学习率：调度器每一步都会用一个标量把所有层组的 lr 重设一遍，
+        # 直接给参数组写不同的 lr 会被立刻冲掉。所以把倍率放在这里，
+        # 每次赋值后按组乘一次。lr_mults 由 build_optimizer 设置。
+        mults = self.__dict__.get('lr_mults', None)
+        if mults is not None and len(mults) == len(vals):
+            vals = [v * m for v, m in zip(vals, mults)]
+        self._lr = self.set_val('lr', vals)
 
     @property
     def mom(self) -> float:
