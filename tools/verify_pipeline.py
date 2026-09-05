@@ -116,10 +116,15 @@ def verify_sim(args):
         for row in pickle.load(open(p, 'rb')):
             c = np.array(row[1:] if isinstance(row[0], str) else row, dtype=np.float64).reshape(8, 3)
             p9 = corners_to_9params(c, seq_name)
-            err1.append(np.abs(proto_corners(p9, seq_name) - c).max())
+            rb = proto_corners(p9, seq_name)
+            # 按【集合】比：真实框先列顶面 4 点、原型先列底面 4 点（映射 4,5,6,7,0,1,2,3），
+            # 逐槽位比会把纯顺序差异误报成几何误差。解码器永远按原型重建，顺序无关。
+            D = np.linalg.norm(c[:, None, :] - rb[None, :, :], axis=2)
+            err1.append(D.min(axis=1).max())
     err1 = np.array(err1)
     check('S1', len(err1) > 0 and err1.max() < 1e-3,
-          '角点->9参数->角点 最大误差 %.2e m（%d 个框）' % (err1.max() if len(err1) else -1, len(err1)))
+          '角点->9参数->角点(集合匹配) 最大误差 %.2e m（%d 个框；角点顺序与原型差一个顶/底面交换，属预期）'
+          % (err1.max() if len(err1) else -1, len(err1)))
 
     # ---- S2: 编码 -> 解码 ----
     perr, aerr = [], []
@@ -181,7 +186,9 @@ def verify_sim(args):
                 uv = (Ks @ pts.T).T; uv = uv[:, :2] / uv[:, 2:3]
                 mk = np.zeros((ds.H, ds.W), np.uint8)
                 cv2.fillConvexPoly(mk, cv2.convexHull(np.round(uv).astype(np.int32)), 1)
-                vals = dep_m[(mk > 0) & (dep_m > 0)]
+                # 只看框内【打在无人机上】(tag) 的像素：框多边形比无人机剪影大得多，
+                # 里面大部分 LiDAR 点其实是几十米外的背景，取整框中位数会被背景淹没。
+                vals = dep_m[(mk > 0) & tag & (dep_m > 0)]
                 if len(vals) >= 3:
                     dep_err.append(abs(np.median(vals) - b[2]))
             if tag.sum() > 0:
@@ -216,8 +223,32 @@ def verify_sim(args):
                 cv2.putText(p, t, (6, 18), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 0), 3, cv2.LINE_AA)
                 cv2.putText(p, t, (6, 18), cv2.FONT_HERSHEY_SIMPLEX, 0.5, WHITE, 1, cv2.LINE_AA)
             sep = np.full((ds.H, 3, 3), 90, np.uint8)
-            cv2.imwrite(os.path.join(out, 'sim_%02d.jpg' % n), np.concatenate([vis_rgb, sep, ir, sep, depv], 1),
-                        [cv2.IMWRITE_JPEG_QUALITY, 90])
+            top = np.concatenate([vis_rgb, sep, ir, sep, depv], 1)
+            # 第二排：围绕最近合格目标的 4x 放大裁剪（三个模态同一窗口），肉眼核对是否对齐
+            qb = [b for b, q in zip(boxes, m['qualified']) if q]
+            if qb:
+                b = min(qb, key=lambda x: x[2])
+                cu = (Ks @ b[:3].astype(np.float64))[:2] / b[2]
+                r = int(max(24, 1.2 * max(b[3:6]) * Ks[0, 0] / b[2]))
+                x0, y0 = int(max(0, cu[0] - r)), int(max(0, cu[1] - r))
+                x1, y1 = int(min(ds.W, cu[0] + r)), int(min(ds.H, cu[1] + r))
+                crops = []
+                for src in (vis_rgb, ir, depv):
+                    cr = src[y0:y1, x0:x1]
+                    if cr.size:
+                        cr = cv2.resize(cr, (4 * (x1 - x0), 4 * (y1 - y0)), interpolation=cv2.INTER_NEAREST)
+                        crops.append(cr)
+                if crops:
+                    hh = max(c.shape[0] for c in crops)
+                    row = np.full((hh, top.shape[1], 3), 30, np.uint8)
+                    x = 0
+                    for c in crops:
+                        row[:c.shape[0], x:x + c.shape[1]] = c
+                        x += c.shape[1] + 12
+                    cv2.putText(row, 'zoom x4 around nearest qualified target (%.1f m): RGB | IR | LiDAR' % b[2],
+                                (6, hh - 8), cv2.FONT_HERSHEY_SIMPLEX, 0.5, WHITE, 1, cv2.LINE_AA)
+                    top = np.concatenate([top, row], 0)
+            cv2.imwrite(os.path.join(out, 'sim_%02d.jpg' % n), top, [cv2.IMWRITE_JPEG_QUALITY, 90])
 
     peak_off = np.array(peak_off)
     check('S3', len(peak_off) > 0 and np.percentile(peak_off, 95) < 1e-3,
@@ -333,11 +364,15 @@ def verify_real(args):
                 for mod in model.module_list:
                     bd = mod(bd)
                 outs.append(bd['pred_center_dict']['center_dis'].cpu().numpy())
-        ratio = outs[1] / np.where(np.abs(outs[0]) < 1e-9, np.nan, outs[0])
-        ratio = ratio[np.isfinite(ratio)]
         want = src_max_dis / float(cfg.DATA_CONFIG.MAX_DIS)
-        check('R4', len(ratio) and np.allclose(ratio, want, rtol=1e-4),
-              'center_dis 重标定实测比例 中位 %.4f，期望 %.4f（源 MAX_DIS %g -> 目标 %g）' % (np.median(ratio), want, src_max_dis, cfg.DATA_CONFIG.MAX_DIS))
+        # 输出接近 0 的位置比值没有意义，改成绝对+相对容差直接比整张图
+        max_dev = float(np.abs(outs[1] - outs[0] * want).max())
+        ratio = outs[1] / np.where(np.abs(outs[0]) < 1e-3, np.nan, outs[0])
+        ratio = ratio[np.isfinite(ratio)]
+        # 权重在 float32 里缩放后再做卷积，与「先算再乘」不逐位相等，1e-3 量级的差是浮点累加误差
+        check('R4', np.allclose(outs[1], outs[0] * want, rtol=2e-3, atol=2e-3),
+              'center_dis 重标定：|out_rescaled - out*%.4f| 最大 %.2e，比值中位 %.4f（源 MAX_DIS %g -> 目标 %g）'
+              % (want, max_dev, np.median(ratio) if len(ratio) else float('nan'), src_max_dis, cfg.DATA_CONFIG.MAX_DIS))
     else:
         check('R4', False, '未给 --src-ckpt，跳过')
 
