@@ -349,7 +349,8 @@ rain_night 14,537 · snow_day 7,518 · snow_night 8,580（**夜间占 63%**）�
 
 ### 8.4 缓存与模型（`tools/build_mm_cache.py`、`uavdet3d/datasets/mmcache/`、`center_det_kd.py`）
 
-HDD 直读三个模态只有 0.3 it/s，故打包为 512×288 的 memmap 放 SSD（每 3 帧取 1，train ≈ 21k 帧）：
+HDD 直读三个模态只有 0.3 it/s，故打包为 512×288 的 memmap（每 3 帧取 1）。实际规模：
+train **21,092 帧 / 50,346 框（合格 30,300）**，test **5,634 帧 / 13,844 框（合格 8,163）**，共 26 GB，放 `E:/mmcache/mm20`。train 里 LiDAR 噪声 0 / 2.5 / 3.5 / 4.5 m 的帧数为 4,900 / 5,566 / 6,229 / 4,397。四个通道组：
 `rgb` uint8 ×3、`ir` uint8（按最近合格目标深度处的视差平移到 RGB 视角）、
 `depth` uint16 厘米（LiDAR 投影 z-buffer）、`tag` uint8。标签为相机系 9 参数，`MAX_DIS 40`、`MAX_SIZE 4`。
 
