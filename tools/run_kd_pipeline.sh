@@ -7,6 +7,8 @@
 # 阶段 4  统一评测 + 仿真域可视化 + MAV6D 可视化
 #
 # 严格每次 2 个作业（上次 3-4 个并发把 Windows 的 dataloader 锁死了）。
+# batch 用 8 不用 16：两个 batch-16 作业把 24 GB 显存顶满后，Windows 会把 CUDA 显存溢出到
+# 系统内存而不是报 OOM —— 实测 30 秒/迭代、磁盘空闲、GPU 100%，一轮要 12 小时。
 set -u
 PY=/d/Miniconda3/envs/city/python.exe
 cd /e/Open3DUAVDet/tools || exit 1
@@ -18,6 +20,9 @@ OUT=/e/Open3DUAVDet/output/models/uavdet_3d
 JS=/e/Open3DUAVDet/output/bench_json
 mkdir -p "$LOG" "$JS"
 say() { echo "[$(date +%H:%M:%S)] $*" | tee -a "$LOG/kd_driver.log"; }
+# 机械盘上随机读 memmap 只有 ~90 IOPS（实测 1 s/it、磁盘队列 3.9）。训练前把该 split 的
+# 四个 .npy 顺序读一遍（21.7 GB 约 3 分钟），进系统页缓存后随机读走内存。RAM 64 GB 装得下。
+prewarm() { for f in rgb ir depth tag; do cat "/e/mmcache/mm20/$1/$f.npy" > /dev/null; done; say "页缓存预热完成: $1"; }
 last_ckpt() { ls "$1"/ckpt/checkpoint_epoch_*.pth 2>/dev/null | sed 's/.*checkpoint_epoch_\([0-9]*\)\.pth/\1 &/' | sort -n | tail -1 | cut -d' ' -f2; }
 
 # 等缓存搬到 E 盘（build_mm_cache 先写 C:，搬完后我手动放 READY 标记）
@@ -25,10 +30,11 @@ until [ -f /e/mmcache/mm20/READY ]; do sleep 60; done
 say "缓存就绪 (E:/mmcache/mm20)"
 
 # ---------------- 阶段 1 ----------------
+prewarm train
 sim() {  # tag cfg extra...
   local tag=$1 cfg=$2; shift 2
   say "START $tag"
-  "$PY" train.py --cfg_file $cfg --batch_size 16 --workers 2 --fix_random_seed --max_ckpt_save_num 2 \
+  "$PY" train.py --cfg_file $cfg --batch_size 8 --workers 2 --fix_random_seed --max_ckpt_save_num 2 \
       --logger_iter_interval 200 --extra_tag "$tag" "$@" > "$LOG/$tag.log" 2>&1
   say "DONE  $tag rc=$?"
 }
@@ -40,6 +46,7 @@ S0_CK=$(last_ckpt $OUT/mmcache/student_rgb/student_rgb)
 say "teacher=$T_CK  s0=$S0_CK"
 
 # ---------------- 阶段 2 ----------------
+prewarm train
 sim student_kd_mm  $MM/student_kd.yaml            --set MODEL.DISTILL.TEACHER_CKPT "$T_CK" &
 sim student_kd_rgb $MM/student_kd_rgbteacher.yaml --set MODEL.DISTILL.TEACHER_CKPT "$S0_CK" &
 wait
@@ -68,6 +75,7 @@ for frac in "p01 80 100" "p05 40 20" "p10 30 10"; do
 done
 
 # ---------------- 阶段 4：评测与可视化 ----------------
+prewarm test
 say "评测开始"
 for tag in K0_p01 K1_p01 K2_p01 K0_p05 K1_p05 K2_p05 K0_p10 K1_p10 K2_p10; do
   ck=$(last_ckpt $OUT/mav6d/centerdet/$tag); [ -n "$ck" ] || continue
