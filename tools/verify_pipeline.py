@@ -243,10 +243,15 @@ def verify_sim(args):
                         cr = cv2.resize(cr, (4 * (x1 - x0), 4 * (y1 - y0)), interpolation=cv2.INTER_NEAREST)
                         crops.append(cr)
                 if crops:
+                    # 目标很大/很近时 4x 裁剪会比整行还宽，按剩余宽度截断，别让显示代码崩掉验证
                     hh = max(c.shape[0] for c in crops)
                     row = np.full((hh, top.shape[1], 3), 30, np.uint8)
                     x = 0
                     for c in crops:
+                        wmax = top.shape[1] - x
+                        if wmax <= 0:
+                            break
+                        c = c[:, :wmax]
                         row[:c.shape[0], x:x + c.shape[1]] = c
                         x += c.shape[1] + 12
                     cv2.putText(row, 'zoom x4 around nearest qualified target (%.1f m): RGB | IR | LiDAR' % b[2],
