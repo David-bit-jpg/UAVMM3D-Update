@@ -89,7 +89,7 @@ def world_to_pixel(pts_w, E, K):
 
 def process_frame(task):
     """一帧 -> dict(rgb, ir, depth, tag, meta) 或 None。"""
-    (root, seq, frame, W, H, lidar_offset, max_label_range, max_range, min_inside, crop_wh, crop_seed) = task
+    (root, seq, frame, W, H, lidar_offset, max_label_range, max_range, min_inside, crop_wh, crop_seed, zoom_cfg) = task
     base = os.path.join(root, seq)
     stem = os.path.splitext(frame)[0]
     try:
@@ -159,6 +159,21 @@ def process_frame(task):
         cw, ch = crop_wh
         cu = (K_rgb @ near_q[:3].astype(np.float64))[:2] / near_q[2]
         rng = np.random.RandomState(crop_seed)
+        if zoom_cfg is not None:
+            # 变焦裁剪：把最近合格目标的表观大小拉到 MAV6D 的区间 [px_min, px_max]（512 宽的缓存里的像素）。
+            # 标准窗口 621x349 下 fx_in = 527.7；窗口缩小 z 倍 -> fx_in = 527.7 z，目标放大 z 倍（原图 1280 像素上采样，
+            # z 越大越糊，所以封顶 zoom_max）。已经够大的目标随机取 z in [1, min(zoom_max, px_max/px0)]，增加尺寸多样性。
+            zmax, px_min, px_max = zoom_cfg
+            ang = float(max(near_q[3:6])) / max(float(np.linalg.norm(near_q[:3])), 1e-3)
+            px0 = ang * K_rgb[0, 0] * W / float(cw)
+            if px0 >= px_min:
+                z = float(rng.uniform(1.0, max(1.0, min(zmax, px_max / px0))))
+            else:
+                z = px_min / px0
+                if z > zmax:
+                    return None
+            cw, ch = int(round(cw / z)), int(round(ch / z))
+            crop_wh = (cw, ch)
         lo_x, hi_x = int(max(0, cu[0] - cw + 8)), int(min(raw_w - cw, cu[0] - 8))
         lo_y, hi_y = int(max(0, cu[1] - ch + 8)), int(min(raw_h - ch, cu[1] - 8))
         if hi_x < lo_x or hi_y < lo_y:
@@ -261,6 +276,10 @@ def main():
                     help='更远的框不进标签（归一化深度会超 1，且只有几个像素大）')
     ap.add_argument('--crop-to-mav6d', action='store_true',
                     help='按 MAV6D 归一化内参裁剪 621x349 再缩放，目标表观大小放大 1.65x，输入 fx 与 MAV6D 一致')
+    ap.add_argument('--zoom-to-mav6d', action='store_true',
+                    help='在 --crop-to-mav6d 基础上按最近合格目标变焦：窗口缩小到目标表观大小落进 MAV6D 区间')
+    ap.add_argument('--zoom-max', type=float, default=1.6, help='最大变焦倍数（原图上采样上限）')
+    ap.add_argument('--zoom-px', default='38,105', help='目标表观大小区间（缓存像素），MAV6D 实测 5%%/95%% 分位')
     ap.add_argument('--workers', type=int, default=8)
     ap.add_argument('--limit', type=int, default=0, help='调试用：只处理前 N 帧')
     args = ap.parse_args()
@@ -287,12 +306,17 @@ def main():
     tag_mm = np.lib.format.open_memmap(os.path.join(out_dir, 'tag.npy'), 'w+', np.uint8, (N, H, W))
 
     crop_wh = None
-    if args.crop_to_mav6d:
+    zoom_cfg = None
+    if args.crop_to_mav6d or args.zoom_to_mav6d:
         # 1280 * (640/1280) / (1979.4/1920) = 621 ；高按 16:9
         crop_wh = (621, 349)
         print('裁剪到 %dx%d（归一化 fx 与 MAV6D 一致）' % crop_wh)
+    if args.zoom_to_mav6d:
+        px_min, px_max = [float(v) for v in args.zoom_px.split(',')]
+        zoom_cfg = (args.zoom_max, px_min, px_max)
+        print('变焦：目标表观大小 -> [%.0f, %.0f] px，最大 %.2fx' % (px_min, px_max, args.zoom_max))
     tasks = [(args.root, s, f, W, H, args.lidar_offset, args.max_label_range, args.max_range, args.min_inside,
-              crop_wh, abs(hash(s + f)) % (2 ** 31))
+              crop_wh, abs(hash(s + f)) % (2 ** 31), zoom_cfg)
              for s, f in picked]
     metas = [None] * N
     ok = 0

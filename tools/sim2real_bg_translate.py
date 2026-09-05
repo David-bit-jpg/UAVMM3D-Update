@@ -135,6 +135,10 @@ def main():
     ap.add_argument('--flat-std', type=float, default=8.0, help='背景亮度标准差低于此视为无结构帧')
     ap.add_argument('--flat-strength', type=float, default=0.3, help='无结构帧用的 img2img 强度')
     ap.add_argument('--only', choices=['', 'dark', 'bright', 'flat'], default='', help='调试：只翻译某一类帧')
+    ap.add_argument('--no-paste', action='store_true',
+                    help='只出「抹掉全部目标 + 翻译」的干净背景底图（不贴回），给 mm_paste_aug.py 做交叉贴的背景用')
+    ap.add_argument('--no-erase', action='store_true',
+                    help='输入已经是抹掉目标的底图（mm_paste_aug.py --make-plates 用 cv2.inpaint 做的），不再做归一化卷积抹除')
     ap.add_argument('--prompt', default='neutral', choices=['skyline', 'neutral'],
                     help='skyline: 写明城市天际线（会往画面里加高楼）；neutral: 只说「同一场景的真实照片」，更守原布局')
     args = ap.parse_args()
@@ -222,7 +226,7 @@ def main():
 
     def run_batch(items, strength):
         nonlocal n_done, n_dark
-        plates = [fill_background(it['orig'], it['mask'], sigma=args.sigma) for it in items]
+        plates = [it['orig'] if args.no_erase else fill_background(it['orig'], it['mask'], sigma=args.sigma) for it in items]
         ins = [p.resize((gw, gh), Image.BICUBIC) for p in plates]
         prompts = [BG_PROMPT % WEATHER_WORDS.get(it['weather'], '') for it in items]
         gens = [torch.Generator('cuda').manual_seed(args.seed + it['i']) for it in items]
@@ -231,10 +235,14 @@ def main():
         for j, it in enumerate(items):
             i = it['i']
             bg = outs[j].resize((W, H), Image.LANCZOS)
-            final = paste_back(bg, it['orig'], it['mask'])
-            fa, oa = np.asarray(final), np.asarray(it['orig'])
-            hard = it['mask'] >= 0.999
-            assert np.array_equal(fa[hard], oa[hard]), '凸包内像素被改了：帧 %d' % i
+            if args.no_paste:
+                final = bg
+                fa, oa = np.asarray(final), np.asarray(it['orig'])
+            else:
+                final = paste_back(bg, it['orig'], it['mask'])
+                fa, oa = np.asarray(final), np.asarray(it['orig'])
+                hard = it['mask'] >= 0.999
+                assert np.array_equal(fa[hard], oa[hard]), '凸包内像素被改了：帧 %d' % i
             dst_rgb[i] = fa
             translated[i] = True
             strength_used[i] = strength
