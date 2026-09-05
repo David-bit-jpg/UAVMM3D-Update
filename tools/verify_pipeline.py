@@ -149,12 +149,13 @@ def verify_sim(args):
 
     # ---- S3 / S4 / S5：逐帧 ----
     peak_off, dep_err, tag_in, ir_res_near, ir_res_other = [], [], [], [], []
-    sx, sy = ds.W / 1280.0, ds.H / 720.0
     seq_cache = {}
     for n, k in enumerate(picks):
         d = ds[int(k)]
         m = ds.metas[int(ds.valid_idx[k])]
         K = m['K_raw'].astype(np.float64)
+        raw_w0, raw_h0 = m['raw_wh']                      # 裁剪版缓存的原始尺寸不是 1280x720，按 meta 来
+        sx, sy = ds.W / float(raw_w0), ds.H / float(raw_h0)
         Ks = K.copy(); Ks[0] *= sx; Ks[1] *= sy
         img = d['image'][0].copy()
         nm, ns = cfg.DATA_CONFIG.get('NORM_MEAN', None), cfg.DATA_CONFIG.get('NORM_STD', None)
