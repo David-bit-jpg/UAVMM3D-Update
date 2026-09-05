@@ -35,8 +35,13 @@ from sim2real_diffuse import WEATHER_WORDS, box_mask, box_uv, draw_box, fill_bac
 os.environ.setdefault('HF_HOME', 'D:/SD/hf')
 os.environ.setdefault('HF_HUB_OFFLINE', '1')
 
-BG_PROMPT = ('a real photograph of a city skyline and sky, %s, DSLR photo, sharp focus, '
-             'realistic lighting, photorealistic, film grain, high detail')
+BG_PROMPTS = {
+    'skyline': ('a real photograph of a city skyline and sky, %s, DSLR photo, sharp focus, '
+                'realistic lighting, photorealistic, film grain, high detail'),
+    'neutral': ('a real photograph of the same scene, %s, natural colors, realistic materials and textures, '
+                'DSLR photo, sharp focus, high detail'),
+}
+BG_PROMPT = BG_PROMPTS['skyline']
 BG_NEGATIVE = ('cartoon, cgi, render, video game, painting, blurry, low quality, deformed, extra objects, '
                'text, watermark, drone, aircraft, bird, helicopter')
 
@@ -70,10 +75,12 @@ def prepare_dst(src_split, dst_split, n_frames):
 
 
 def bg_luminance(rgb_bgr, mask):
-    """目标掩码之外的亮度均值（缓存是 BGR）。"""
+    """目标掩码之外的亮度均值与标准差（缓存是 BGR）。"""
     lum = np.asarray(rgb_bgr, np.float32) @ np.array([0.114, 0.587, 0.299], np.float32)
     bg = lum[mask < 0.01]
-    return float(bg.mean()) if bg.size else float(lum.mean())
+    if not bg.size:
+        bg = lum.reshape(-1)
+    return float(bg.mean()), float(bg.std())
 
 
 def make_sheet(orig, plate, bg, final, boxes, K, title, path, up=2):
@@ -104,7 +111,9 @@ def main():
     ap.add_argument('--max-targets', type=int, default=2, help='有标签目标多于此数的帧不翻译')
     ap.add_argument('--min-vis', type=float, default=5.0, help='RGB 可见度低于此的帧不翻译（vis_score.npy）')
     ap.add_argument('--min-angsize', type=float, default=0.0, help='最大合格目标的角尺度（max(dim)/z）低于此的帧不翻译')
-    ap.add_argument('--strength', type=float, default=0.6)
+    # 32 帧 × 3 组对比（output/bgx_compare）：0.6 + skyline 提示词会把布局换成高楼；0.6 + 中性提示词 30 步会编出
+    # 树枝小鸟、水珠叶子这种无关照片；0.45 + 中性提示词最守原布局、质感也够。默认取后者。
+    ap.add_argument('--strength', type=float, default=0.45)
     ap.add_argument('--steps', type=int, default=20)
     ap.add_argument('--guidance', type=float, default=6.0)
     ap.add_argument('--batch', type=int, default=4)
@@ -121,10 +130,17 @@ def main():
     # 夜景帧背景几乎全黑（实测 8 种天气的 *_night 帧背景亮度均值 0-24，白天 >= 78）：强度 0.6 会凭空编出车、灯塔；
     # 对这种帧只做弱翻译（加传感器质感、不编内容），阈值按 BGR 亮度均值（目标掩码之外）
     ap.add_argument('--dark-mean', type=float, default=32.0, help='背景亮度均值低于此视为暗帧')
-    ap.add_argument('--dark-strength', type=float, default=0.35, help='暗帧用的 img2img 强度')
-    ap.add_argument('--only', choices=['', 'dark', 'bright'], default='', help='调试：只翻译暗帧 / 亮帧')
+    ap.add_argument('--dark-strength', type=float, default=0.3, help='暗帧用的 img2img 强度')
+    # 浓雾 / 大雪的白茫茫帧背景没有结构（亮度标准差 1.6–7，有结构的白天 ≥ 9），任何强度都是凭空编：只做最弱翻译
+    ap.add_argument('--flat-std', type=float, default=8.0, help='背景亮度标准差低于此视为无结构帧')
+    ap.add_argument('--flat-strength', type=float, default=0.3, help='无结构帧用的 img2img 强度')
+    ap.add_argument('--only', choices=['', 'dark', 'bright', 'flat'], default='', help='调试：只翻译某一类帧')
+    ap.add_argument('--prompt', default='neutral', choices=['skyline', 'neutral'],
+                    help='skyline: 写明城市天际线（会往画面里加高楼）；neutral: 只说「同一场景的真实照片」，更守原布局')
     args = ap.parse_args()
 
+    global BG_PROMPT
+    BG_PROMPT = BG_PROMPTS[args.prompt]
     src_split = os.path.join(args.src, args.split)
     dst_split = os.path.join(args.dst, args.split)
     idx = pickle.load(open(os.path.join(src_split, 'index.pkl'), 'rb'))
@@ -189,8 +205,9 @@ def main():
     t0 = time.time()
     n_done = 0
     n_dark = 0
-    pending = []          # 未凑满 batch 的暗帧 / 亮帧分别攒着（同一次 pipe 调用只能一个强度）
-    queues = {'bright': [], 'dark': []}
+    # 同一次 pipe 调用只能一个强度：亮帧 / 暗帧 / 无结构帧分别攒 batch
+    queues = {'bright': [], 'dark': [], 'flat': []}
+    strengths = {'bright': args.strength, 'dark': args.dark_strength, 'flat': args.flat_strength}
 
     def prep(i):
         m = metas[i]
@@ -198,8 +215,9 @@ def main():
         K = cache_K(m, W, H)
         boxes = [np.asarray(b, dtype=np.float64) for b in m['boxes9d']]
         mask = box_mask((W, H), boxes, K, dilate=args.dilate, feather=args.feather)
-        dark = bg_luminance(rgb, mask) < args.dark_mean
-        return dict(i=i, orig=Image.fromarray(rgb), mask=mask, K=K, boxes=boxes, dark=dark,
+        mean, std = bg_luminance(rgb, mask)
+        kind = 'dark' if mean < args.dark_mean else ('flat' if std < args.flat_std else 'bright')
+        return dict(i=i, orig=Image.fromarray(rgb), mask=mask, K=K, boxes=boxes, dark=(kind == 'dark'), kind=kind,
                     weather=m['seq'].split('/')[3] if len(m['seq'].split('/')) > 3 else '')
 
     def run_batch(items, strength):
@@ -224,7 +242,7 @@ def main():
             if args.vis_n > 0 and n_done < args.vis_n:
                 m = metas[i]
                 title = '%s | %s | %d target(s) | %s s=%.2f steps=%d' % (
-                    it['weather'], os.path.splitext(m['frame'])[0], len(it['boxes']), 'DARK' if it['dark'] else 'bright',
+                    it['weather'], os.path.splitext(m['frame'])[0], len(it['boxes']), it['kind'].upper(),
                     strength, args.steps)
                 make_sheet(it['orig'], plates[j], bg, final, it['boxes'], it['K'], title,
                            os.path.join(vis_dir, '%03d_%s_%s.jpg' % (n_done, it['weather'], os.path.splitext(m['frame'])[0])))
@@ -241,21 +259,19 @@ def main():
     last_ck = 0
     for i in cand:
         it = prep(i)
-        if args.only == 'dark' and not it['dark']:
+        if args.only and it['kind'] != args.only:
             continue
-        if args.only == 'bright' and it['dark']:
-            continue
-        q = queues['dark' if it['dark'] else 'bright']
+        q = queues[it['kind']]
         q.append(it)
         if len(q) >= args.batch:
-            run_batch(q, args.dark_strength if it['dark'] else args.strength)
+            run_batch(q, strengths[it['kind']])
             q.clear()
         if n_done - last_ck >= args.flush_every:
             checkpoint()
             last_ck = n_done
     for name, q in queues.items():
         if q:
-            run_batch(q, args.dark_strength if name == 'dark' else args.strength)
+            run_batch(q, strengths[name])
             q.clear()
     checkpoint()
     meta = {'args': vars(args), 'n_valid': int(len(valid)), 'n_translated_total': int(translated.sum()),
