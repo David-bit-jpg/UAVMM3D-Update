@@ -108,6 +108,7 @@ def main():
     ap.add_argument('--vis-n', type=int, default=0, help='前 N 个翻译帧另存 4 栏对比图')
     ap.add_argument('--vis-dir', default='')
     ap.add_argument('--flush-every', type=int, default=64)
+    ap.add_argument('--no-shuffle', action='store_true', help='按索引顺序翻译（默认按 --seed 打乱候选顺序）')
     args = ap.parse_args()
 
     src_split = os.path.join(args.src, args.split)
@@ -144,6 +145,9 @@ def main():
                 skipped['angsize'] += 1
                 continue
         cand.append(i)
+    if not args.no_shuffle:
+        # 打乱候选顺序：随时中断都得到一个跨序列/跨天气均匀的已翻译子集；--vis-n 的样例也因此是多样的
+        cand = [int(c) for c in np.random.RandomState(args.seed).permutation(np.asarray(cand, dtype=np.int64))]
     if args.limit > 0:
         cand = cand[:args.limit]
     print('缓存 %s/%s：%d 帧有效，已翻译 %d，跳过（目标>%d：%d，可见度<%.1f：%d，角尺度：%d），本次候选 %d'

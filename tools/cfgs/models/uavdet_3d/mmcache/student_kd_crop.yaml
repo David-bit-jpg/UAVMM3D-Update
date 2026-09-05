@@ -1,0 +1,66 @@
+# 同 student_kd.yaml，只把数据集换成尺度对齐缓存 mmcache_crop（E:/mmcache/mm20c，目标表观大小 ≈ MAV6D）。
+# 蒸馏学生（多模态教师）：学生只看 RGB，教师看 rgb+ir+depth+tag，二者在特征、热图、
+# 回归头、GT 中心像素特征四个层面对齐。存下来的 ckpt 是干净的 RGB CenterDet。
+DATA_CONFIG:
+    _BASE_CONFIG_: cfgs/dataset_configs/uavdet_3d/mmcache_crop.yaml
+    MAX_OBJ_PER_SAMPLE: 7
+    MODALITIES: ['rgb', 'ir', 'depth', 'tag']    # 数据集吐全部通道，教师用；学生在模型里切前 3 个
+
+MODEL:
+    NAME: CenterDetKD
+    DISTILL:
+        TEACHER_CFG: cfgs/models/uavdet_3d/mmcache/teacher.yaml
+        TEACHER_CKPT: 'SET_AT_LAUNCH.pth'     # 用 --set MODEL.DISTILL.TEACHER_CKPT <path> 传入
+        STUDENT_CHANNELS: 3                  # 学生只吃前 3 个通道 = rgb
+        # 论文消融：对象级（RoI）蒸馏项最重要，其次特征项，再是 CrossKD 项
+        W_FEAT: 1.0
+        W_CENTER_COS: 1.0
+        W_HM: 1.0
+        W_REG: 1.0
+        W_CROSS: 0.5
+
+    BACKBONE_2D:
+      NAME: ResNet8x
+      NUM_FILTERS: [64,128,256,512]
+      INPUT_CHANNELS: 3
+      OUT_CHANNELS: 512
+
+    DENSE_HEAD_2D:
+      NAME: CenterHead
+      INPUT_CHANNELS: 512
+      SEPARATE_HEAD_CFG:
+          HEAD_ORDER: [ 'hm', 'center_res', 'center_dis', 'dim', 'rot' ]
+          HEAD_DICT: {
+              'hm': { 'out_channels': 7, 'conv_dim': 128},
+              'center_res': { 'out_channels': 2, 'conv_dim': 128},
+              'center_dis': { 'out_channels': 1, 'conv_dim': 128},
+              'dim': { 'out_channels': 3, 'conv_dim': 128},
+              'rot': { 'out_channels': 6, 'conv_dim': 128},
+          }
+
+    POST_PROCESSING:
+      DECONDER: center_point_decoder_mav6d
+      MAX_OBJ: 7
+      SCORE_THRESH: 0.1
+
+
+OPTIMIZATION:
+    BATCH_SIZE_PER_GPU: 16
+    NUM_EPOCHS: 16
+
+    OPTIMIZER: adam_onecycle
+    LR: 0.001
+    WEIGHT_DECAY: 0.01
+    MOMENTUM: 0.9
+
+    MOMS: [0.95, 0.85]
+    PCT_START: 0.4
+    DIV_FACTOR: 10
+    DECAY_STEP_LIST: [10, 14]
+    LR_DECAY: 0.1
+    LR_CLIP: 0.0000001
+
+    LR_WARMUP: False
+    WARMUP_EPOCH: 1
+
+    GRAD_NORM_CLIP: 10
