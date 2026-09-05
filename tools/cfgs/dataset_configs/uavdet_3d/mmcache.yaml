@@ -1,6 +1,7 @@
-# 多模态缓存数据集（tools/build_mm_cache.py 产出，放 SSD）。
+# 多模态缓存数据集（tools/build_mm_cache.py 产出）。
 # 源域 = UAV-MM3D 的 mm20 子集：任一目标 <= 20 m 且整框可见，保留全部天气/批次/多目标。
-DATA_PATH: 'C:/mmcache/mm20'
+# 用户要求数据一律放 E 盘（机械盘）。memmap 是大块顺序/随机读，实测比直读 PNG 快一个量级。
+DATA_PATH: 'E:/mmcache/mm20'
 DATASET: 'MMCache_Det_Dataset'
 
 CLASS_NAMES: ['DJI-avata2','DJI-phantom4','drone-unk3','m210-rtk','DJI-mavic-mini','Matrice-600-Pro','matrix-300-RTK']

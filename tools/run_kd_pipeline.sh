@@ -20,9 +20,9 @@ mkdir -p "$LOG" "$JS"
 say() { echo "[$(date +%H:%M:%S)] $*" | tee -a "$LOG/kd_driver.log"; }
 last_ckpt() { ls "$1"/ckpt/checkpoint_epoch_*.pth 2>/dev/null | sed 's/.*checkpoint_epoch_\([0-9]*\)\.pth/\1 &/' | sort -n | tail -1 | cut -d' ' -f2; }
 
-# 等缓存
-until grep -q CACHE_DONE "$LOG/cache_test.log" 2>/dev/null; do sleep 60; done
-say "缓存就绪"
+# 等缓存搬到 E 盘（build_mm_cache 先写 C:，搬完后我手动放 READY 标记）
+until [ -f /e/mmcache/mm20/READY ]; do sleep 60; done
+say "缓存就绪 (E:/mmcache/mm20)"
 
 # ---------------- 阶段 1 ----------------
 sim() {  # tag cfg extra...
