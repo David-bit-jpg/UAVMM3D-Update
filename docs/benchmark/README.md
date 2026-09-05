@@ -400,6 +400,13 @@ S4a 用整个框多边形取中位数会被框内几十米外的背景点淹没�
 4. **只翻译背景**：底图放大到 1024×576 送本地 SDXL img2img（强度 0.6、20 步、batch 4，≈2.7 s/帧），
    提示词只写场景 + 天气、不写 drone（写了会把路灯画成无人机），负面词含 drone/aircraft；结果缩回 512×288。
 5. **贴回**：凸包内像素 = 缓存原像素（逐帧 `assert np.array_equal`），只有凸包外 5 px 环里是羽化过渡。
+6. **暗帧弱翻译**：夜景帧背景几乎全黑（8 种天气各 24 帧的样例里 *_night 背景亮度均值 0–24，白天 ≥ 78），
+   强度 0.6 会凭空编出车、灯塔、天际线；背景亮度均值 < 32 的帧改用强度 0.35，只加质感不编内容（实测保留原布局）。
+   每帧用的强度记在 `strength.npy`。
+
+尺度对齐的多天气样例（`E:/mmcache/demo_crop`，8 种天气各 24 帧）：178 帧有效，其中 37 帧目标 > 2、77 帧 RGB 不可见，
+可翻译 64 帧（36%）；1024×576、20 步、batch 4 实测 2.3–3.0 s/帧。对比图在 `E:/mmcache/demo_crop_bgx/vis_train`
+（亮帧 0.6）与 `E:/mmcache/demo_crop_dark/vis_train`（暗帧 0.35）。
 
 输出是与源缓存同布局的新目录（`rgb.npy` 逐帧替换，`ir/depth/tag/index.pkl/vis_score.npy` 原样复制），
 外加 `translated.npy`（每帧 bool，断点续跑用）、`bgx_meta.json`，跑完写 `READY`。

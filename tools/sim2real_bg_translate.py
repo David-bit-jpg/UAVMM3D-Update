@@ -64,7 +64,16 @@ def prepare_dst(src_split, dst_split, n_frames):
         shutil.copyfile(s, d)
     tp = os.path.join(dst_split, 'translated.npy')
     translated = np.load(tp) if os.path.exists(tp) else np.zeros(n_frames, dtype=bool)
-    return translated
+    sp = os.path.join(dst_split, 'strength.npy')
+    strength_used = np.load(sp) if os.path.exists(sp) else np.zeros(n_frames, dtype=np.float32)
+    return translated, strength_used
+
+
+def bg_luminance(rgb_bgr, mask):
+    """目标掩码之外的亮度均值（缓存是 BGR）。"""
+    lum = np.asarray(rgb_bgr, np.float32) @ np.array([0.114, 0.587, 0.299], np.float32)
+    bg = lum[mask < 0.01]
+    return float(bg.mean()) if bg.size else float(lum.mean())
 
 
 def make_sheet(orig, plate, bg, final, boxes, K, title, path, up=2):
@@ -109,6 +118,11 @@ def main():
     ap.add_argument('--vis-dir', default='')
     ap.add_argument('--flush-every', type=int, default=64)
     ap.add_argument('--no-shuffle', action='store_true', help='按索引顺序翻译（默认按 --seed 打乱候选顺序）')
+    # 夜景帧背景几乎全黑（实测 8 种天气的 *_night 帧背景亮度均值 0-24，白天 >= 78）：强度 0.6 会凭空编出车、灯塔；
+    # 对这种帧只做弱翻译（加传感器质感、不编内容），阈值按 BGR 亮度均值（目标掩码之外）
+    ap.add_argument('--dark-mean', type=float, default=32.0, help='背景亮度均值低于此视为暗帧')
+    ap.add_argument('--dark-strength', type=float, default=0.35, help='暗帧用的 img2img 强度')
+    ap.add_argument('--only', choices=['', 'dark', 'bright'], default='', help='调试：只翻译暗帧 / 亮帧')
     args = ap.parse_args()
 
     src_split = os.path.join(args.src, args.split)
@@ -119,7 +133,7 @@ def main():
     gw, gh = [int(v) for v in args.gen_wh.split('x')]
     src_rgb = np.load(os.path.join(src_split, 'rgb.npy'), mmap_mode='r')
     n_frames = src_rgb.shape[0]
-    translated = prepare_dst(src_split, dst_split, n_frames)
+    translated, strength_used = prepare_dst(src_split, dst_split, n_frames)
     dst_rgb = np.load(os.path.join(dst_split, 'rgb.npy'), mmap_mode='r+')
     vis_path = os.path.join(src_split, 'vis_score.npy')
     vis = np.load(vis_path) if os.path.exists(vis_path) else None
@@ -174,55 +188,79 @@ def main():
 
     t0 = time.time()
     n_done = 0
-    for b0 in range(0, len(cand), args.batch):
-        ids = cand[b0:b0 + args.batch]
-        origs, masks, plates, prompts, negs, gens, Ks, boxes_l = [], [], [], [], [], [], [], []
-        for i in ids:
-            m = metas[i]
-            rgb = np.ascontiguousarray(src_rgb[i])
-            K = cache_K(m, W, H)
-            boxes = [np.asarray(b, dtype=np.float64) for b in m['boxes9d']]
-            mask = box_mask((W, H), boxes, K, dilate=args.dilate, feather=args.feather)
-            orig = Image.fromarray(rgb)
-            plate = fill_background(orig, mask, sigma=args.sigma)
-            weather = m['seq'].split('/')[3] if len(m['seq'].split('/')) > 3 else ''
-            origs.append(orig)
-            masks.append(mask)
-            plates.append(plate)
-            prompts.append(BG_PROMPT % WEATHER_WORDS.get(weather, ''))
-            negs.append(BG_NEGATIVE)
-            gens.append(torch.Generator('cuda').manual_seed(args.seed + i))
-            Ks.append(K)
-            boxes_l.append(boxes)
+    n_dark = 0
+    pending = []          # 未凑满 batch 的暗帧 / 亮帧分别攒着（同一次 pipe 调用只能一个强度）
+    queues = {'bright': [], 'dark': []}
+
+    def prep(i):
+        m = metas[i]
+        rgb = np.ascontiguousarray(src_rgb[i])
+        K = cache_K(m, W, H)
+        boxes = [np.asarray(b, dtype=np.float64) for b in m['boxes9d']]
+        mask = box_mask((W, H), boxes, K, dilate=args.dilate, feather=args.feather)
+        dark = bg_luminance(rgb, mask) < args.dark_mean
+        return dict(i=i, orig=Image.fromarray(rgb), mask=mask, K=K, boxes=boxes, dark=dark,
+                    weather=m['seq'].split('/')[3] if len(m['seq'].split('/')) > 3 else '')
+
+    def run_batch(items, strength):
+        nonlocal n_done, n_dark
+        plates = [fill_background(it['orig'], it['mask'], sigma=args.sigma) for it in items]
         ins = [p.resize((gw, gh), Image.BICUBIC) for p in plates]
-        outs = pipe(prompt=prompts, negative_prompt=negs, image=ins, strength=args.strength,
+        prompts = [BG_PROMPT % WEATHER_WORDS.get(it['weather'], '') for it in items]
+        gens = [torch.Generator('cuda').manual_seed(args.seed + it['i']) for it in items]
+        outs = pipe(prompt=prompts, negative_prompt=[BG_NEGATIVE] * len(items), image=ins, strength=strength,
                     num_inference_steps=args.steps, guidance_scale=args.guidance, generator=gens).images
-        for j, i in enumerate(ids):
+        for j, it in enumerate(items):
+            i = it['i']
             bg = outs[j].resize((W, H), Image.LANCZOS)
-            final = paste_back(bg, origs[j], masks[j])
-            fa, oa = np.asarray(final), np.asarray(origs[j])
-            hard = masks[j] >= 0.999
+            final = paste_back(bg, it['orig'], it['mask'])
+            fa, oa = np.asarray(final), np.asarray(it['orig'])
+            hard = it['mask'] >= 0.999
             assert np.array_equal(fa[hard], oa[hard]), '凸包内像素被改了：帧 %d' % i
             dst_rgb[i] = fa
             translated[i] = True
+            strength_used[i] = strength
+            n_dark += int(it['dark'])
             if args.vis_n > 0 and n_done < args.vis_n:
                 m = metas[i]
-                title = '%s | %s | %d target(s) | s=%.2f steps=%d' % (
-                    m['seq'].split('/')[3], os.path.splitext(m['frame'])[0], len(boxes_l[j]), args.strength, args.steps)
-                make_sheet(origs[j], plates[j], bg, final, boxes_l[j], Ks[j], title,
-                           os.path.join(vis_dir, '%03d_%s_%s.jpg' % (n_done, m['seq'].split('/')[3], os.path.splitext(m['frame'])[0])))
+                title = '%s | %s | %d target(s) | %s s=%.2f steps=%d' % (
+                    it['weather'], os.path.splitext(m['frame'])[0], len(it['boxes']), 'DARK' if it['dark'] else 'bright',
+                    strength, args.steps)
+                make_sheet(it['orig'], plates[j], bg, final, it['boxes'], it['K'], title,
+                           os.path.join(vis_dir, '%03d_%s_%s.jpg' % (n_done, it['weather'], os.path.splitext(m['frame'])[0])))
             n_done += 1
-        if (b0 // args.batch) % max(1, args.flush_every // args.batch) == 0 or b0 + args.batch >= len(cand):
-            dst_rgb.flush()
-            np.save(os.path.join(dst_split, 'translated.npy'), translated)
-            el = time.time() - t0
-            print('  %d/%d  %.2f s/帧  剩余约 %.1f min' % (n_done, len(cand), el / max(n_done, 1),
-                                                        el / max(n_done, 1) * (len(cand) - n_done) / 60.0), flush=True)
-    dst_rgb.flush()
-    np.save(os.path.join(dst_split, 'translated.npy'), translated)
+
+    def checkpoint(force=False):
+        dst_rgb.flush()
+        np.save(os.path.join(dst_split, 'translated.npy'), translated)
+        np.save(os.path.join(dst_split, 'strength.npy'), strength_used)
+        el = time.time() - t0
+        print('  %d/%d（暗帧 %d）  %.2f s/帧  剩余约 %.1f min' % (n_done, len(cand), n_dark, el / max(n_done, 1),
+                                                             el / max(n_done, 1) * (len(cand) - n_done) / 60.0), flush=True)
+
+    last_ck = 0
+    for i in cand:
+        it = prep(i)
+        if args.only == 'dark' and not it['dark']:
+            continue
+        if args.only == 'bright' and it['dark']:
+            continue
+        q = queues['dark' if it['dark'] else 'bright']
+        q.append(it)
+        if len(q) >= args.batch:
+            run_batch(q, args.dark_strength if it['dark'] else args.strength)
+            q.clear()
+        if n_done - last_ck >= args.flush_every:
+            checkpoint()
+            last_ck = n_done
+    for name, q in queues.items():
+        if q:
+            run_batch(q, args.dark_strength if name == 'dark' else args.strength)
+            q.clear()
+    checkpoint()
     meta = {'args': vars(args), 'n_valid': int(len(valid)), 'n_translated_total': int(translated.sum()),
-            'n_this_run': n_done, 'sec_per_frame': (time.time() - t0) / max(n_done, 1), 'skipped': skipped,
-            'prompt': BG_PROMPT, 'negative': BG_NEGATIVE}
+            'n_this_run': n_done, 'n_dark_this_run': n_dark, 'sec_per_frame': (time.time() - t0) / max(n_done, 1),
+            'skipped': skipped, 'prompt': BG_PROMPT, 'negative': BG_NEGATIVE}
     json.dump(meta, open(os.path.join(dst_split, 'bgx_meta.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
     if args.limit == 0:
         open(os.path.join(dst_split, 'READY'), 'w').write('ok\n')
