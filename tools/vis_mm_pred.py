@@ -65,6 +65,7 @@ def main():
     ap.add_argument('--out', default='../output/vis_mm_pred')
     ap.add_argument('--stride-pick', type=int, default=97, help='每隔多少帧取一张，避免全是同一序列')
     ap.add_argument('--tag', default=None, help='写在图上的名字')
+    ap.add_argument('--no-norm', action='store_true', help='评 2026-09-06 归一化改动之前训出的权重：去掉 NORM_MEAN/STD')
     args = ap.parse_args()
 
     logger = common_utils.create_logger()
@@ -72,6 +73,9 @@ def main():
     cfg_from_yaml_file(args.cfg, cfg)
     if args.data_path:
         cfg.DATA_CONFIG.DATA_PATH = args.data_path
+    if args.no_norm:
+        cfg.DATA_CONFIG.pop('NORM_MEAN', None)
+        cfg.DATA_CONFIG.pop('NORM_STD', None)
     # 只画学生自己：不构建教师
     if 'DISTILL' in cfg.MODEL:
         for k in list(cfg.MODEL.DISTILL.keys()):
@@ -111,9 +115,12 @@ def main():
             K[0] *= sx
             K[1] *= sy
 
-            img = full[0, 0]
-            rgb = (img[:3].transpose(1, 2, 0)[:, :, ::-1] * 255).astype(np.uint8).copy()   # 缓存里是 BGR 顺序存的
-            rgb = np.ascontiguousarray(rgb[:, :, ::-1])
+            img = full[0, 0].copy()
+            # 数据集若按域归一化了 rgb（NORM_MEAN/STD），显示前要反归一化回 [0,1]
+            nm, ns = cfg.DATA_CONFIG.get('NORM_MEAN', None), cfg.DATA_CONFIG.get('NORM_STD', None)
+            if nm and ns:
+                img[:3] = img[:3] * np.asarray(ns, np.float32)[:, None, None] + np.asarray(nm, np.float32)[:, None, None]
+            rgb = np.ascontiguousarray((np.clip(img[:3], 0, 1).transpose(1, 2, 0) * 255).astype(np.uint8))   # 缓存里就是 BGR
             ir = cv2.cvtColor((img[3] * 255).astype(np.uint8), cv2.COLOR_GRAY2BGR)
             dep = img[4]
             depv = cv2.applyColorMap((255 - np.clip(dep, 0, 1) * 255).astype(np.uint8), cv2.COLORMAP_TURBO)

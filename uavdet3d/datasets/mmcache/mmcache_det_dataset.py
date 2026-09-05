@@ -18,7 +18,9 @@ import copy
 import os
 import pickle
 
+import cv2
 import numpy as np
+from scipy.spatial.transform import Rotation as R
 
 from ..dataset import DatasetTemplate
 from ...utils import frame_convention
@@ -66,6 +68,12 @@ class MMCache_Det_Dataset(DatasetTemplate):
         interval = int(dataset_cfg.SAMPLED_INTERVAL[self.mode]) if 'SAMPLED_INTERVAL' in dataset_cfg else 1
         self.valid_idx = self.valid_idx[::max(interval, 1)]
         self._mm = None           # memmap 在 worker 里懒打开（spawn 后重新映射）
+        # 在线增广（仓库原有的 DATA_AUGMENTOR 从未被调用过；这里是真的会执行的那份）
+        self.aug = dict(dataset_cfg.get('AUG', {}) or {})
+        # 按域归一化：rgb 三通道 (x/255 - mean) / std
+        nm, ns = dataset_cfg.get('NORM_MEAN', None), dataset_cfg.get('NORM_STD', None)
+        self.norm_mean = np.array(nm, np.float32) if nm else None
+        self.norm_std = np.array(ns, np.float32) if ns else None
         if self.logger is not None:
             self.logger.info('MMCache[%s]: %d 帧, 模态 %s -> %d 通道, 缓存 %s'
                              % (self.mode, len(self.valid_idx), self.modalities, self.num_channels, self.split_dir))
@@ -96,14 +104,25 @@ class MMCache_Det_Dataset(DatasetTemplate):
                 chans.append(np.clip(d / self.depth_max, 0.0, 1.0)[None])
             elif m == 'tag':
                 chans.append(np.ascontiguousarray(mm['tag'][i]).astype(np.float32)[None])
-        image = np.concatenate(chans, axis=0)[None]      # (1, C, H, W)
-
+        image = np.concatenate(chans, axis=0)            # (C, H, W)
+        boxes = meta['boxes9d'].astype(np.float32).copy()
+        names = list(meta['names'])
+        K = np.array(meta['K_raw'], dtype=np.float64).copy()
         raw_w, raw_h = meta['raw_wh']
+
+        if self.training and self.aug:
+            image, boxes, names, K = self._augment(image, boxes, names, K, raw_w, raw_h)
+        if self.norm_mean is not None:
+            # 按本域自身统计量归一化 rgb 三通道（其余通道已在 [0,1]）。源域亮度中位 66、目标域 118，
+            # 只除 255 的话两域第一层卷积看到的分布差很多。
+            image[:3] = (image[:3] - self.norm_mean[:, None, None]) / self.norm_std[:, None, None]
+        image = image[None]                              # (1, C, H, W)
+
         data_dict = {
             'image': image,
-            'gt_box9d': meta['boxes9d'].astype(np.float32).copy(),
-            'gt_name': np.array(meta['names']),
-            'intrinsic': np.array([meta['K_raw']], dtype=np.float32),
+            'gt_box9d': boxes,
+            'gt_name': np.array(names),
+            'intrinsic': np.array([K], dtype=np.float32),
             'extrinsic': np.array([np.eye(4, dtype=np.float32)]),
             'distortion': np.zeros((1, 5), dtype=np.float32),
             'raw_im_size': np.array([raw_w, raw_h]),
@@ -118,6 +137,76 @@ class MMCache_Det_Dataset(DatasetTemplate):
         return data_dict
 
     # ------------------------------------------------------------------ #
+    def _augment(self, image, boxes, names, K, raw_w, raw_h):
+        """在线增广（只在训练时）。几何变换同步作用于 image 各通道、内参 K 和相机系 3D 框。
+
+        水平翻转：像素 u -> W-1-u 等价于相机系 x -> -x；3D 框中心 x 取反，
+                  旋转 R -> M R M（M = diag(-1,1,1)，det 仍为 +1，是真旋转），K 的 cx -> W-1-cx。
+                  注意 K 是【原始分辨率】下的，翻转在缓存分辨率上做，等价于原始分辨率翻转。
+        随机尺度：图像按 s 缩放后再裁/补回 (H,W)，K 的 fx,fy,cx,cy 乘 s 并减去裁剪偏移
+                  （K 以原始分辨率计，偏移要换算回原始像素）；中心出画的框丢掉。
+                  这一项直接练「表观大小」的鲁棒性 —— 源域与 MAV6D 的表观尺度差 2.84 倍。
+        光度：亮度/对比度/gamma/逐通道增益只作用在 rgb（以及轻微作用在 ir），depth/tag 不动。
+        """
+        rng = np.random
+        a = self.aug
+        C, H, W = image.shape
+
+        # ---- 水平翻转 ----
+        if rng.rand() < float(a.get('hflip', 0.0)):
+            image = image[:, :, ::-1].copy()
+            K[0, 2] = (raw_w - 1) - K[0, 2]
+            if len(boxes):
+                boxes[:, 0] *= -1
+                M = np.diag([-1.0, 1.0, 1.0])
+                for i in range(len(boxes)):
+                    Rm = R.from_euler(frame_convention.get_default_euler_seq(), boxes[i, 6:9]).as_matrix()
+                    boxes[i, 6:9] = R.from_matrix(M @ Rm @ M).as_euler(frame_convention.get_default_euler_seq())
+
+        # ---- 随机尺度（缩放后裁剪/补边回原尺寸）----
+        sr = a.get('scale', None)
+        if sr:
+            s = float(rng.uniform(sr[0], sr[1]))
+            if abs(s - 1.0) > 1e-3:
+                nh, nw = max(8, int(round(H * s))), max(8, int(round(W * s)))
+                out = np.zeros_like(image)
+                res = np.stack([cv2.resize(image[c], (nw, nh), interpolation=cv2.INTER_LINEAR if c < 4 else cv2.INTER_NEAREST)
+                                for c in range(C)], 0)
+                if s >= 1.0:          # 放大后随机裁一块 (H,W)
+                    oy, ox = rng.randint(0, nh - H + 1), rng.randint(0, nw - W + 1)
+                    out = res[:, oy:oy + H, ox:ox + W]
+                    dx, dy = -ox, -oy
+                else:                 # 缩小后随机贴到画布里
+                    oy, ox = rng.randint(0, H - nh + 1), rng.randint(0, W - nw + 1)
+                    out[:, oy:oy + nh, ox:ox + nw] = res
+                    dx, dy = ox, oy
+                image = out
+                # K 在原始分辨率：缩放 s 后平移 (dx,dy) 个缓存像素 = (dx*raw_w/W, dy*raw_h/H) 个原始像素
+                K[0, 0] *= s; K[1, 1] *= s
+                K[0, 2] = K[0, 2] * s + dx * raw_w / W
+                K[1, 2] = K[1, 2] * s + dy * raw_h / H
+                if len(boxes):
+                    uv = (K @ boxes[:, :3].T.astype(np.float64)).T
+                    uv = uv[:, :2] / uv[:, 2:3]
+                    keep = (uv[:, 0] >= 0) & (uv[:, 0] < raw_w) & (uv[:, 1] >= 0) & (uv[:, 1] < raw_h)
+                    boxes, names = boxes[keep], [n for n, k in zip(names, keep) if k]
+
+        # ---- 光度（只动 rgb；ir 轻微）----
+        if a.get('photometric', False):
+            rgb = image[:3]
+            gain = rng.uniform(0.7, 1.3)                       # 亮度
+            contrast = rng.uniform(0.7, 1.3)
+            gamma = rng.uniform(0.7, 1.4)
+            cgain = rng.uniform(0.9, 1.1, size=(3, 1, 1))     # 逐通道
+            m = rgb.mean()
+            rgb = np.clip(((rgb - m) * contrast + m) * gain * cgain, 0, 1) ** gamma
+            if a.get('noise', 0.0) > 0:
+                rgb = np.clip(rgb + rng.randn(*rgb.shape).astype(np.float32) * float(a['noise']), 0, 1)
+            image[:3] = rgb
+            if C > 3 and 'ir' in self.modalities:
+                image[3] = np.clip(image[3] * rng.uniform(0.85, 1.15), 0, 1)
+        return image.astype(np.float32), boxes, names, K
+
     def generate_prediction_dicts(self, batch_dict, output_path=None):
         annos = []
         for b in range(batch_dict['batch_size']):

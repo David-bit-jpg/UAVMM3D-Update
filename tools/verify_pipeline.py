@@ -156,8 +156,11 @@ def verify_sim(args):
         m = ds.metas[int(ds.valid_idx[k])]
         K = m['K_raw'].astype(np.float64)
         Ks = K.copy(); Ks[0] *= sx; Ks[1] *= sy
-        img = d['image'][0]
-        rgb = np.ascontiguousarray((img[:3].transpose(1, 2, 0) * 255).astype(np.uint8))
+        img = d['image'][0].copy()
+        nm, ns = cfg.DATA_CONFIG.get('NORM_MEAN', None), cfg.DATA_CONFIG.get('NORM_STD', None)
+        if nm and ns:      # 反归一化回 [0,1] 再显示
+            img[:3] = img[:3] * np.asarray(ns, np.float32)[:, None, None] + np.asarray(nm, np.float32)[:, None, None]
+        rgb = np.ascontiguousarray((np.clip(img[:3], 0, 1).transpose(1, 2, 0) * 255).astype(np.uint8))
         ir = cv2.cvtColor((img[3] * 255).astype(np.uint8), cv2.COLOR_GRAY2BGR)
         dep_m = img[4] * ds.depth_max
         tag = img[5] > 0
@@ -321,7 +324,11 @@ def verify_real(args):
     Ks = K.copy(); Ks[0] *= sx; Ks[1] *= sy
     for n, k in enumerate(picks[::20][:args.n_img]):
         d = ds[int(k)]
-        img = np.ascontiguousarray((d['image'][0].transpose(1, 2, 0) * 255).astype(np.uint8))
+        im = d['image'][0].copy()
+        nm, ns = cfg.DATA_CONFIG.get('NORM_MEAN', None), cfg.DATA_CONFIG.get('NORM_STD', None)
+        if nm and ns:
+            im = im * np.asarray(ns, np.float32)[:, None, None] + np.asarray(nm, np.float32)[:, None, None]
+        img = np.ascontiguousarray((np.clip(im, 0, 1).transpose(1, 2, 0) * 255).astype(np.uint8))
         hm = d['hm'][0].max(axis=0)
         for g in d['gt_box9d'].astype(np.float64):
             uv_d, _ = cv2.projectPoints(g[None, :3], np.zeros(3), np.zeros(3), K, dist.reshape(1, -1))

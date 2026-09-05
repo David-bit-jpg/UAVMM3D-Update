@@ -207,6 +207,19 @@ class DataPreProcessor():
 
         data_dict['image'] /= 255
 
+        # 可选：按本域统计量归一化 rgb 三通道（BGR 顺序）。源域与目标域亮度差近一倍，
+        # 只除 255 的话两域第一层卷积看到的分布相差很多。
+        nm, ns = self.dataset_cfg.get('NORM_MEAN', None), self.dataset_cfg.get('NORM_STD', None)
+        if nm and ns:
+            img = data_dict['image']                     # (K, C, H, W) 或 (C, H, W)
+            mean = np.asarray(nm, dtype=np.float32).reshape(-1, 1, 1)
+            std = np.asarray(ns, dtype=np.float32).reshape(-1, 1, 1)
+            if img.ndim == 4:
+                img[:, :3] = (img[:, :3] - mean[None]) / std[None]
+            else:
+                img[:3] = (img[:3] - mean) / std
+            data_dict['image'] = img
+
         return data_dict
 
     def filter_box_outside(self, data_dict=None, config=None):

@@ -22,6 +22,16 @@ MODALITIES: ['rgb']
 # 实测 mm20 夜间帧目标对比度中位 2.3-2.9、白天 8.5-15.4；目标域 MAV6D 是明亮室内。
 # 教师、学生、蒸馏都用同一批帧，保证可比。分数文件 vis_score.npy 由 tools/mm_vis_score.py 生成。
 MIN_RGB_VIS: 5.0
+
+# 在线增广（只在训练时；仓库原有 DATA_AUGMENTOR 从未被调用，这里才是真的）。
+# 几何项同步改 K 与相机系 3D 框：hflip 概率；scale 为随机尺度区间（直接练表观尺度鲁棒性，
+# 源域与 MAV6D 表观大小差 2.84 倍）；photometric 为亮度/对比度/gamma/逐通道增益；noise 为高斯噪声 std。
+AUG: {hflip: 0.5, scale: [0.8, 1.25], photometric: true, noise: 0.01}
+
+# 按本域统计量归一化 rgb（BGR 顺序，x/255 后）。mm20 可见帧实测 600 帧。
+# 目标域 MAV6D 用它自己的一组（见 mav6d.yaml），两域输入分布对齐到零均值单位方差。
+NORM_MEAN: [0.3982, 0.3668, 0.3631]
+NORM_STD: [0.2791, 0.2445, 0.2473]
 DEPTH_MAX: 40          # depth 通道 = 米 / DEPTH_MAX，截断到 1
 
 OB_SIZE: [[1.0, 1.0, 1.0]]     # 只是透传的元数据，dim 真值来自标注（见 results 文档）

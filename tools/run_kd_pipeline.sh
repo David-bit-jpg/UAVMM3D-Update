@@ -67,19 +67,26 @@ xfer() {  # tag src_ckpt epochs interval
       --set DATA_CONFIG.DATA_PATH E:/MAV6D DATA_CONFIG.SAMPLED_INTERVAL.train "$iv" > "$LOG/$tag.log" 2>&1
   say "DONE  $tag rc=$?"
 }
+scratch() {  # tag epochs interval  —— 目标域从零（K3 对照，与 K0-K2 同设置）
+  local tag=$1 ep=$2 iv=$3
+  say "START $tag"
+  "$PY" train.py --cfg_file $MAV --batch_size 8 --workers 2 --fix_random_seed --max_ckpt_save_num 2       --logger_iter_interval 200 --epochs "$ep" --extra_tag "$tag"       --set DATA_CONFIG.DATA_PATH E:/MAV6D DATA_CONFIG.SAMPLED_INTERVAL.train "$iv" > "$LOG/$tag.log" 2>&1
+  say "DONE  $tag rc=$?"
+}
 for frac in "p01 80 100" "p05 40 20" "p10 30 10"; do
   set -- $frac; f=$1; ep=$2; iv=$3
   xfer K0_$f "$S0_CK"   $ep $iv &
   xfer K1_$f "$S1MM_CK" $ep $iv &
   wait
   xfer K2_$f "$S1RGB_CK" $ep $iv &
+  scratch K3_$f $ep $iv &
   wait
 done
 
 # ---------------- 阶段 4：评测与可视化 ----------------
 prewarm test
 say "评测开始"
-for tag in K0_p01 K1_p01 K2_p01 K0_p05 K1_p05 K2_p05 K0_p10 K1_p10 K2_p10; do
+for tag in K0_p01 K1_p01 K2_p01 K3_p01 K0_p05 K1_p05 K2_p05 K3_p05 K0_p10 K1_p10 K2_p10 K3_p10; do
   ck=$(last_ckpt $OUT/mav6d/centerdet/$tag); [ -n "$ck" ] || continue
   "$PY" eval_on_mav6d.py --ckpt "$ck" --tag "$tag" --json "$JS/$tag.json" > "$LOG/eval_$tag.log" 2>&1
   say "eval $tag: $(grep -E '位置误差 ' $LOG/eval_$tag.log | head -1)"
@@ -93,7 +100,7 @@ done
 "$PY" vis_mm_pred.py --cfg $MM/student_rgb.yaml --ckpt "$S0_CK"   --num 6 --tag s0_rgb  --out ../output/vis_kd_sim >> "$LOG/vis_sim.log" 2>&1
 "$PY" vis_mm_pred.py --cfg $MM/student_kd.yaml  --ckpt "$S1MM_CK" --num 6 --tag s1_kdmm --out ../output/vis_kd_sim >> "$LOG/vis_sim.log" 2>&1
 # MAV6D 可视化：5% 档三臂
-for tag in K0_p05 K1_p05 K2_p05; do
+for tag in K0_p05 K1_p05 K2_p05 K3_p05; do
   ck=$(last_ckpt $OUT/mav6d/centerdet/$tag); [ -n "$ck" ] || continue
   "$PY" eval_on_mav6d.py --ckpt "$ck" --tag "$tag" --vis 4 --vis-out ../output/vis_kd_mav6d/$tag > /dev/null 2>&1
 done

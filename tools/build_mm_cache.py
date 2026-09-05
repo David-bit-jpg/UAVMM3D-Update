@@ -89,7 +89,7 @@ def world_to_pixel(pts_w, E, K):
 
 def process_frame(task):
     """一帧 -> dict(rgb, ir, depth, tag, meta) 或 None。"""
-    (root, seq, frame, W, H, lidar_offset, max_label_range, max_range, min_inside) = task
+    (root, seq, frame, W, H, lidar_offset, max_label_range, max_range, min_inside, crop_wh, crop_seed) = task
     base = os.path.join(root, seq)
     stem = os.path.splitext(frame)[0]
     try:
@@ -150,13 +150,58 @@ def process_frame(task):
         return None
     boxes = np.stack(boxes)
 
+    # ---- 可选：按 MAV6D 的归一化内参裁剪（尺度对齐）----
+    # MAV6D fx/W = 1979.4/1920 = 1.031，仿真 640/1280 = 0.5 -> 裁到 621x349 再缩放，输入 fx 就和 MAV6D 一致，
+    # 目标表观大小放大 1.65x。窗口位置随机（seed 由帧名决定，可复现），但必须包住最近的合格目标，
+    # 避免「目标总在画面中心」的位置偏置。落在窗口外的框从标签里去掉（中心出窗）。
+    crop_x0 = crop_y0 = 0
+    if crop_wh is not None:
+        cw, ch = crop_wh
+        cu = (K_rgb @ near_q[:3].astype(np.float64))[:2] / near_q[2]
+        rng = np.random.RandomState(crop_seed)
+        lo_x, hi_x = int(max(0, cu[0] - cw + 8)), int(min(raw_w - cw, cu[0] - 8))
+        lo_y, hi_y = int(max(0, cu[1] - ch + 8)), int(min(raw_h - ch, cu[1] - 8))
+        if hi_x < lo_x or hi_y < lo_y:
+            return None
+        crop_x0 = int(rng.randint(lo_x, hi_x + 1))
+        crop_y0 = int(rng.randint(lo_y, hi_y + 1))
+        K_rgb = K_rgb.copy()
+        K_rgb[0, 2] -= crop_x0
+        K_rgb[1, 2] -= crop_y0
+        rgb = rgb[crop_y0:crop_y0 + ch, crop_x0:crop_x0 + cw]
+        keep = []
+        for j, b in enumerate(boxes):
+            cuj = (K_rgb @ b[:3].astype(np.float64))[:2] / b[2]
+            ok = 0 <= cuj[0] < cw and 0 <= cuj[1] < ch
+            if ok:
+                # 重新判「整框可见」：8 角点是否都在窗口内
+                cb = np.array([[-.5, -.5, -.5], [.5, -.5, -.5], [.5, .5, -.5], [-.5, .5, -.5],
+                               [-.5, -.5, .5], [.5, -.5, .5], [.5, .5, .5], [-.5, .5, .5]]) * b[3:6]
+                cb = cb @ R.from_euler('xyz', b[6:9]).as_matrix().T + b[:3]
+                uvc = (K_rgb @ cb.T).T
+                uvc = uvc[:, :2] / uvc[:, 2:3]
+                inside_c = int(((uvc[:, 0] >= 0) & (uvc[:, 0] < cw) & (uvc[:, 1] >= 0) & (uvc[:, 1] < ch)).sum())
+                qual[j] = bool(inside_c >= min_inside and np.linalg.norm(b[:3]) <= max_range)
+            keep.append(ok)
+        keep = np.array(keep, bool)
+        boxes, names, qual = boxes[keep], [n for n, k in zip(names, keep) if k], [q for q, k in zip(qual, keep) if k]
+        if len(boxes) == 0 or not any(qual):
+            return None
+        raw_w, raw_h = cw, ch
+        sx, sy = W / float(raw_w), H / float(raw_h)
+        K_s = K_rgb.copy()
+        K_s[0] *= sx
+        K_s[1] *= sy
+
     # ---- IR 对齐到 RGB：用最近合格目标中心处的视差整体平移 ----
     cw = cam_to_world(near_q[None, :3], E_rgb)
     uv_rgb, _ = world_to_pixel(cw, E_rgb, K_rgb)
     uv_ir, _ = world_to_pixel(cw, E_ir, K_ir)
     shift = (uv_rgb[0] - uv_ir[0])
     M = np.float32([[1, 0, shift[0]], [0, 1, shift[1]]])
-    ir_al = cv2.warpAffine(ir, M, (raw_w, raw_h), borderMode=cv2.BORDER_CONSTANT, borderValue=0)
+    ir_al = cv2.warpAffine(ir, M, ir.shape[1::-1], borderMode=cv2.BORDER_CONSTANT, borderValue=0)
+    if crop_wh is not None:
+        ir_al = ir_al[crop_y0:crop_y0 + raw_h, crop_x0:crop_x0 + raw_w]
 
     # ---- LiDAR 深度 / tag（直接投到缓存分辨率）----
     frames = sorted([f for f in os.listdir(os.path.join(base, 'images_rgb')) if f.endswith('.png')],
@@ -195,6 +240,7 @@ def process_frame(task):
         'seq': seq, 'frame': frame, 'K_raw': K_rgb.astype(np.float32), 'raw_wh': (raw_w, raw_h),
         'boxes9d': boxes.astype(np.float32), 'names': names, 'qualified': np.array(qual, bool),
         'lidar_noise': noise, 'ir_shift': shift.astype(np.float32), 'lidar_frame': frames[li],
+        'crop_xy': (crop_x0, crop_y0), 'crop_wh': crop_wh,
     }
     return rgb_s, ir_s, depth, tag, meta
 
@@ -213,6 +259,8 @@ def main():
     ap.add_argument('--min-inside', type=int, default=8)
     ap.add_argument('--max-label-range', type=float, default=40.0,
                     help='更远的框不进标签（归一化深度会超 1，且只有几个像素大）')
+    ap.add_argument('--crop-to-mav6d', action='store_true',
+                    help='按 MAV6D 归一化内参裁剪 621x349 再缩放，目标表观大小放大 1.65x，输入 fx 与 MAV6D 一致')
     ap.add_argument('--workers', type=int, default=8)
     ap.add_argument('--limit', type=int, default=0, help='调试用：只处理前 N 帧')
     args = ap.parse_args()
@@ -238,7 +286,13 @@ def main():
     dep_mm = np.lib.format.open_memmap(os.path.join(out_dir, 'depth.npy'), 'w+', np.uint16, (N, H, W))
     tag_mm = np.lib.format.open_memmap(os.path.join(out_dir, 'tag.npy'), 'w+', np.uint8, (N, H, W))
 
-    tasks = [(args.root, s, f, W, H, args.lidar_offset, args.max_label_range, args.max_range, args.min_inside)
+    crop_wh = None
+    if args.crop_to_mav6d:
+        # 1280 * (640/1280) / (1979.4/1920) = 621 ；高按 16:9
+        crop_wh = (621, 349)
+        print('裁剪到 %dx%d（归一化 fx 与 MAV6D 一致）' % crop_wh)
+    tasks = [(args.root, s, f, W, H, args.lidar_offset, args.max_label_range, args.max_range, args.min_inside,
+              crop_wh, abs(hash(s + f)) % (2 ** 31))
              for s, f in picked]
     metas = [None] * N
     ok = 0
@@ -262,6 +316,7 @@ def main():
         'classes': CLASSES, 'split': args.split, 'every': args.every,
         'lidar_offset': args.lidar_offset, 'max_range': args.max_range,
         'max_label_range': args.max_label_range, 'root': args.root, 'list': args.list,
+        'crop_wh': crop_wh,
     }
     with open(os.path.join(out_dir, 'index.pkl'), 'wb') as f:
         pickle.dump(index, f)
