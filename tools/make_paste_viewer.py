@@ -64,7 +64,7 @@ HTML = r'''<!DOCTYPE html>
  #top{flex-wrap:wrap}
  .thumb canvas{max-width:100%;height:auto}
  .cap{position:absolute;left:4px;top:2px;color:#fff;font-size:12px;text-shadow:0 0 3px #000}
- #grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:0 12px 16px}
+ #grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:0 12px 16px}
  .thumb{position:relative;cursor:pointer;border:2px solid transparent}
  .thumb.sel{border-color:#6f6}
  #checks{padding:0 12px 16px;color:#bbb}
@@ -86,7 +86,10 @@ HTML = r'''<!DOCTYPE html>
 <div id="checks"></div>
 <script>
 const DATA = __DATA__;
-const MODS = [['rgb','RGB 翻译背景（学生输入）'],['rgb_sim','RGB 仿真背景（教师输入）'],['ir','IR'],['dvs','DVS'],['lidar','LiDAR 深度 + tag(品红)'],['radar','雷达速度热图']];
+const MODS = [['rgb','RGB 翻译背景（学生输入）','uv'],['rgb_sim','RGB 仿真背景（教师输入）','uv'],['ir','IR','uv'],['dvs','DVS','uv'],
+              ['lidar','LiDAR 深度 + tag(品红)，从 B 的新点云投影','uv'],['radar','雷达速度热图','uv'],
+              ['rgb_src','A 帧原始 RGB（源，原框）','uv_src'],['lidar_src','A 帧原始 LiDAR（源，原框：原始噪声长这样）','uv_src']];
+const uvFor = (d, k) => (d[MODS[k][2]] || d.uv);
 const EDGES = [[0,1],[1,2],[2,3],[3,0],[4,5],[5,6],[6,7],[7,4],[0,4],[1,5],[2,6],[3,7]];
 let cur = 0, mod = 0, showBox = true, showLab = true, zoomF = 4;
 const imgs = {};
@@ -116,18 +119,19 @@ function render(){
   const draw = () => {
     ctx.fillStyle='#000'; ctx.fillRect(0,0,big.width,big.height);
     ctx.drawImage(im,0,0,big.width,big.height);
-    drawBox(ctx, d.uv, 2, 2, 0, 0, 2, d.cls+' '+d.range_new.toFixed(1)+'m');
+    const uvm = uvFor(d, mod);
+    drawBox(ctx, uvm, 2, 2, 0, 0, 2, d.cls+' '+(MODS[mod][2]==='uv_src' ? d.range_old : d.range_new).toFixed(1)+'m');
     document.getElementById('bigcap').textContent = MODS[mod][1];
     // 放大窗：以框中心为中心，取 (512/zoomF) x (576/zoomF) 的窗口
     const zc = document.getElementById('zoomc'), zx = zc.getContext('2d');
-    const xs = d.uv.map(p=>p[0]), ys = d.uv.map(p=>p[1]);
+    const xs = uvm.map(p=>p[0]), ys = uvm.map(p=>p[1]);
     const cx = (Math.min(...xs)+Math.max(...xs))/2, cy = (Math.min(...ys)+Math.max(...ys))/2;
     const ww = zc.width/zoomF/2, wh = zc.height/zoomF/2;   // 512x288 坐标下的窗口尺寸
     let ox = Math.max(0, Math.min(512-ww, cx-ww/2)), oy = Math.max(0, Math.min(288-wh, cy-wh/2));
     zx.imageSmoothingEnabled = false;
     zx.fillStyle='#000'; zx.fillRect(0,0,zc.width,zc.height);
     zx.drawImage(im, ox, oy, ww, wh, 0, 0, zc.width, zc.height);
-    drawBox(zx, d.uv, zoomF*2, zoomF*2, ox, oy, 2, '');
+    drawBox(zx, uvm, zoomF*2, zoomF*2, ox, oy, 2, '');
   };
   im.addEventListener('load', draw, {once:true}); if(im.complete && im.naturalWidth) draw();   // 两条都挂，避免 complete/onload 竞争漏画
   // 缩略图
@@ -138,13 +142,13 @@ function render(){
     const cap = document.createElement('div'); cap.className='cap'; cap.textContent=(k+1)+'. '+m[1]; div.appendChild(cap);
     g.appendChild(div);
     const t = loadImg('img/'+d.name+'_'+m[0]+'.jpg');
-    const dr = ()=>{ const x=c.getContext('2d'); x.drawImage(t,0,0,512,288); drawBox(x,d.uv,1,1,0,0,1,''); };
+    const dr = ()=>{ const x=c.getContext('2d'); x.drawImage(t,0,0,512,288); drawBox(x,uvFor(d,k),1,1,0,0,1,''); };
     t.addEventListener('load', dr, {once:true}); if(t.complete && t.naturalWidth) dr();
   });
   const ck = d.checks || {};
   const f = (k, n=2) => (typeof ck[k]==='number' ? ck[k].toFixed(n) : '—');
   document.getElementById('checks').innerHTML = '<table>'+
-    '<tr><td>LiDAR 无人机点在框内比例（变换前 -> 后，应相等）</td><td>'+f('lidar_in_box_old')+' -> '+f('lidar_in_box_new')+'（'+f('lidar_n',0)+' 点）</td></tr>'+
+    '<tr><td>LiDAR 无人机点在框内比例：A 原始 -> 沿射线去噪 -> 按 B 的 σ 重新加噪</td><td>'+f('lidar_in_box_old')+' -> '+f('lidar_in_box_denoised')+' -> '+f('lidar_in_box_new')+'（'+f('lidar_n',0)+' 点；σ_A '+f('sigma_A',1)+' m，σ_B '+f('sigma_B',1)+' m；射线穿框 '+f('lidar_ray_hit_frac')+'）</td></tr>'+
     '<tr><td>雷达回波在框内比例（前 -> 后）</td><td>'+f('radar_in_box_old')+' -> '+f('radar_in_box_new')+'（'+f('radar_n',0)+' 点）</td></tr>'+
     '<tr><td>贴入像素落在新框凸包内的比例</td><td>'+f('alpha_in_hull')+'</td></tr>'+
     '<tr><td>tag 像素落在新框凸包内的比例</td><td>'+f('tag_px_in_hull')+'</td></tr>'+
@@ -163,7 +167,7 @@ document.addEventListener('keydown',(e)=>{
   else if(e.key==='b'||e.key==='B'){document.getElementById('tbox').onclick();}
   else if(e.key==='l'||e.key==='L'){document.getElementById('tlab').onclick();}
   else if(e.key==='Home'){cur=0;render();} else if(e.key==='End'){cur=DATA.length-1;render();}
-  else if(e.key>='1'&&e.key<='6'){mod=+e.key-1;render();}
+  else if(e.key>='1'&&e.key<='8'){mod=Math.min(+e.key-1, MODS.length-1);render();}
 });
 render();
 </script></body></html>'''
@@ -185,13 +189,18 @@ def main():
         H, W = rgb.shape[:2]
         panels = {'rgb': rgb, 'rgb_sim': rgb_sim, 'ir': cv2.cvtColor(ir, cv2.COLOR_GRAY2BGR), 'dvs': dvs,
                   'lidar': depth_vis(z['depth'], z['tag']), 'radar': hm_vis(z['radar_hm'])}
+        has_src = 'depth_src' in z.files
+        if has_src:
+            panels['rgb_src'] = z['rgb_src']
+            panels['lidar_src'] = depth_vis(z['depth_src'], z['tag_src'])
         for k, im in panels.items():
             cv2.imwrite(os.path.join(out, 'img', '%s_%s.jpg' % (name, k)), im, [cv2.IMWRITE_JPEG_QUALITY, 92])
         b = z['box9d'].astype(np.float64)
         uv = corners_uv(b, z['K_raw'], z['raw_wh'], W, H)
+        uv_src = z['uv_src'].round(2).tolist() if has_src else None
         ck = z['checks'].item() if 'checks' in z else {}
         tr_s = float(z['s'])
-        data.append({'name': name, 'cls': str(z['name']), 'dim': [float(v) for v in b[3:6]], 'uv': uv,
+        data.append({'name': name, 'cls': str(z['name']), 'dim': [float(v) for v in b[3:6]], 'uv': uv, 'uv_src': uv_src,
                      'range_old': float(ck.get('range_old', np.linalg.norm(b[:3]) * tr_s)), 'range_new': float(np.linalg.norm(b[:3])),
                      's': tr_s, 'px': float(ck.get('px_new', max(max(p[0] for p in uv) - min(p[0] for p in uv), max(p[1] for p in uv) - min(p[1] for p in uv)))),
                      'matte': float(ck.get('matte_frac', -1)), 'A': str(z['A']), 'B': str(z['B']),

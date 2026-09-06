@@ -120,6 +120,30 @@ def inside_obb(pts, b):
     return np.all(np.abs(local) <= b[3:6] / 2.0 + 1e-6, axis=1)
 
 
+def denoise_along_rays(pts, origin, b):
+    """LiDAR 距离噪声是沿射线的（CARLA NoiseStdDev）：把每个点沿「传感器原点 -> 点」的射线收回到 OBB 内
+    （slab 法求射线与框的交段，把射线参数夹到交段里；射线不穿框的点收到框中心所在的垂直平面）。
+    返回去噪后的点和每条射线的单位方向。"""
+    Rm = Rot.from_euler('xyz', b[6:9]).as_matrix()
+    d = pts - origin
+    t = np.linalg.norm(d, axis=1)
+    dirs = d / np.maximum(t[:, None], 1e-9)
+    o_l = (origin - b[:3]) @ Rm                  # 射线原点 / 方向到框系
+    d_l = dirs @ Rm
+    half = b[3:6] / 2.0
+    with np.errstate(divide='ignore', invalid='ignore'):
+        t1 = (-half - o_l) / d_l
+        t2 = (half - o_l) / d_l
+    tmin = np.where(np.isfinite(t1), np.minimum(t1, t2), -np.inf)
+    tmax = np.where(np.isfinite(t2), np.maximum(t1, t2), np.inf)
+    t_in = tmin.max(axis=1)
+    t_out = tmax.min(axis=1)
+    hit = (t_out >= t_in) & (t_out > 0)
+    t_c = float(np.dot(b[:3] - origin, dirs.mean(axis=0)))   # 框中心的近似射线距离
+    t_new = np.where(hit, np.clip(t, np.maximum(t_in, 0), t_out), np.maximum(t_c, 0.1))
+    return origin + dirs * t_new[:, None], dirs, hit
+
+
 # ----------------------------------------------------------------------------- 数据读取
 class Frame:
     """一帧的原始多模态数据 + 缓存索引里的窗口/标签。所有 3D 量在 RGB 相机 OpenCV 系。"""
@@ -363,6 +387,17 @@ def paste(A, B, plates, rng, args):
 
     r_old = float(np.linalg.norm(c))
     for _ in range(args.tries):
+        if getattr(args, 'identity', False):
+            # 自检：A=B、同位置、同距离 —— 走完整条链路后一切都应回到原样
+            s, px_new = 1.0, px_now
+            uvB = uvA.copy()
+            R_cam = np.eye(3)
+            c_new = c.copy()
+            t = np.zeros(3)
+            R_new = Rb.copy()
+            b_new = b.copy()
+            uv_new = project(box_corners(b_new), B.K_s)
+            break
         if args.range_ref_arr is not None:
             # 用户定的规则（2026-09-06）：先抽 MAV6D 的距离 r_ref（2-5 m），再按机型大小等比例放远：
             #   r_new = r_ref * max(dim) / ref_dim   —— 小机型 2-5 m，大机型按比例 5-10 m 甚至更远，
@@ -489,8 +524,20 @@ def paste(A, B, plates, rng, args):
         'matte_frac': matte_frac,
     }
     # ---- 点云：无人机的点刚体变换到 B ----
+    # LiDAR：先沿 A 的 LiDAR 射线去噪（收回框内），刚体变换，再沿 B 的 LiDAR 射线按 B 序列的 σ 重新加噪——
+    # 噪声方向 / 大小都是 B 的传感器的，不是把 A 的噪声整体搬过去（LiDAR 离相机 2.4 m，绕相机中心转会让散布方向偏）
     lid_A = A.lidar_cam[lid_idx]
-    lid_new_cam = lid_A @ R_cam.T + t
+    o_A = A._lidar_to_cam(np.zeros((1, 3)))[0]
+    o_B = B._lidar_to_cam(np.zeros((1, 3)))[0]
+    lid_A_clean, _, hit_A = denoise_along_rays(lid_A, o_A, b)
+    lid_clean_cam = lid_A_clean @ R_cam.T + t
+    sigma_B = float(max(B.meta.get('lidar_noise', 0.0), 0.0))
+    dirs_B = lid_clean_cam - o_B
+    dirs_B /= np.maximum(np.linalg.norm(dirs_B, axis=1, keepdims=True), 1e-9)
+    if getattr(args, 'identity', False):
+        lid_new_cam = lid_A @ R_cam.T + t            # 自检不去噪不加噪：点应逐个回到原坐标
+    else:
+        lid_new_cam = lid_clean_cam + dirs_B * (rng.randn(len(lid_idx), 1) * sigma_B)
     lid_new_raw = np.c_[B.cam_to_lidar(lid_new_cam), A.lidar_raw[lid_idx, 3], np.ones(len(lid_idx))]
     lidar_aug = np.r_[B.lidar_raw[B_lid_bg], lid_new_raw]
     cam_all = np.r_[B.lidar_cam[B_lid_bg], lid_new_cam]
@@ -517,6 +564,11 @@ def paste(A, B, plates, rng, args):
     out['transform'] = {'R_cam': R_cam, 't': t, 's': s, 'range_old': float(np.linalg.norm(c)), 'range_new': float(np.linalg.norm(c_new))}
     frac_old = float(inside_obb(lid_A, b).mean())
     frac_new = float(inside_obb(lid_new_cam, b_new).mean())
+    frac_clean = float(inside_obb(lid_clean_cam, b_new).mean())
+    # A 帧原始 LiDAR（A 自己的窗口）留给查看器对照
+    out['depth_src'], out['tag_src'] = A.render_depth_tag(A.lidar_cam, (A.lidar_owner == A.kept).astype(int))
+    out['uv_src'] = project(box_corners(b), A.K_s)
+    out['rgb_src'] = cv2.resize(A.win(A.rgb), (W, H), interpolation=cv2.INTER_AREA)
     rad_old = float(inside_obb(rad_A, b).mean()) if len(rad_idx) else -1
     rad_new = float(inside_obb(rad_new_cam, b_new).mean()) if len(rad_idx) else -1
     # 贴上的像素区域 vs 新框凸包（缓存坐标）
@@ -526,7 +578,9 @@ def paste(A, B, plates, rng, args):
     # 新框在 B 的 512 分辨率下的表观大小
     # 贴上去的像素（alpha>0.5）应全部落在新框凸包内（紧致 matte 比凸包小，所以看「alpha 在凸包内的比例」而不是 IoU）
     a_in = float((hull_new & a_bin).sum()) / max(float(a_bin.sum()), 1.0)
-    out['checks'] = {'lidar_in_box_old': frac_old, 'lidar_in_box_new': frac_new, 'lidar_n': int(len(lid_idx)),
+    out['checks'] = {'lidar_in_box_old': frac_old, 'lidar_in_box_new': frac_new, 'lidar_in_box_denoised': frac_clean,
+                     'lidar_ray_hit_frac': float(hit_A.mean()), 'sigma_A': float(max(A.meta.get('lidar_noise', 0.0), 0.0)),
+                     'sigma_B': sigma_B, 'lidar_n': int(len(lid_idx)),
                      'radar_in_box_old': rad_old, 'radar_in_box_new': rad_new, 'radar_n': int(len(rad_idx)),
                      'alpha_vs_box_iou': iou, 'alpha_in_hull': a_in, 'matte_frac': matte_frac, 'px_new': float(px_new),
                      'corners_inside': True,
@@ -736,6 +790,8 @@ def main():
     ap.add_argument('--tone', type=float, default=0.6, help='色调匹配强度 0-1（0 = 关）')
     ap.add_argument('--poisson', action='store_true', help='RGB 用泊松融合（seamlessClone）而不是纯 alpha 合成')
     ap.add_argument('--gallery', action='store_true', help='出精简版样图（2x3：RGB/IR/DVS/LiDAR投影/雷达热图/放大）+ 每 20 张一页的总览')
+    ap.add_argument('--selftest', type=int, default=0,
+                    help='坐标链路自检：取 N 帧，A=B、恒等变换走完整条链路，检查 LiDAR/雷达点逐点回到原坐标、深度图与缓存一致、框不变')
     ap.add_argument('--balance-classes', action='store_true', default=True, help='源机型轮流选，保证每个机型都有')
     ap.add_argument('--no-sheets', action='store_true', help='不出大图（只做统计 / 批量生成）')
     ap.add_argument('--tries', type=int, default=30)
@@ -800,6 +856,50 @@ def main():
     srcs = [i for i in valid if vis[i] >= args.min_vis]
     print('背景帧 %d（有翻译底图），源无人机帧 %d（RGB 可见）' % (len(bgs), len(srcs)))
 
+    if args.selftest > 0:
+        # ---- 坐标链路自检：A=B、恒等变换 ----
+        c_depth = np.load(os.path.join(cs, 'depth.npy'), mmap_mode='r')
+        c_tag = np.load(os.path.join(cs, 'tag.npy'), mmap_mode='r')
+        args.identity, args.tone = True, 0.0
+        n_ok = 0
+        print('%-34s %10s %10s %10s %9s %9s %8s %8s' % ('frame', 'lidar_xyz', 'lidar_int', 'radar_raw', 'depth_eq', 'tag_eq', 'box', 'rgb_eq'))
+        for i in bgs[:args.selftest]:
+            F = get(int(i))
+            if (F.lidar_owner == F.kept).sum() < args.min_lidar_pts:
+                continue
+            out = paste(F, F, {'rgb': np.ascontiguousarray(plate_rgb[i])}, rng, args)
+            if out is None:
+                print(metas[i]['frame'], 'paste 返回 None'); continue
+            n_l = int((F.lidar_owner == F.kept).sum())
+            n_r = int((F.radar_owner == F.kept).sum())
+            lid_back = out['lidar_pts'][-n_l:]
+            lid_orig = F.lidar_raw[F.lidar_owner == F.kept]
+            d_xyz = float(np.abs(lid_back[:, :3] - lid_orig[:, :3]).max())
+            d_int = float(np.abs(lid_back[:, 3] - lid_orig[:, 3]).max())
+            if n_r:
+                rad_back = out['radar_pts'][-n_r:]
+                rad_orig = F.radar_raw[F.radar_owner == F.kept]
+                # 方位角可能差 2π
+                da = np.abs(np.angle(np.exp(1j * (rad_back[:, 1] - rad_orig[:, 1]))))
+                d_rad = float(max(da.max(), np.abs(rad_back[:, 2] - rad_orig[:, 2]).max(), np.abs(rad_back[:, 3] - rad_orig[:, 3]).max(),
+                                  np.abs(rad_back[:, 0] - rad_orig[:, 0]).max()))
+            else:
+                d_rad = float('nan')
+            dep_eq = float((out['depth'] == np.asarray(c_depth[i])).mean())
+            tag_eq = float((out['tag'] == np.asarray(c_tag[i])).mean())
+            d_box = float(np.abs(out['box9d'] - F.boxes[F.kept]).max())
+            # 合成图在 matte 内应与原图窗口逐像素一致（alpha=1 处）
+            orig_win = cv2.resize(F.win(F.rgb), (W, H), interpolation=cv2.INTER_AREA)
+            hard = out['alpha'] >= 0.999
+            # 合成走了 float 预乘 alpha + 缩放，与直接缩放的原图差 ±1 灰度是正常的：按容差 2 统计
+            rgb_eq = float((np.abs(out['rgb_sim'][hard].astype(int) - orig_win[hard].astype(int)).max(axis=1) <= 2).mean()) if hard.any() else float('nan')
+            ok = d_xyz < 1e-6 and d_int < 1e-6 and (np.isnan(d_rad) or d_rad < 1e-6) and dep_eq > 0.999 and tag_eq > 0.999 and d_box < 1e-6
+            n_ok += ok
+            print('%-34s %10.2e %10.2e %10s %9.4f %9.4f %8.1e %8.3f %s' % (
+                metas[i]['frame'][:34], d_xyz, d_int, ('%.2e' % d_rad) if not np.isnan(d_rad) else 'n/a', dep_eq, tag_eq, d_box, rgb_eq, 'OK' if ok else 'FAIL'))
+        print('自检通过 %d 帧' % n_ok)
+        return 0
+
     by_w = {}
     src_cls = {}
     n_big = 0
@@ -855,13 +955,14 @@ def main():
                             name=out['name'], K_raw=out['K_raw'], raw_wh=np.array(out['raw_wh']), R_cam=out['transform']['R_cam'],
                             t=out['transform']['t'], s=out['transform']['s'], A=metas[ia]['seq'] + '/' + metas[ia]['frame'],
                             B=metas[ib]['seq'] + '/' + metas[ib]['frame'],
+                            depth_src=out['depth_src'], tag_src=out['tag_src'], uv_src=out['uv_src'], rgb_src=out['rgb_src'],
                             checks=np.array(dict(out['checks'], range_old=out['transform']['range_old'],
                                                  range_new=out['transform']['range_new'], cls=src_cls.get(ia, '?')), dtype=object))
         ck = out['checks']
-        print('%s  s=%.2f  range %.1f->%.1f  px %.0f  lidar in-box %.2f->%.2f (%d)  radar %.2f->%.2f (%d)  matte %.2f  in-hull %.2f  tag-in-hull %.2f' % (
+        print('%s  s=%.2f  range %.1f->%.1f  px %.0f  lidar in-box A %.2f -> 去噪 %.2f -> B加噪(σ %.1f->%.1f) %.2f (%d, 射线穿框 %.2f)  radar %.2f->%.2f (%d)  matte %.2f  in-hull %.2f' % (
             name, out['transform']['s'], out['transform']['range_old'], out['transform']['range_new'], ck['px_new'],
-            ck['lidar_in_box_old'], ck['lidar_in_box_new'], ck['lidar_n'], ck['radar_in_box_old'], ck['radar_in_box_new'], ck['radar_n'],
-            ck['matte_frac'], ck['alpha_in_hull'], ck['tag_px_in_hull']), flush=True)
+            ck['lidar_in_box_old'], ck['lidar_in_box_denoised'], ck['sigma_A'], ck['sigma_B'], ck['lidar_in_box_new'], ck['lidar_n'], ck['lidar_ray_hit_frac'],
+            ck['radar_in_box_old'], ck['radar_in_box_new'], ck['radar_n'], ck['matte_frac'], ck['alpha_in_hull']), flush=True)
         ck['cls'] = src_cls.get(ia, '?')
         ck['range_new'] = out['transform']['range_new']
         ck['dim'] = float(max(A.boxes[A.kept][3:6]))
@@ -877,7 +978,7 @@ def main():
             px = [r['px_new'] for r in rs]
             print('  机型 %-16s 边长 %.2f m  样本 %3d  距离 %.1f-%.1f m (中位 %.1f)  表观 %.0f-%.0f px (中位 %.0f)' % (
                 c, rs[0]['dim'], len(rs), min(rg), max(rg), np.median(rg), min(px), max(px), np.median(px)))
-        keys = ['lidar_in_box_old', 'lidar_in_box_new', 'matte_frac', 'alpha_in_hull', 'tag_px_in_hull', 'px_new']
+        keys = ['lidar_in_box_old', 'lidar_in_box_denoised', 'lidar_in_box_new', 'lidar_ray_hit_frac', 'matte_frac', 'alpha_in_hull', 'tag_px_in_hull', 'px_new']
         print('汇总（%d 样本）: ' % len(results) + '  '.join('%s=%.2f' % (kk, np.mean([r[kk] for r in results])) for kk in keys))
     return 0
 
