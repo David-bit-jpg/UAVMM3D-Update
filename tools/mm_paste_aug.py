@@ -833,7 +833,7 @@ def main():
             continue
         if args.balance_classes:
             # 机型轮流：在本天气可用的机型里选目前样本最少的那个
-            avail = sorted(set(src_cls[i] for i in pool), key=lambda c: (cls_count[c], rng.rand()))
+            avail = sorted(sorted(set(src_cls[i] for i in pool)), key=lambda c: (cls_count[c], rng.rand()))   # 先按名字排，seed 可复现
             pool = [i for i in pool if src_cls[i] == avail[0]]
         ia = int(rng.choice(pool))
         A, B = get(ia), get(ib)
@@ -854,7 +854,9 @@ def main():
                             radar_hm=out['radar_hm'], lidar_pts=out['lidar_pts'], radar_pts=out['radar_pts'], box9d=out['box9d'],
                             name=out['name'], K_raw=out['K_raw'], raw_wh=np.array(out['raw_wh']), R_cam=out['transform']['R_cam'],
                             t=out['transform']['t'], s=out['transform']['s'], A=metas[ia]['seq'] + '/' + metas[ia]['frame'],
-                            B=metas[ib]['seq'] + '/' + metas[ib]['frame'])
+                            B=metas[ib]['seq'] + '/' + metas[ib]['frame'],
+                            checks=np.array(dict(out['checks'], range_old=out['transform']['range_old'],
+                                                 range_new=out['transform']['range_new'], cls=src_cls.get(ia, '?')), dtype=object))
         ck = out['checks']
         print('%s  s=%.2f  range %.1f->%.1f  px %.0f  lidar in-box %.2f->%.2f (%d)  radar %.2f->%.2f (%d)  matte %.2f  in-hull %.2f  tag-in-hull %.2f' % (
             name, out['transform']['s'], out['transform']['range_old'], out['transform']['range_new'], ck['px_new'],
