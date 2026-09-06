@@ -27,7 +27,7 @@ def main():
     picks = []      # (root, idx_in_src, tag)
     src_meta = {}
     for spec in args.input:
-        root, min_vis, cap, tag = spec.split(':')
+        root, min_vis, cap, tag = spec.rsplit(':', 3)          # 路径里有盘符冒号，从右边切
         d = os.path.join(root, 'train')
         idx = pickle.load(open(os.path.join(d, 'index.pkl'), 'rb'))
         valid = np.asarray(idx['valid_idx'])

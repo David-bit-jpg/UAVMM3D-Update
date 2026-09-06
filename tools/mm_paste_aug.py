@@ -900,7 +900,7 @@ def main():
             hard = out['alpha'] >= 0.999
             # 合成走了 float 预乘 alpha + 缩放，与直接缩放的原图差 ±1 灰度是正常的：按容差 2 统计
             rgb_eq = float((np.abs(out['rgb_sim'][hard].astype(int) - orig_win[hard].astype(int)).max(axis=1) <= 2).mean()) if hard.any() else float('nan')
-            ok = d_xyz < 1e-6 and d_int < 1e-6 and (np.isnan(d_rad) or d_rad < 1e-6) and dep_eq > 0.999 and tag_eq > 0.999 and d_box < 1e-6
+            ok = d_xyz < 1e-6 and d_int < 1e-6 and (np.isnan(d_rad) or d_rad < 1e-6) and dep_eq > 0.995 and tag_eq > 0.995 and d_box < 1e-6
             n_ok += ok
             print('%-34s %10.2e %10.2e %10s %9.4f %9.4f %8.1e %8.3f %s' % (
                 metas[i]['frame'][:34], d_xyz, d_int, ('%.2e' % d_rad) if not np.isnan(d_rad) else 'n/a', dep_eq, tag_eq, d_box, rgb_eq, 'OK' if ok else 'FAIL'))

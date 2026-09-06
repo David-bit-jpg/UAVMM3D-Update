@@ -27,6 +27,7 @@ if [ ! -f "$MIX/READY" ]; then
   say "合并缓存"
   "$PY" merge_mmcaches.py --out "$MIX" --input "$AUG/cache:0:0:aug" --input "$SRC:5:2000:orig" --test-from orig --test-n 100 2>&1 | tail -4 | tee -a "$LOG/paste_transfer.log"
 fi
+[ -f "$MIX/READY" ] || { say "合并缓存失败，停止"; exit 1; }
 
 # ---- 阶段 1：纯 RGB 学生 M0 在混合集上训练 ----
 sim() {  # tag cfg extra...
@@ -42,6 +43,7 @@ if [ -z "$M0_CK" ]; then
   sim M0_mix $MM/student_rgb_mix.yaml
   M0_CK=$(last_ckpt $OUT/mmcache/student_rgb_mix/M0_mix)
 fi
+[ -n "$M0_CK" ] || { say "M0 训练没有产出 ckpt，停止（看 $LOG/M0_mix.log）"; exit 1; }
 say "M0=$M0_CK"
 
 # ---- 阶段 2：迁到 MAV6D（与 run_kd_pipeline.sh 同协议）----
