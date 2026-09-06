@@ -800,6 +800,7 @@ def main():
     ap.add_argument('--feather', type=int, default=6)
     ap.add_argument('--sigma', type=float, default=25.0)
     ap.add_argument('--min-vis', type=float, default=5.0)
+    ap.add_argument('--max-cache-frames', type=int, default=300, help='内存里最多缓存多少帧原始数据（LRU）')
     args = ap.parse_args()
     os.makedirs(args.out, exist_ok=True)
     rng = np.random.RandomState(args.seed)
@@ -819,11 +820,17 @@ def main():
     idx = pickle.load(open(os.path.join(cs, 'index.pkl'), 'rb'))
     metas, valid, W, H = idx['metas'], list(idx['valid_idx']), int(idx['W']), int(idx['H'])
     vis = np.load(os.path.join(cs, 'vis_score.npy'))
-    cache = {}
+    import collections as _c
+    cache = _c.OrderedDict()
 
     def get(i):
-        if i not in cache:
-            cache[i] = Frame(args.root, metas[i], W, H)
+        # LRU：每帧原生五模态 + 点云约 10 MB，几千帧的池子不能全留在内存
+        if i in cache:
+            cache.move_to_end(i)
+            return cache[i]
+        cache[i] = Frame(args.root, metas[i], W, H)
+        while len(cache) > args.max_cache_frames:
+            cache.popitem(last=False)
         return cache[i]
 
     es = os.path.join(args.erased, args.split)

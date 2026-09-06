@@ -189,10 +189,13 @@ def main():
     ap.add_argument('--out', default='', help='默认 <dir>/viewer')
     ap.add_argument('--cache', default='', help='背景帧所在缓存（给出则多两格：B 帧增广前的原始 RGB / LiDAR，用来对照稀疏程度）')
     ap.add_argument('--split', default='train')
+    ap.add_argument('--limit', type=int, default=0, help='只做前 N 个样本')
     args = ap.parse_args()
     out = args.out or os.path.join(args.dir, 'viewer')
     os.makedirs(os.path.join(out, 'img'), exist_ok=True)
     files = sorted(glob.glob(os.path.join(args.dir, '*.npz')))
+    if args.limit:
+        files = files[:args.limit]
     cache = None
     if args.cache:
         cs = os.path.join(args.cache, args.split)
