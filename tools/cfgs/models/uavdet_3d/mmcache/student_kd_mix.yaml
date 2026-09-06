@@ -13,6 +13,9 @@ MODEL:
         TEACHER_CKPT: 'SET_AT_LAUNCH.pth'     # 用 --set MODEL.DISTILL.TEACHER_CKPT <path> 传入
         STUDENT_CHANNELS: 3
         TEACHER_CHANNELS: 6
+        # 2026-09-07 第一次跑（v1，逐元素 L2）：kd_feat 训到最后仍 ~390，总损失被它独占，GRAD_NORM_CLIP 10 之下
+        # 检测项几乎拿不到梯度，域内召回从 M0 的 0.51 掉到 0.22（S1MT 0.24）。改成逐像素余弦（尺度不变，[0,2]）。
+        FEAT_MODE: 'cos'
         W_FEAT: 1.0
         W_CENTER_COS: 1.0
         W_HM: 1.0
