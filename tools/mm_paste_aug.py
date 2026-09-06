@@ -31,8 +31,11 @@ import numpy as np
 from scipy.spatial.transform import Rotation as Rot
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'))
 from build_mm_cache import (CARLA_TO_OPENCV, OPENCV_TO_CARLA, cam_to_world, world_to_pixel, frame_sort_key,  # noqa: E402
                             corners_to_9params, class_of)
+# 可视化用用户原有的投影代码（LiDAR 点投影 / 雷达速度热图），保证口径与原数据集工具一致
+from uavdet3d.datasets.laam6d.dataset_utils import project_lidar_and_get_uvz_rgb_tag, radar_to_velocity_heatmap  # noqa: E402
 
 
 def load_full_boxes(base, frame, max_label_range=40.0):
@@ -433,10 +436,6 @@ def paste(A, B, plates, rng, args):
     alpha = to_cache(warp(alpha_full)).astype(np.float32)
     if alpha.ndim == 3:
         alpha = alpha[..., 0]
-    spr = {'rgb': to_cache(warp(rgb_clean * alpha_full[..., None])),
-           'ir': to_cache(warp(A.ir_al * alpha_full)),
-           'dvs': to_cache(warp(A.dvs_al * alpha_full[..., None]))}
-    # 预乘 alpha 已经在 sprite 里：合成 = plate*(1-alpha) + sprite
     # B 的底图：RGB 学生版 = SD 翻译过的（--make-plates 抹除 + 翻译脚本）；其余现算：
     # 全部目标 inpaint 抹掉，IR / DVS 在各自原始图上抹再按【新目标深度】平移对齐（与缓存「在目标深度对齐」的约定一致，
     # 否则 B 原来的近目标会带来几百像素的平移把半幅图移出画面）
@@ -445,12 +444,47 @@ def paste(A, B, plates, rng, args):
     plates['ir'] = to_cache(B._shifted(B.erased('ir'), B.shift_for('ir', c_new)))
     plates['dvs'] = to_cache(B._shifted(B.erased('dvs'), B.shift_for('dvs', c_new)))
 
-    def comp(plate, sprite):
+    # ---- 色调匹配：无人机的亮度 / 对比度向贴入处背景的统计靠拢（雾天自然变淡、阴天变灰）----
+    # A 帧无人机周围的背景环（原生坐标） vs B 底图贴入区域（缓存坐标），逐通道 I' = I + tone*[(I-muA)*(sigB/sigA) + muB - I]
+    a_hard = alpha_full > 0.05
+    ring = (cv2.dilate(a_hard.astype(np.uint8), np.ones((41, 41), np.uint8)) > 0) & ~a_hard
+    dst_region = cv2.dilate((alpha > 0.05).astype(np.uint8), np.ones((15, 15), np.uint8)) > 0
+
+    def tone(plate):
+        if args.tone <= 0 or ring.sum() < 50 or dst_region.sum() < 50:
+            return rgb_clean
+        muA, sgA = A.rgb[ring].astype(np.float32).mean(0), A.rgb[ring].astype(np.float32).std(0) + 1.0
+        muB, sgB = plate[dst_region].astype(np.float32).mean(0), plate[dst_region].astype(np.float32).std(0) + 1.0
+        ratio = np.clip(sgB / sgA, 0.5, 1.5)
+        I = rgb_clean.astype(np.float32)
+        J = (I - muA) * ratio + muB
+        return np.clip(I + args.tone * (J - I), 0, 255).astype(np.uint8)
+
+    spr = {'rgb': to_cache(warp(tone(plates['rgb']) * alpha_full[..., None])),
+           'rgb_sim': to_cache(warp(tone(plates['rgb_sim']) * alpha_full[..., None])),
+           'ir': to_cache(warp(A.ir_al * alpha_full)),
+           'dvs': to_cache(warp(A.dvs_al * alpha_full[..., None]))}
+
+    # 预乘 alpha 已经在 sprite 里：合成 = plate*(1-alpha) + sprite
+    def comp(plate, sprite, poisson=False):
         a = alpha[..., None] if plate.ndim == 3 else alpha
-        return np.clip(plate.astype(np.float32) * (1 - a) + sprite.astype(np.float32), 0, 255).astype(np.uint8)
+        img = np.clip(plate.astype(np.float32) * (1 - a) + sprite.astype(np.float32), 0, 255).astype(np.uint8)
+        if poisson and plate.ndim == 3:
+            # 泊松融合：保留机身内部梯度、边界颜色与背景连续。掩码不能贴到图像边界
+            m = (cv2.dilate((alpha > 0.3).astype(np.uint8), np.ones((5, 5), np.uint8)) * 255)
+            m[:2, :] = m[-2:, :] = 0
+            m[:, :2] = m[:, -2:] = 0
+            ys, xs = np.where(m > 0)
+            if len(ys) > 20:
+                ctr = (int((xs.min() + xs.max()) / 2), int((ys.min() + ys.max()) / 2))
+                try:
+                    img = cv2.seamlessClone(img, plate, m, ctr, cv2.NORMAL_CLONE)
+                except cv2.error:
+                    pass
+        return img
 
     out = {
-        'rgb': comp(plates['rgb'], spr['rgb']), 'rgb_sim': comp(plates['rgb_sim'], spr['rgb']),
+        'rgb': comp(plates['rgb'], spr['rgb'], args.poisson), 'rgb_sim': comp(plates['rgb_sim'], spr['rgb_sim'], args.poisson),
         'ir': comp(plates['ir'], spr['ir']), 'dvs': comp(plates['dvs'], spr['dvs']), 'alpha': alpha,
         'matte_frac': matte_frac,
     }
@@ -555,6 +589,72 @@ def bev(cam_pts, tags, b, size=(512, 288), rng_m=(-8, 8, 0, 24)):
     return img
 
 
+def lidar_panel_user(B, lidar_pts, img_shape=(288, 512)):
+    """用用户原代码 project_lidar_and_get_uvz_rgb_tag 投影增广后的点云（B 的 LiDAR 系），按深度上色，tag=1 品红。"""
+    res = project_lidar_and_get_uvz_rgb_tag(lidar_pts.astype(np.float64), B.L_ext, B.E['rgb'], B.K_s,
+                                            np.zeros(img_shape + (3,), np.uint8))
+    img = np.zeros(img_shape + (3,), np.uint8)
+    if len(res) == 0:
+        return img
+    z = np.clip(res[:, 2] / 40.0, 0, 1)
+    cols = cv2.applyColorMap((255 * (1 - z)).astype(np.uint8).reshape(-1, 1), cv2.COLORMAP_JET).reshape(-1, 3)
+    for (u, v), c, t in zip(res[:, :2], cols, res[:, 9]):
+        if t == 1:
+            cv2.circle(img, (int(round(u)), int(round(v))), 2, (255, 0, 255), -1)
+        else:
+            cv2.circle(img, (int(round(u)), int(round(v))), 1, tuple(int(x) for x in c), -1)
+    return img
+
+
+def radar_panel_user(B, radar_pts, img_shape=(288, 512)):
+    """用用户原代码 radar_to_velocity_heatmap（投影 + 取 max + 5x5 高斯）出速度热图，JET 上色。"""
+    if len(radar_pts) == 0:
+        return np.zeros(img_shape + (3,), np.uint8)
+    hm = radar_to_velocity_heatmap(radar_pts.astype(np.float64), B.R_ext, B.E['rgb'], B.K_s, image_shape=img_shape, method='max')[0]
+    n = hm / max(float(hm.max()), 1e-6)
+    return cv2.applyColorMap((255 * n).astype(np.uint8), cv2.COLORMAP_JET)
+
+
+def make_gallery(A, B, out, path, up=1.5):
+    """精简版：RGB(翻译背景)+框 | IR+框 | DVS+框 / LiDAR 投影+框 | 雷达热图+框 | RGB 放大 3x。返回一行 5 格的缩略图给总览用。"""
+    W, H = A.W, A.H
+    b_new, K_s = out['box9d'], B.K_s
+    g = (60, 220, 60)
+    tr, ck = out['transform'], out['checks']
+    rgb = draw_box_img(out['rgb'].copy(), b_new, K_s, g, 1, '%s %.1fm' % (out['name'], tr['range_new']))
+    ir3 = draw_box_img(cv2.cvtColor(out['ir'], cv2.COLOR_GRAY2BGR), b_new, K_s, g, 1)
+    dvs = draw_box_img(out['dvs'].copy(), b_new, K_s, g, 1)
+    lid = draw_box_img(lidar_panel_user(B, out['lidar_pts']), b_new, K_s, g, 1)
+    rad = draw_box_img(radar_panel_user(B, out['radar_pts']), b_new, K_s, g, 1)
+    uv = out['uv_new']
+    cx, cy = float(uv[:, 0].mean()), float(uv[:, 1].mean())
+    zw, zh = 170, 96
+    x0 = int(np.clip(cx - zw / 2, 0, W - zw))
+    y0 = int(np.clip(cy - zh / 2, 0, H - zh))
+    zoom = cv2.resize(rgb[y0:y0 + zh, x0:x0 + zw], (W, H), interpolation=cv2.INTER_NEAREST)
+    panels = [('RGB (translated bg) + box', rgb), ('IR + box', ir3), ('DVS + box', dvs),
+              ('LiDAR projection (user code) + box', lid), ('radar velocity heatmap (user code) + box', rad), ('RGB zoom 3x', zoom)]
+    pw, ph = int(W * up), int(H * up)
+    sheet = np.full((2 * (ph + 22), 3 * (pw + 6), 3), 30, np.uint8)
+    for k, (t, im) in enumerate(panels):
+        r, c = divmod(k, 3)
+        x, y = c * (pw + 6), r * (ph + 22)
+        sheet[y + 22:y + 22 + ph, x:x + pw] = cv2.resize(im, (pw, ph), interpolation=cv2.INTER_LINEAR)
+        cv2.putText(sheet, t, (x + 6, y + 15), cv2.FONT_HERSHEY_SIMPLEX, 0.45, (255, 255, 255), 1, cv2.LINE_AA)
+    info = 'A %s/%s -> B %s/%s | %s dim %.2fm | range %.1f->%.1f m | s=%.2f | %.0f px | matte %.2f' % (
+        A.meta['seq'].split('/')[3], os.path.splitext(A.meta['frame'])[0], B.meta['seq'].split('/')[3], os.path.splitext(B.meta['frame'])[0],
+        out['name'], float(max(A.boxes[A.kept][3:6])), tr['range_old'], tr['range_new'], tr['s'], ck['px_new'], ck['matte_frac'])
+    cv2.putText(sheet, info, (pw + 12, 15), cv2.FONT_HERSHEY_SIMPLEX, 0.42, (200, 200, 200), 1, cv2.LINE_AA)
+    cv2.imwrite(path, sheet, [cv2.IMWRITE_JPEG_QUALITY, 88])
+    tw, th = 384, 216
+    strip = np.full((th + 16, 5 * (tw + 4), 3), 30, np.uint8)
+    for k, im in enumerate([rgb, ir3, dvs, lid, rad]):
+        strip[16:16 + th, k * (tw + 4):k * (tw + 4) + tw] = cv2.resize(im, (tw, th), interpolation=cv2.INTER_AREA)
+    cv2.putText(strip, '%s | %s | %s %.1fm | %.0f px | s=%.2f' % (os.path.basename(path)[:-4], A.meta['seq'].split('/')[3], out['name'],
+                tr['range_new'], ck['px_new'], tr['s']), (4, 12), cv2.FONT_HERSHEY_SIMPLEX, 0.4, (220, 220, 220), 1, cv2.LINE_AA)
+    return strip
+
+
 def make_sheet(A, B, out, path, up=2):
     W, H = A.W, A.H
     b_new, K_s = out['box9d'], B.K_s
@@ -629,10 +729,13 @@ def main():
                     help='MAV6D 目标距离经验分布（.npy，米；mav6d_size_stats.py 一起写出的 *_range_m.npy）：'
                          '贴入时先抽距离，缩放由距离物理推出（用户 2026-09-06：距离 range 要和 MAV6D 差不多）')
     ap.add_argument('--max-dim', type=float, default=9.0, help='源无人机最大边长上限（m），默认不限（各机型都要有）')
-    ap.add_argument('--ref-dim', type=float, default=0.51,
-                    help='与 MAV6D 无人机（0.34 m 框）等价的仿真框边长：仿真框含桨叶余量，phantom4 在仿真里是 0.55 m，'
-                         '取 0.51 -> phantom 级 2-5 m、m210 级 3.5-8 m、matrix-300 级 4-10 m、Matrice-600 级 7-17 m')
-    ap.add_argument('--px-vis', type=float, nargs=2, default=[40, 200], help='贴入后表观大小的合理区间：看得清 / 整框放得下')
+    ap.add_argument('--ref-dim', type=float, default=0.34,
+                    help='等比例放远的参考边长 = MAV6D 无人机的框边长 0.34 m：r_new = r_MAV6D * max(dim)/0.34，'
+                         '各机型的表观大小与 MAV6D 同分布（phantom 级 3-8 m、m210 级 5-12 m、Matrice-600 级 11-26 m）')
+    ap.add_argument('--px-vis', type=float, nargs=2, default=[40, 140], help='贴入后表观大小的合理区间（MAV6D 的 1%%-99%% 分位）')
+    ap.add_argument('--tone', type=float, default=0.6, help='色调匹配强度 0-1（0 = 关）')
+    ap.add_argument('--poisson', action='store_true', help='RGB 用泊松融合（seamlessClone）而不是纯 alpha 合成')
+    ap.add_argument('--gallery', action='store_true', help='出精简版样图（2x3：RGB/IR/DVS/LiDAR投影/雷达热图/放大）+ 每 20 张一页的总览')
     ap.add_argument('--balance-classes', action='store_true', default=True, help='源机型轮流选，保证每个机型都有')
     ap.add_argument('--no-sheets', action='store_true', help='不出大图（只做统计 / 批量生成）')
     ap.add_argument('--tries', type=int, default=30)
@@ -717,6 +820,7 @@ def main():
     k = 0
     attempts = 0
     results = []
+    strips = []
     while k < args.n and attempts < args.n * 20:
         attempts += 1
         ib = int(rng.choice(bgs))
@@ -738,7 +842,12 @@ def main():
         if out is None:
             continue
         name = '%02d_%s_A%s_B%s' % (k, w, os.path.splitext(metas[ia]['frame'])[0], os.path.splitext(metas[ib]['frame'])[0])
-        if not args.no_sheets:
+        if args.gallery:
+            strips.append(make_gallery(A, B, out, os.path.join(args.out, name + '.jpg')))
+            if len(strips) % 20 == 0 or k + 1 == args.n:
+                page = np.vstack(strips[-(len(strips) - 20 * ((len(strips) - 1) // 20)):])
+                cv2.imwrite(os.path.join(args.out, 'contact_%02d.jpg' % ((len(strips) - 1) // 20)), page, [cv2.IMWRITE_JPEG_QUALITY, 85])
+        elif not args.no_sheets:
             make_sheet(A, B, out, os.path.join(args.out, name + '.jpg'))
         np.savez_compressed(os.path.join(args.out, name + '.npz'),
                             rgb=out['rgb'], rgb_sim=out['rgb_sim'], ir=out['ir'], dvs=out['dvs'], depth=out['depth'], tag=out['tag'],
