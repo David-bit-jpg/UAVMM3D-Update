@@ -129,7 +129,7 @@ function render(){
     zx.drawImage(im, ox, oy, ww, wh, 0, 0, zc.width, zc.height);
     drawBox(zx, d.uv, zoomF*2, zoomF*2, ox, oy, 2, '');
   };
-  if(im.complete && im.naturalWidth) draw(); else im.onload = draw;
+  im.addEventListener('load', draw, {once:true}); if(im.complete && im.naturalWidth) draw();   // 两条都挂，避免 complete/onload 竞争漏画
   // 缩略图
   const g = document.getElementById('grid'); g.innerHTML='';
   MODS.forEach((m,k)=>{
@@ -139,7 +139,7 @@ function render(){
     g.appendChild(div);
     const t = loadImg('img/'+d.name+'_'+m[0]+'.jpg');
     const dr = ()=>{ const x=c.getContext('2d'); x.drawImage(t,0,0,512,288); drawBox(x,d.uv,1,1,0,0,1,''); };
-    if(t.complete && t.naturalWidth) dr(); else t.onload = dr;
+    t.addEventListener('load', dr, {once:true}); if(t.complete && t.naturalWidth) dr();
   });
   const ck = d.checks || {};
   const f = (k, n=2) => (typeof ck[k]==='number' ? ck[k].toFixed(n) : '—');
