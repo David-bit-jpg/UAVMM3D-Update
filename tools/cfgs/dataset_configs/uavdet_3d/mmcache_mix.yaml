@@ -1,0 +1,7 @@
+# 「3000 张交叉贴增广 + 约 2000 张筛选出的原版白天帧」合并缓存（tools/merge_mmcaches.py），
+# 尺度对齐 MAV6D（--crop-to-mav6d 窗口 621x349 -> 512x288），用户 2026-09-06 要求的迁移实验训练集。
+# 增广帧 vis_score = 100，原版帧按 MIN_RGB_VIS 过滤过；test split 是从原版帧里切出的 100 帧（域内 sanity）。
+_BASE_CONFIG_: cfgs/dataset_configs/uavdet_3d/mmcache.yaml
+DATA_PATH: 'E:/data_collect/aug_paste_v1/mixed_cache'
+IM_SIZE: [621, 349]
+MIN_RGB_VIS: 5.0
