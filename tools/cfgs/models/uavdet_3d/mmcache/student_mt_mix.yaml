@@ -1,0 +1,61 @@
+# 多任务学生（MT）：RGB 学生 + 三个辅助头从同一特征图幻觉 IR / LiDAR 深度 / 无人机 LiDAR 命中（CenterDetMT）。
+# 没有教师、没有蒸馏；辅助目标来自 batch 里的 ir/depth/tag 通道，数据集不改。ckpt 里的 aux_heads.* 迁移时按名字跳过。
+DATA_CONFIG:
+    _BASE_CONFIG_: cfgs/dataset_configs/uavdet_3d/mmcache_mix.yaml
+    MAX_OBJ_PER_SAMPLE: 7
+    MODALITIES: ['rgb', 'ir', 'depth', 'tag']
+
+MODEL:
+    NAME: CenterDetMT
+    AUX:
+        W_IR: 1.0
+        W_DEPTH: 1.0
+        W_TAG: 1.0
+        CONV_DIM: 128
+        TAG_POS_WEIGHT: 10.0
+
+    BACKBONE_2D:
+      NAME: ResNet8x
+      NUM_FILTERS: [64,128,256,512]
+      INPUT_CHANNELS: 3
+      OUT_CHANNELS: 512
+
+    DENSE_HEAD_2D:
+      NAME: CenterHead
+      INPUT_CHANNELS: 512
+      SEPARATE_HEAD_CFG:
+          HEAD_ORDER: [ 'hm', 'center_res', 'center_dis', 'dim', 'rot' ]
+          HEAD_DICT: {
+              'hm': { 'out_channels': 7, 'conv_dim': 128},
+              'center_res': { 'out_channels': 2, 'conv_dim': 128},
+              'center_dis': { 'out_channels': 1, 'conv_dim': 128},
+              'dim': { 'out_channels': 3, 'conv_dim': 128},
+              'rot': { 'out_channels': 6, 'conv_dim': 128},
+          }
+
+    POST_PROCESSING:
+      DECONDER: center_point_decoder_mav6d
+      MAX_OBJ: 7
+      SCORE_THRESH: 0.1
+
+
+OPTIMIZATION:
+    BATCH_SIZE_PER_GPU: 16
+    NUM_EPOCHS: 16
+
+    OPTIMIZER: adam_onecycle
+    LR: 0.001
+    WEIGHT_DECAY: 0.01
+    MOMENTUM: 0.9
+
+    MOMS: [0.95, 0.85]
+    PCT_START: 0.4
+    DIV_FACTOR: 10
+    DECAY_STEP_LIST: [10, 14]
+    LR_DECAY: 0.1
+    LR_CLIP: 0.0000001
+
+    LR_WARMUP: False
+    WARMUP_EPOCH: 1
+
+    GRAD_NORM_CLIP: 10

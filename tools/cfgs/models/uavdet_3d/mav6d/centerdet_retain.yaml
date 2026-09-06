@@ -1,0 +1,73 @@
+# 迁移框架实验「保留式微调」：在 MAV6D 上微调时，把【迁移前的仿真预训练 RGB 学生】冻结当教师，
+# 对同一张真实图加特征保留项（features_2d 逐像素余弦 + GT 中心像素特征余弦），其余蒸馏项关掉
+# （教师在真实图上的热图/回归是错的，不能当软标签）。目的：对抗第二、四版观察到的
+# 「真实数据一多，仿真预训练就被洗掉甚至拖后腿」。学生仍用 --pretrained_model 初始化（同 B/M0 臂协议）。
+# 启动：--set MODEL.DISTILL.TEACHER_CKPT <同一个预训练 ckpt> DATA_CONFIG.DATA_PATH E:/MAV6D DATA_CONFIG.SAMPLED_INTERVAL.train N
+DATA_CONFIG:
+    _BASE_CONFIG_: cfgs/dataset_configs/uavdet_3d/mav6d.yaml
+    CLASS_NAMES: ['mavic2', 'phantom4']
+    DATA_PRE_PROCESSOR:
+        - NAME: convert_box9d_to_centermap
+          OFFSET: [0.2,0.2,0]
+          ENCODER: center_point_encoder_mav6d
+        - NAME: image_normalization
+
+MODEL:
+    NAME: CenterDetKD
+    DISTILL:
+        TEACHER_CFG: cfgs/models/uavdet_3d/mmcache/student_rgb_mix.yaml   # 教师结构 = 源域 RGB 学生（hm 7 类），权重由启动参数给
+        TEACHER_CKPT: 'SET_AT_LAUNCH.pth'
+        STUDENT_CHANNELS: 3
+        TEACHER_CHANNELS: 3
+        FEAT_MODE: 'cos'      # 逐像素 1-余弦（尺度不变）；MSE 会被 BN 统计口径差导致的幅值差主导（冒烟实测 ~700）
+        W_FEAT: 1.0
+        W_CENTER_COS: 1.0
+        W_HM: 0.0
+        W_REG: 0.0
+        W_CROSS: 0.0
+
+    BACKBONE_2D:
+      NAME: ResNet8x
+      NUM_FILTERS: [64,128,256,512]
+      INPUT_CHANNELS: 3
+      OUT_CHANNELS: 512
+
+    DENSE_HEAD_2D:
+      NAME: CenterHead
+      INPUT_CHANNELS: 512
+      SEPARATE_HEAD_CFG:
+          HEAD_ORDER: [ 'hm', 'center_res', 'center_dis', 'dim', 'rot' ]
+          HEAD_DICT: {
+              'hm': { 'out_channels': 2, 'conv_dim': 128},
+              'center_res': { 'out_channels': 2, 'conv_dim': 128},
+              'center_dis': { 'out_channels': 1, 'conv_dim': 128},
+              'dim': { 'out_channels': 3, 'conv_dim': 128},
+              'rot': { 'out_channels': 6, 'conv_dim': 128},
+          }
+
+    POST_PROCESSING:
+      DECONDER: center_point_decoder_mav6d
+      MAX_OBJ: 1
+      SCORE_THRESH: 0.1
+
+
+OPTIMIZATION:
+    BATCH_SIZE_PER_GPU: 4
+    NUM_EPOCHS: 50
+
+    OPTIMIZER: adam_onecycle
+    LR: 0.001
+    WEIGHT_DECAY: 0.01
+    MOMENTUM: 0.9
+
+    MOMS: [0.95, 0.85]
+    PCT_START: 0.4
+    DIV_FACTOR: 10
+    DECAY_STEP_LIST: [35, 45]
+    LR_DECAY: 0.1
+    LR_CLIP: 0.0000001
+
+    LR_WARMUP: False
+    WARMUP_EPOCH: 1
+
+    GRAD_NORM_CLIP: 10

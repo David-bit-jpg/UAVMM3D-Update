@@ -32,6 +32,9 @@ class CenterDetKD(CenterDet):
         d = model_cfg.get('DISTILL', None) or {}
         self.kd_w = {k: float(d.get(k, 0.0)) for k in ('W_FEAT', 'W_CENTER_COS', 'W_HM', 'W_REG', 'W_CROSS')}
         self.student_channels = int(d.get('STUDENT_CHANNELS', 3))
+        # 特征项形式：'mse'（缺省，逐元素 L2）或 'cos'（逐像素 1-余弦，尺度不变——保留式微调用：
+        # 学生 BN 用 batch 统计、教师用滑动统计，二者特征幅值差很多，但方向一致，L2 会被幅值差主导）
+        self.feat_mode = str(d.get('FEAT_MODE', 'mse'))
         self.teacher_channels = int(d.get('TEACHER_CHANNELS', 6))
         self._teacher = []          # 用 list 藏起来：不注册为子模块，不进 state_dict / parameters()
         if any(v > 0 for v in self.kd_w.values()):
@@ -85,6 +88,7 @@ class CenterDetKD(CenterDet):
         sb = self._student_batch(batch_dict)
         for cur_module in self.module_list:
             sb = cur_module(sb)
+        self._student_out = sb                               # 子类（多任务头）要用学生的 features_2d
         if not self.training:
             return self.post_processing(sb)
 
@@ -106,7 +110,10 @@ class CenterDetKD(CenterDet):
 
         w = self.kd_w
         if w['W_FEAT'] > 0:
-            l = F.mse_loss(s_feat, t_feat)
+            if self.feat_mode == 'cos':
+                l = (1.0 - F.cosine_similarity(s_feat, t_feat, dim=2)).mean()
+            else:
+                l = F.mse_loss(s_feat, t_feat)
             terms['kd_feat'] = float(l)
             loss = loss + w['W_FEAT'] * l
         if w['W_CENTER_COS'] > 0 and fg.any():

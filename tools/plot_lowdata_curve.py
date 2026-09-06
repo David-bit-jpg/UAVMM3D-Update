@@ -61,7 +61,7 @@ def run_custom(args, arms, fracs):
     except Exception as e:
         print('(未画图: %s)' % e); return 0
     fig, ax = plt.subplots(figsize=(7, 4.6))
-    for (prefix, label), color in zip(arms, ('tab:blue', 'tab:red', 'tab:green', 'tab:purple', 'tab:orange')):
+    for (prefix, label), color in zip(arms, ('tab:blue', 'tab:red', 'tab:green', 'tab:purple', 'tab:orange', 'tab:brown', 'tab:pink', 'tab:gray', 'tab:olive', 'tab:cyan')):
         pts = [(x, d.get(args.metric)) for x, d in zip(xs, table[prefix]) if d and d.get(args.metric) is not None]
         if pts:
             ax.plot([p[0] for p in pts], [p[1] for p in pts], 'o-', color=color, lw=2, ms=6, label=label)

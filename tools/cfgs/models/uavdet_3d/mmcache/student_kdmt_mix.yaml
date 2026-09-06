@@ -1,0 +1,70 @@
+# 蒸馏 + 多任务学生（S1MT）：student_kd_mix 的蒸馏项 + student_mt_mix 的三个辅助头，同一个 RGB 学生。
+DATA_CONFIG:
+    _BASE_CONFIG_: cfgs/dataset_configs/uavdet_3d/mmcache_mix.yaml
+    MAX_OBJ_PER_SAMPLE: 7
+    MODALITIES: ['rgb', 'ir', 'depth', 'tag']
+
+MODEL:
+    NAME: CenterDetMT
+    DISTILL:
+        TEACHER_CFG: cfgs/models/uavdet_3d/mmcache/teacher_mix.yaml
+        TEACHER_CKPT: 'SET_AT_LAUNCH.pth'
+        STUDENT_CHANNELS: 3
+        TEACHER_CHANNELS: 6
+        W_FEAT: 1.0
+        W_CENTER_COS: 1.0
+        W_HM: 1.0
+        W_REG: 1.0
+        W_CROSS: 0.5
+    AUX:
+        W_IR: 1.0
+        W_DEPTH: 1.0
+        W_TAG: 1.0
+        CONV_DIM: 128
+        TAG_POS_WEIGHT: 10.0
+
+    BACKBONE_2D:
+      NAME: ResNet8x
+      NUM_FILTERS: [64,128,256,512]
+      INPUT_CHANNELS: 3
+      OUT_CHANNELS: 512
+
+    DENSE_HEAD_2D:
+      NAME: CenterHead
+      INPUT_CHANNELS: 512
+      SEPARATE_HEAD_CFG:
+          HEAD_ORDER: [ 'hm', 'center_res', 'center_dis', 'dim', 'rot' ]
+          HEAD_DICT: {
+              'hm': { 'out_channels': 7, 'conv_dim': 128},
+              'center_res': { 'out_channels': 2, 'conv_dim': 128},
+              'center_dis': { 'out_channels': 1, 'conv_dim': 128},
+              'dim': { 'out_channels': 3, 'conv_dim': 128},
+              'rot': { 'out_channels': 6, 'conv_dim': 128},
+          }
+
+    POST_PROCESSING:
+      DECONDER: center_point_decoder_mav6d
+      MAX_OBJ: 7
+      SCORE_THRESH: 0.1
+
+
+OPTIMIZATION:
+    BATCH_SIZE_PER_GPU: 16
+    NUM_EPOCHS: 16
+
+    OPTIMIZER: adam_onecycle
+    LR: 0.001
+    WEIGHT_DECAY: 0.01
+    MOMENTUM: 0.9
+
+    MOMS: [0.95, 0.85]
+    PCT_START: 0.4
+    DIV_FACTOR: 10
+    DECAY_STEP_LIST: [10, 14]
+    LR_DECAY: 0.1
+    LR_CLIP: 0.0000001
+
+    LR_WARMUP: False
+    WARMUP_EPOCH: 1
+
+    GRAD_NORM_CLIP: 10
