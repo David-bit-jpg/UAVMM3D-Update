@@ -422,3 +422,23 @@ S4a 用整个框多边形取中位数会被框内几十米外的背景点淹没�
 
 小样结论见 `docs/results/README.md` 的「扩散翻译」一节：整图 img2img 在任何强度都会重画机身（框内边缘 IoU 0.07–0.14），
 只回贴不抹除在强度 0.6 会留框外鬼影；本管线（先抹除再翻译再贴回）IoU 0.90–1.00 且无鬼影。
+
+### 8.8 多任务学生与保留式微调（2026-09-06 夜，`center_det_mt.py`、`centerdet_retain.yaml`、`run_night_mtkd.sh`）
+
+导师定的主线是「多模态蒸馏 + 多任务 + 迁移框架创新」，在混合缓存（§8.7 之后的 `mixed_cache`：3000 交叉贴增广 + 1436 原版白天帧，
+尺度对齐 MAV6D）上补了三类臂，全部与第四版 M0 同协议（12 轮、batch 8、OneCycle），M0 就是它们的「无蒸馏、无多任务」对照：
+
+| 臂 | 模型 | 说明 |
+|---|---|---|
+| T_mix | `teacher_mix.yaml` | 多模态教师 rgb+ir+depth+tag（6 通道），只用于蒸馏 |
+| MT_mix | `student_mt_mix.yaml` → `CenterDetMT` | **多任务学生**：RGB 学生的同一张 stride-8 特征图上再接三个辅助头，幻觉 IR（池化灰度，L1）、LiDAR 深度（只在有回波的像素上平均，L1）、无人机 LiDAR 命中（格子内有 tag 点，pos_weight 10 的 BCE）。目标全部来自 batch 里的 ir/depth/tag 通道，数据集一行不改；`aux_heads.*` 迁移时按名字跳过 |
+| S1_mix | `student_kd_mix.yaml` → `CenterDetKD` | 蒸馏学生（特征 L2 / GT 中心像素余弦 / 热图软标签 / 前景回归 / CrossKD，权重同 §8.4） |
+| S1MT_mix | `student_kdmt_mix.yaml` → `CenterDetMT` | 蒸馏 + 多任务 |
+| RM0 | `mav6d/centerdet_retain.yaml` → `CenterDetKD` | **保留式微调**（迁移框架）：在 MAV6D 上微调 M0 时，把迁移前的 M0 冻结当教师，对同一张真实图加特征保留项：逐像素 1−cos（`FEAT_MODE: cos`，尺度不变）+ GT 中心像素余弦；热图/回归的软标签项关掉（教师在真实图上是错的）。对抗第二、四版观察到的「真实数据一多，仿真预训练就被洗掉」 |
+
+工程细节：
+- `CenterDetKD.forward` 现在把学生的输出字典存到 `self._student_out`，子类拿 `features_2d` 接辅助头；`CenterDetMT` 继承它，所以蒸馏 + 多任务只是配置叠加。
+- 特征保留项为什么用余弦：学生 BN 用 batch 统计、教师用滑动统计，二者特征幅值差很多但方向一致（冒烟实测 MSE ≈ 700 而 1−cos ≈ 0.23，中心像素 1−cos ≈ 0.04），L2 会被幅值差主导。
+- 冒烟：`tools/smoke_night.py`（五个配置各跑 3 个 batch 前向/反向，打印全部损失项；教师用现成 ckpt）。
+- 驱动 `tools/run_night_mtkd.sh`：严格 2 个作业并行，每对迁移训练之间串行评测（Windows 上 ≥3 个 dataloader 进程会锁死），
+  零样本 + `plot_lowdata_curve.py`（已支持 10 条臂）+ `summarize_bench.py` 汇总表。结果见 `docs/results/README.md` 第五版。
