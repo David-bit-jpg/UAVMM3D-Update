@@ -31,7 +31,27 @@ import numpy as np
 from scipy.spatial.transform import Rotation as Rot
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from build_mm_cache import CARLA_TO_OPENCV, OPENCV_TO_CARLA, cam_to_world, world_to_pixel, frame_sort_key  # noqa: E402
+from build_mm_cache import (CARLA_TO_OPENCV, OPENCV_TO_CARLA, cam_to_world, world_to_pixel, frame_sort_key,  # noqa: E402
+                            corners_to_9params, class_of)
+
+
+def load_full_boxes(base, frame, max_label_range=40.0):
+    """整帧的全部无人机框（不只是裁剪窗口内的）：抹除时要用它——窗口外的无人机经 IR/DVS 视差平移后会进窗口。"""
+    try:
+        raw = pickle.load(open(os.path.join(base, 'boxes_rgb', os.path.splitext(frame)[0] + '.pkl'), 'rb'))
+    except Exception:
+        return []
+    out = []
+    for row in raw:
+        name = row[0] if isinstance(row[0], str) else '?'
+        if class_of(name) is None:
+            continue
+        c = np.array(row[1:] if isinstance(row[0], str) else row, dtype=np.float64).reshape(8, 3)
+        p9 = corners_to_9params(c).astype(np.float64)
+        if p9[2] <= 0.5 or np.linalg.norm(p9[:3]) > max_label_range:
+            continue
+        out.append(p9)
+    return out
 
 PROTO = np.array([[-.5, -.5, -.5], [.5, -.5, -.5], [.5, .5, -.5], [-.5, .5, -.5],
                   [-.5, -.5, .5], [.5, -.5, .5], [.5, .5, .5], [-.5, .5, .5]])
@@ -118,6 +138,7 @@ class Frame:
         self.boxes = np.asarray(meta['boxes9d'], np.float64)
         self.names = list(meta['names'])
         self.qual = np.asarray(meta['qualified'], bool)
+        self.boxes_full = load_full_boxes(base, meta['frame']) or [b for b in self.boxes]
         cands = [i for i in range(len(self.boxes)) if self.qual[i]]
         self.kept = min(cands, key=lambda i: np.linalg.norm(self.boxes[i, :3]))
         self.x0, self.y0 = meta['crop_xy']
@@ -203,10 +224,13 @@ class Frame:
         return hull_mask((self.raw_h, self.raw_w), uv, dilate, 0) > 0.5
 
     def erase_all(self, img, cam='rgb', radius=5, dilate=6):
-        """把帧里全部有标签目标用 cv2.inpaint（Telea）抹掉：比模糊填充更像背景的延续，SD 不会把大洞当成物体。
-        cam='rgb' 时凸包按 RGB 相机投影；'ir'/'dvs' 按该相机投影（输入应是未平移的原始 IR / DVS 图）。"""
+        """把帧里【整帧全部】无人机用 cv2.inpaint（Telea）抹掉：比模糊填充更像背景的延续，SD 不会把大洞当成物体。
+        cam='rgb' 时凸包按 RGB 相机投影；'ir'/'dvs' 按该相机投影（输入应是未平移的原始 IR / DVS 图）。
+        DVS 事件图里运动的无人机会在「上一位置」留一条反极性的拖影（实测约 80 px），所以 DVS 的抹除范围外扩得多。"""
+        if cam == 'dvs':
+            dilate = max(dilate, 60)
         m = np.zeros((self.raw_h, self.raw_w), np.uint8)
-        for bb in self.boxes:
+        for bb in self.boxes_full:
             hm = (self.hull_full(bb, dilate=dilate, feather=0) > 0.5) if cam == 'rgb' else self.hull_in_cam(bb, cam, dilate)
             m = np.maximum(m, hm.astype(np.uint8))
         if not m.any():
@@ -330,13 +354,36 @@ def paste(A, B, plates, rng, args):
     B_rad_bg = np.where(B.radar_owner < 0)[0]
     # B 背景深度（遮挡检查用）
     depth_bg, _ = B.render_depth_tag(B.lidar_cam[B_lid_bg], np.zeros(len(B_lid_bg)))
-    px_now = max(b[3:6]) / np.linalg.norm(c) * B.K_s[0, 0]           # 目前表观大小（B 的缓存像素）
+    # 目前表观大小 = 8 角点投影框的长边（B 的缓存像素；与 MAV6D 统计口径一致）
+    uv0 = project(box_corners(b), B.K_s)
+    px_now = float(max(uv0[:, 0].max() - uv0[:, 0].min(), uv0[:, 1].max() - uv0[:, 1].min()))
 
+    r_old = float(np.linalg.norm(c))
     for _ in range(args.tries):
-        s = float(rng.uniform(args.scale[0], args.scale[1]))
-        px_new = px_now * s
-        if not (args.px[0] <= px_new <= args.px[1]):
-            continue
+        if args.range_ref_arr is not None:
+            # 用户定的规则（2026-09-06）：先抽 MAV6D 的距离 r_ref（2-5 m），再按机型大小等比例放远：
+            #   r_new = r_ref * max(dim) / ref_dim   —— 小机型 2-5 m，大机型按比例 5-10 m 甚至更远，
+            # 表观大小与 MAV6D 同量级、整框在视野内、看得清；缩放倍数由距离物理推出 s = r_old / r_new。
+            r_ref = float(rng.choice(args.range_ref_arr))
+            r_new = r_ref * float(max(b[3:6])) / args.ref_dim
+            s = r_old / max(r_new, 1e-3)
+            if not (args.scale[0] <= s <= args.scale[1]):
+                continue
+            px_new = px_now * s
+            if not (args.px_vis[0] <= px_new <= args.px_vis[1]):      # 看得清（>= 40 px）且放得下（<= 200 px）
+                continue
+        elif args.size_ref_arr is not None:
+            # 只按尺寸分布抽（没有距离参考时）
+            px_target = float(rng.choice(args.size_ref_arr))
+            s = px_target / max(px_now, 1e-3)
+            if not (args.scale[0] <= s <= args.scale[1]):
+                continue
+            px_new = px_now * s
+        else:
+            s = float(rng.uniform(args.scale[0], args.scale[1]))
+            px_new = px_now * s
+            if not (args.px[0] <= px_new <= args.px[1]):
+                continue
         # 目标位置：B 窗口内（缓存坐标）留边
         mg = px_new * 0.8 + 6
         if B.W - 2 * mg <= 0 or B.H - 2 * mg <= 0:
@@ -573,8 +620,21 @@ def main():
     ap.add_argument('--n', type=int, default=16)
     ap.add_argument('--out', default='../output/paste_demo')
     ap.add_argument('--seed', type=int, default=0)
-    ap.add_argument('--scale', type=float, nargs=2, default=[0.8, 1.4], help='表观缩放区间（>1 = 拉近）')
-    ap.add_argument('--px', type=float, nargs=2, default=[30, 120], help='贴入后表观大小区间（缓存像素）')
+    ap.add_argument('--scale', type=float, nargs=2, default=[0.5, 2.0], help='允许的表观缩放区间（>1 = 拉近）；超出就换目标尺寸/换源帧')
+    ap.add_argument('--px', type=float, nargs=2, default=[30, 120], help='无 --size-ref 时：贴入后表观大小区间（缓存像素）')
+    ap.add_argument('--size-ref', default='',
+                    help='MAV6D 表观大小经验分布（.npy，网络输入分辨率下 8 角点投影框的长边像素）：每次贴入的目标尺寸直接从里面抽，'
+                         '贴出来的尺寸分布严格等于 MAV6D 的（tools/mav6d_size_stats.py 生成）')
+    ap.add_argument('--range-ref', default='',
+                    help='MAV6D 目标距离经验分布（.npy，米；mav6d_size_stats.py 一起写出的 *_range_m.npy）：'
+                         '贴入时先抽距离，缩放由距离物理推出（用户 2026-09-06：距离 range 要和 MAV6D 差不多）')
+    ap.add_argument('--max-dim', type=float, default=9.0, help='源无人机最大边长上限（m），默认不限（各机型都要有）')
+    ap.add_argument('--ref-dim', type=float, default=0.51,
+                    help='与 MAV6D 无人机（0.34 m 框）等价的仿真框边长：仿真框含桨叶余量，phantom4 在仿真里是 0.55 m，'
+                         '取 0.51 -> phantom 级 2-5 m、m210 级 3.5-8 m、matrix-300 级 4-10 m、Matrice-600 级 7-17 m')
+    ap.add_argument('--px-vis', type=float, nargs=2, default=[40, 200], help='贴入后表观大小的合理区间：看得清 / 整框放得下')
+    ap.add_argument('--balance-classes', action='store_true', default=True, help='源机型轮流选，保证每个机型都有')
+    ap.add_argument('--no-sheets', action='store_true', help='不出大图（只做统计 / 批量生成）')
     ap.add_argument('--tries', type=int, default=30)
     ap.add_argument('--min-lidar-pts', type=int, default=8)
     ap.add_argument('--dilate', type=int, default=10)
@@ -584,6 +644,17 @@ def main():
     args = ap.parse_args()
     os.makedirs(args.out, exist_ok=True)
     rng = np.random.RandomState(args.seed)
+    args.size_ref_arr = None
+    args.range_ref_arr = None
+    if args.size_ref:
+        args.size_ref_arr = np.load(args.size_ref).astype(np.float64)
+        args.size_lo, args.size_hi = np.percentile(args.size_ref_arr, [1, 99])
+        print('目标尺寸参考分布 %s：%d 个，p05/p50/p95 = %.0f / %.0f / %.0f px（合理性区间 p01-p99 = %.0f-%.0f）' % (
+            args.size_ref, len(args.size_ref_arr), *np.percentile(args.size_ref_arr, [5, 50, 95]), args.size_lo, args.size_hi))
+    if args.range_ref:
+        args.range_ref_arr = np.load(args.range_ref).astype(np.float64)
+        print('目标距离参考分布 %s：%d 个，p05/p50/p95 = %.2f / %.2f / %.2f m' % (
+            args.range_ref, len(args.range_ref_arr), *np.percentile(args.range_ref_arr, [5, 50, 95])))
 
     cs = os.path.join(args.cache, args.split)
     idx = pickle.load(open(os.path.join(cs, 'index.pkl'), 'rb'))
@@ -627,12 +698,26 @@ def main():
     print('背景帧 %d（有翻译底图），源无人机帧 %d（RGB 可见）' % (len(bgs), len(srcs)))
 
     by_w = {}
+    src_cls = {}
+    n_big = 0
     for i in srcs:
-        by_w.setdefault(metas[i]['seq'].split('/')[3], []).append(i)
+        m = metas[i]
+        q = [(b, n) for b, n, qq in zip(m['boxes9d'], m['names'], m['qualified']) if qq]
+        if not q:
+            continue
+        kept, kname = min(q, key=lambda t: np.linalg.norm(t[0][:3]))
+        if max(kept[3:6]) > args.max_dim:
+            n_big += 1
+            continue
+        by_w.setdefault(m['seq'].split('/')[3], []).append(i)
+        src_cls[i] = class_of(kname) or kname
+    cls_count = {c: 0 for c in set(src_cls.values())}
+    print('源帧 %d（剔除超过 %.1f m 的 %d），机型：%s' % (len(src_cls), args.max_dim, n_big,
+          {c: sum(1 for v in src_cls.values() if v == c) for c in cls_count}))
     k = 0
     attempts = 0
     results = []
-    while k < args.n and attempts < args.n * 10:
+    while k < args.n and attempts < args.n * 20:
         attempts += 1
         ib = int(rng.choice(bgs))
         w = metas[ib]['seq'].split('/')[3]
@@ -642,6 +727,10 @@ def main():
             pool = [i for i in by_w.get(w, []) if i != ib]
         if not pool:
             continue
+        if args.balance_classes:
+            # 机型轮流：在本天气可用的机型里选目前样本最少的那个
+            avail = sorted(set(src_cls[i] for i in pool), key=lambda c: (cls_count[c], rng.rand()))
+            pool = [i for i in pool if src_cls[i] == avail[0]]
         ia = int(rng.choice(pool))
         A, B = get(ia), get(ib)
         plates = {'rgb': np.ascontiguousarray(plate_rgb[ib])}
@@ -649,7 +738,8 @@ def main():
         if out is None:
             continue
         name = '%02d_%s_A%s_B%s' % (k, w, os.path.splitext(metas[ia]['frame'])[0], os.path.splitext(metas[ib]['frame'])[0])
-        make_sheet(A, B, out, os.path.join(args.out, name + '.jpg'))
+        if not args.no_sheets:
+            make_sheet(A, B, out, os.path.join(args.out, name + '.jpg'))
         np.savez_compressed(os.path.join(args.out, name + '.npz'),
                             rgb=out['rgb'], rgb_sim=out['rgb_sim'], ir=out['ir'], dvs=out['dvs'], depth=out['depth'], tag=out['tag'],
                             radar_hm=out['radar_hm'], lidar_pts=out['lidar_pts'], radar_pts=out['radar_pts'], box9d=out['box9d'],
@@ -661,9 +751,21 @@ def main():
             name, out['transform']['s'], out['transform']['range_old'], out['transform']['range_new'], ck['px_new'],
             ck['lidar_in_box_old'], ck['lidar_in_box_new'], ck['lidar_n'], ck['radar_in_box_old'], ck['radar_in_box_new'], ck['radar_n'],
             ck['matte_frac'], ck['alpha_in_hull'], ck['tag_px_in_hull']), flush=True)
+        ck['cls'] = src_cls.get(ia, '?')
+        ck['range_new'] = out['transform']['range_new']
+        ck['dim'] = float(max(A.boxes[A.kept][3:6]))
+        cls_count[ck['cls']] = cls_count.get(ck['cls'], 0) + 1
         results.append(ck)
         k += 1
     if results:
+        by_c = {}
+        for r in results:
+            by_c.setdefault(r['cls'], []).append(r)
+        for c, rs in sorted(by_c.items()):
+            rg = [r['range_new'] for r in rs]
+            px = [r['px_new'] for r in rs]
+            print('  机型 %-16s 边长 %.2f m  样本 %3d  距离 %.1f-%.1f m (中位 %.1f)  表观 %.0f-%.0f px (中位 %.0f)' % (
+                c, rs[0]['dim'], len(rs), min(rg), max(rg), np.median(rg), min(px), max(px), np.median(px)))
         keys = ['lidar_in_box_old', 'lidar_in_box_new', 'matte_frac', 'alpha_in_hull', 'tag_px_in_hull', 'px_new']
         print('汇总（%d 样本）: ' % len(results) + '  '.join('%s=%.2f' % (kk, np.mean([r[kk] for r in results])) for kk in keys))
     return 0
