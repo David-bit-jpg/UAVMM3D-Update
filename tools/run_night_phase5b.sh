@@ -4,7 +4,7 @@
 # 再从该权重继续训（预算帧真标签 + 伪标签帧），评同一测试集。对两个起点各做一次：
 #   BASE1 = MT/S1/S1MT 里 5% 档位置最好的（我们的预训练线），BASE2 = C_p05（从零，验证增益是否独立于预训练）。
 # 前置：run_night_v2.sh 已 ALL DONE，且 mav6d_det_dataset.py 已打 LABEL_DIR/SPLIT_DIR 补丁（无训练进程时打）。
-# 用法：bash tools/run_night_phase5b.sh [epochs=3] [score=0.3]
+# 用法：bash tools/run_night_phase5b.sh [epochs=3] [score=0.3] [base=S1MT]
 set -u
 EP=${1:-3}
 SCORE=${2:-0.3}
@@ -32,6 +32,7 @@ for arm in ('MT', 'S1', 'S1MT'):
 print(best[0] if best else '')
 PYEOF
 )
+[ -n "${3:-}" ] && best=$3        # 第 3 个参数可指定起点臂（例如 S1MT：10% 档最好、也是完整方法）
 [ -n "$best" ] || { say "阶段 5b：没有 MT/S1/S1MT 的 p05 结果，退出"; exit 1; }
 say "== 阶段 5b 自训练：起点 ${best}_p05 与 C_p05，伪标签置信度 >= $SCORE，续训 $EP 轮"
 

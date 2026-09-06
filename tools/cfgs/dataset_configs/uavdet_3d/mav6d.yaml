@@ -1,6 +1,10 @@
 DATA_PATH: 'D:\dataset\MAV6D'
 
 DATASET: 'MAV6D_Det_Dataset'
+# 标签 / split 子目录名（自训练用 labels_pseudo_<tag> / split_pseudo_<tag>，见 tools/mav6d_pseudo_label.py）。
+# 缺省就是原目录；放在这里是因为 --set 只能覆盖已有的键。
+LABEL_DIR: 'labels'
+SPLIT_DIR: 'split'
 
 CLASS_NAMES: ['mavic2', 'phantom4']
 

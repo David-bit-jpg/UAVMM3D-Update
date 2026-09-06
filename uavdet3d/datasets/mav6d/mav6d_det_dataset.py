@@ -29,7 +29,9 @@ class MAV6D_Det_Dataset(DatasetTemplate):
         self.logger=logger
 
         self.im_path_name = 'JPEGImages'
-        self.label_path_name = 'labels'
+        # 自训练（tools/mav6d_pseudo_label.py）用：标签与 split 目录可换成 labels_<suffix> / split_<suffix>，缺省不变
+        self.label_path_name = dataset_cfg.get('LABEL_DIR', 'labels')
+        self.split_dir_name = dataset_cfg.get('SPLIT_DIR', 'split')
 
         self.intrinsic = np.array([[1979.4, 0.3984, 976.8189, ],
                               [0.0, 1979.1, 533.9717, ],
@@ -61,7 +63,7 @@ class MAV6D_Det_Dataset(DatasetTemplate):
 
         for cls in self.class_name_dict:
 
-             split_dir = os.path.join( self.root_path, cls, 'split', self.split + '.txt')
+             split_dir = os.path.join( self.root_path, cls, self.split_dir_name, self.split + '.txt')
              all_splits.append(split_dir)
 
              self.sample_scene_list += [[cls]+x.strip().split('/')[-3:] for x in open(split_dir).readlines()]
@@ -78,7 +80,7 @@ class MAV6D_Det_Dataset(DatasetTemplate):
         self.sample_scene_list = []
 
         for cls in self.class_name_dict:
-            split_dir = os.path.join(self.root_path, cls, 'split', self.split + '.txt')
+            split_dir = os.path.join(self.root_path, cls, self.split_dir_name, self.split + '.txt')
             all_splits.append(split_dir)
 
             self.sample_scene_list += [[cls]+x.strip().split('/')[-3:] for x in open(split_dir).readlines()]
