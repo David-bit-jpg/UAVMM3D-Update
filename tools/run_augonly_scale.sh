@@ -40,7 +40,7 @@ train_eval() {  # tag data_path
 gen() {  # seed outdir n
   [ -d "$2" ] && [ "$(ls $2/*.npz 2>/dev/null | wc -l)" -ge "$3" ] && { say "SKIP 生成 $2（已有）"; return; }
   "$PY" mm_paste_aug.py --cache "$SRC" --erased "${SRC}_erased" --plates "${SRC}_plates" --n "$3" --no-sheets \
-      --range-ref docs/results/mav6d_size_px_range_m.npy --tone 0.6 --seed "$1" --out "$2" \
+      --range-ref ../docs/results/mav6d_size_px_range_m.npy --tone 0.6 --seed "$1" --out "$2" \
       > "$LOG/gen_$(basename $2).log" 2>&1
   say "生成完成 $2: $(ls $2/*.npz 2>/dev/null | wc -l) 个"
 }
