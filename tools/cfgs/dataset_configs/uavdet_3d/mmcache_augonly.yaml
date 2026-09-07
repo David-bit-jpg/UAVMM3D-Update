@@ -1,0 +1,8 @@
+# 「只用交叉贴生成的仿真帧」训练集（不含任何原版帧、不含任何真实帧），用于回答
+# 「只用生成的仿真数据、量大一点，在 MAV6D 上零样本能到什么程度」。
+# DATA_PATH 由启动参数给（aug_only_3k / aug_only_12k …）；test split 是 100 张原版白天帧（域内 sanity，不进训练）。
+# 尺度对齐 MAV6D：源缓存用 build_mm_cache --crop-to-mav6d，窗口 621x349 -> 512x288。
+_BASE_CONFIG_: cfgs/dataset_configs/uavdet_3d/mmcache.yaml
+DATA_PATH: 'E:/data_collect/aug_only_3k'
+IM_SIZE: [621, 349]
+MIN_RGB_VIS: 0.0

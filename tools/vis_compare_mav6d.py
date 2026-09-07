@@ -35,7 +35,15 @@ def main():
     ap.add_argument('--data-path', default='E:/MAV6D')
     ap.add_argument('--crop', type=int, default=520, help='围绕目标裁一个方块（0 = 整帧）')
     args = ap.parse_args()
-    models = [s.split('=', 1) for s in args.ckpts.split(',')]
+    # tag=path 或 tag=path@<解码 MAX_DIS>（零样本权重要用训练时的 40，微调权重用 MAV6D 的 8）
+    models = []
+    for it in args.ckpts.split(','):
+        tag, path = it.split('=', 1)
+        md = None
+        if '@' in path:
+            path, md = path.rsplit('@', 1)
+            md = float(md)
+        models.append((tag, path, md))
     os.makedirs(args.out, exist_ok=True)
     logger = common_utils.create_logger()
 
@@ -56,9 +64,12 @@ def main():
     picks = sorted(set(picks))[:args.num]
     print('选帧 %s' % picks)
 
-    # 每个模型跑一遍这些帧
+    # 每个模型跑一遍这些帧。注意 ds.dataset_cfg 就是 cfg.DATA_CONFIG（同一个对象），
+    # 所以基准 MAX_DIS 必须在循环外存下来，否则第一个模型的 @40 会污染后面的模型。
+    base_max_dis = float(cfg.DATA_CONFIG.MAX_DIS)
     preds = {}
-    for tag, ck in models:
+    for tag, ck, md in models:
+        ds.dataset_cfg.MAX_DIS = md if md is not None else base_max_dis
         cfg.MODEL.DENSE_HEAD_2D.SEPARATE_HEAD_CFG.HEAD_DICT.hm.out_channels = infer_hm_channels(ck)
         model = build_network(model_cfg=cfg.MODEL, dataset=ds)
         model.load_params_from_file(filename=ck, to_cpu=False, logger=logger)
@@ -88,7 +99,7 @@ def main():
         gt = np.asarray(d['gt_box9d'])[0]
         img = draw_box(img, gt, K, dist, (60, 230, 60), 3)
         lines = ['%s  %s/%s  GT z=%.2fm' % (info['cls_name'], info['scene_id'], info['seq_id'], gt[2])]
-        for k, (tag, _) in enumerate(models):
+        for k, (tag, _, _) in enumerate(models):
             p = preds[tag][i]
             if p is None:
                 lines.append('%s: no detection' % tag)
@@ -120,10 +131,10 @@ def main():
         r, c = divmod(k, cols)
         sheet[r * H:(r + 1) * H, c * W:(c + 1) * W] = s
     hdr = np.zeros((46, sheet.shape[1], 3), np.uint8)
-    cv2.putText(hdr, 'GT = green;  ' + ';  '.join('%s' % t for t, _ in models), (10, 32),
+    cv2.putText(hdr, 'GT = green;  ' + ';  '.join('%s' % m[0] for m in models), (10, 32),
                 cv2.FONT_HERSHEY_SIMPLEX, 0.8, (255, 255, 255), 2, cv2.LINE_AA)
     sheet = np.vstack([hdr, sheet])
-    p = os.path.join(args.out, 'compare_%s.jpg' % '_'.join(t for t, _ in models))
+    p = os.path.join(args.out, 'compare_%s.jpg' % '_'.join(m[0] for m in models))
     cv2.imwrite(p, sheet, [cv2.IMWRITE_JPEG_QUALITY, 92])
     print('写出 %s  %s' % (p, sheet.shape))
     return 0

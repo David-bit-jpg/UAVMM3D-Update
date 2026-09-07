@@ -27,12 +27,16 @@ from build_mm_cache import CLASSES  # noqa: E402
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument('--samples', required=True)
+    ap.add_argument('--samples', required=True, action='append', help='样本目录，可重复给多个（并行生成的几批）')
     ap.add_argument('--out', required=True)
     ap.add_argument('--split', default='train')
     ap.add_argument('--note', default='', help='写进 README 的一句话（生成命令 / 参数）')
     args = ap.parse_args()
-    files = sorted(glob.glob(os.path.join(args.samples, '*.npz')))
+    files = []
+    for d in args.samples:
+        fs = sorted(glob.glob(os.path.join(d, '*.npz')))
+        print('%s: %d 个样本' % (d, len(fs)))
+        files += fs
     assert files, '没有样本'
     z0 = np.load(files[0], allow_pickle=True)
     H, W = z0['rgb'].shape[:2]
