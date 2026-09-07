@@ -120,7 +120,12 @@ def main():
     model.cuda().eval()
 
     pos_err, ang_err, z_err, z_gt_all, conf_all = [], [], [], [], []
+    add_err, uv_err, ang_fold = [], [], []
     vis_pool = []
+    # 6-DoF 位姿的标准做法：把模型点（这里用 3D 框 8 角点）分别按预测位姿和真值位姿变换后求平均距离（ADD），
+    # 阈值取物体直径的 10%（phantom4 框 0.34x0.34x0.23 -> 直径 0.53 m -> 5.3 cm）。
+    PROTO8 = np.array([[-.5, -.5, -.5], [.5, -.5, -.5], [.5, .5, -.5], [-.5, .5, -.5],
+                       [-.5, -.5, .5], [.5, -.5, .5], [.5, .5, .5], [-.5, .5, .5]])
 
     with torch.no_grad():
         for batch in loader:
@@ -145,7 +150,23 @@ def main():
                 conf_all.append(float(conf[k]))
                 rp = R.from_euler('xyz', p[6:9])
                 rg = R.from_euler('xyz', gt[6:9])
-                ang_err.append(float(np.degrees((rp.inv() * rg).magnitude())))
+                a = float(np.degrees((rp.inv() * rg).magnitude()))
+                ang_err.append(a)
+                ang_fold.append(180.0 - a if a > 90 else a)      # 把机体当 180° 对称时的角度误差
+                # ADD：8 角点按两个位姿变换后的平均距离（尺寸用真值，只考察位姿）
+                mp = PROTO8 * np.asarray(gt[3:6])
+                add_err.append(float(np.linalg.norm((mp @ rp.as_matrix().T + p[:3]) - (mp @ rg.as_matrix().T + gt[:3]), axis=1).mean()))
+                # 2D 重投影：8 角点投到图像后的平均像素距离
+                Kb = np.asarray(batch['intrinsic'][b])[0]
+                db = np.asarray(batch['distortion'][b])[0].reshape(1, -1)
+                cp = mp @ rp.as_matrix().T + p[:3]
+                cg = mp @ rg.as_matrix().T + gt[:3]
+                if cp[:, 2].min() > 1e-3 and cg[:, 2].min() > 1e-3:
+                    up, _ = cv2.projectPoints(cp.astype(np.float64), np.zeros(3), np.zeros(3), Kb, db)
+                    ug, _ = cv2.projectPoints(cg.astype(np.float64), np.zeros(3), np.zeros(3), Kb, db)
+                    uv_err.append(float(np.linalg.norm(up.reshape(-1, 2) - ug.reshape(-1, 2), axis=1).mean()))
+                else:
+                    uv_err.append(float('nan'))
 
                 if args.vis and len(vis_pool) < args.vis:
                     vis_pool.append((batch['scene_id'][b], batch['seq_id'][b],
@@ -156,6 +177,10 @@ def main():
     pos_err = np.array(pos_err)
     ang_err = np.array(ang_err)
     z_err = np.array(z_err)
+    add_err = np.array(add_err)
+    ang_fold = np.array(ang_fold)
+    uv_err = np.array(uv_err)
+    N_ALL = float(len(ds))          # 准确率一律以【全部测试帧】为分母：没检出 = 失败
     print('\n有效样本 %d / %d' % (len(pos_err), len(ds)))
     if len(pos_err) == 0:
         print('!! 没有任何有效检测')
@@ -172,8 +197,23 @@ def main():
     stat('角度误差', ang_err, 'deg')
     print('  GT 深度范围 %.2f ~ %.2f m (中位 %.2f)'
           % (min(z_gt_all), max(z_gt_all), np.median(z_gt_all)))
-    for t in [0.1, 0.2, 0.5, 1.0]:
-        print('  位置误差 < %.1f m 的比例: %5.1f%%' % (t, 100.0 * (pos_err < t).mean()))
+    print('--- 准确率（分母 = 全部 %d 帧，没检出算失败）---' % len(ds))
+    print('  检出率           %5.1f%%' % (100.0 * len(pos_err) / N_ALL))
+    for t in (0.05, 0.1, 0.2, 0.5):
+        print('  位置 < %-5s m    %5.1f%%' % (t, 100.0 * (pos_err < t).sum() / N_ALL))
+    for t in (5, 10, 20, 30):
+        print('  朝向 < %-5s deg  %5.1f%%   (按 180° 对称折算 %5.1f%%)'
+              % (t, 100.0 * (ang_err < t).sum() / N_ALL, 100.0 * (ang_fold < t).sum() / N_ALL))
+    for pt, at in ((0.05, 5), (0.1, 10), (0.2, 20)):
+        print('  位置<%.2fm 且 朝向<%d deg   %5.1f%%' % (pt, at, 100.0 * ((pos_err < pt) & (ang_err < at)).sum() / N_ALL))
+    diam = 0.53
+    print('  ADD 中位 %.3f m；ADD < 10%%直径(%.3f m) %5.1f%%；ADD < 20%%直径 %5.1f%%'
+          % (np.median(add_err), 0.1 * diam, 100.0 * (add_err < 0.1 * diam).sum() / N_ALL,
+             100.0 * (add_err < 0.2 * diam).sum() / N_ALL))
+    u = uv_err[np.isfinite(uv_err)]
+    if len(u):
+        print('  2D 重投影 中位 %.1f px；< 5 px %5.1f%%；< 10 px %5.1f%%'
+              % (np.median(u), 100.0 * (u < 5).sum() / N_ALL, 100.0 * (u < 10).sum() / N_ALL))
 
     if args.json:
         import json
@@ -185,10 +225,29 @@ def main():
             res[nm + '_median'] = float(np.median(a))
             res[nm + '_mean'] = float(a.mean())
             res[nm + '_p90'] = float(np.percentile(a, 90))
+        # 旧口径（分母 = 有检出的帧），保持与之前的 JSON 可比
         for t in (0.1, 0.2, 0.5, 1.0):
             res['acc_%g' % t] = float((pos_err < t).mean())
         for t in (5, 10, 20):
             res['acc_%ddeg' % t] = float((ang_err < t).mean())
+        # 新口径（分母 = 全部测试帧，没检出算失败）——报告性能用这一组
+        res['det_rate'] = float(len(pos_err) / N_ALL)
+        for t in (0.05, 0.1, 0.2, 0.5):
+            res['ACC_pos_%g' % t] = float((pos_err < t).sum() / N_ALL)
+        for t in (5, 10, 20, 30):
+            res['ACC_rot_%d' % t] = float((ang_err < t).sum() / N_ALL)
+            res['ACC_rotfold_%d' % t] = float((ang_fold < t).sum() / N_ALL)
+        for pt, at in ((0.05, 5), (0.1, 10), (0.2, 20)):
+            res['ACC_%gm%ddeg' % (pt, at)] = float(((pos_err < pt) & (ang_err < at)).sum() / N_ALL)
+        res['add_median'] = float(np.median(add_err))
+        res['ACC_add_10'] = float((add_err < 0.053).sum() / N_ALL)
+        res['ACC_add_20'] = float((add_err < 0.106).sum() / N_ALL)
+        res['ang_fold_median'] = float(np.median(ang_fold))
+        u = uv_err[np.isfinite(uv_err)]
+        if len(u):
+            res['uv_median'] = float(np.median(u))
+            res['ACC_uv_5'] = float((u < 5).sum() / N_ALL)
+            res['ACC_uv_10'] = float((u < 10).sum() / N_ALL)
         os.makedirs(os.path.dirname(os.path.abspath(args.json)), exist_ok=True)
         with open(args.json, 'w') as f:
             json.dump(res, f, indent=2)

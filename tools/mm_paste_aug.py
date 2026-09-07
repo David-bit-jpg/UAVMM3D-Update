@@ -794,6 +794,12 @@ def main():
                     help='坐标链路自检：取 N 帧，A=B、恒等变换走完整条链路，检查 LiDAR/雷达点逐点回到原坐标、深度图与缓存一致、框不变')
     ap.add_argument('--balance-classes', action='store_true', default=True, help='源机型轮流选，保证每个机型都有')
     ap.add_argument('--no-sheets', action='store_true', help='不出大图（只做统计 / 批量生成）')
+    ap.add_argument('--block-frames', type=int, default=0,
+                    help='块采样：每块用多少帧候选（背景/源各一半），0 = 关。机械盘上开到 240 左右能把生成速度提回单进程的水平')
+    ap.add_argument('--block-samples', type=int, default=600, help='每块生成多少个样本后重抽子集')
+    ap.add_argument('--light', action='store_true',
+                    help='轻量输出：只存 rgb/ir/depth/tag + 标签（不存点云/DVS/雷达热图/仿真背景 RGB），且不压缩')
+    ap.add_argument('--prefix', default='', help='样本文件名前缀（多进程并行生成时避免重名）')
     ap.add_argument('--tries', type=int, default=30)
     ap.add_argument('--min-lidar-pts', type=int, default=8)
     ap.add_argument('--dilate', type=int, default=10)
@@ -928,14 +934,27 @@ def main():
     attempts = 0
     results = []
     strips = []
+    # 块采样（--block-frames>0）：源帧读的是 data_collect 里的原始 PNG + 点云，机械盘随机读是瓶颈。
+    # 把每 --block-samples 个样本的候选限制在一个随机小子集里（背景 + 源各一半），子集能整个待在
+    # --max-cache-frames 的 LRU 里，命中率从 ~14% 提到 ~100%；子集本身每块重抽，全局分布不变。
+    blk_bgs, blk_by_w, blk_left = bgs, by_w, 0
     while k < args.n and attempts < args.n * 20:
         attempts += 1
-        ib = int(rng.choice(bgs))
+        if args.block_frames > 0 and blk_left <= 0:
+            half = max(4, args.block_frames // 2)
+            blk_bgs = list(rng.choice(bgs, size=min(half, len(bgs)), replace=False))
+            keep = set(int(i) for i in rng.choice(list(src_cls.keys()), size=min(half, len(src_cls)), replace=False))
+            blk_by_w = {w: [i for i in v if i in keep] for w, v in by_w.items()}
+            blk_by_w = {w: v for w, v in blk_by_w.items() if v}
+            blk_left = args.block_samples
+        ib = int(rng.choice(blk_bgs))
         w = metas[ib]['seq'].split('/')[3]
         # 同天气；LiDAR 噪声等级也尽量相同（把 ±3 m 噪声的无人机点贴进零噪声的点云会露馅），没有再放宽
-        pool = [i for i in by_w.get(w, []) if i != ib and metas[i]['lidar_noise'] == metas[ib]['lidar_noise']]
+        pool = [i for i in blk_by_w.get(w, []) if i != ib and metas[i]['lidar_noise'] == metas[ib]['lidar_noise']]
         if not pool:
-            pool = [i for i in by_w.get(w, []) if i != ib]
+            pool = [i for i in blk_by_w.get(w, []) if i != ib]
+        if not pool:
+            pool = [i for i in by_w.get(w, []) if i != ib]      # 该块内这个天气没有源帧，退回全局
         if not pool:
             continue
         if args.balance_classes:
@@ -948,7 +967,8 @@ def main():
         out = paste(A, B, plates, rng, args)
         if out is None:
             continue
-        name = '%02d_%s_A%s_B%s' % (k, w, os.path.splitext(metas[ia]['frame'])[0], os.path.splitext(metas[ib]['frame'])[0])
+        blk_left -= 1
+        name = '%s%02d_%s_A%s_B%s' % (args.prefix, k, w, os.path.splitext(metas[ia]['frame'])[0], os.path.splitext(metas[ib]['frame'])[0])
         if args.gallery:
             strips.append(make_gallery(A, B, out, os.path.join(args.out, name + '.jpg')))
             if len(strips) % 20 == 0 or k + 1 == args.n:
@@ -956,6 +976,23 @@ def main():
                 cv2.imwrite(os.path.join(args.out, 'contact_%02d.jpg' % ((len(strips) - 1) // 20)), page, [cv2.IMWRITE_JPEG_QUALITY, 85])
         elif not args.no_sheets:
             make_sheet(A, B, out, os.path.join(args.out, name + '.jpg'))
+        if args.light:
+            # 只留 RGB 学生训练需要的：rgb / ir / depth / tag / 标签（不存点云、DVS、雷达热图、仿真背景版 RGB）
+            np.savez(os.path.join(args.out, name + '.npz'),
+                     rgb=out['rgb'], ir=out['ir'], depth=out['depth'], tag=out['tag'],
+                     box9d=out['box9d'], name=out['name'], K_raw=out['K_raw'], raw_wh=np.array(out['raw_wh'], np.int32),
+                     s=out['transform']['s'], A=A.meta['seq'] + '/' + A.meta['frame'], B=B.meta['seq'] + '/' + B.meta['frame'],
+                     checks=out['checks'])
+            ck = out['checks']
+            ck['cls'] = src_cls.get(ia, '?')
+            ck['range_new'] = out['transform']['range_new']
+            ck['dim'] = float(max(A.boxes[A.kept][3:6]))
+            cls_count[ck['cls']] = cls_count.get(ck['cls'], 0) + 1
+            results.append(ck)
+            k += 1
+            if k % 200 == 0:
+                print('  %d/%d' % (k, args.n), flush=True)
+            continue
         np.savez_compressed(os.path.join(args.out, name + '.npz'),
                             rgb=out['rgb'], rgb_sim=out['rgb_sim'], ir=out['ir'], dvs=out['dvs'], depth=out['depth'], tag=out['tag'],
                             radar_hm=out['radar_hm'], lidar_pts=out['lidar_pts'], radar_pts=out['radar_pts'], box9d=out['box9d'],
