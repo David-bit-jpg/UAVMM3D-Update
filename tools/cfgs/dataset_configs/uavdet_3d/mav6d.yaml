@@ -4,6 +4,11 @@ DATASET: 'MAV6D_Det_Dataset'
 # 标签 / split 子目录名（自训练用 labels_pseudo_<tag> / split_pseudo_<tag>，见 tools/mav6d_pseudo_label.py）。
 # 缺省就是原目录；放在这里是因为 --set 只能覆盖已有的键。
 LABEL_DIR: 'labels'
+# 在线增广（只在训练时生效；仓库原有的 DATA_AUGMENTOR 从未被数据集调用过）。
+# 缺省全关，行为与 2026-09-07 之前一致；要开就在启动时 --set DATA_CONFIG.AUG.hflip 0.5 等。
+# 动机：MAV6D 15202 帧只来自 77 个序列，5% 预算的 761 帧同序列内高度相关，
+# 实测 rot 训练损失压到 0.01 而测试角度中位仍 31°，是过拟合而不是欠训练。
+AUG: {hflip: 0.0, scale: [1.0, 1.0], photometric: false, noise: 0.0, scale_margin: 24.0}
 SPLIT_DIR: 'split'
 
 CLASS_NAMES: ['mavic2', 'phantom4']

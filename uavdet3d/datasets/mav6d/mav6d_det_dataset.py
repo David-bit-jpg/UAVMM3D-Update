@@ -68,8 +68,93 @@ class MAV6D_Det_Dataset(DatasetTemplate):
 
              self.sample_scene_list += [[cls]+x.strip().split('/')[-3:] for x in open(split_dir).readlines()]
 
+        # 在线增广（只在训练时；仓库原有的 DATA_AUGMENTOR 从来没有被数据集调用过）。
+        # MAV6D 训练集 15202 帧只来自 77 个序列，5% 预算抽 761 帧时同序列内高度相关，
+        # 实测 rot 训练损失能压到 0.01 而测试角度中位仍有 31°，是典型的过拟合，所以这里补上增广。
+        self.aug = dict(dataset_cfg.get('AUG', {}) or {}) if training else {}
+
         self.infos = []
         self.include_MAV6D_data(self.mode)
+
+    def _augment(self, img, boxes9d, K, D):
+        """几何增广同步改 内参 / 畸变 / 相机系 3D 框；光度增广只动像素。
+
+        img: (h, w, 3) float32 0-255，已经 resize 到 IM_RESIZE；K/D 是【原始分辨率】下的，
+        编码器按 new/raw 的比例缩放投影结果，所以这里改 K 时要换算回原始像素。
+
+        水平翻转：像素 u -> W-1-u 等价于相机系 x -> -x。
+          - K: cx -> (raw_w - 1) - cx
+          - 畸变: 切向项 p2 = D[3] 变号（x_dist 里 p2*(r2+2xp^2) 项在 x->-x 下不变号，
+            所以要翻 p2 才能保持等价；p1 项含 xp*yp 自动变号）。径向项对称，不变。
+          - 框: x -> -x，R -> M R M（M = diag(-1,1,1)，det=+1，仍是真旋转）
+        随机尺度：在 resize 后的图上缩放再裁/补回原尺寸，K 的 fx,fy,cx,cy 相应变换；
+          目标中心出画就重试，重试不到就不缩放（MAV6D 每帧只有一个目标，不能丢）。
+        """
+        rng = np.random
+        a = self.aug
+        h, w = img.shape[:2]
+        raw_w, raw_h = float(self.raw_im_width), float(self.raw_im_hight)
+        K = K.copy()
+        D = D.copy()
+        boxes9d = np.array(boxes9d, dtype=np.float64, copy=True)
+
+        def center_uv(K_, D_, box):
+            xyz = box[None, :3]
+            xp, yp = xyz[:, 0] / xyz[:, 2], xyz[:, 1] / xyz[:, 2]
+            r2 = xp * xp + yp * yp
+            rad = 1.0 + D_[0] * r2 + D_[1] * r2 * r2 + D_[4] * r2 * r2 * r2
+            xd = xp * rad + 2.0 * D_[2] * xp * yp + D_[3] * (r2 + 2.0 * xp * xp)
+            yd = yp * rad + D_[2] * (r2 + 2.0 * yp * yp) + 2.0 * D_[3] * xp * yp
+            return float(K_[0, 0] * xd + K_[0, 2]), float(K_[1, 1] * yd + K_[1, 2])
+
+        if rng.rand() < float(a.get('hflip', 0.0)):
+            img = img[:, ::-1].copy()
+            K[0, 2] = (raw_w - 1.0) - K[0, 2]
+            D[3] = -D[3]
+            boxes9d[:, 0] *= -1.0
+            M = np.diag([-1.0, 1.0, 1.0])
+            for i in range(len(boxes9d)):
+                Rm = R.from_euler('xyz', boxes9d[i, 6:9]).as_matrix()
+                boxes9d[i, 6:9] = R.from_matrix(M @ Rm @ M).as_euler('xyz')
+
+        sr = a.get('scale', None)
+        if sr:
+            for _ in range(5):
+                s = float(rng.uniform(sr[0], sr[1]))
+                if abs(s - 1.0) < 1e-3:
+                    break
+                nh, nw = max(8, int(round(h * s))), max(8, int(round(w * s)))
+                res = cv2.resize(img, (nw, nh), interpolation=cv2.INTER_LINEAR)
+                if s >= 1.0:
+                    oy, ox = rng.randint(0, nh - h + 1), rng.randint(0, nw - w + 1)
+                    out = res[oy:oy + h, ox:ox + w]
+                    dx, dy = -ox, -oy
+                else:
+                    out = np.zeros_like(img)
+                    oy, ox = rng.randint(0, h - nh + 1), rng.randint(0, w - nw + 1)
+                    out[oy:oy + nh, ox:ox + nw] = res
+                    dx, dy = ox, oy
+                K2 = K.copy()
+                K2[0, 0] *= s; K2[1, 1] *= s
+                K2[0, 2] = K2[0, 2] * s + dx * raw_w / w
+                K2[1, 2] = K2[1, 2] * s + dy * raw_h / h
+                u, v = center_uv(K2, D, boxes9d[0])
+                mg = float(a.get('scale_margin', 24.0))       # 原始像素下的留边
+                if mg <= u < raw_w - mg and mg <= v < raw_h - mg:
+                    img, K = out, K2
+                    break
+
+        if a.get('photometric', False):
+            gain = rng.uniform(0.75, 1.25)
+            contrast = rng.uniform(0.8, 1.25)
+            gamma = rng.uniform(0.8, 1.25)
+            cgain = rng.uniform(0.92, 1.08, size=(1, 1, 3))
+            m = img.mean()
+            x = np.clip(((img - m) * contrast + m) * gain * cgain, 0, 255) / 255.0
+            img = (np.power(x, gamma) * 255.0).astype(np.float32)
+            if a.get('noise', 0.0) > 0:
+                img = np.clip(img + rng.randn(*img.shape).astype(np.float32) * float(a['noise']) * 255.0, 0, 255)
+        return img.astype(np.float32), boxes9d.astype(np.float32), K, D
 
     def set_split(self, split):
         super(MAV6D_Det_Dataset, self).__init__(dataset_cfg=self.dataset_cfg, training=self.training,
@@ -141,9 +226,6 @@ class MAV6D_Det_Dataset(DatasetTemplate):
             (self.new_im_width, self.new_im_hight),  # 目标尺寸 (width, height)
             interpolation=cv2.INTER_AREA  # 缩小推荐使用区域插值
         )
-        resized_img = resized_img.transpose(2,0,1)
-        C,W,H = resized_img.shape
-        resized_img = resized_img.reshape(1,C,W,H)
 
         rotation_matrix, translation_matrix = read_truth_Rt(label_path)
         rotation_matrix = np.array(rotation_matrix.reshape(3, 3), dtype=np.float32)
@@ -154,12 +236,21 @@ class MAV6D_Det_Dataset(DatasetTemplate):
 
         boxes9d = np.array([box9d])
 
+        K = np.array(self.intrinsic, dtype=np.float64)
+        D = np.array(self.distortion_matrix, dtype=np.float64)
+        if self.training and self.aug:
+            resized_img, boxes9d, K, D = self._augment(resized_img, boxes9d, K, D)
+
+        resized_img = resized_img.transpose(2,0,1)
+        C,W,H = resized_img.shape
+        resized_img = resized_img.reshape(1,C,W,H)
+
         data_dict = {}
 
 
-        data_dict['intrinsic'] = np.array([self.intrinsic])
+        data_dict['intrinsic'] = np.array([K])
         data_dict['extrinsic'] = np.array([self.extrinsic])
-        data_dict['distortion'] = np.array([self.distortion_matrix])
+        data_dict['distortion'] = np.array([D])
         data_dict['raw_im_size'] = np.array([self.raw_im_width, self.raw_im_hight])
         data_dict['new_im_size'] = np.array([self.new_im_width, self.new_im_hight])
         data_dict['obj_size'] = np.array(self.dataset_cfg.OB_SIZE)
