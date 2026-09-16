@@ -1,0 +1,71 @@
+# camnorm 系列共用的网络与优化配置。仿真预训练、MAV6D 从零、MAV6D 迁移三者网络结构逐层相同，
+# 权重可整体载入（不跳任何层，不做任何换算）。
+MODEL:
+    NAME: CenterDet
+
+    BACKBONE_2D:
+      NAME: ResNet8x
+      # 归一化类型 bn(缺省) / gn / in。BN 的 running stats 是域相关的（AdaBN 实测能把 P1 从 4.59 修到 1.68 m），
+      # gn / in 没有 running stats，结构上不存在这个问题。换类型的权重与 BN 权重不可互相加载。
+      NORM_TYPE: 'bn'
+      # MixStyle：训练时随机混合批内样本的特征统计量，逼网络不依赖「风格」（含细节强度这一轴）。
+      # p<=0 = 关闭，逐位等同于没有这个模块。见 model_utils/mixstyle.py
+      MIXSTYLE: {p: 0.0, alpha: 0.1, layers: [1, 2]}
+      NUM_FILTERS: [64, 128, 256, 512]
+      INPUT_CHANNELS: 3
+      OUT_CHANNELS: 512
+
+    DENSE_HEAD_2D:
+      NAME: CenterHead
+      NORM_TYPE: 'bn'
+      INPUT_CHANNELS: 512
+      # 审查 P12：CenterNet focal loss + hm 偏置先验（sigmoid 后 0.1）
+      HM_LOSS: 'focal'
+      HM_BIAS_PRIOR: -2.19
+      # 审查 P11（原来五项等权，深度只占总损失 1.1%）之后的权重，按【梯度】而不是损失值来平衡：
+      # 起初取 center_dis 24（每虚拟米 L1）—— 实测它独占梯度：初始化时总梯度范数 ~7800（深度项 7803），
+      # 第 15 轮仍 16（深度头自己 15.8），GRAD_NORM_CLIP=10 一直在裁，旋转项到骨干的梯度只有 0.28，角度学不动。
+      # 在 MAV6D 验证集（5% 预算、20 轮、开增广）上比了 4 组：
+      #   dis24/rot1/clip10 score 0.279 角度中位 54.8° | dis24/rot5/clip35 0.284 40.4° |
+      #   dis8/rot4/res2/clip35 0.315 31.4° | dis3/rot1/clip10 0.303 40.4°  -> 取 dis8/rot4/res2 + 裁剪 35
+      LOSS_WEIGHTS: {hm: 1.0, center_res: 2.0, center_dis: 8.0, dim: 2.0, rot: 4.0}
+      SEPARATE_HEAD_CFG:
+          HEAD_ORDER: ['hm', 'center_res', 'center_dis', 'dim', 'rot']
+          HEAD_DICT: {
+              'hm': {'out_channels': 1, 'conv_dim': 128},
+              'center_res': {'out_channels': 2, 'conv_dim': 128},
+              'center_dis': {'out_channels': 1, 'conv_dim': 128},
+              'dim': {'out_channels': 3, 'conv_dim': 128},
+              'rot': {'out_channels': 6, 'conv_dim': 128},
+          }
+
+    POST_PROCESSING:
+      DECONDER: center_point_decoder_mav6d
+      # true = 深度由「预测的 3D 尺寸+姿态」与「预测的 2D 跨度」几何解出，不用自由回归的 center_dis。
+      # 需要 HEAD_ORDER 里有 size2d 且 DATA_CONFIG.MAKE_SIZE2D 打开。缺省 false，行为不变。
+      DEPTH_FROM_SIZE2D: false
+      MAX_OBJ: 5
+      SCORE_THRESH: 0.05
+
+
+OPTIMIZATION:
+    BATCH_SIZE_PER_GPU: 8
+    NUM_EPOCHS: 30
+
+    OPTIMIZER: adam_onecycle
+    LR: 0.001
+    WEIGHT_DECAY: 0.01
+    MOMENTUM: 0.9
+
+    MOMS: [0.95, 0.85]
+    PCT_START: 0.4
+    DIV_FACTOR: 10
+    DECAY_STEP_LIST: [35, 45]
+    LR_DECAY: 0.1
+    LR_CLIP: 0.0000001
+
+    LR_WARMUP: False
+    WARMUP_EPOCH: 1
+
+    # 10 时训练中后期仍一直在裁（见上面 LOSS_WEIGHTS 的实测），放宽到 35：前期大梯度照样裁，中后期不再压低有效学习率
+    GRAD_NORM_CLIP: 35

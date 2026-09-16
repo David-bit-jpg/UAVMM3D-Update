@@ -86,7 +86,8 @@ class MAV6D_Det_Dataset(DatasetTemplate):
           - K: cx -> (raw_w - 1) - cx
           - 畸变: 切向项 p2 = D[3] 变号（x_dist 里 p2*(r2+2xp^2) 项在 x->-x 下不变号，
             所以要翻 p2 才能保持等价；p1 项含 xp*yp 自动变号）。径向项对称，不变。
-          - 框: x -> -x，R -> M R M（M = diag(-1,1,1)，det=+1，仍是真旋转）
+          - 框: x -> -x，R -> M R S（M = diag(-1,1,1) 相机系镜像，S = diag(1,-1,1) 无人机左右对称面；
+            不能用 M R M，那会把机头机尾对调，见 camera_geometry.hflip_rotation）
         随机尺度：在 resize 后的图上缩放再裁/补回原尺寸，K 的 fx,fy,cx,cy 相应变换；
           目标中心出画就重试，重试不到就不缩放（MAV6D 每帧只有一个目标，不能丢）。
         """
@@ -113,9 +114,10 @@ class MAV6D_Det_Dataset(DatasetTemplate):
             D[3] = -D[3]
             boxes9d[:, 0] *= -1.0
             M = np.diag([-1.0, 1.0, 1.0])
+            S = np.diag([1.0, -1.0, 1.0])
             for i in range(len(boxes9d)):
                 Rm = R.from_euler('xyz', boxes9d[i, 6:9]).as_matrix()
-                boxes9d[i, 6:9] = R.from_matrix(M @ Rm @ M).as_euler('xyz')
+                boxes9d[i, 6:9] = R.from_matrix(M @ Rm @ S).as_euler('xyz')
 
         sr = a.get('scale', None)
         if sr:
@@ -260,7 +262,9 @@ class MAV6D_Det_Dataset(DatasetTemplate):
         data_dict['stride'] = self.stride
         data_dict['image'] = resized_img
         data_dict['gt_box9d'] = boxes9d
-        data_dict['gt_name'] = np.array([cls_name]*len(boxes9d))
+        # 不分机型训练时（配置 HM_CLASS_NAMES: ['drone']）标签统一成一类；数据仍按机型目录读
+        hm_names = self.dataset_cfg.get('HM_CLASS_NAMES', None)
+        data_dict['gt_name'] = np.array([hm_names[0] if hm_names else cls_name]*len(boxes9d))
 
         data_dict = self.data_pre_processor(data_dict)
 

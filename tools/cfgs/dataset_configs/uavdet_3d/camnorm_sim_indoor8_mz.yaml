@@ -1,0 +1,13 @@
+# 新室内仿真，原分辨率 JPEG 缓存（build_mm_cache.py --store jpeg）+ 在线多焦距裁窗（mz = multi-zoom）。
+# 为什么：只用整幅缩放（焦距 256 px）训练时，仿真无人机的虚拟深度 Zv 集中在 4~20（中位 11），
+# MAV6D 在 1~6（中位 3.6）—— 整个目标域在训练分布之外。实测零样本深度被估大 3.6 倍；
+# 同一批仿真验证帧裁成长焦窗口（Zv 3.6）也偏大 2.1 倍，说明是覆盖问题而不是 bug（tools/diag_zv_coverage.py）。
+# 每次取样在 1280x720 原图上裁宽 1280/z 的窗口缩到 512x288，等效焦距 256*z，z 在 [1,4] 内对数均匀：Zv 覆盖约 1.3~20。
+_BASE_CONFIG_: cfgs/dataset_configs/uavdet_3d/camnorm_sim_indoor8.yaml
+DATA_PATH: 'E:/mmcache/indoor8jpg'
+# 裁窗已经覆盖尺度变化，不再叠加旧的缩放增广
+AUG: {hflip: 0.5, scale: [1.0, 1.0], photometric: true, noise: 0.01, blur: 0.0, blur_prob: 0.5}
+# no_upscale: true = 窗口夹到不小于网络输入，只降采样不放大（缺省 false = 历史行为）
+VIEW_AUG: {zoom: [1.0, 4.0], no_upscale: false}
+# 选轮用的仿真验证：整幅（z=1）与长焦窗口（z=2.5，与 MAV6D 虚拟深度相当）轮流，两种视角都要好
+VAL_ZOOMS: [1.0, 2.5]

@@ -67,6 +67,7 @@ def main():
     ap.add_argument('--tag', required=True)
     ap.add_argument('--data-path', default='E:/MAV6D')
     ap.add_argument('--decode-max-dis', type=float, default=None, help='零样本权重要用训练时的 40')
+    ap.add_argument('--decode-max-size', type=float, default=None, help='零样本权重要用训练时的 4（mmcache MAX_SIZE）')
     ap.add_argument('--batch-size', type=int, default=8)
     ap.add_argument('--workers', type=int, default=2)
     ap.add_argument('--no-norm', action='store_true', help='2026-09-06 之前训的权重没有按域归一化')
@@ -81,6 +82,8 @@ def main():
     cfg.DATA_CONFIG.DATA_PATH = args.data_path
     if args.decode_max_dis is not None:
         cfg.DATA_CONFIG.MAX_DIS = args.decode_max_dis
+    if args.decode_max_size is not None:
+        cfg.DATA_CONFIG.MAX_SIZE = args.decode_max_size
     if args.no_norm:
         cfg.DATA_CONFIG.pop('NORM_MEAN', None)
         cfg.DATA_CONFIG.pop('NORM_STD', None)

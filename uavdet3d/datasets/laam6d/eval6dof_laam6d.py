@@ -314,7 +314,9 @@ def eval_box6d_error(annos, max_dis):
         dis_error = np.linalg.norm(pred_xyz - gt_xyz, axis=-1)
         dis_error[dis_error > max_dis] = max_dis
 
-        size_error = np.mean(np.abs(pred_boxes9d[:, 3:6] - gt_box9d[:, 3:6]), axis=-1)
+        # 审查 P15：原来是 pred_boxes9d[:, 3:6] - gt_box9d[:, 3:6]，而这里的框是 (N,9,3) 九点格式，
+        # 取到的是第 3~5 号角点坐标，平移 0.2 m 时「尺寸误差」0.067、只旋转 20° 时 0.040。改为按 l,w,h 参数比。
+        size_error = np.mean(np.abs(pred_params[:, 3:6] - gt_params[:, 3:6]), axis=-1)
 
         dis_error = dis_error[~np.isnan(dis_error) & ~np.isinf(dis_error)]
         angle_error = angle_error[~np.isnan(angle_error) & ~np.isinf(angle_error)]

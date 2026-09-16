@@ -1,0 +1,17 @@
+# R1：与 P1b 逐项相同，只把骨干换成 ImageNet 预训练 ResNet-34 + FPN（stride 8）。
+# 动机：S1 的尺寸头在 4800 帧真实图上输出恒定 0.822（四分位距仅 0.055）—— 它在真实照片上
+# 完全分不出这是哪架机；而在仿真里跨 0.265~2.587 m 十倍量程比值全是 1.00。
+# 一个 19M 网络从零训在 2 万帧单一渲染器的图上，学到的必然是那个渲染器的纹理。
+# ImageNet 特征是在 120 万张真实照片上学的，这是 sim2real 最基本的一步，本项目从未评过。
+_BASE_CONFIG_: cfgs/models/uavdet_3d/camnorm/sim_pp_realsize.yaml
+MODEL:
+    BACKBONE_2D:
+      NAME: TvResNet
+      ARCH: resnet34
+      PRETRAINED: true
+      BGR_INPUT: true
+      INPUT_CHANNELS: 3
+      OUT_CHANNELS: 512
+      FPN_CHANNELS: 128
+      # 不锁 BN：先看最朴素的微调效果，R1b 再对照锁 BN 的版本
+      FREEZE_BN: false

@@ -18,6 +18,13 @@ MAV6D 专用的 center-point 编解码器。
 LAAM6D 的行为一致，做迁移对比时可能用得上）。
 
 欧拉角约定 'xyz'，与 uavdet3d/datasets/mav6d/*.py 里的 as_euler('xyz') 一致。
+
+相机自适应（2026-09-14，见 uavdet3d/utils/camera_geometry.py）：
+    depth_mode='virtual' : center_dis 学 Zv = Z * f_ref / f_in（f_in = 网络输入分辨率上的 sqrt(fx*fy)）
+    rot_frame='allo'     : rot 头学视线相对旋转 R_ray^T R_cam，解码时用预测中心的视线转回相机系
+    euler_seq            : 必须显式给（配置 EULER_SEQ）。缺省回落到模块全局只是为了兼容旧配置 ——
+                           spawn 出来的 dataloader worker 里模块全局是 'zyx'，不是主进程设的值。
+缺省 depth_mode='metric' / rot_frame='ego' 与历史行为逐位一致。
 """
 import copy
 
@@ -25,9 +32,16 @@ import cv2
 import numpy as np
 import torch
 
+from scipy.spatial.transform import Rotation as R
+
+from uavdet3d.utils import camera_geometry as cg
 from uavdet3d.utils.centernet_utils import draw_gaussian_to_heatmap, draw_res_to_heatmap
 from uavdet3d.utils.frame_convention import get_default_euler_seq
 from uavdet3d.utils.rotation_repr import euler_to_vec, vec_to_euler
+
+# 单位立方体 8 角点（与 datasets/pre_processor 的 PROTO8 同一约定）
+PROTO8 = np.array([[-.5, -.5, -.5], [.5, -.5, -.5], [.5, .5, -.5], [-.5, .5, -.5],
+                   [-.5, -.5, .5], [.5, -.5, .5], [.5, .5, .5], [-.5, .5, .5]], dtype=np.float64)
 
 
 def project_points(xyz, intrinsic_mat, distortion_matrix, use_distortion=True):
@@ -89,7 +103,10 @@ def center_point_encoder(gt_box9d_with_cls,
                          center_rad=None,
                          use_distortion=True,
                          rot_repr='euler6',
-                         euler_seq=None):
+                         euler_seq=None,
+                         depth_mode='metric',
+                         f_ref=None,
+                         rot_frame='ego'):
     """把 (N, 10) 的 [x,y,z,l,w,h,a1,a2,a3,cls] 编码成 CenterNet 风格监督图。
 
     返回 (hm, center_res, center_dis, dim, rot)，形状依次为
@@ -102,6 +119,7 @@ def center_point_encoder(gt_box9d_with_cls,
 
     scale_x = float(new_im_width) / float(raw_im_width) / float(stride)
     scale_y = float(new_im_hight) / float(raw_im_hight) / float(stride)
+    seq = _check_modes(euler_seq, depth_mode, f_ref, rot_frame, rot_repr)
 
     gt_box9d_with_cls = np.asarray(gt_box9d_with_cls, dtype=np.float64).reshape(-1, 10)
 
@@ -120,6 +138,13 @@ def center_point_encoder(gt_box9d_with_cls,
         if len(gt_box9d_with_cls) > 0:
             xyz = copy.deepcopy(gt_box9d_with_cls[:, 0:3])
             uv, depth = project_points(xyz, in_mat, dis_mat, use_distortion)
+            f_in = cg.input_focal(in_mat, (raw_im_width, raw_im_hight), (new_im_width, new_im_hight))
+            if rot_frame == 'allo':
+                # 视线方向就是 3D 中心方向；有畸变时视线仍是 xyz 本身，与解码侧 unproject 一致
+                R_allo = cg.ego_to_allo(R.from_euler(seq, gt_box9d_with_cls[:, 6:9]).as_matrix(), xyz)
+                ang_target = R.from_matrix(R_allo).as_euler(seq)
+            else:
+                ang_target = gt_box9d_with_cls[:, 6:9]
 
             for obj_i, obj in enumerate(gt_box9d_with_cls):
                 Z = depth[obj_i]
@@ -147,17 +172,16 @@ def center_point_encoder(gt_box9d_with_cls,
                 this_res_map[0], this_res_map[1] = draw_res_to_heatmap(
                     this_res_map[0], this_res_map[1], center)
 
-                this_dis_map[0, h_idx, w_idx] = Z
+                this_dis_map[0, h_idx, w_idx] = (Z * float(f_ref) / f_in) if depth_mode == 'virtual' else Z
 
                 l, w, h = obj[3], obj[4], obj[5]
-                a1, a2, a3 = obj[6], obj[7], obj[8]
+                a1, a2, a3 = ang_target[obj_i]
 
                 this_size_map[0, h_idx, w_idx] = l
                 this_size_map[1, h_idx, w_idx] = w
                 this_size_map[2, h_idx, w_idx] = h
 
-                this_angle_map[:, h_idx, w_idx] = euler_to_vec(
-                    (a1, a2, a3), euler_seq or get_default_euler_seq(), rot_repr)
+                this_angle_map[:, h_idx, w_idx] = euler_to_vec((a1, a2, a3), seq, rot_repr)
 
         gt_hm.append(this_heat_map.cpu().numpy())
         gt_center_res.append(this_res_map)
@@ -167,6 +191,22 @@ def center_point_encoder(gt_box9d_with_cls,
 
     return (np.array(gt_hm), np.array(gt_center_res), np.array(gt_center_dis),
             np.array(gt_dim), np.array(gt_rot))
+
+
+def _check_modes(euler_seq, depth_mode, f_ref, rot_frame, rot_repr):
+    if depth_mode not in ('metric', 'virtual'):
+        raise ValueError('DEPTH_MODE 只能是 metric / virtual，收到 %r' % (depth_mode,))
+    if rot_frame not in ('ego', 'allo'):
+        raise ValueError('ROT_FRAME 只能是 ego / allo，收到 %r' % (rot_frame,))
+    if depth_mode == 'virtual' and not f_ref:
+        raise ValueError('DEPTH_MODE=virtual 需要 DEPTH_F_REF')
+    if euler_seq is None:
+        # 旧配置兼容：euler6 只是存储角的 cos/sin，与顺序无关，回落到全局也不会错；
+        # 但凡要把角变成矩阵（allo / r6d）就必须显式给，否则 worker 里拿到的是 'zyx'
+        if rot_frame == 'allo' or rot_repr != 'euler6':
+            raise ValueError('ROT_FRAME=allo 或 ROT_REPR!=euler6 时必须显式配置 EULER_SEQ')
+        return get_default_euler_seq()
+    return euler_seq
 
 
 def nms_pytorch(confidence_map, max_num, distance_threshold=5):
@@ -213,7 +253,11 @@ def center_point_decoder(hm,
                          max_num=10,
                          use_distortion=True,
                          rot_repr='euler6',
-                         euler_seq=None):
+                         euler_seq=None,
+                         depth_mode='metric',
+                         f_ref=None,
+                         rot_frame='ego',
+                         size2d=None):
     """center_point_encoder 的逆过程，输出 (N, 10) 的 [x,y,z,l,w,h,a1,a2,a3,cls]。
 
     坐标系为 OpenCV 相机系，与 MAV6D 的 gt_box9d 一致
@@ -224,6 +268,7 @@ def center_point_decoder(hm,
 
     scale_x = float(new_im_width) / float(raw_im_width) / float(stride)
     scale_y = float(new_im_hight) / float(raw_im_hight) / float(stride)
+    seq = _check_modes(euler_seq, depth_mode, f_ref, rot_frame, rot_repr)
 
     for im_id in range(im_num):
         in_mat = np.asarray(intrinsic_mat[im_id], dtype=np.float64).reshape(3, 3)
@@ -247,7 +292,10 @@ def center_point_decoder(hm,
         # 回到原始分辨率的像素坐标
         uv_raw = np.stack([u_hm / scale_x, v_hm / scale_y], axis=1)
 
-        depth = center_dis[im_id][0, rows, cols].detach().cpu().numpy()
+        depth = center_dis[im_id][0, rows, cols].detach().cpu().numpy().astype(np.float64)
+        if depth_mode == 'virtual':
+            f_in = cg.input_focal(in_mat, (raw_im_width, raw_im_hight), (new_im_width, new_im_hight))
+            depth = depth * f_in / float(f_ref)
 
         points = unproject_points(uv_raw, depth, in_mat, dis_mat, use_distortion)
 
@@ -263,11 +311,54 @@ def center_point_decoder(hm,
         if len(rot_vec) == 0:
             eul = np.zeros((0, 3), dtype=np.float64)
         else:
-            eul = vec_to_euler(rot_vec, euler_seq or get_default_euler_seq(), rot_repr)
+            eul = np.asarray(vec_to_euler(rot_vec, seq, rot_repr), dtype=np.float64).reshape(-1, 3)
+            if rot_frame == 'allo':
+                # 视线取解码出的中心像素方向（unproject 已处理畸变），与编码侧用 3D 中心方向严格一致
+                rays = unproject_points(uv_raw, np.ones(len(uv_raw)), in_mat, dis_mat, use_distortion)
+                R_ego = cg.allo_to_ego(R.from_euler(seq, eul).as_matrix(), rays)
+                eul = R.from_matrix(R_ego).as_euler(seq)
         eul = np.asarray(eul, dtype=np.float64).reshape(-1, 3)
         a1 = eul[:, 0:1]
         a2 = eul[:, 1:2]
         a3 = eul[:, 2:3]
+
+        # ---- 几何解深度（2026-09-16）：Z 由「自己预测的 3D 尺寸 + 姿态」和「自己量的 2D 跨度」解出，
+        # 不再用自由回归的 center_dis。深度的相对误差 = 2D 跨度的相对误差，而 2D 跨度是图上可见量，
+        # 跨域比公制深度稳得多。size2d 通道是 (log w2d, log h2d)，单位 = 网络输入像素，与 in_mat 同分辨率。
+        if size2d is not None and len(rows):
+            s2 = size2d[im_id][:, rows, cols].detach().cpu().numpy().astype(np.float64)
+            w2d = np.exp(np.clip(s2[0], -5.0, 9.0))
+            h2d = np.exp(np.clip(s2[1], -5.0, 9.0))
+            fx, fy = float(in_mat[0, 0]), float(in_mat[1, 1])
+            lwh = np.concatenate([l, w, h], axis=1)
+            Rm = R.from_euler(seq, eul).as_matrix().reshape(-1, 3, 3)
+            zs = np.asarray(depth, dtype=np.float64).reshape(-1).copy()
+            for i in range(len(lwh)):
+                c0 = (PROTO8 * lwh[i]) @ Rm[i].T          # 绕自身中心的角点偏移（与 Z 无关）
+                a_, b_ = fx * float(np.ptp(c0[:, 0])), fy * float(np.ptp(c0[:, 1]))
+                den = a_ * w2d[i] + b_ * h2d[i]
+                z = (a_ * a_ + b_ * b_) / den if den > 1e-9 else float(zs[i])
+                # 正交近似只是起点：8 个角点深度不同，真实 2D 包围盒比 f·L/Z 略大。
+                # 投影尺寸近似正比于 1/Z，所以按「当前投影 / 目标」直接缩放 Z，几轮就收敛。
+                for _ in range(8):
+                    if not np.isfinite(z) or z <= 1e-6:
+                        z = float(zs[i]); break
+                    ctr = unproject_points(uv_raw[i:i + 1], np.array([z]), in_mat, dis_mat, use_distortion)[0]
+                    cw = c0 + ctr
+                    if (cw[:, 2] <= 1e-6).any():
+                        break
+                    uvp, _ = project_points(cw, in_mat, dis_mat, use_distortion)
+                    pw, ph = float(np.ptp(uvp[:, 0])), float(np.ptp(uvp[:, 1]))
+                    if pw < 1e-9 or ph < 1e-9:
+                        break
+                    r = 0.5 * (pw / w2d[i] + ph / h2d[i])
+                    if not np.isfinite(r) or r <= 0:
+                        break
+                    z *= r
+                    if abs(r - 1.0) < 1e-12:
+                        break
+                zs[i] = z
+            points = unproject_points(uv_raw, zs, in_mat, dis_mat, use_distortion)
 
         cls = cls_map[rows, cols].detach().cpu().numpy().reshape(-1, 1).astype(np.float64)
 

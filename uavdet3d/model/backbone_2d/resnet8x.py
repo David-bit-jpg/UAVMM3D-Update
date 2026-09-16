@@ -1,11 +1,17 @@
 import torch.nn as nn
 
+from uavdet3d.model.model_utils.norm_layer import build_norm
+from uavdet3d.model.model_utils.mixstyle import build_mixstyle
+
 
 class ResNet8x(nn.Module):
     def __init__(self, model_cfg):
         super(ResNet8x, self).__init__()
 
         self.in_channels, self.out_channels, self.feature_channels = model_cfg.INPUT_CHANNELS, model_cfg.OUT_CHANNELS, model_cfg.NUM_FILTERS
+
+        # 归一化类型：'bn'(缺省，与历史逐位一致) / 'gn' / 'in'。见 model_utils/norm_layer.py 的说明
+        self.norm_type = model_cfg.get('NORM_TYPE', 'bn')
 
         self.init_block = nn.Conv2d(self.in_channels, self.feature_channels[0], kernel_size=1)
 
@@ -22,12 +28,15 @@ class ResNet8x(nn.Module):
 
         self.final_conv = nn.Conv2d(self.feature_channels[3], self.out_channels, kernel_size=3, padding=1)
 
+        # MixStyle：只插在浅层（stage 1/2 之后），深层混会伤判别力。不配时是 None，逐位等同于没有它
+        self.mixstyle, self.mixstyle_layers = build_mixstyle(model_cfg)
+
     def _make_block(self, in_channels, feature_channels):
         layers = []
 
         for _ in range(4):
             layers.append(nn.Conv2d(in_channels, feature_channels, kernel_size=3, padding=1))
-            layers.append(nn.BatchNorm2d(feature_channels))
+            layers.append(build_norm(feature_channels, self.norm_type))
             layers.append(nn.ReLU(inplace=True))
             in_channels = feature_channels
 
@@ -36,7 +45,7 @@ class ResNet8x(nn.Module):
     def down_block(self, in_channels, feature_channels):
         return nn.Sequential(nn.MaxPool2d(kernel_size=2, stride=2),
                              nn.Conv2d(in_channels, feature_channels, kernel_size=3, padding=1),
-                             nn.BatchNorm2d(feature_channels),
+                             build_norm(feature_channels, self.norm_type),
                              nn.ReLU(inplace=True))
 
     def forward(self, batch_dict):
@@ -51,9 +60,15 @@ class ResNet8x(nn.Module):
         x1 = x1 + x
         x1 = self.d1(x1)
 
+        if self.mixstyle is not None and 1 in self.mixstyle_layers:
+            x1 = self.mixstyle(x1)
+
         x2 = self.block2(x1)
         x2 = x2 + x1
         x2 = self.d2(x2)
+
+        if self.mixstyle is not None and 2 in self.mixstyle_layers:
+            x2 = self.mixstyle(x2)
 
         x3 = self.block3(x2)
         x3 = x3 + x2

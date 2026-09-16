@@ -1,0 +1,6 @@
+1. 打补丁          python <scratchpad>/patch_bias_norm.py
+2. 回归测试        python tools/verify_camnorm.py          （8 项必须全过 = 默认路径没被破坏）
+3. size2d 往返     python tools/annot_audit/check_size2d.py
+4. 标准化往返自检  新写：GT -> 标准化监督图 -> 解码，必须还原 GT
+5. 冒烟            N1 配置建模型 + 前向反向 + 推理
+6. 开跑            bash tools/run_n1.sh

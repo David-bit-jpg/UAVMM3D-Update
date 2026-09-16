@@ -1,0 +1,7 @@
+# S2：与 S1（sim_indoor8_mz.yaml）逐项相同，只把标签换成机头偏航修正版。
+_BASE_CONFIG_: cfgs/models/uavdet_3d/camnorm/_model.yaml
+DATA_CONFIG:
+    _BASE_CONFIG_: cfgs/dataset_configs/uavdet_3d/camnorm_sim_indoor8_mz_nose.yaml
+MODEL:
+    POST_PROCESSING:
+      MAX_OBJ: 5

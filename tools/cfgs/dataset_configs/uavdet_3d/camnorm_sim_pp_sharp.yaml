@@ -1,0 +1,9 @@
+# 2026-09-16 P2：与 pp_realsize 同数据，只把裁窗倍数限制在「不放大」的区间，保住目标细节。
+# 依据（docs/audit/ANNOTATION_CONSISTENCY_2026-09-15.md §12.2）：仿真 1280x720/90° 的角分辨率只有
+# MAV6D（1920/55°）的 0.41 倍，目标原生像素 59 vs 289。旧的 zoom [1,4] 为了够到 MAV6D 的
+# 虚拟深度要跑到 z≈3.3，那里是把 388 px 放大到 512 —— 目标块细节量只剩 MAV6D 的 1/16。
+# _view 在窗口宽 = 512（即 z=2.5）时直接跳过 resize，是原生像素。取 [2.0, 3.0]：
+# 重采样只在 1.25x 降 ~ 1.20x 升之间，Zv 覆盖 2.57~7.30，压住 MAV6D 的 2.50~4.61（中位 3.52）。
+_BASE_CONFIG_: cfgs/dataset_configs/uavdet_3d/camnorm_sim_pp_realsize.yaml
+VIEW_AUG: {zoom: [2.0, 3.0]}
+VAL_ZOOMS: [2.0, 3.0]

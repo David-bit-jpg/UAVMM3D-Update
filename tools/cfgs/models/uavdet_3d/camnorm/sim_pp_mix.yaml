@@ -1,0 +1,7 @@
+# M1：与 P1b 逐项相同，只加 MixStyle（训练时混合批内样本的特征统计量）。
+# 动机：AdaBN 实测证明失败的主因之一就是特征统计量跨域漂移（P1 位置 4.593 -> 1.679 m）。
+# AdaBN 是事后补救且要目标域数据；MixStyle 在训练时就堵死这条捷径，只用源域。
+_BASE_CONFIG_: cfgs/models/uavdet_3d/camnorm/sim_pp_realsize.yaml
+MODEL:
+    BACKBONE_2D:
+      MIXSTYLE: {p: 0.5, alpha: 0.1, layers: [1, 2]}

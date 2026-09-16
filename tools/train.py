@@ -13,7 +13,7 @@ from uavdet3d.datasets import build_dataloader
 from uavdet3d.model import build_network, model_fn_decorator
 from uavdet3d.utils import common_utils
 from tools.train_utils.optimization import build_optimizer, build_scheduler
-from tools.train_utils.train_utils import train_model
+from tools.train_utils.train_utils import train_model, checkpoint_state
 from tools.test import repeat_eval_ckpt
 
 def parse_config():
@@ -49,6 +49,18 @@ def parse_config():
     parser.add_argument('--tcp_port', type=int, default=18888, help='tcp port for distrbuted training')
     parser.add_argument('--sync_bn', action='store_true', default=False, help='whether to use sync bn')
     parser.add_argument('--fix_random_seed', action='store_true', default=False, help='')
+    parser.add_argument('--seed', type=int, default=666,
+                        help='配合 --fix_random_seed 的随机种子。原来写死 666，「多种子」实验跑出来会完全一样')
+    parser.add_argument('--cudnn_benchmark', action='store_true',
+                        help='固定种子时仍开 cudnn.benchmark（不追求逐位复现，只要种子决定数据顺序和增广）')
+    parser.add_argument('--val_split', type=str, default=None,
+                        help='按验证集选轮：DATA_SPLIT 名（如 val）。每次验证后分数更高就存 ckpt/best.pth')
+    parser.add_argument('--val_interval', type=int, default=1, help='验证集抽帧间隔')
+    parser.add_argument('--val_every', type=int, default=1, help='每 N 轮验证一次（最后一轮一定验证）')
+    parser.add_argument('--val_match', type=str, default='top1', choices=['top1', 'greedy'],
+                        help='top1 = 每帧 1 个 GT（MAV6D）；greedy = 多目标（仿真）')
+    parser.add_argument('--skip_test_eval', action='store_true',
+                        help='训练结束后不跑仓库自带的测试集评测（测试集只在选好轮次后由 eval_camnorm.py 测一次）')
     parser.add_argument('--ckpt_save_interval', type=int, default=1, help='number of training epochs')
     parser.add_argument('--local_rank', type=int, default=None, help='local rank for distributed training')
     parser.add_argument('--max_ckpt_save_num', type=int, default=30, help='max number of saved checkpoint')
@@ -66,7 +78,7 @@ def parse_config():
     parser.add_argument('--logger_iter_interval', type=int, default=50, help='')
     parser.add_argument('--ckpt_save_time_interval', type=int, default=300, help='in terms of seconds')
     parser.add_argument('--wo_gpu_stat', action='store_true', help='')
-    parser.add_argument('--use_amp', action='store_true', help='use mix precision training')
+    parser.add_argument('--use_amp', action='store_true', help='bfloat16 自动混合精度训练（验证/评测仍是 float32）')
 
     args = parser.parse_args()
 
@@ -105,7 +117,10 @@ def main():
     args.epochs = cfg.OPTIMIZATION.NUM_EPOCHS if args.epochs is None else args.epochs
 
     if args.fix_random_seed:
-        common_utils.set_random_seed(666 + cfg.LOCAL_RANK)
+        common_utils.set_random_seed(args.seed + cfg.LOCAL_RANK)
+        if args.cudnn_benchmark:
+            torch.backends.cudnn.deterministic = False
+            torch.backends.cudnn.benchmark = True
 
     output_dir = cfg.ROOT_DIR / 'output' / cfg.EXP_GROUP_PATH / cfg.TAG / args.extra_tag
     ckpt_dir = output_dir / 'ckpt'
@@ -140,7 +155,7 @@ def main():
         dist=dist_train, workers=args.workers,
         logger=logger,
         training=True,
-        seed=666 if args.fix_random_seed else None
+        seed=args.seed if args.fix_random_seed else None
     )
 
     model = build_network(model_cfg=cfg.MODEL, dataset=train_set)
@@ -234,6 +249,42 @@ def main():
         last_epoch=last_epoch, optim_cfg=cfg.OPTIMIZATION
     )
 
+    # ---------------- 按验证集选轮（审查 P9：取最后一轮的比较受过拟合动态主导）----------------
+    on_epoch_end = None
+    if args.val_split:
+        import copy
+        import json
+        from uavdet3d.utils import pose_eval
+        val_cfg = copy.deepcopy(cfg.DATA_CONFIG)
+        val_cfg.DATA_SPLIT['test'] = args.val_split
+        val_cfg.SAMPLED_INTERVAL['test'] = args.val_interval
+        # workers=0：不再多开 spawn 进程（这台机器 >=3 个带 worker 的进程会锁死）
+        val_set, val_loader, _ = build_dataloader(dataset_cfg=val_cfg, batch_size=args.batch_size, dist=False,
+                                                  workers=0, logger=logger, training=False)
+        hist_path = output_dir / 'val_history.json'
+        history = json.load(open(hist_path, encoding='utf-8')) if hist_path.exists() else []
+        best = {'score': max([h['score'] for h in history], default=-1.0)}
+        seq = str(cfg.DATA_CONFIG.get('EULER_SEQ', 'xyz'))
+        logger.info('验证集选轮: split=%s 间隔 %d -> %d 帧，每 %d 轮验证，匹配 %s；已有记录 %d 条'
+                    % (args.val_split, args.val_interval, len(val_set), args.val_every, args.val_match, len(history)))
+
+        def on_epoch_end(trained_epoch, accumulated_iter, _model=model, _opt=optimizer):
+            if trained_epoch % args.val_every != 0 and trained_epoch != args.epochs:
+                return
+            s, _ = pose_eval.evaluate(_model, val_loader, seq=seq, match=args.val_match)
+            s['epoch'] = int(trained_epoch)
+            history.append(s)
+            json.dump(history, open(hist_path, 'w', encoding='utf-8'), indent=1)
+            tag = '验证 第 %d 轮' % trained_epoch
+            if s['score'] > best['score']:
+                best['score'] = s['score']
+                state = checkpoint_state(_model, _opt, trained_epoch, accumulated_iter)
+                torch.save(state, str(ckpt_dir / 'best.pth'))
+                json.dump({'epoch': int(trained_epoch), 'score': s['score']},
+                          open(ckpt_dir / 'best.json', 'w', encoding='utf-8'))
+                tag += ' [新最优，已存 best.pth]'
+            logger.info(pose_eval.format_summary(tag, s))
+
     # -----------------------start training---------------------------
     logger.info('**********************Start training %s/%s(%s)**********************'
                 % (cfg.EXP_GROUP_PATH, cfg.TAG, args.extra_tag))
@@ -258,6 +309,8 @@ def main():
         logger=logger,
         log_interval=args.logger_iter_interval,
         on_epoch_start=unfreeze_hook,
+        on_epoch_end=on_epoch_end,
+        use_amp=args.use_amp,
     )
 
     if hasattr(train_set, 'use_shared_memory') and train_set.use_shared_memory:
@@ -265,6 +318,8 @@ def main():
 
     logger.info('**********************End training %s/%s(%s)**********************\n\n\n'
                 % (cfg.EXP_GROUP_PATH, cfg.TAG, args.extra_tag))
+    if args.skip_test_eval:
+        return
 
     logger.info('**********************Start evaluation %s/%s(%s)**********************' %
                 (cfg.EXP_GROUP_PATH, cfg.TAG, args.extra_tag))

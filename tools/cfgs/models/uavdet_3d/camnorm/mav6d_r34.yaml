@@ -1,0 +1,13 @@
+# 评测 R1（ImageNet ResNet-34 骨干）用：MAV6D 数据 + 与训练一致的骨干结构。
+# eval_camnorm.py 会检查权重是否全部载入，结构对不上会直接拒绝评测。
+_BASE_CONFIG_: cfgs/models/uavdet_3d/camnorm/mav6d.yaml
+MODEL:
+    BACKBONE_2D:
+      NAME: TvResNet
+      ARCH: resnet34
+      PRETRAINED: true
+      BGR_INPUT: true
+      INPUT_CHANNELS: 3
+      OUT_CHANNELS: 512
+      FPN_CHANNELS: 128
+      FREEZE_BN: false

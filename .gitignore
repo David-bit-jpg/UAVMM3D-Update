@@ -24,3 +24,10 @@ dataset/
 .vscode/
 *.bak
 .DS_Store
+
+# 评测脚本每次运行生成的结果（可随时重算，不进版本库）
+tools/ap2d_evaluation_results/
+tools/ap3d_evaluation_results/
+tools/dof6_evaluation_results/
+__pycache__/
+*.pyc

@@ -1,0 +1,7 @@
+# P2：与 P1b 同数据同协议，只改裁窗区间（保住目标细节）。用来检验「仿真有效分辨率不足」这个根因。
+_BASE_CONFIG_: cfgs/models/uavdet_3d/camnorm/_model.yaml
+DATA_CONFIG:
+    _BASE_CONFIG_: cfgs/dataset_configs/uavdet_3d/camnorm_sim_pp_sharp.yaml
+MODEL:
+    POST_PROCESSING:
+      MAX_OBJ: 5

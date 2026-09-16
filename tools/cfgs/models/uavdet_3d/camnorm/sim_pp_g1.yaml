@@ -1,0 +1,33 @@
+# G1：把今天验证过的三件事叠在一起 ——
+#   1. ImageNet 预训练骨干（R1 实测：2D 中心误差 110 -> 10.5 px，折叠角 54 -> 39°）
+#   2. size2d 头 + 几何解深度（把「深度」从隐式的尺寸感知变成显式的 2D 监督量；2D 量才迁移得动）
+#   3. 回归头加 bias + 真值自洽标准化（把先验挪出特征通路）
+_BASE_CONFIG_: cfgs/models/uavdet_3d/camnorm/_model.yaml
+DATA_CONFIG:
+    _BASE_CONFIG_: cfgs/dataset_configs/uavdet_3d/camnorm_sim_pp_g1.yaml
+MODEL:
+    BACKBONE_2D:
+      NAME: TvResNet
+      ARCH: resnet34
+      PRETRAINED: true
+      BGR_INPUT: true
+      INPUT_CHANNELS: 3
+      OUT_CHANNELS: 512
+      FPN_CHANNELS: 128
+      FREEZE_BN: false
+    DENSE_HEAD_2D:
+      HEAD_BIAS: true
+      LOSS_WEIGHTS: {hm: 1.0, center_res: 2.0, center_dis: 8.0, dim: 2.0, rot: 4.0, size2d: 4.0}
+      SEPARATE_HEAD_CFG:
+          HEAD_ORDER: ["hm", "center_res", "center_dis", "dim", "rot", "size2d"]
+          HEAD_DICT: {
+              "hm": {"out_channels": 1, "conv_dim": 128},
+              "center_res": {"out_channels": 2, "conv_dim": 128},
+              "center_dis": {"out_channels": 1, "conv_dim": 128},
+              "dim": {"out_channels": 3, "conv_dim": 128},
+              "rot": {"out_channels": 6, "conv_dim": 128},
+              "size2d": {"out_channels": 2, "conv_dim": 128},
+          }
+    POST_PROCESSING:
+      MAX_OBJ: 5
+      DEPTH_FROM_SIZE2D: true

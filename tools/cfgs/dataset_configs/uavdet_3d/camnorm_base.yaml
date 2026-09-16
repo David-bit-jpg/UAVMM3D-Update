@@ -1,0 +1,65 @@
+# 相机归一化（camnorm-v1）数据配置的公共部分 —— 仿真与 MAV6D 两域【完全相同】的几何约定，
+# 使权重可以原样互迁（不再需要 --pretrained_src_max_dis / --pretrained_skip hm 这类换算）。
+# 缓存由 tools/build_mm_cache.py（仿真）与 tools/build_mav6d_cache.py（MAV6D）产出，
+# 每帧 meta 自带缓存分辨率上的针孔内参 K_in，下面所有几何量都只由它决定：
+#   深度  DEPTH_MODE virtual：center_dis 学 Zv = Z * DEPTH_F_REF / f_in（f_in = 该帧输入分辨率焦距）
+#   旋转  ROT_FRAME allo：rot 头学视线相对旋转，解码时按预测中心的视线转回相机系
+#   畸变  MAV6D 在建缓存时已去畸变到针孔，distortion 恒为 0
+# 详见 uavdet3d/utils/camera_geometry.py 与 docs/audit/AUDIT_2026-09-14.md。
+DATASET: 'MMCache_Det_Dataset'
+
+# 不分机型（用户 2026-09-14 定）：热力图单通道，所有标签名映射成 drone
+CLASS_NAMES: ['drone']
+HM_CLASS_NAMES: ['drone']
+
+DATA_SPLIT: {
+    'train': train,
+    'test': test
+}
+SAMPLED_INTERVAL: {
+    'train': 1,
+    'test': 1
+}
+
+MODALITIES: ['rgb']
+MIN_RGB_VIS: 0.0
+# 训练帧重复遍数（小数据量档用，让每轮约 800 个 iteration；只影响训练）
+TRAIN_REPEAT: 1
+
+# 两域同一套在线增广（审查 P10：之前 MAV6D 微调全关）。几何项同步改 K_in 与相机系 3D 框，
+# 虚拟深度下缩放增广自洽（审查 P8）
+# blur = 带宽（细节量）增广的最大降采样倍数，1.0/0 = 关；blur_prob = 施加概率。
+# 两域唯一没被增广覆盖的轴就是「细节量」，而它和裁窗倍数强相关，网络会把它当成距离线索（§12.2）。
+AUG: {hflip: 0.5, scale: [0.8, 1.25], photometric: true, noise: 0.01, blur: 0.0, blur_prob: 0.5}
+
+IM_RESIZE: [512, 288]
+IM_NUM: 1
+CENTER_RAD: 2
+STRIDE: 8
+
+DEPTH_MODE: 'virtual'
+DEPTH_F_REF: 512          # 参考焦距（输入像素）= 输入宽度，相当于水平视场 53°
+# 虚拟深度上限：仿真 Z<=8 m、f_in=256 -> Zv<=16，缩放增广 0.8 倍 -> 20；MAV6D Zv<=7。两域同一个值
+MAX_DIS: 24
+# 最大机型 Matrice-600-Pro 1.81 m（新室内仿真实测）；MAV6D 0.34 m。两域同一个值
+MAX_SIZE: 2
+# 是否额外产出 size2d 监督图（目标 8 角点投影 2D 包围盒的 log 宽/高，输入像素）。
+# 配 size2d 头 + MODEL.POST_PROCESSING.DEPTH_FROM_SIZE2D 时才需要开；缺省关，行为不变。
+MAKE_SIZE2D: false
+ROT_FRAME: 'allo'
+ROT_REPR: 'euler6'
+EULER_SEQ: 'xyz'
+
+OB_SIZE: [[1.0, 1.0, 1.0]]     # 只是透传的元数据，dim 真值来自标注
+
+DATA_PRE_PROCESSOR:
+    - NAME: convert_box9d_to_centermap
+      OFFSET: [0.0, 0.0, 0]
+      ENCODER: center_point_encoder_mav6d
+
+# 仓库原 DataAugmentor 从未被数据集调用，这里只为满足 DatasetTemplate 的字段要求
+DATA_AUGMENTOR:
+  AUG_CONFIG_LIST:
+        - NAME: image_flip
+          DATA_LIST: ['image', 'heatmap']
+          ALONG_AXIS_LIST: ['x']

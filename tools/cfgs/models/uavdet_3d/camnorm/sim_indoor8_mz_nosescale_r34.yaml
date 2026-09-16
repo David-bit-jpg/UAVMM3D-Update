@@ -1,0 +1,13 @@
+# R3：与 S3（sim_indoor8_mz_nosescale.yaml）逐项相同，只把骨干换成 ImageNet 预训练 ResNet-34 + FPN（stride 8）。
+# 目的：标签修正后若零样本仍差，分辨是不是「模型」的原因（ResNet8x 从零训、只见过仿真纹理）。
+_BASE_CONFIG_: cfgs/models/uavdet_3d/camnorm/sim_indoor8_mz_nosescale.yaml
+MODEL:
+    BACKBONE_2D:
+      NAME: TvResNet
+      ARCH: resnet34
+      PRETRAINED: true
+      BGR_INPUT: true
+      INPUT_CHANNELS: 3
+      OUT_CHANNELS: 512
+      FPN_CHANNELS: 128
+      NUM_FILTERS: [64, 128, 256, 512]

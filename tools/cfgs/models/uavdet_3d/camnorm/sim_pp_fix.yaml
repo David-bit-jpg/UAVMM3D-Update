@@ -1,0 +1,7 @@
+# F1：只改预处理（归一化修正 + 不放大 + 带宽增广），网络与 P1 逐层相同。
+_BASE_CONFIG_: cfgs/models/uavdet_3d/camnorm/_model.yaml
+DATA_CONFIG:
+    _BASE_CONFIG_: cfgs/dataset_configs/uavdet_3d/camnorm_sim_pp_fix.yaml
+MODEL:
+    POST_PROCESSING:
+      MAX_OBJ: 5

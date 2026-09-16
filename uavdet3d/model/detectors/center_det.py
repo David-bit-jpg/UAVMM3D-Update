@@ -19,13 +19,10 @@ class CenterDet(DetectorTemplate):
 
         # 解码用的旋转表示必须与编码一致，所以【只从 DATA_CONFIG 读一处】，
         # 不在 MODEL 下再放一个同名开关，避免两边写岔。
-        rot_repr = self.dataset.dataset_cfg.get('ROT_REPR', 'euler6')
-        self.dec_kwargs = {}
-        if 'rot_repr' in inspect.signature(self.center_decoder).parameters:
-            self.dec_kwargs['rot_repr'] = rot_repr
-        elif rot_repr != 'euler6':
-            raise ValueError('解码器 %s 还不支持 ROT_REPR=%s'
-                             % (self.model_cfg.POST_PROCESSING.DECONDER, rot_repr))
+        # 深度模式 / 视线相对旋转 / 欧拉顺序同理，与预处理共用 encoder_geometry_kwargs
+        from uavdet3d.datasets.pre_processor.pre_processor import encoder_geometry_kwargs
+        self.dec_kwargs = encoder_geometry_kwargs(self.dataset.dataset_cfg, self.center_decoder,
+                                                  self.model_cfg.POST_PROCESSING.DECONDER)
 
     def forward(self, batch_dict):
 
@@ -64,11 +61,16 @@ class CenterDet(DetectorTemplate):
         center_dis = batch_dict['pred_center_dict']['center_dis']
         dim = batch_dict['pred_center_dict']['dim']
         rot = batch_dict['pred_center_dict']['rot']
+        # 有 size2d 头且配置要求时，深度改由「预测的 3D 尺寸 + 姿态」和「预测的 2D 跨度」几何解出，
+        # 不用自由回归的 center_dis（见 object_encoder_mav6d.center_point_decoder 里的说明）
+        size2d = batch_dict['pred_center_dict'].get('size2d', None) \
+            if self.model_cfg.POST_PROCESSING.get('DEPTH_FROM_SIZE2D', False) else None
 
         def reshape_t(tensor, batch_size):
             BK, C, W, H = tensor.shape
             return tensor.reshape(batch_size, -1, C, W, H)
 
+        size2d = reshape_t(size2d, batch_size) if size2d is not None else None
         hm = reshape_t(hm, batch_size)
         center_res = reshape_t(center_res, batch_size)
         center_dis = reshape_t(center_dis, batch_size)
@@ -92,9 +94,25 @@ class CenterDet(DetectorTemplate):
             # this_center_dis = torch.exp(center_dis[batch_id])*self.dataset.dataset_cfg.MAX_DIS
             # this_dim = torch.exp(dim[batch_id]) #*self.dataset.dataset_cfg.MAX_SIZE
 
-            this_center_dis = center_dis[batch_id] * self.dataset.dataset_cfg.MAX_DIS
-            this_dim = dim[batch_id] * self.dataset.dataset_cfg.MAX_SIZE
+            # 与 pre_processor 的 TARGET_NORM 严格互逆（只从 DATA_CONFIG 读一处，避免两边写岔）
+            dcfg = self.dataset.dataset_cfg
+            if str(dcfg.get('TARGET_NORM', 'maxdis')) == 'standard':
+                import numpy as _np
+                _smu = torch.as_tensor(_np.asarray(dcfg.SIZE_MEAN, _np.float32).reshape(3, 1, 1),
+                                       device=dim.device)
+                _ssd = torch.as_tensor(_np.asarray(dcfg.SIZE_STD, _np.float32).reshape(3, 1, 1),
+                                       device=dim.device).clamp(min=1e-6)
+                this_center_dis = center_dis[batch_id] * float(dcfg.DEPTH_STD) + float(dcfg.DEPTH_MEAN)
+                this_dim = dim[batch_id] * _ssd + _smu
+            else:
+                this_center_dis = center_dis[batch_id] * dcfg.MAX_DIS
+                this_dim = dim[batch_id] * dcfg.MAX_SIZE
             this_rot = rot[batch_id]
+            this_size2d = size2d[batch_id] if size2d is not None else None
+
+            dec_kwargs = dict(self.dec_kwargs)
+            if this_size2d is not None:
+                dec_kwargs['size2d'] = this_size2d
 
             pred_boxes9d, confidence = self.center_decoder(this_hm,
                                                            this_center_res,
@@ -111,7 +129,7 @@ class CenterDet(DetectorTemplate):
                                                            stride,
                                                            im_num,
                                                            self.max_num,
-                                                           **self.dec_kwargs)
+                                                           **dec_kwargs)
             # pred_boxes9d[:,0:2]+=0.2
 
             all_pred_boxes9d.append(pred_boxes9d[confidence > self.score_thresh])

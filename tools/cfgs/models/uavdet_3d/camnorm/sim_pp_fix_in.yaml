@@ -1,0 +1,6 @@
+# F2：F1 + 把 BN 换成 InstanceNorm。BN 的 running stats 是域相关的
+# （AdaBN 实测能把 P1 在 MAV6D 上从 4.593 修到 1.679 m），IN 没有 running stats。
+_BASE_CONFIG_: cfgs/models/uavdet_3d/camnorm/sim_pp_fix.yaml
+MODEL:
+    BACKBONE_2D: {NORM_TYPE: 'in'}
+    DENSE_HEAD_2D: {NORM_TYPE: 'in'}

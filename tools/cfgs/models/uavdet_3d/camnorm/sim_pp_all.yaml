@@ -1,0 +1,5 @@
+# F4：F1 + InstanceNorm + 2D 尺寸头几何解深度（全开）。
+_BASE_CONFIG_: cfgs/models/uavdet_3d/camnorm/sim_pp_geo.yaml
+MODEL:
+    BACKBONE_2D: {NORM_TYPE: 'in'}
+    DENSE_HEAD_2D: {NORM_TYPE: 'in'}

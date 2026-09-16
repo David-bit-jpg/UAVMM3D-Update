@@ -1,0 +1,17 @@
+# 2026-09-16 自洽标准化：回归真值 = (量 − mu) / sigma，mu/sigma 由 tools/calc_target_stats.py
+# 从【本训练集自身】算出（pp_realsize/train，含裁窗分布），不看任何目标域。
+#
+# 为什么换掉 MAX_DIS / MAX_SIZE：
+#   1. 对 L1 + 线性输出头，MAX_DIS 与损失权重完全简并，单独改它等于改权重。
+#   2. 真正的毛病是回归头输出层【没有 bias】（只有 hm 有），常数部分必须由特征产生。
+#      MAV6D 的深度真值是 0.147、变化范围只有 ±0.05 —— 预测里 80% 是「典型值」，
+#      而这 80% 全从会跨域漂移的特征里长出来，于是退化成 x2.05 的乘性误差
+#      （实测 预测 = 2.21x真值 − 0.27，截距为零；只除这一个常数，位置 3.71 -> 0.269 m）。
+#   标准化把 mu 挪到解码时才加回去，永远不经过特征通路；配 HEAD_BIAS 让 bias 承担剩下的常数。
+_BASE_CONFIG_: cfgs/dataset_configs/uavdet_3d/camnorm_sim_pp_realsize.yaml
+TARGET_NORM: 'standard'
+# tools/calc_target_stats.py --cfg cfgs/models/uavdet_3d/camnorm/sim_pp_realsize.yaml
+DEPTH_MEAN: 6.1180
+DEPTH_STD: 2.8330
+SIZE_MEAN: [0.6744, 0.6452, 0.2617]
+SIZE_STD: [0.5453, 0.4945, 0.1943]

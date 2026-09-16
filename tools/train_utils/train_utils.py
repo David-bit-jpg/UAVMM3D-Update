@@ -12,7 +12,7 @@ import copy
 
 def train_one_epoch(model, optimizer, train_loader, model_func, lr_scheduler, accumulated_iter, optim_cfg,
                     rank, tbar, total_it_each_epoch, dataloader_iter, tb_log=None, leave_pbar=False,
-                    logger=None, log_interval=50):
+                    logger=None, log_interval=50, use_amp=False):
     if total_it_each_epoch == len(train_loader):
         dataloader_iter = iter(train_loader)
 
@@ -21,6 +21,8 @@ def train_one_epoch(model, optimizer, train_loader, model_func, lr_scheduler, ac
 
     accus = 1
     _t_start = time.time()
+    # 本轮分项损失的累计，轮末打印均值 —— 判断各头是否收敛（审查 P20：只看总损失看不出深度/旋转学没学好）
+    _term_sum, _term_n = {}, 0
 
     for cur_it in range(total_it_each_epoch):
         try:
@@ -41,7 +43,9 @@ def train_one_epoch(model, optimizer, train_loader, model_func, lr_scheduler, ac
 
         model.train()
 
-        loss = model_func(model, batch)
+        # --use_amp：bfloat16 自动混合精度（无需 GradScaler；BN / 损失里的 sigmoid-log 仍按 float32 算）
+        with torch.autocast('cuda', dtype=torch.bfloat16, enabled=bool(use_amp)):
+            loss = model_func(model, batch)
         loss = loss / accus
         loss.backward()
         if ((cur_it + 1) % accus) == 0:
@@ -53,6 +57,11 @@ def train_one_epoch(model, optimizer, train_loader, model_func, lr_scheduler, ac
 
         disp_dict = {}
         disp_dict.update({'loss': loss.item() * accus, 'lr': cur_lr})
+        _terms = getattr(getattr(model, 'dense_head_2d', None), 'loss_terms', None) or {}
+        _term_sum['total'] = _term_sum.get('total', 0.0) + loss.item() * accus
+        for _k, _v in _terms.items():
+            _term_sum[_k] = _term_sum.get(_k, 0.0) + float(_v)
+        _term_n += 1
 
         # log to console and tensorboard
         if rank == 0:
@@ -84,13 +93,17 @@ def train_one_epoch(model, optimizer, train_loader, model_func, lr_scheduler, ac
 
     if rank == 0:
         pbar.close()
+        if logger is not None and _term_n:
+            logger.info('  本轮平均损失（%d iter，%.1f 分钟）: %s'
+                        % (_term_n, (time.time() - _t_start) / 60.0,
+                           ' '.join('%s %.4f' % (k, v / _term_n) for k, v in _term_sum.items())))
     return accumulated_iter
 
 
 def train_model(model, optimizer, train_loader, model_func, lr_scheduler, optim_cfg,
                 start_epoch, total_epochs, start_iter, rank, tb_log, ckpt_save_dir, train_sampler=None,
                 lr_warmup_scheduler=None, ckpt_save_interval=1, max_ckpt_save_num=50,
-                logger=None, log_interval=50, on_epoch_start=None):
+                logger=None, log_interval=50, on_epoch_start=None, on_epoch_end=None, use_amp=False):
     accumulated_iter = start_iter
     with tqdm.trange(start_epoch, total_epochs, desc='epochs', dynamic_ncols=True, leave=(rank == 0)) as tbar:
         total_it_each_epoch = len(train_loader)
@@ -116,7 +129,7 @@ def train_model(model, optimizer, train_loader, model_func, lr_scheduler, optim_
                 leave_pbar=(cur_epoch + 1 == total_epochs),
                 total_it_each_epoch=total_it_each_epoch,
                 dataloader_iter=dataloader_iter,
-                logger=logger, log_interval=log_interval
+                logger=logger, log_interval=log_interval, use_amp=use_amp
             )
 
             # save trained model
@@ -134,6 +147,10 @@ def train_model(model, optimizer, train_loader, model_func, lr_scheduler, optim_
                 save_checkpoint(
                     checkpoint_state(model, optimizer, trained_epoch, accumulated_iter), filename=ckpt_name,
                 )
+
+            # 按验证集选轮等「每轮结束」的动作（train.py --val_split）
+            if on_epoch_end is not None and rank == 0:
+                on_epoch_end(trained_epoch, accumulated_iter)
 
 
 def model_state_to_cpu(model_state):

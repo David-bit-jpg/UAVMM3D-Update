@@ -1,0 +1,6 @@
+# 新室内仿真缓存（tools/build_mm_cache.py，源 = D:/data_collect 四个场景）。
+# 与 mmcache.yaml 只差 DATA_PATH 和本域归一化统计量。
+_BASE_CONFIG_: cfgs/dataset_configs/uavdet_3d/mmcache.yaml
+DATA_PATH: 'E:/mmcache/indoor8'
+NORM_MEAN: [0.3506, 0.4013, 0.4481]
+NORM_STD: [0.2686, 0.2072, 0.2308]

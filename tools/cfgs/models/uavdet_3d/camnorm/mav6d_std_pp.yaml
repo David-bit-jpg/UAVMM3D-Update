@@ -1,0 +1,7 @@
+# 评测用：MAV6D 数据 + pp_realsize 训练域的标准化常数（见 dataset 配置里的说明）。
+_BASE_CONFIG_: cfgs/models/uavdet_3d/camnorm/mav6d.yaml
+DATA_CONFIG:
+    _BASE_CONFIG_: cfgs/dataset_configs/uavdet_3d/camnorm_mav6d_std_pp.yaml
+MODEL:
+    DENSE_HEAD_2D:
+      HEAD_BIAS: true

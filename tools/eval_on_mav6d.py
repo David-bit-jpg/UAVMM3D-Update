@@ -71,6 +71,10 @@ def main():
     ap.add_argument('--data-path', default='E:/MAV6D')
     ap.add_argument('--decode-max-dis', type=float, default=None,
                     help='训练该权重时的 MAX_DIS；不给则用 MAV6D 配置里的值')
+    ap.add_argument('--decode-max-size', type=float, default=None,
+                    help='零样本权重要用源域训练时的 MAX_SIZE（mmcache 是 4）；只换 MAX_DIS 不换它，预测框尺寸会小 4 倍，2D/3D AP 趋近 0')
+    ap.add_argument('--split', default=None, help='读哪个划分（默认 test）；设 train 可测训练帧，检验过拟合')
+    ap.add_argument('--interval', type=int, default=None, help='配合 --split 的抽帧间隔（10 = 10%% 那批帧）')
     ap.add_argument('--batch-size', type=int, default=8)
     ap.add_argument('--workers', type=int, default=4)
     ap.add_argument('--vis', type=int, default=0, help='额外画 N 张预测 vs GT 对比图')
@@ -90,6 +94,12 @@ def main():
     cfg.DATA_CONFIG.DATA_PATH = args.data_path
     if args.decode_max_dis is not None:
         cfg.DATA_CONFIG.MAX_DIS = args.decode_max_dis
+    if args.decode_max_size is not None:
+        cfg.DATA_CONFIG.MAX_SIZE = args.decode_max_size
+    if args.split is not None:
+        cfg.DATA_CONFIG.DATA_SPLIT['test'] = args.split
+    if args.interval is not None:
+        cfg.DATA_CONFIG.SAMPLED_INTERVAL['test'] = args.interval
     if args.rot_repr is not None:
         cfg.DATA_CONFIG.ROT_REPR = args.rot_repr
     if args.no_norm:

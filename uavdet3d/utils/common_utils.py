@@ -126,12 +126,15 @@ def set_random_seed(seed):
 
 
 def worker_init_fn(worker_id, seed=666):
-    if seed is not None:
-        random.seed(seed + worker_id)
-        np.random.seed(seed + worker_id)
-        torch.manual_seed(seed + worker_id)
-        torch.cuda.manual_seed(seed + worker_id)
-        torch.cuda.manual_seed_all(seed + worker_id)
+    # 原实现用固定的 seed + worker_id：worker 每个 epoch 重新 spawn，numpy 随机数序列每个 epoch 完全重复
+    # （翻转/缩放/光度增广的随机数流逐轮相同）。改用 torch 给 worker 的 seed = base_seed + worker_id，
+    # base_seed 由主进程 RNG 在每次创建迭代器时抽取：主进程固定了种子就可复现，且每个 epoch 不同。
+    info = torch.utils.data.get_worker_info()
+    s = int(info.seed) if info is not None else (0 if seed is None else seed) + worker_id
+    s = s % (2 ** 32)
+    random.seed(s)
+    np.random.seed(s)
+    torch.manual_seed(s)
 
 
 def get_pad_params(desired_size, cur_size):

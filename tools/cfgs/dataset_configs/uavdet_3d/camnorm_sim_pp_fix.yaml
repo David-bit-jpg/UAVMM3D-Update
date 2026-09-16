@@ -1,0 +1,10 @@
+# 2026-09-16 预处理修正组（数据不变，只改取样规则）。依据 docs/audit/ANNOTATION_CONSISTENCY_2026-09-15.md §12。
+#   1. 归一化统计量：pp_realsize 自己的实测值（原来沿用旧 indoor8 的常数，网络输入均值偏 +0.25σ）
+#      —— 已在 camnorm_sim_pp_realsize.yaml 里修好，这里继承。
+#   2. no_upscale：窗口不小于网络输入，只降采样不放大。原来 33.3% 的训练样本是被放大出来的，
+#      在 MAV6D 的工作点上放大 1.32 倍，目标块细节量只剩真实的 1/16，而深度头正是靠细节量判距离。
+#   3. blur：带宽增广，把「细节量」这个轴随机化，切断它与裁窗倍数的伪相关。
+#      只会变糊不会变锐，所以对仿真是安全方向。
+_BASE_CONFIG_: cfgs/dataset_configs/uavdet_3d/camnorm_sim_pp_realsize.yaml
+VIEW_AUG: {zoom: [1.0, 4.0], no_upscale: true}
+AUG: {hflip: 0.5, scale: [1.0, 1.0], photometric: true, noise: 0.01, blur: 2.5, blur_prob: 0.5}

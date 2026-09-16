@@ -1,0 +1,9 @@
+# N1：与 P1b 逐项相同，只改两处 —— 回归头加 bias + 真值自洽标准化。
+_BASE_CONFIG_: cfgs/models/uavdet_3d/camnorm/_model.yaml
+DATA_CONFIG:
+    _BASE_CONFIG_: cfgs/dataset_configs/uavdet_3d/camnorm_sim_pp_std.yaml
+MODEL:
+    DENSE_HEAD_2D:
+      HEAD_BIAS: true
+    POST_PROCESSING:
+      MAX_OBJ: 5

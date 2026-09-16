@@ -1,0 +1,5 @@
+# R1b：R1 + 锁住骨干 BN 的 running statistics（保住 ImageNet 那份「真实照片」的统计量，
+# 不被仿真微调拉回仿真分布）。与 R1 只差这一项。
+_BASE_CONFIG_: cfgs/models/uavdet_3d/camnorm/sim_pp_r34.yaml
+MODEL:
+    BACKBONE_2D: {FREEZE_BN: true}

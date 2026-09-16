@@ -1,0 +1,7 @@
+# 新室内仿真 RGB 预训练（迁移臂的权重来源；零样本也直接评它）。
+_BASE_CONFIG_: cfgs/models/uavdet_3d/camnorm/_model.yaml
+DATA_CONFIG:
+    _BASE_CONFIG_: cfgs/dataset_configs/uavdet_3d/camnorm_sim_indoor8.yaml
+MODEL:
+    POST_PROCESSING:
+      MAX_OBJ: 5

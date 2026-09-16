@@ -1,0 +1,4 @@
+# 同 camnorm_sim_indoor8_mz.yaml，只换标签索引：仿真资产机头偏航修正（网格真实机头 = 标签 -y，R·Rz(-90°)，l/w 互换）。
+# 证据与修正表：uavdet3d/utils/sim_asset_fix.py；索引由 tools/fix_sim_labels.py 生成。
+_BASE_CONFIG_: cfgs/dataset_configs/uavdet_3d/camnorm_sim_indoor8_mz.yaml
+INDEX_FILE: index_nose.pkl

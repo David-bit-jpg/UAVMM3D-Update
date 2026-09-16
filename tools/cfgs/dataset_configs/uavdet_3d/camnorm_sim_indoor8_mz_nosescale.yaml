@@ -1,0 +1,3 @@
+# 同 camnorm_sim_indoor8_mz.yaml，标签索引 = 机头偏航修正 + 物理尺度修正（t/k、lwh/k，k = 网格/真机，逐像素投影不变）。
+_BASE_CONFIG_: cfgs/dataset_configs/uavdet_3d/camnorm_sim_indoor8_mz.yaml
+INDEX_FILE: index_nosescale.pkl

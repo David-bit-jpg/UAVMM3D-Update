@@ -27,13 +27,16 @@ import os
 import pickle
 import sys
 import time
+import zlib
 
 import cv2
 import numpy as np
 from scipy.spatial.transform import Rotation as R
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from build_near_subset import frame_sort_key   # noqa: E402
+from uavdet3d.utils import camera_geometry as cg   # noqa: E402
 
 CARLA_TO_OPENCV = np.array([[0, 1, 0, 0], [0, 0, -1, 0], [1, 0, 0, 0], [0, 0, 0, 1]], dtype=np.float64)
 OPENCV_TO_CARLA = np.linalg.inv(CARLA_TO_OPENCV)
@@ -60,12 +63,17 @@ def class_of(name):
 
 
 def corners_to_9params(c, seq='xyz'):
-    """8 角点(相机系) -> [x,y,z,l,w,h,a1,a2,a3]。角点顺序为标准原型，c1-c0/c3-c0/c4-c0 是三条边。"""
+    """8 角点(相机系) -> [x,y,z,l,w,h,a1,a2,a3]。角点顺序为标准原型，c1-c0/c3-c0/c4-c0 是三条边。
+
+    仿真角点来自 UE（左手系：X 前、Y 右、Z 上），三条边 100% 构成左手系，必须翻一个轴才是真旋转。
+    翻【宽度轴】：得到 X 前、Y 左、Z 上的右手机体系，与 MAV6D 的 MAV 坐标系一致（机体 z 朝上）。
+    审查 P4：原来翻的是高度轴，机体 z 朝下，两域旋转标签差 180°，零样本角度 157°。
+    """
     ex, ey, ez = c[1] - c[0], c[3] - c[0], c[4] - c[0]
     l, w, h = np.linalg.norm(ex), np.linalg.norm(ey), np.linalg.norm(ez)
     Rm = np.stack([ex / l, ey / w, ez / h], axis=1)
     if np.linalg.det(Rm) < 0:
-        Rm[:, 2] *= -1
+        Rm[:, 1] *= -1
     # 数值上再正交化一次，防止 float32 角点带来的微小非正交
     u, _, vt = np.linalg.svd(Rm)
     Rm = u @ vt
@@ -89,32 +97,44 @@ def world_to_pixel(pts_w, E, K):
 
 def process_frame(task):
     """一帧 -> dict(rgb, ir, depth, tag, meta) 或 None。"""
-    (root, seq, frame, W, H, lidar_offset, max_label_range, max_range, min_inside, crop_wh, crop_seed, zoom_cfg) = task
+    (root, seq, frame, W, H, lidar_offset, max_label_range, max_range, min_inside, crop_wh, crop_seed, zoom_cfg,
+     rgb_only, intrinsic_mode, store, jpeg_quality) = task
     base = os.path.join(root, seq)
     stem = os.path.splitext(frame)[0]
     try:
         with open(os.path.join(base, 'im_info.pkl'), 'rb') as f:
             info = pickle.load(f)
-        with open(os.path.join(base, 'lidar_radar_info.pkl'), 'rb') as f:
-            lr = pickle.load(f)
+        lr = None
+        if not rgb_only:
+            with open(os.path.join(base, 'lidar_radar_info.pkl'), 'rb') as f:
+                lr = pickle.load(f)
     except Exception:
         return None
     K_rgb = np.array(info['rgb']['intrinsic'], dtype=np.float64)
     E_rgb = np.array(info['rgb']['extrinsic'], dtype=np.float64)
-    K_ir = np.array(info['ir']['intrinsic'], dtype=np.float64)
-    E_ir = np.array(info['ir']['extrinsic'], dtype=np.float64)
-    L_ext = np.array(lr['lidars'][0]['extrinsic'], dtype=np.float64)
-    noise = float(lr['lidars'][0]['attributes'].get('NoiseStdDev', -1.0))
 
     rgb = cv2.imread(os.path.join(base, 'images_rgb', frame), cv2.IMREAD_COLOR)
-    ir = cv2.imread(os.path.join(base, 'images_ir', frame), cv2.IMREAD_GRAYSCALE)
-    if rgb is None or ir is None:
+    if rgb is None:
         return None
     raw_h, raw_w = rgb.shape[:2]
-    sx, sy = W / float(raw_w), H / float(raw_h)
-    K_s = K_rgb.copy()
-    K_s[0] *= sx
-    K_s[1] *= sy
+    # 审查 P7：录制器写的是扰动过的假内参（fy=fx*1.01, cx=W/2+2, cy=H/2-1.5），识别出来就换回真渲染内参
+    legacy_fixed = False
+    if intrinsic_mode == 'auto':
+        K_rgb, legacy_fixed = cg.legacy_sim_intrinsic_fix(K_rgb, raw_w, raw_h)
+    ir = None
+    if not rgb_only:
+        K_ir = np.array(info['ir']['intrinsic'], dtype=np.float64)
+        E_ir = np.array(info['ir']['extrinsic'], dtype=np.float64)
+        L_ext = np.array(lr['lidars'][0]['extrinsic'], dtype=np.float64)
+        noise = float(lr['lidars'][0]['attributes'].get('NoiseStdDev', -1.0))
+        ir = cv2.imread(os.path.join(base, 'images_ir', frame), cv2.IMREAD_GRAYSCALE)
+        if ir is None:
+            return None
+        if intrinsic_mode == 'auto':
+            K_ir, _ = cg.legacy_sim_intrinsic_fix(K_ir, ir.shape[1], ir.shape[0])
+    else:
+        noise = -1.0
+    K_s = cg.scale_K(K_rgb, W / float(raw_w), H / float(raw_h))
 
     # ---- 标签 ----
     try:
@@ -215,10 +235,25 @@ def process_frame(task):
         if len(boxes) == 0 or not any(qual):
             return None
         raw_w, raw_h = cw, ch
-        sx, sy = W / float(raw_w), H / float(raw_h)
-        K_s = K_rgb.copy()
-        K_s[0] *= sx
-        K_s[1] *= sy
+        K_s = cg.scale_K(K_rgb, W / float(raw_w), H / float(raw_h))
+
+    if store == 'jpeg':
+        # 原分辨率 JPEG 字节（不缩放）：数据集在线裁不同大小的窗口模拟不同焦距（见 mmcache_det_dataset 的 VIEW_AUG）
+        ok_enc, buf = cv2.imencode('.jpg', rgb, [cv2.IMWRITE_JPEG_QUALITY, int(jpeg_quality)])
+        if not ok_enc:
+            return None
+        rgb_s = buf.tobytes()
+    else:
+        rgb_s = cv2.resize(rgb, (W, H), interpolation=cv2.INTER_AREA)
+    meta = {
+        'seq': seq, 'frame': frame, 'K_raw': K_rgb.astype(np.float64), 'raw_wh': (raw_w, raw_h),
+        # K_in = 缓存分辨率上的真针孔内参（cv2.resize 像素中心约定精确换算），数据集直接用它
+        'K_in': K_s.astype(np.float64), 'legacy_intrinsic_fixed': bool(legacy_fixed),
+        'boxes9d': boxes.astype(np.float32), 'names': names, 'qualified': np.array(qual, bool),
+        'lidar_noise': noise, 'crop_xy': (crop_x0, crop_y0), 'crop_wh': crop_wh,
+    }
+    if rgb_only:
+        return rgb_s, None, None, None, meta
 
     # ---- IR 对齐到 RGB：用最近合格目标中心处的视差整体平移 ----
     cw = cam_to_world(near_q[None, :3], E_rgb)
@@ -260,15 +295,9 @@ def process_frame(task):
         depth[vi[order], ui[order]] = zc[order]
         tag[vi[t == 1], ui[t == 1]] = 1
 
-    rgb_s = cv2.resize(rgb, (W, H), interpolation=cv2.INTER_AREA)
     ir_s = cv2.resize(ir_al, (W, H), interpolation=cv2.INTER_AREA)
-
-    meta = {
-        'seq': seq, 'frame': frame, 'K_raw': K_rgb.astype(np.float32), 'raw_wh': (raw_w, raw_h),
-        'boxes9d': boxes.astype(np.float32), 'names': names, 'qualified': np.array(qual, bool),
-        'lidar_noise': noise, 'ir_shift': shift.astype(np.float32), 'lidar_frame': frames[li],
-        'crop_xy': (crop_x0, crop_y0), 'crop_wh': crop_wh,
-    }
+    meta['ir_shift'] = shift.astype(np.float32)
+    meta['lidar_frame'] = frames[li]
     return rgb_s, ir_s, depth, tag, meta
 
 
@@ -281,7 +310,10 @@ def main():
     ap.add_argument('--width', type=int, default=512)
     ap.add_argument('--height', type=int, default=288)
     ap.add_argument('--every', type=int, default=3, help='每条序列每 N 帧取 1 帧（相邻帧几乎重复）')
-    ap.add_argument('--lidar-offset', type=int, default=6)
+    # 2026-09-16 实测：新录制器（UavSim，同步逐帧写盘）的 LiDAR / Radar 与 RGB 同帧，偏移 0 最好
+    #   —— 三个组合上扫 0~12 帧，tag=1 的点到最近框心的中位距离 0 帧 0.08 m，逐帧变差到 12 帧 0.7 m。
+    # 旧 CARLA 时代的数据是 6（雷达 8），那是后台线程池异步写盘造成的滞后。采旧数据的缓存要显式传 --lidar-offset 6。
+    ap.add_argument('--lidar-offset', type=int, default=0)
     ap.add_argument('--max-range', type=float, default=20.0, help='「合格」目标的距离上限，与筛选一致')
     ap.add_argument('--min-inside', type=int, default=8)
     ap.add_argument('--max-label-range', type=float, default=40.0,
@@ -295,6 +327,15 @@ def main():
     ap.add_argument('--zoom-ref', default='', help='MAV6D 表观大小经验分布 .npy（tools/mav6d_size_stats.py）；给了就从里面抽目标尺寸')
     ap.add_argument('--workers', type=int, default=8)
     ap.add_argument('--limit', type=int, default=0, help='调试用：只处理前 N 帧')
+    ap.add_argument('--rgb-only', action='store_true', help='只打包 RGB（不读 IR / LiDAR，不写 ir/depth/tag.npy）')
+    ap.add_argument('--store', default='npy', choices=['npy', 'jpeg'],
+                    help='npy = 缩到 --width x --height 的 memmap；jpeg = 原分辨率 JPEG 字节（rgb_jpg.bin + rgb_jpg_index.npy），'
+                         '供在线多焦距裁窗（--width/--height 忽略，K_in 为原图真内参）')
+    ap.add_argument('--jpeg-quality', type=int, default=95)
+    ap.add_argument('--allow-unfixed-nose', action='store_true',
+                    help='允许读取没有 label_fix_nose_x.json 标记的序列（仅当确认原始标注已是机头 +x）')
+    ap.add_argument('--intrinsic', default='auto', choices=['auto', 'stored'],
+                    help='auto = 识别录制器的扰动假内参并换回真内参（审查 P7）；stored = 原样用 im_info 里的值')
     args = ap.parse_args()
 
     rows = read_list(args.list)
@@ -302,6 +343,14 @@ def main():
     by_seq = {}
     for seq, fr in rows:
         by_seq.setdefault(seq, []).append(fr)
+    # 原始标注的机头修正标记（tools/fix_raw_nose_labels.py，2026-09-15）：Drone Pack 网格机头朝 actor +Y，
+    # 未修正的序列里 c1-c0 不是机头。新旧数据已全部就地修正；没有标记的序列（比如以后用旧资产新采的）直接拒绝，
+    # 免得混进两种约定。确认数据本身已经是机头 +x（例如资产改过朝向后采集）时用 --allow-unfixed-nose。
+    unfixed = [s for s in by_seq if not os.path.exists(os.path.join(args.root, s, 'label_fix_nose_x.json'))]
+    if unfixed and not args.allow_unfixed_nose:
+        raise SystemExit('有 %d 个序列没有机头修正标记 label_fix_nose_x.json（例：%s）。先跑 tools/fix_raw_nose_labels.py，'
+                         '或确认数据已是机头 +x 后加 --allow-unfixed-nose' % (len(unfixed), unfixed[0]))
+    raw_label_fix = 'nose-x-v1-20260915' if not unfixed else ('mixed-or-native' if len(unfixed) < len(by_seq) else 'native(--allow-unfixed-nose)')
     picked = []
     for seq, frs in by_seq.items():
         frs = sorted(frs, key=frame_sort_key)
@@ -313,10 +362,26 @@ def main():
     out_dir = os.path.join(args.out, args.split)
     os.makedirs(out_dir, exist_ok=True)
     N, H, W = len(picked), args.height, args.width
-    rgb_mm = np.lib.format.open_memmap(os.path.join(out_dir, 'rgb.npy'), 'w+', np.uint8, (N, H, W, 3))
-    ir_mm = np.lib.format.open_memmap(os.path.join(out_dir, 'ir.npy'), 'w+', np.uint8, (N, H, W))
-    dep_mm = np.lib.format.open_memmap(os.path.join(out_dir, 'depth.npy'), 'w+', np.uint16, (N, H, W))
-    tag_mm = np.lib.format.open_memmap(os.path.join(out_dir, 'tag.npy'), 'w+', np.uint8, (N, H, W))
+    if args.store == 'jpeg':
+        # 原分辨率：从第一个可读帧取尺寸，任务里的 W/H 等于原图，process_frame 里 K_s = 原图真内参
+        for s_, f_ in picked:
+            im0 = cv2.imread(os.path.join(args.root, s_, 'images_rgb', f_), cv2.IMREAD_COLOR)
+            if im0 is not None:
+                H, W = im0.shape[:2]
+                break
+        print('原分辨率 JPEG 存储：%dx%d，质量 %d' % (W, H, args.jpeg_quality))
+    if args.store == 'jpeg':
+        assert args.rgb_only, '--store jpeg 只支持 --rgb-only'
+        jpg_fh = open(os.path.join(out_dir, 'rgb_jpg.bin'), 'wb')
+        jpg_index = np.zeros((N, 2), np.int64)          # (偏移, 长度)，长度 0 = 无效帧
+        jpg_pos = 0
+        rgb_mm = None
+    else:
+        rgb_mm = np.lib.format.open_memmap(os.path.join(out_dir, 'rgb.npy'), 'w+', np.uint8, (N, H, W, 3))
+    if not args.rgb_only:
+        ir_mm = np.lib.format.open_memmap(os.path.join(out_dir, 'ir.npy'), 'w+', np.uint8, (N, H, W))
+        dep_mm = np.lib.format.open_memmap(os.path.join(out_dir, 'depth.npy'), 'w+', np.uint16, (N, H, W))
+        tag_mm = np.lib.format.open_memmap(os.path.join(out_dir, 'tag.npy'), 'w+', np.uint8, (N, H, W))
 
     crop_wh = None
     zoom_cfg = None
@@ -333,8 +398,10 @@ def main():
                   % (args.zoom_ref, len(ref), *np.percentile(ref, [5, 50, 95]), args.zoom_max))
         else:
             print('变焦：目标表观大小 -> [%.0f, %.0f] px，最大 %.2fx' % (px_min, px_max, args.zoom_max))
+    # 裁剪窗口的随机种子由 序列名+帧名 决定（zlib.crc32 跨进程稳定；内置 hash() 每个进程随机加盐，不可复现）
     tasks = [(args.root, s, f, W, H, args.lidar_offset, args.max_label_range, args.max_range, args.min_inside,
-              crop_wh, abs(hash(s + f)) % (2 ** 31), zoom_cfg)
+              crop_wh, zlib.crc32((s + f).encode('utf-8')) % (2 ** 31), zoom_cfg, args.rgb_only, args.intrinsic,
+              args.store, args.jpeg_quality)
              for s, f in picked]
     metas = [None] * N
     ok = 0
@@ -343,14 +410,28 @@ def main():
         for i, res in enumerate(pool.imap(process_frame, tasks, chunksize=8)):
             if res is None:
                 continue
-            rgb_mm[i], ir_mm[i], dep_mm[i], tag_mm[i], metas[i] = res
+            if args.rgb_only:
+                if args.store == 'jpeg':
+                    jpg_fh.write(res[0])
+                    jpg_index[i] = (jpg_pos, len(res[0]))
+                    jpg_pos += len(res[0])
+                    metas[i] = res[4]
+                else:
+                    rgb_mm[i], metas[i] = res[0], res[4]
+            else:
+                rgb_mm[i], ir_mm[i], dep_mm[i], tag_mm[i], metas[i] = res
             ok += 1
             if (i + 1) % 500 == 0:
                 el = time.time() - t0
                 print('   %d/%d  有效 %d  %.1f 帧/s  剩余 %.0f 分钟' %
-                      (i + 1, N, ok, (i + 1) / el, (N - i - 1) / max((i + 1) / el, 1e-6) / 60))
-    for m in (rgb_mm, ir_mm, dep_mm, tag_mm):
-        m.flush()
+                      (i + 1, N, ok, (i + 1) / el, (N - i - 1) / max((i + 1) / el, 1e-6) / 60), flush=True)
+    if args.store == 'jpeg':
+        jpg_fh.close()
+        np.save(os.path.join(out_dir, 'rgb_jpg_index.npy'), jpg_index)
+        print('JPEG 字节 %.2f GB' % (jpg_pos / 1e9))
+    else:
+        for m in ([rgb_mm] if args.rgb_only else [rgb_mm, ir_mm, dep_mm, tag_mm]):
+            m.flush()
 
     valid = [i for i, m in enumerate(metas) if m is not None]
     index = {
@@ -358,7 +439,11 @@ def main():
         'classes': CLASSES, 'split': args.split, 'every': args.every,
         'lidar_offset': args.lidar_offset, 'max_range': args.max_range,
         'max_label_range': args.max_label_range, 'root': args.root, 'list': args.list,
-        'crop_wh': crop_wh,
+        'crop_wh': crop_wh, 'rgb_only': bool(args.rgb_only), 'intrinsic_mode': args.intrinsic,
+        # camnorm-v1：meta 带 K_in（缓存分辨率真针孔内参）、角点左手系翻宽度轴（机体 z 朝上）、欧拉 'xyz'
+        'format': 'camnorm-v1', 'store': args.store,
+        # 原始标注机头修正状态：'nose-x-v1-20260915' = 读的是已就地修正（机头 +x）的原始数据
+        'raw_label_fix': raw_label_fix,
     }
     with open(os.path.join(out_dir, 'index.pkl'), 'wb') as f:
         pickle.dump(index, f)

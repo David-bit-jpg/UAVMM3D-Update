@@ -1,0 +1,20 @@
+# F3：F1 + 2D 尺寸头，深度改由「预测的 3D 尺寸+姿态」与「预测的 2D 跨度」几何解出。
+# 上界检验（用 GT 的 2D 跨度代替这个头）：P1 在 MAV6D 上位置中位 4.601 -> 1.012 m。
+_BASE_CONFIG_: cfgs/models/uavdet_3d/camnorm/sim_pp_fix.yaml
+DATA_CONFIG:
+    _BASE_CONFIG_: cfgs/dataset_configs/uavdet_3d/camnorm_sim_pp_geo.yaml
+MODEL:
+    DENSE_HEAD_2D:
+      LOSS_WEIGHTS: {hm: 1.0, center_res: 2.0, center_dis: 8.0, dim: 2.0, rot: 4.0, size2d: 4.0}
+      SEPARATE_HEAD_CFG:
+          HEAD_ORDER: ['hm', 'center_res', 'center_dis', 'dim', 'rot', 'size2d']
+          HEAD_DICT: {
+              'hm': {'out_channels': 1, 'conv_dim': 128},
+              'center_res': {'out_channels': 2, 'conv_dim': 128},
+              'center_dis': {'out_channels': 1, 'conv_dim': 128},
+              'dim': {'out_channels': 3, 'conv_dim': 128},
+              'rot': {'out_channels': 6, 'conv_dim': 128},
+              'size2d': {'out_channels': 2, 'conv_dim': 128},
+          }
+    POST_PROCESSING:
+      DEPTH_FROM_SIZE2D: true

@@ -1,0 +1,12 @@
+# MAV6D 相机归一化缓存（去畸变 + 512x288 等比），build_mav6d_cache.py 产出 train / val / test。
+# val = 从官方训练序列里按序列留出约 15%（序列清单 cfgs/subsets/mav6d_camnorm/val_sequences.txt），只用来选轮。
+# 数据量档位用 SAMPLED_INTERVAL.train 抽帧（100/20/10/4/2/1 = 1/5/10/25/50/100%）。
+_BASE_CONFIG_: cfgs/dataset_configs/uavdet_3d/camnorm_base.yaml
+DATA_PATH: 'E:/mmcache/mav6d_cn'
+# MAV6D 增广 = 翻转 + 光度（审查 P10 的批准方案），不做随机缩放。验证集对比（5% 预算、20 轮，score / 位置中位 / 角度中位）：
+#   翻转+缩放+光度 0.315 / 0.274 m / 31.4° | 翻转+光度 0.380 / 0.195 m / 28.3° | 不增广 0.394 / 0.243 m / 19.4°
+# 仿真预训练仍保留缩放增广（虚拟深度下几何自洽，审查 P8）
+AUG: {hflip: 0.5, scale: [1.0, 1.0], photometric: true, noise: 0.01, blur: 0.0, blur_prob: 0.5}
+# 本域归一化统计量（train 抽 600 帧，float64 累加；BGR，x/255 后）
+NORM_MEAN: [0.4360, 0.4418, 0.4374]
+NORM_STD: [0.2239, 0.2244, 0.2200]

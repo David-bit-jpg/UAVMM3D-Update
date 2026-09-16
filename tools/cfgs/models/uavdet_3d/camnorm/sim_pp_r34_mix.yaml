@@ -1,0 +1,5 @@
+# R2：ImageNet 骨干 + MixStyle（两条独立的域泛化手段一起上）。
+_BASE_CONFIG_: cfgs/models/uavdet_3d/camnorm/sim_pp_r34.yaml
+MODEL:
+    BACKBONE_2D:
+      MIXSTYLE: {p: 0.5, alpha: 0.1, layers: [1, 2]}

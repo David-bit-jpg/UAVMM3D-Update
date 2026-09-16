@@ -1,0 +1,7 @@
+# 纯 RGB 检测器，训在新室内仿真数据上 —— 迁 MAV6D 的 I0 臂权重来源。
+# 网络结构与 student_rgb.yaml 完全一致，只换数据。
+_BASE_CONFIG_: cfgs/models/uavdet_3d/mmcache/student_rgb.yaml
+DATA_CONFIG:
+    _BASE_CONFIG_: cfgs/dataset_configs/uavdet_3d/mmcache_indoor.yaml
+    MAX_OBJ_PER_SAMPLE: 7
+    MODALITIES: ['rgb']

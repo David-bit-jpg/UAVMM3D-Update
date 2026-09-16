@@ -23,20 +23,40 @@ import numpy as np
 
 def score_split(cache, split):
     idx = pickle.load(open(os.path.join(cache, split, 'index.pkl'), 'rb'))
-    rgb = np.load(os.path.join(cache, split, 'rgb.npy'), mmap_mode='r')
-    H, W = idx['H'], idx['W']
+    jpeg = idx.get('store', 'npy') == 'jpeg'
+    if jpeg:
+        # 原分辨率 JPEG 缓存：解码后整幅缩到 512x288 再算，和 npy 缓存同一口径（MIN_RGB_VIS 阈值通用）
+        import cv2
+        blob = np.memmap(os.path.join(cache, split, 'rgb_jpg.bin'), dtype=np.uint8, mode='r')
+        jidx = np.load(os.path.join(cache, split, 'rgb_jpg_index.npy'))
+        srcH, srcW = idx['H'], idx['W']
+        H, W = 288, 512
+    else:
+        rgb = np.load(os.path.join(cache, split, 'rgb.npy'), mmap_mode='r')
+        H, W = idx['H'], idx['W']
     raw_w, raw_h = None, None
     N = len(idx['metas'])
     score = np.full(N, -1.0, np.float32)
     for i in idx['valid_idx']:
         m = idx['metas'][i]
-        if raw_w is None:
+        if jpeg:
+            from uavdet3d.utils import camera_geometry as cg
+            K = cg.scale_K(m['K_in'], W / float(srcW), H / float(srcH))
+        elif 'K_in' in m:                                  # camnorm 缓存：已是缓存分辨率上的内参
+            K = np.asarray(m['K_in'], dtype=np.float64)
+        else:
             raw_w, raw_h = m['raw_wh']
-        sx, sy = W / float(raw_w), H / float(raw_h)
-        K = m['K_raw'].astype(np.float64).copy()
-        K[0] *= sx
-        K[1] *= sy
-        g = np.asarray(rgb[i]).astype(np.float32).mean(axis=2)
+            sx, sy = W / float(raw_w), H / float(raw_h)
+            K = m['K_raw'].astype(np.float64).copy()
+            K[0] *= sx
+            K[1] *= sy
+        if jpeg:
+            o, ln = jidx[i]
+            im = cv2.resize(cv2.imdecode(np.asarray(blob[int(o):int(o) + int(ln)]), cv2.IMREAD_COLOR), (W, H),
+                            interpolation=cv2.INTER_AREA)
+            g = im.astype(np.float32).mean(axis=2)
+        else:
+            g = np.asarray(rgb[i]).astype(np.float32).mean(axis=2)
         best = -1.0
         for b, q in zip(m['boxes9d'], m['qualified']):
             if not q:

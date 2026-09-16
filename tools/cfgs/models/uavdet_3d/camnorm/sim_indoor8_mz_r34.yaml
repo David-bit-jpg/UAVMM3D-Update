@@ -1,0 +1,13 @@
+# 纯仿真预训练 · ImageNet 预训练 ResNet-34 骨干（其余与 sim_indoor8_mz.yaml 完全一致）。
+# 目的：检验纯仿真零样本差是不是「模型」的原因 —— ResNet8x 从零训、只见过仿真纹理。
+_BASE_CONFIG_: cfgs/models/uavdet_3d/camnorm/sim_indoor8_mz.yaml
+MODEL:
+    BACKBONE_2D:
+      NAME: TvResNet
+      ARCH: resnet34
+      PRETRAINED: true
+      BGR_INPUT: true
+      INPUT_CHANNELS: 3
+      OUT_CHANNELS: 512
+      FPN_CHANNELS: 128
+      NUM_FILTERS: [64, 128, 256, 512]

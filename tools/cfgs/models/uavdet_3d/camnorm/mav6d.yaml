@@ -1,0 +1,11 @@
+# MAV6D 训练 / 验证 / 测试（从零臂、迁移臂、零样本评测共用）。每帧恰好一架机，解码只取 1 个。
+_BASE_CONFIG_: cfgs/models/uavdet_3d/camnorm/_model.yaml
+DATA_CONFIG:
+    _BASE_CONFIG_: cfgs/dataset_configs/uavdet_3d/camnorm_mav6d.yaml
+MODEL:
+    POST_PROCESSING:
+      MAX_OBJ: 1
+      # 每帧恰好一架机：位姿评测始终取置信度最高的那一个，不用阈值筛（AP 类指标按置信度排序算，不受影响）。
+      # 阈值 0.05 时实测 1% 档训练越久验证集检出率越低（100% -> 49%，峰值置信度掉到阈值下），
+      # 选轮就被「检出率」而不是位姿质量主导（选中第 3 轮，测试角度中位 60°）
+      SCORE_THRESH: 0.0
