@@ -1,0 +1,4 @@
+# KC 臂：KA + 关键点监督扩到 3x3 邻域（与 KA 只差这一项，用来单独衡量邻域监督值多少）。
+_BASE_CONFIG_: cfgs/models/uavdet_3d/camnorm/sim_full_r34_kp_hm2.yaml
+DATA_CONFIG:
+    _BASE_CONFIG_: cfgs/dataset_configs/uavdet_3d/camnorm_sim_full_kp_t_n1.yaml

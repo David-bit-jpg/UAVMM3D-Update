@@ -257,7 +257,10 @@ def center_point_decoder(hm,
                          depth_mode='metric',
                          f_ref=None,
                          rot_frame='ego',
-                         size2d=None):
+                         size2d=None,
+                         size2d_mode='both',
+                         kp2d=None,
+                         kp_scale=64.0):
     """center_point_encoder 的逆过程，输出 (N, 10) 的 [x,y,z,l,w,h,a1,a2,a3,cls]。
 
     坐标系为 OpenCV 相机系，与 MAV6D 的 gt_box9d 一致
@@ -333,11 +336,18 @@ def center_point_decoder(hm,
             lwh = np.concatenate([l, w, h], axis=1)
             Rm = R.from_euler(seq, eul).as_matrix().reshape(-1, 3, 3)
             zs = np.asarray(depth, dtype=np.float64).reshape(-1).copy()
+            # size2d_mode（2026-09-18）：'both' = 宽高联立（缺省，历史行为）；'width' = 只用水平跨度。
+            # 为什么：真实图上这两个量的迁移差得很多 —— 实测 B 臂 预测/真值 宽 0.82、高 0.46（域内都是 0.99），
+            # 高度这一项把几何解深度污染得更厉害（无人机竖直方向薄、可见部分与标注框差得多）。
+            use_w = (str(size2d_mode) == 'width')
             for i in range(len(lwh)):
                 c0 = (PROTO8 * lwh[i]) @ Rm[i].T          # 绕自身中心的角点偏移（与 Z 无关）
                 a_, b_ = fx * float(np.ptp(c0[:, 0])), fy * float(np.ptp(c0[:, 1]))
-                den = a_ * w2d[i] + b_ * h2d[i]
-                z = (a_ * a_ + b_ * b_) / den if den > 1e-9 else float(zs[i])
+                if use_w:
+                    z = a_ / w2d[i] if w2d[i] > 1e-9 else float(zs[i])
+                else:
+                    den = a_ * w2d[i] + b_ * h2d[i]
+                    z = (a_ * a_ + b_ * b_) / den if den > 1e-9 else float(zs[i])
                 # 正交近似只是起点：8 个角点深度不同，真实 2D 包围盒比 f·L/Z 略大。
                 # 投影尺寸近似正比于 1/Z，所以按「当前投影 / 目标」直接缩放 Z，几轮就收敛。
                 for _ in range(8):
@@ -351,7 +361,7 @@ def center_point_decoder(hm,
                     pw, ph = float(np.ptp(uvp[:, 0])), float(np.ptp(uvp[:, 1]))
                     if pw < 1e-9 or ph < 1e-9:
                         break
-                    r = 0.5 * (pw / w2d[i] + ph / h2d[i])
+                    r = (pw / w2d[i]) if use_w else 0.5 * (pw / w2d[i] + ph / h2d[i])
                     if not np.isfinite(r) or r <= 0:
                         break
                     z *= r
@@ -359,6 +369,45 @@ def center_point_decoder(hm,
                         break
                 zs[i] = z
             points = unproject_points(uv_raw, zs, in_mat, dis_mat, use_distortion)
+
+        # ---- 关键点 + PnP（2026-09-18）：8 个角点的图像位置 -> 位姿，深度与朝向都由几何解出 ----
+        # 为什么：能跨域迁移的是【定位类】的 2D 量（中心 9.7 px、检出 85%），不能迁移的是【尺度类】的量
+        # （size2d 头域内 0.99、真实域宽 0.85 高 0.53）。角点位置属于定位，交给 PnP 出位姿。
+        if kp2d is not None and len(rows):
+            kp = kp2d[im_id][:, rows, cols].detach().cpu().numpy().astype(np.float64).T     # (N, 16)
+            sx = float(raw_im_width) / float(new_im_width)
+            sy = float(raw_im_hight) / float(new_im_hight)
+            lwh = np.concatenate([l, w, h], axis=1)
+            pts = points.copy()
+            eul2 = eul.copy()
+            for i in range(len(kp)):
+                img_pts = kp[i].reshape(8, 2) * float(kp_scale)
+                img_pts = np.stack([img_pts[:, 0] * sx + uv_raw[i, 0], img_pts[:, 1] * sy + uv_raw[i, 1]], axis=1)
+                # 尺寸保护：训练早期预测的 lwh 会接近 0，角点几乎重合，SQPnP 会直接抛
+                # (-215 point_coordinate_variance >= POINT_VARIANCE_THRESHOLD)。夹一个下限并跳过退化样本。
+                lw = np.clip(np.abs(lwh[i]).astype(np.float64), 0.02, 50.0)
+                obj_pts = (PROTO8 * lw)
+                if not np.isfinite(img_pts).all() or np.ptp(img_pts[:, 0]) < 1e-3:
+                    continue
+                if float(obj_pts.var(axis=0).sum()) < 1e-6 or float(np.ptp(img_pts[:, 1])) < 1e-3:
+                    continue
+                dist = np.asarray(dis_mat, dtype=np.float64).reshape(1, -1) if use_distortion else np.zeros((1, 5))
+                try:
+                    ok, rvec, tvec = cv2.solvePnP(obj_pts.reshape(-1, 1, 3), img_pts.reshape(-1, 1, 2),
+                                                  in_mat, dist, flags=cv2.SOLVEPNP_SQPNP)
+                    if not ok or not np.isfinite(tvec).all() or tvec[2, 0] <= 1e-6:
+                        continue
+                    ok2, rvec, tvec = cv2.solvePnP(obj_pts.reshape(-1, 1, 3), img_pts.reshape(-1, 1, 2),
+                                                   in_mat, dist, rvec, tvec, useExtrinsicGuess=True,
+                                                   flags=cv2.SOLVEPNP_ITERATIVE)
+                    if not ok2 or not np.isfinite(tvec).all() or tvec[2, 0] <= 1e-6:
+                        continue
+                except cv2.error:
+                    continue                    # 解不出来就保留 center_dis 那条路的结果
+                pts[i] = tvec.reshape(3)
+                eul2[i] = R.from_matrix(cv2.Rodrigues(rvec)[0]).as_euler(seq)
+            points = pts
+            a1, a2, a3 = eul2[:, 0:1], eul2[:, 1:2], eul2[:, 2:3]
 
         cls = cls_map[rows, cols].detach().cpu().numpy().reshape(-1, 1).astype(np.float64)
 

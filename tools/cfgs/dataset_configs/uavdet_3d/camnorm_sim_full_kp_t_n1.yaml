@@ -1,0 +1,4 @@
+# 关键点监督扩到 3x3 邻域：同一份偏移写进中心格周围 9 个格子（偏移是相对目标中心而非格子，所以值相同）。
+# 目的：每个目标只有 1 个格子有监督对 16 通道的回归太少；PnP 敏感度是 1 px -> 位置 0.067 m，定位精度值钱。
+_BASE_CONFIG_: cfgs/dataset_configs/uavdet_3d/camnorm_sim_full_kp_t.yaml
+KP_NEIGHBOR: 1

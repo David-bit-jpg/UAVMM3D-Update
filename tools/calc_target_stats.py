@@ -55,7 +55,7 @@ def main():
     W_in = int(dc.IM_RESIZE[0])
     zmax_nomag = W_src / float(W_in)
 
-    Zv_cache, LWH = [], []
+    Zv_cache, LWH, ZF = [], [], []
     for i in idx['valid_idx']:
         m = idx['metas'][int(i)]
         K = np.asarray(m['K_in']).reshape(3, 3)
@@ -65,12 +65,25 @@ def main():
                 continue
             Zv_cache.append(b[2] * f_ref / f_in)
             LWH.append(b[3:6])
+            ZF.append((b[2], f_in))
     Zv_cache = np.asarray(Zv_cache, np.float64)
     LWH = np.asarray(LWH, np.float64).reshape(-1, 3)
 
     rng = np.random.default_rng(0)
     store = str(idx.get('store', 'npy'))
-    if store == 'jpeg':
+    t_range = (dc.get('VIEW_AUG', {}) or {}).get('t_range', None)
+    if store == 'jpeg' and t_range:
+        # 与数据集 _view 的 t_range 模式一致：按目标反算窗口宽（16 的倍数、夹在 [oW/max_upscale, W_src]）
+        max_up = float((dc.get('VIEW_AUG', {}) or {}).get('max_upscale', 1.0))
+        ZF = np.asarray(ZF, np.float64)
+        Lnorm = np.linalg.norm(LWH, axis=1)
+        unit = int(np.gcd(W_in, int(dc.IM_RESIZE[1])))
+        uw = W_in // unit
+        tt = rng.uniform(float(t_range[0]), float(t_range[1]), size=(a.reps, len(Lnorm)))
+        w = Lnorm[None, :] * np.exp(tt) * ZF[None, :, 1] * W_in / (ZF[None, :, 0] * f_ref)
+        k = np.clip(np.round(w / uw), max(1, int(round(unit / max(max_up, 1.0)))), min(W_src // uw, int(idx['H']) // (int(dc.IM_RESIZE[1]) // unit)))
+        Zv = (ZF[None, :, 0] * f_ref / (ZF[None, :, 1] * W_in / (k * uw))).ravel()
+    elif store == 'jpeg':
         # 只有原分辨率 jpeg 缓存才在线裁窗。裁宽 W_src/z 的窗口缩到 W_in：
         #   f_in = f_cache * W_in * z / W_src   ->   Zv = Zv_cache * (W_src / W_in) / z
         z = np.exp(rng.uniform(np.log(z0), np.log(z1), size=(a.reps, len(Zv_cache)))) if z1 > z0             else np.full((a.reps, len(Zv_cache)), z0)
@@ -80,11 +93,18 @@ def main():
     else:
         Zv = Zv_cache          # 缓存分辨率就是网络输入，不裁窗
 
+    depth_target = str(dc.get('DEPTH_TARGET', 'value'))
+    if depth_target == 'log_ratio':
+        # 与 pre_processor 一致：t = log(Zv / ||lwh||)；Zv 按 (reps, N) 展平，L 逐目标重复
+        L = np.linalg.norm(LWH, axis=1)
+        reps = len(Zv) // len(L)
+        Zv = np.log(Zv / np.tile(L, reps))
     dm, ds = float(Zv.mean()), float(Zv.std())
     sm, ss = LWH.mean(0), LWH.std(0)
     print('%s  %s 划分：%d 个目标，裁窗 zoom [%g, %g]%s' % (
         dc.DATA_PATH, a.split, len(Zv_cache), z0, z1, '（不放大，上限 %.2f）' % zmax_nomag if no_up else ''))
-    print('  虚拟深度 Zv   均值 %.3f  标准差 %.3f   | p1 %.2f  中位 %.2f  p99 %.2f  最大 %.2f' % (
+    print('  %s   均值 %.3f  标准差 %.3f   | p1 %.2f  中位 %.2f  p99 %.2f  最大 %.2f' % (
+        'log(Zv/L)' if depth_target == 'log_ratio' else '虚拟深度 Zv',
         dm, ds, np.percentile(Zv, 1), np.median(Zv), np.percentile(Zv, 99), Zv.max()))
     print('  尺寸 l,w,h    均值 %s  标准差 %s' % (np.round(sm, 4), np.round(ss, 4)))
     print()

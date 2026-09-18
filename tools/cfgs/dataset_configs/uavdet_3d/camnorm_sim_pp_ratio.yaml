@@ -1,0 +1,12 @@
+# 2026-09-17 机身倍数深度：center_dis 学 log(Zv / L)，L = ||lwh||（「离几个机身长度远」），尺寸由 dim 头单独学。
+# 为什么：MAV6D 零样本分档实测，深度比在 <2.5 m 到 4~9 m 各档都是 x2（不是距离外推失败），
+# 真因是尺寸判断：真实图上认不出机型，猜大 1.5~2 倍。Zv/L = f_ref / 表观大小，只由图上大小决定，能迁移；
+# 推理时 深度 = 倍数 x 尺寸，尺寸用预测值或已知/近似值（MODEL.POST_PROCESSING.SIZE_SOURCE）。
+# 尺寸常数与 camnorm_sim_pp_std.yaml 相同；DEPTH_MEAN/STD 是 log(Zv/L) 的统计量（tools/calc_target_stats.py）。
+_BASE_CONFIG_: cfgs/dataset_configs/uavdet_3d/camnorm_sim_pp_std.yaml
+DEPTH_TARGET: 'log_ratio'
+# 自洽标准化（tools/calc_target_stats.py 实测，只来自训练集本身）
+DEPTH_MEAN: 2.0292
+DEPTH_STD: 0.8294
+SIZE_MEAN: [0.6744, 0.6452, 0.2617]
+SIZE_STD: [0.5453, 0.4945, 0.1943]

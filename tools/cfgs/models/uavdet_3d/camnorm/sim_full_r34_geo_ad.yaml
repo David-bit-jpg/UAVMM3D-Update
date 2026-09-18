@@ -1,0 +1,10 @@
+# AD 臂：最好配方 + 锚点蒸馏。教师 = 跨域表现最好的早期权重（D6 第 5 轮），
+# 约束当前模型的 size2d / dim 输出在同一张图上贴住教师，骨干照常继续训。
+# 目的：朝向要靠骨干长训练（折算 61 -> 41），而深度在长训练里退化（0.50 -> 0.77 m），
+# 冻结骨干只训旋转头无效（15 轮角度不动），所以改成钉住「深度所依赖的函数」而不是钉住权重。
+_BASE_CONFIG_: cfgs/models/uavdet_3d/camnorm/sim_full_r34_geo_tr.yaml
+MODEL:
+    ANCHOR_DISTILL:
+      CKPT: 'E:/Open3DUAVDet/output/models/uavdet_3d/camnorm/sim_full_r34_geo_tr/D6/ckpt/checkpoint_epoch_5.pth'
+      HEADS: ['size2d', 'dim']
+      WEIGHT: 4.0

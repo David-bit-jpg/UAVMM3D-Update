@@ -32,6 +32,9 @@ from ...utils import camera_geometry as cg
 from ...utils import frame_convention
 
 MODAL_ORDER = ['rgb', 'ir', 'depth', 'tag']
+# 单位立方体 8 角点（与 utils/object_encoder_mav6d 同一约定），目标级增广要用它算 2D 框
+PROTO8 = np.array([[-.5, -.5, -.5], [.5, -.5, -.5], [.5, .5, -.5], [-.5, .5, -.5],
+                   [-.5, -.5, .5], [.5, -.5, .5], [.5, .5, .5], [-.5, .5, .5]], dtype=np.float64)
 MODAL_CH = {'rgb': 3, 'ir': 1, 'depth': 1, 'tag': 1}
 
 
@@ -88,6 +91,13 @@ class MMCache_Det_Dataset(DatasetTemplate):
         self.val_zooms = [float(v) for v in dataset_cfg.get('VAL_ZOOMS', [1.0])]
         # 只降采样不放大（见 _view 的说明）。缺省 False = 与 2026-09-16 之前逐位一致
         self.no_upscale = bool((dataset_cfg.get('VIEW_AUG', {}) or {}).get('no_upscale', False))
+        # 裁窗按「机身倍数」反算（2026-09-18，见 _view）：t_range = [lo, hi] 时训练不再独立抽 z，
+        # 而是按选中目标的 Z、L 反算窗口宽，让 t = log(Zv/L) 在区间内均匀；max_upscale 限制放大倍数。
+        va = dataset_cfg.get('VIEW_AUG', {}) or {}
+        tr = va.get('t_range', None)
+        self.t_range = [float(tr[0]), float(tr[1])] if tr else None
+        self.max_upscale = float(va.get('max_upscale', 1.0))
+        self.f_ref = float(dataset_cfg.get('DEPTH_F_REF', 512))
         # RGB 可见度过滤：vis_score.npy 是每帧「最近合格目标处 RGB 局部对比度」(灰度级)。
         # mm20 有 61% 是夜间帧，夜间目标对比度中位只有 2.3-2.9（亮度 3-21/255），对 RGB 学生
         # 就是不可见的纯噪声；白天中位 8.5-15.4。按对比度筛而不按天气标签：有路灯的夜景能留下。
@@ -226,6 +236,11 @@ class MMCache_Det_Dataset(DatasetTemplate):
         验证 / 测试：z 按 VAL_ZOOMS 轮流取，窗口以第一个目标为中心（夹到图内），结果确定。
         中心出窗口的框丢掉。
 
+        VIEW_AUG.t_range（2026-09-18）：训练时不独立抽 z，而是按选中目标反算窗口宽，让
+        t = log(Zv/L)（「离几个机身长度远」，L = ||lwh||）在区间内均匀。为什么：独立抽 z 时 t 的方差
+        63% 由机型尺寸决定（各机型 t 几乎不重叠），网络把「看起来多大」当机型身份，换域认错机型就整体偏一个常数。
+        max_upscale 限制窗口小于输入的倍数（放大会丢细节，配 AUG.blur 把细节随机化）。
+
         VIEW_AUG.no_upscale（2026-09-16 起默认开）：把窗口夹到【不小于网络输入】，即只降采样不放大。
         为什么：窗口小于输入时 cv2 只能插值放大，凭空造不出细节。实测仿真在 MAV6D 的工作点上要放大 1.30 倍，
         目标块细节量掉到真实的 1/16（docs/audit/ANNOTATION_CONSISTENCY_2026-09-15.md §12.2），
@@ -234,26 +249,37 @@ class MMCache_Det_Dataset(DatasetTemplate):
         """
         sH, sW = img.shape[:2]
         oW, oH = self.new_im_width, self.new_im_hight
-        if self.training:
-            z0, z1 = self.view_zoom
-            z = float(np.exp(np.random.uniform(np.log(z0), np.log(z1)))) if z1 > z0 else z0
-        else:
-            z = self.val_zooms[item % len(self.val_zooms)]
         # 窗口宽高与输入严格同比例（输入 16:9 -> 宽取 16 的倍数）
         unit = int(np.gcd(oW, oH))
         uw, uh = oW // unit, oH // unit
-        k_min = unit if self.no_upscale else 1          # unit = oW // uw，即窗口宽 >= 输入宽
-        k = max(k_min, min(int(round(sW / z / uw)), sW // uw, sH // uh))
-        w, h = k * uw, k * uh
         uv = None
         cand = []
         if len(boxes):
             pr = (K @ boxes[:, :3].T).T
             uv = pr[:, :2] / pr[:, 2:3]
             cand = [j for j in range(len(boxes)) if boxes[j, 2] > 0 and 0 <= uv[j, 0] < sW and 0 <= uv[j, 1] < sH]
-        m = 8.0 * w / oW
+        j = None
         if cand:
             j = cand[np.random.randint(len(cand))] if self.training else cand[0]
+        if self.training and self.t_range is not None and j is not None:
+            # 反算：Zv = Z*f_ref/f_in，f_in = f_src*oW/w  ->  w = L*e^t*f_src*oW/(Z*f_ref)
+            f_src = float(np.sqrt(K[0, 0] * K[1, 1]))
+            L = float(np.linalg.norm(boxes[j, 3:6]))
+            t = float(np.random.uniform(*self.t_range))
+            w_want = L * np.exp(t) * f_src * oW / (max(float(boxes[j, 2]), 1e-6) * self.f_ref)
+            k_lo = max(1, int(round(unit / max(self.max_upscale, 1.0))))
+            k = max(k_lo, min(int(round(w_want / uw)), sW // uw, sH // uh))
+        else:
+            if self.training:
+                z0, z1 = self.view_zoom
+                z = float(np.exp(np.random.uniform(np.log(z0), np.log(z1)))) if z1 > z0 else z0
+            else:
+                z = self.val_zooms[item % len(self.val_zooms)]
+            k_min = unit if self.no_upscale else 1      # unit = oW // uw，即窗口宽 >= 输入宽
+            k = max(k_min, min(int(round(sW / z / uw)), sW // uw, sH // uh))
+        w, h = k * uw, k * uh
+        m = 8.0 * w / oW
+        if j is not None:
             cu, cv_ = uv[j]
             lo_x, hi_x = max(0.0, cu - w + m), min(float(sW - w), cu - m)
             lo_y, hi_y = max(0.0, cv_ - h + m), min(float(sH - h), cv_ - m)
@@ -348,6 +374,60 @@ class MMCache_Det_Dataset(DatasetTemplate):
             nc = min(3, C)
             small = [cv2.resize(image[c], (nw2, nh2), interpolation=cv2.INTER_AREA) for c in range(nc)]
             image[:nc] = np.stack([cv2.resize(s, (W, H), interpolation=cv2.INTER_LINEAR) for s in small], 0)
+
+        # ---- 目标级随机化（2026-09-18）：同一个标注框，让「看得见的结构」本身随机 ----
+        # 为什么：实测模型对目标外圈结构极度敏感 —— 在仿真图上把框内 0.64~1.0 的环带抹掉，
+        # 预测深度就被推远 24%（而抹背景 1.0~1.5 完全没影响）。真实相机下旋转桨叶几乎不可见、细机臂又暗，
+        # 「框内被填满的程度」本来就会随机型、曝光、运动而变，模型必须自己 cover 这一档变化，
+        # 而不是把某一种填充程度当成尺度基准。两项都只改像素、不动任何几何量和标签：
+        #   target_ring : 以概率把框内 [core, 1.0] 的环带向局部背景衰减（core、衰减强度都随机）
+        #   target_blur : 以概率对框内做随机方向的运动模糊（模拟真实曝光下的旋转/位移）
+        ring_p = float(a.get('target_ring', 0.0) or 0.0)
+        tblur_p = float(a.get('target_blur', 0.0) or 0.0)
+        if (ring_p > 0 or tblur_p > 0) and len(boxes):
+            nc = min(3, C)
+            Rm = R.from_euler(self.euler_seq, boxes[:, 6:9]).as_matrix()
+            for bi in range(len(boxes)):
+                if boxes[bi, 2] <= 1e-6:
+                    continue
+                cs = (PROTO8 * boxes[bi, 3:6]) @ Rm[bi].T + boxes[bi, :3]
+                pr = (K @ cs.T).T
+                if (pr[:, 2] <= 1e-6).any():
+                    continue
+                uv = pr[:, :2] / pr[:, 2:3]
+                x0, y0 = uv[:, 0].min(), uv[:, 1].min()
+                x1, y1 = uv[:, 0].max(), uv[:, 1].max()
+                bw, bh = x1 - x0, y1 - y0
+                if bw < 6 or bh < 6:
+                    continue
+                cx, cy = 0.5 * (x0 + x1), 0.5 * (y0 + y1)
+                if rng.rand() < ring_p:
+                    core = float(rng.uniform(*a.get('target_ring_core', (0.55, 1.0))))
+                    alpha = float(rng.uniform(*a.get('target_ring_alpha', (0.4, 1.0))))   # 1 = 完全抹掉
+                    ox0 = int(max(0, np.floor(cx - 0.8 * bw))); ox1 = int(min(W, np.ceil(cx + 0.8 * bw)))
+                    oy0 = int(max(0, np.floor(cy - 0.8 * bh))); oy1 = int(min(H, np.ceil(cy + 0.8 * bh)))
+                    if ox1 - ox0 < 4 or oy1 - oy0 < 4:
+                        continue
+                    bg = np.median(image[:nc, oy0:oy1, ox0:ox1].reshape(nc, -1), axis=1)
+                    m = np.zeros((H, W), np.uint8)
+                    cv2.rectangle(m, (int(x0), int(y0)), (int(np.ceil(x1)), int(np.ceil(y1))), 1, -1)
+                    cv2.rectangle(m, (int(cx - core * bw / 2), int(cy - core * bh / 2)),
+                                  (int(cx + core * bw / 2), int(cy + core * bh / 2)), 0, -1)
+                    mb = cv2.GaussianBlur(m.astype(np.float32), (0, 0), 0.8) * alpha      # 羽化，别造硬边
+                    image[:nc] = image[:nc] * (1 - mb) + bg[:, None, None] * mb
+                if rng.rand() < tblur_p:
+                    ln = int(rng.randint(3, max(4, int(a.get('target_blur_len', 7)))))
+                    ang = float(rng.uniform(0, np.pi))
+                    ker = np.zeros((ln, ln), np.float32)
+                    c0 = (ln - 1) / 2.0
+                    for t_ in np.linspace(-c0, c0, ln * 2):
+                        ker[int(round(c0 + t_ * np.sin(ang))), int(round(c0 + t_ * np.cos(ang)))] = 1
+                    ker /= max(ker.sum(), 1e-6)
+                    px0 = int(max(0, np.floor(x0 - 2))); px1 = int(min(W, np.ceil(x1 + 2)))
+                    py0 = int(max(0, np.floor(y0 - 2))); py1 = int(min(H, np.ceil(y1 + 2)))
+                    if px1 - px0 > 4 and py1 - py0 > 4:
+                        for c in range(nc):
+                            image[c, py0:py1, px0:px1] = cv2.filter2D(image[c, py0:py1, px0:px1], -1, ker)
 
         # ---- 光度（只动 rgb；ir 轻微）----
         if a.get('photometric', False):

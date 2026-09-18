@@ -1,0 +1,10 @@
+# 全量新数据 + 机身倍数深度（DEPTH_TARGET log_ratio，见 camnorm_sim_pp_ratio.yaml 的说明）。
+# DEPTH_MEAN/STD（log(Zv/L)）与 SIZE_MEAN/STD 由 tools/calc_target_stats.py 从本训练集写入。
+_BASE_CONFIG_: cfgs/dataset_configs/uavdet_3d/camnorm_sim_full.yaml
+TARGET_NORM: 'standard'
+DEPTH_TARGET: 'log_ratio'
+# 自洽标准化（tools/calc_target_stats.py 实测，只来自训练集本身）
+DEPTH_MEAN: 1.9442
+DEPTH_STD: 0.8389
+SIZE_MEAN: [0.6609, 0.6330, 0.2555]
+SIZE_STD: [0.5517, 0.5008, 0.1951]

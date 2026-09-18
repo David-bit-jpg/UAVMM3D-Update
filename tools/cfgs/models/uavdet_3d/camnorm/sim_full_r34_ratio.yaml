@@ -1,0 +1,4 @@
+# Q3：Q2（ImageNet ResNet-34 + 机身倍数深度 + bias + 标准化）换成全量新数据（四场景 + 近距离两批）。
+_BASE_CONFIG_: cfgs/models/uavdet_3d/camnorm/sim_pp_r34_ratio.yaml
+DATA_CONFIG:
+    _BASE_CONFIG_: cfgs/dataset_configs/uavdet_3d/camnorm_sim_full_ratio.yaml

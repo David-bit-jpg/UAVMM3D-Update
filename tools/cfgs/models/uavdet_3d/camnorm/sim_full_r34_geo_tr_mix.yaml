@@ -1,0 +1,7 @@
+# MIX 臂：最好配方 + MixStyle（训练时混合批内样本的通道统计量）。
+# 动机：跨域失败的形态是「响应对、零点偏」，而 MixStyle 正是堵「靠风格/统计量判断」这条路；
+# 这个开关 2026-09-16 就实现了，但一直没在当前管线里评过。
+_BASE_CONFIG_: cfgs/models/uavdet_3d/camnorm/sim_full_r34_geo_tr.yaml
+MODEL:
+    BACKBONE_2D:
+      MIXSTYLE: {p: 0.5, alpha: 0.1, layers: [1, 2]}

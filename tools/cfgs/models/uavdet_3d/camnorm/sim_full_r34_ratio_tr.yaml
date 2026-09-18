@@ -1,0 +1,4 @@
+# C 臂：A 臂 + 目标级随机化（外圈随机衰减 + 目标运动模糊）。判据 = 在仿真上对外圈消融不再敏感。
+_BASE_CONFIG_: cfgs/models/uavdet_3d/camnorm/sim_full_r34_ratio_t.yaml
+DATA_CONFIG:
+    _BASE_CONFIG_: cfgs/dataset_configs/uavdet_3d/camnorm_sim_full_ratio_tr.yaml

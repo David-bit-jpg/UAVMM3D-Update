@@ -1,0 +1,8 @@
+# 2026-09-18 裁窗按「机身倍数」对齐（VIEW_AUG.t_range）+ 带宽增广。
+# 为什么：独立随机抽裁窗倍数时，t = log(Zv/L) 的方差 63% 由机型尺寸决定（各机型 t 几乎不重叠），
+# 网络把「看起来多大」当成机型身份，换域认错机型就整体偏一个常数（Q2 实测 1.27 倍）。
+# 反算窗口宽让 t 在区间内均匀：模拟 corr(t, log 尺寸) −0.79 → −0.50，各机型 t 中位都落到 1.5~2.2；取 [1.0,3.0] 而不是更窄的区间，是为了让先验本身不准（σ(t) 0.48），否则「给尺寸就变好」有可能只是先验凑巧。
+# 代价是 43% 的样本要放大（中位 1.78x），所以同时开 blur 把「细节量」随机化，避免它变成新的捷径。
+_BASE_CONFIG_: cfgs/dataset_configs/uavdet_3d/camnorm_sim_full.yaml
+VIEW_AUG: {zoom: [1.0, 4.0], no_upscale: false, t_range: [1.0, 3.0], max_upscale: 2.0}
+AUG: {hflip: 0.5, scale: [1.0, 1.0], photometric: true, noise: 0.01, blur: 2.5, blur_prob: 0.5}

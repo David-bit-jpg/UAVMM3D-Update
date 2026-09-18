@@ -1,0 +1,5 @@
+# 评测 D 臂：与训练一致（几何解深度只用水平跨度）。已知尺寸口径加 --set MODEL.POST_PROCESSING.SIZE_SOURCE known
+_BASE_CONFIG_: cfgs/models/uavdet_3d/camnorm/mav6d_r34_geo_full_t.yaml
+MODEL:
+    POST_PROCESSING:
+      SIZE2D_MODE: 'width'

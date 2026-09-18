@@ -44,6 +44,14 @@ MODEL:
       # true = 深度由「预测的 3D 尺寸+姿态」与「预测的 2D 跨度」几何解出，不用自由回归的 center_dis。
       # 需要 HEAD_ORDER 里有 size2d 且 DATA_CONFIG.MAKE_SIZE2D 打开。缺省 false，行为不变。
       DEPTH_FROM_SIZE2D: false
+      # 几何解深度用哪个 2D 跨度：both（缺省，宽高联立）/ width（只用水平跨度）。
+      # 真实图上 预测/真值 宽 0.82、高 0.46（域内均 0.99），高度这一项不可靠。
+      SIZE2D_MODE: 'both'
+      # 解码用的尺寸来源（2026-09-17，见 pre_processor.denormalize_regression）：
+      #   pred = 网络预测的 dim；known = 用 KNOWN_SIZE [l,w,h]（米，已知机型给精确值，只知大概给近似值）。
+      # DEPTH_TARGET=log_ratio 时深度 = 机身倍数 x ||尺寸||，尺寸来源直接决定深度；value 时只替换输出框的尺寸。
+      SIZE_SOURCE: 'pred'
+      KNOWN_SIZE: [0.0, 0.0, 0.0]
       MAX_OBJ: 5
       SCORE_THRESH: 0.05
 

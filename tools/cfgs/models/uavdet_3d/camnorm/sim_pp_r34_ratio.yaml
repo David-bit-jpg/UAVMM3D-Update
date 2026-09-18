@@ -1,0 +1,12 @@
+# Q2：Q1 换 ImageNet ResNet-34 骨干（与 R1 同骨干）。
+_BASE_CONFIG_: cfgs/models/uavdet_3d/camnorm/sim_pp_ratio.yaml
+MODEL:
+    BACKBONE_2D:
+      NAME: TvResNet
+      ARCH: resnet34
+      PRETRAINED: true
+      BGR_INPUT: true
+      INPUT_CHANNELS: 3
+      OUT_CHANNELS: 512
+      FPN_CHANNELS: 128
+      FREEZE_BN: false

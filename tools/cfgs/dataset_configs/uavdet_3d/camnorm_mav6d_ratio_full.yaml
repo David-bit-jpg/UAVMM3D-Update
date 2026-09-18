@@ -1,0 +1,9 @@
+# 评测 Q3（全量新数据上机身倍数深度训练）用：MAV6D + 【训练域】标准化常数（由驱动从训练集写入，与 camnorm_sim_full_ratio.yaml 相同）。
+_BASE_CONFIG_: cfgs/dataset_configs/uavdet_3d/camnorm_mav6d.yaml
+TARGET_NORM: 'standard'
+DEPTH_TARGET: 'log_ratio'
+# 自洽标准化（tools/calc_target_stats.py 实测，只来自训练集本身）
+DEPTH_MEAN: 1.9442
+DEPTH_STD: 0.8389
+SIZE_MEAN: [0.6609, 0.6330, 0.2555]
+SIZE_STD: [0.5517, 0.5008, 0.1951]

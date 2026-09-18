@@ -1,0 +1,4 @@
+# 评测 B 臂（结构与 mav6d_g1 相同：size2d 头 + 几何解深度）
+_BASE_CONFIG_: cfgs/models/uavdet_3d/camnorm/mav6d_g1.yaml
+DATA_CONFIG:
+    _BASE_CONFIG_: cfgs/dataset_configs/uavdet_3d/camnorm_mav6d_geo_full_t.yaml

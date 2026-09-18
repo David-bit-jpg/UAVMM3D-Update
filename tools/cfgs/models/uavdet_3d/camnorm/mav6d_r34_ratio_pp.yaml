@@ -1,0 +1,12 @@
+# 评测 Q2：同 mav6d_ratio_pp.yaml，骨干与训练一致（ImageNet ResNet-34）。
+_BASE_CONFIG_: cfgs/models/uavdet_3d/camnorm/mav6d_ratio_pp.yaml
+MODEL:
+    BACKBONE_2D:
+      NAME: TvResNet
+      ARCH: resnet34
+      PRETRAINED: true
+      BGR_INPUT: true
+      INPUT_CHANNELS: 3
+      OUT_CHANNELS: 512
+      FPN_CHANNELS: 128
+      FREEZE_BN: false

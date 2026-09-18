@@ -1,0 +1,4 @@
+# E 臂：D + 加强的目标级随机化。
+_BASE_CONFIG_: cfgs/models/uavdet_3d/camnorm/sim_full_r34_geo_tr.yaml
+DATA_CONFIG:
+    _BASE_CONFIG_: cfgs/dataset_configs/uavdet_3d/camnorm_sim_full_geo_tr2.yaml

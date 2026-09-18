@@ -1,0 +1,10 @@
+# 评测 B 臂：MAV6D + B 臂训练域常数 + 产出 size2d（评测不用真值，只是键要在）。
+_BASE_CONFIG_: cfgs/dataset_configs/uavdet_3d/camnorm_mav6d.yaml
+TARGET_NORM: 'standard'
+MAKE_SIZE2D: true
+# 自洽标准化（tools/calc_target_stats.py 实测，只来自训练集本身）
+# 自洽标准化（tools/calc_target_stats.py 实测，只来自训练集本身）
+DEPTH_MEAN: 5.9527
+DEPTH_STD: 3.7845
+SIZE_MEAN: [0.6609, 0.6330, 0.2555]
+SIZE_STD: [0.5517, 0.5008, 0.1951]

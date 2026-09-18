@@ -1,0 +1,7 @@
+# E 臂数据：D 臂的目标级随机化加强（更高概率、更强衰减、更大模糊）。
+# 为什么：D 训 24 轮后域内持续变好但真实域深度从 0.395 退到 0.743 —— 训得越久越贴合仿真的「外观→大小」映射。
+# 加强随机化是为了让这套映射在训练中就站不住；配合只用仿真的稳健性选轮（annot_audit/robust_val.py）。
+_BASE_CONFIG_: cfgs/dataset_configs/uavdet_3d/camnorm_sim_full_geo_t.yaml
+AUG: {hflip: 0.5, scale: [1.0, 1.0], photometric: true, noise: 0.01, blur: 3.0, blur_prob: 0.6,
+      target_ring: 0.8, target_ring_core: [0.5, 1.0], target_ring_alpha: [0.5, 1.0],
+      target_blur: 0.5, target_blur_len: 9}

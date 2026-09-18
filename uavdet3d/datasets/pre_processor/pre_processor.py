@@ -49,6 +49,52 @@ def make_size2d_map(gt_box9d, intrinsic, distortion, new_im_width, new_im_hight,
     return np.array(out)
 
 
+KP_SCALE = 64.0          # 关键点偏移的归一化常数（输入像素 / 该值），让回归量是 O(1)
+
+
+def make_kp2d_map(gt_box9d, intrinsic, distortion, new_im_width, new_im_hight, stride, im_num,
+                  euler_seq='xyz', use_distortion=True, neighbor=0):
+    """目标 3D 框 8 个角点在图上的位置，写成「相对中心的偏移 / KP_SCALE」，落在中心格上（16 通道）。
+
+    为什么用关键点而不是继续回归深度/尺寸（2026-09-18）：
+    这个项目里反复验证过，能跨域迁移的是【定位类】的 2D 量（热力图中心误差 9.7 px、检出 85%），
+    不能迁移的是【尺度类】的量（size2d 头域内 0.99，真实域宽 0.85 / 高 0.53）。
+    「某个角点在哪」属于定位，「这东西多大」属于判断；把位姿交给 8 个角点 + PnP，
+    深度和朝向都由几何解出，网络只需要做它擅长的定位。
+    """
+    from scipy.spatial.transform import Rotation as R
+    from uavdet3d.utils.object_encoder_mav6d import project_points
+
+    hm_w, hm_h = int(new_im_width) // int(stride), int(new_im_hight) // int(stride)
+    boxes = np.asarray(gt_box9d, dtype=np.float64).reshape(-1, 9)
+    out = []
+    for im_id in range(int(im_num)):
+        K = np.asarray(intrinsic[im_id], dtype=np.float64).reshape(3, 3)
+        D = np.asarray(distortion[im_id], dtype=np.float64).reshape(-1)
+        m = np.zeros((16, hm_h, hm_w), dtype=np.float32)
+        for b in boxes:
+            if not np.isfinite(b).all() or b[2] <= 1e-6:
+                continue
+            uv_c, _ = project_points(b[None, :3], K, D, use_distortion)
+            wi, hi = int(uv_c[0, 0] / stride), int(uv_c[0, 1] / stride)
+            if not (0 <= hi < hm_h and 0 <= wi < hm_w):
+                continue
+            corners = (PROTO8 * b[3:6]) @ R.from_euler(euler_seq, b[6:9]).as_matrix().T + b[:3]
+            if (corners[:, 2] <= 1e-6).any():
+                continue
+            uv, _ = project_points(corners, K, D, use_distortion)
+            off = (uv - uv_c[0][None, :]) / KP_SCALE          # 相对中心的偏移，单位 = 输入像素 / KP_SCALE
+            # neighbor>0 时把同一份监督写进 (2n+1)^2 邻域：偏移是相对【目标中心】而不是相对格子，
+            # 解码时加的也是解出来的中心，所以邻域里的值与中心格完全一样，等于把监督信号放大 9 倍。
+            for dh in range(-int(neighbor), int(neighbor) + 1):
+                for dw in range(-int(neighbor), int(neighbor) + 1):
+                    hh, ww = hi + dh, wi + dw
+                    if 0 <= hh < hm_h and 0 <= ww < hm_w:
+                        m[:, hh, ww] = off.reshape(-1).astype(np.float32)
+        out.append(m)
+    return np.array(out)
+
+
 def encoder_geometry_kwargs(dataset_cfg, fn, fn_name):
     """编码器 / 解码器共用的几何参数，只从 DATA_CONFIG 读一处，保证两边一致。
 
@@ -74,6 +120,43 @@ def encoder_geometry_kwargs(dataset_cfg, fn, fn_name):
         elif v != default:
             raise ValueError('编码器/解码器 %s 不支持 %s=%s' % (fn_name, k, v))
     return kwargs
+
+
+def denormalize_regression(dataset_cfg, post_cfg, center_dis, dim):
+    """网络输出的 center_dis / dim 监督量 -> (虚拟深度 Zv, 尺寸 lwh)。CenterDet 解码与自检脚本共用这一份。
+
+    center_dis, dim: torch 张量 (K, 1, H, W) / (K, 3, H, W)
+    TARGET_NORM   maxdis（缺省）/ standard，与 convert_box9d_to_centermap 严格互逆
+    DEPTH_TARGET  value（缺省）= center_dis 就是 Zv；
+                  log_ratio = center_dis 是 log(Zv / L)，L = ||lwh||（「离几个机身长度远」），这里乘回 L
+    POST_PROCESSING.SIZE_SOURCE（2026-09-17）
+                  pred（缺省）= L 与输出尺寸用网络自己预测的 dim
+                  known       = 用 POST_PROCESSING.KNOWN_SIZE [l, w, h]（已知机型给精确值，只知大概给近似值）
+    """
+    import torch
+    if str(dataset_cfg.get('TARGET_NORM', 'maxdis')) == 'standard':
+        smu = torch.as_tensor(np.asarray(dataset_cfg.SIZE_MEAN, np.float32).reshape(1, 3, 1, 1), device=dim.device)
+        ssd = torch.as_tensor(np.asarray(dataset_cfg.SIZE_STD, np.float32).reshape(1, 3, 1, 1),
+                              device=dim.device).clamp(min=1e-6)
+        dis = center_dis * float(dataset_cfg.DEPTH_STD) + float(dataset_cfg.DEPTH_MEAN)
+        dim = dim * ssd + smu
+    else:
+        dis = center_dis * float(dataset_cfg.MAX_DIS)
+        dim = dim * float(dataset_cfg.MAX_SIZE)
+    size_source = str((post_cfg or {}).get('SIZE_SOURCE', 'pred'))
+    if size_source == 'known':
+        ks = torch.as_tensor(np.asarray(post_cfg.KNOWN_SIZE, np.float32).reshape(1, 3, 1, 1), device=dim.device)
+        assert float(ks.min()) > 0, 'SIZE_SOURCE=known 需要 POST_PROCESSING.KNOWN_SIZE（米，l w h 都 > 0）'
+        dim = ks.expand_as(dim).clone()
+    elif size_source != 'pred':
+        raise ValueError('SIZE_SOURCE 只能是 pred / known，收到 %r' % size_source)
+    depth_target = str(dataset_cfg.get('DEPTH_TARGET', 'value'))
+    if depth_target == 'log_ratio':
+        L = torch.linalg.norm(dim, dim=1, keepdim=True).clamp(min=1e-3)
+        dis = torch.exp(dis.clamp(-10.0, 10.0)) * L
+    elif depth_target != 'value':
+        raise ValueError('DEPTH_TARGET 只能是 value / log_ratio，收到 %r' % depth_target)
+    return dis, dim
 
 
 class DataPreProcessor():
@@ -257,6 +340,21 @@ class DataPreProcessor():
         # 不能再拿 `center_dis > 0` 当前景指示
         data_dict['fg_mask'] = (np.abs(gt_center_dis) > 0).astype(np.float32)
 
+        # DEPTH_TARGET（2026-09-17）：log_ratio = 学 log(Zv / L)，L = ||lwh||，即「离几个机身长度远」。
+        # 为什么：零样本深度 x2 的根源是尺寸判断（真实图上认不出机型，猜大 1.5~2 倍），而 Zv/L = f_ref / 表观大小
+        # 只由目标在图上的大小决定，和 2D 一样能迁移。尺寸交给 dim 头，推理时 深度 = 倍数 x 尺寸，
+        # 尺寸可以用网络预测的，也可以用已知/近似尺寸（POST_PROCESSING.SIZE_SOURCE），见 denormalize_regression。
+        depth_target = str(self.dataset_cfg.get('DEPTH_TARGET', 'value'))
+        if depth_target == 'log_ratio':
+            assert str(self.dataset_cfg.get('TARGET_NORM', 'maxdis')) == 'standard', 'DEPTH_TARGET=log_ratio 需要 TARGET_NORM=standard'
+            fg = data_dict['fg_mask'] > 0
+            L = np.linalg.norm(gt_dim, axis=1, keepdims=True)
+            t = np.zeros_like(gt_center_dis)
+            t[fg] = np.log(gt_center_dis[fg] / np.maximum(L[fg], 1e-6))
+            gt_center_dis = t
+        elif depth_target != 'value':
+            raise ValueError('DEPTH_TARGET 只能是 value / log_ratio，收到 %r' % depth_target)
+
         # TARGET_NORM（2026-09-16）：
         #   'maxdis'  （缺省，逐位等同历史）真值 = 量 / MAX_DIS、量 / MAX_SIZE，两个手填常数
         #   'standard' 真值 = (量 − mu) / sigma，mu/sigma 由 tools/calc_target_stats.py 从训练集自身算
@@ -287,6 +385,14 @@ class DataPreProcessor():
                 gt_box9d, intrinsic, distortion, new_im_size[0], new_im_size[1], stride, im_num,
                 euler_seq=self.dataset_cfg.get('EULER_SEQ', 'xyz'),
                 use_distortion=enc_kwargs.get('use_distortion', True))
+
+        # ---- kp2d：8 个角点相对中心的图像偏移（16 通道），配 POSE_FROM_KP2D 用 PnP 解位姿 ----
+        if self.dataset_cfg.get('MAKE_KP2D', False):
+            data_dict['kp2d'] = make_kp2d_map(
+                gt_box9d, intrinsic, distortion, new_im_size[0], new_im_size[1], stride, im_num,
+                euler_seq=self.dataset_cfg.get('EULER_SEQ', 'xyz'),
+                use_distortion=enc_kwargs.get('use_distortion', True),
+                neighbor=int(self.dataset_cfg.get('KP_NEIGHBOR', 0)))
 
         return data_dict
 

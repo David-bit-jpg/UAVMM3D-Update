@@ -119,6 +119,10 @@ class CenterHead(nn.Module):
                 l = F.binary_cross_entropy(torch.sigmoid(p.reshape(-1)), g.reshape(-1),
                                            reduction='none')
                 term = l.sum() / ((g > 0).sum() + 1)
+            elif cur_name == 'kp2d':
+                # kp2d 可以写在中心格的邻域里（DATA_CONFIG.KP_NEIGHBOR），所以用它自己的非零掩码，
+                # 不跟着只写中心格的 center_dis/dim/rot 用同一个前景掩码。
+                m = torch.abs(g).sum(dim=-3, keepdim=True).expand_as(g) > 0
             else:
                 m = (torch.abs(g) > 0) if fg is None else fg.expand_as(g)
                 m = m.reshape(-1)

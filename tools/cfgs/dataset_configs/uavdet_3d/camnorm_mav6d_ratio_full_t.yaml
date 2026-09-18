@@ -1,0 +1,10 @@
+# 评测 A 臂：MAV6D + A 臂训练域常数。
+_BASE_CONFIG_: cfgs/dataset_configs/uavdet_3d/camnorm_mav6d.yaml
+TARGET_NORM: 'standard'
+DEPTH_TARGET: 'log_ratio'
+# 自洽标准化（tools/calc_target_stats.py 实测，只来自训练集本身）
+# 自洽标准化（tools/calc_target_stats.py 实测，只来自训练集本身）
+DEPTH_MEAN: 1.9252
+DEPTH_STD: 0.4795
+SIZE_MEAN: [0.6609, 0.6330, 0.2555]
+SIZE_STD: [0.5517, 0.5008, 0.1951]

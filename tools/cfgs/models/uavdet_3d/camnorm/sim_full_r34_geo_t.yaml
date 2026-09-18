@@ -1,0 +1,4 @@
+# B 臂：ImageNet ResNet-34 + size2d 头（显式监督 2D 表观大小）+ 几何解深度 + 裁窗对齐。
+_BASE_CONFIG_: cfgs/models/uavdet_3d/camnorm/sim_pp_g1.yaml
+DATA_CONFIG:
+    _BASE_CONFIG_: cfgs/dataset_configs/uavdet_3d/camnorm_sim_full_geo_t.yaml

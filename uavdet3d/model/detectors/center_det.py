@@ -3,6 +3,7 @@ import torch
 import numpy as np
 from uavdet3d.model.detectors.detector_template import DetectorTemplate
 from uavdet3d.utils.object_encoder import all_object_encoders
+from uavdet3d.datasets.pre_processor.pre_processor import denormalize_regression
 import torch.nn.functional as F
 
 
@@ -13,6 +14,28 @@ class CenterDet(DetectorTemplate):
         self.model_cfg = model_cfg
         self.dataset = dataset
         self.center_decoder = all_object_encoders[self.model_cfg.POST_PROCESSING.DECONDER]
+
+        # ---- 锚点蒸馏（2026-09-18）：把「深度所依赖的那个函数」钉在早期权重上 ----
+        # 为什么：跨域深度在第 4~5 轮最好、之后退化（0.50 -> 0.77 m），而朝向要靠长训练（折算 61 -> 41）。
+        # 冻结骨干只训旋转头无效（15 轮角度纹丝不动），说明朝向的提升来自骨干特征本身。
+        # 所以让骨干继续学，但约束 size2d 头在同一张图上的输出必须贴住早期教师 —— 钉的是函数行为，不是权重。
+        self.anchor_cfg = self.model_cfg.get('ANCHOR_DISTILL', None)
+        self.anchor_heads = [str(x) for x in (self.anchor_cfg.get('HEADS', ['size2d']) if self.anchor_cfg else [])]
+        self._teacher = []          # 放进 list，避免被注册成子模块（否则会跟着存进 checkpoint）
+        self._anchor_pred = None
+        if self.anchor_cfg and str(self.anchor_cfg.get('CKPT', '')):
+            import copy as _copy
+            from uavdet3d.model import build_network
+            tcfg = _copy.deepcopy(self.model_cfg)
+            tcfg.pop('ANCHOR_DISTILL', None)
+            t = build_network(tcfg, dataset)
+            n_ld, n_tot = t.load_params_from_file(str(self.anchor_cfg.CKPT), to_cpu=False)
+            assert n_ld == n_tot, ('锚点教师权重没全载入', n_ld, n_tot)
+            for prm in t.parameters():
+                prm.requires_grad_(False)
+            self._teacher.append(t.cuda().eval())
+            print('锚点蒸馏: 教师 %s，头 %s，权重 %.2f' % (self.anchor_cfg.CKPT, self.anchor_heads,
+                                                     float(self.anchor_cfg.get('WEIGHT', 4.0))), flush=True)
 
         self.max_num = self.model_cfg.POST_PROCESSING.MAX_OBJ
         self.score_thresh = self.model_cfg.POST_PROCESSING.SCORE_THRESH
@@ -25,6 +48,14 @@ class CenterDet(DetectorTemplate):
                                                   self.model_cfg.POST_PROCESSING.DECONDER)
 
     def forward(self, batch_dict):
+
+        if self.training and self._teacher:
+            with torch.no_grad():
+                tb = {k: v for k, v in batch_dict.items()}
+                for cur_module in self._teacher[0].module_list:
+                    tb = cur_module(tb)
+                self._anchor_pred = {k: tb['pred_center_dict'][k].detach() for k in self.anchor_heads
+                                     if k in tb['pred_center_dict']}
 
         for cur_module in self.module_list:
             batch_dict = cur_module(batch_dict)
@@ -43,6 +74,22 @@ class CenterDet(DetectorTemplate):
     def get_training_loss(self):
 
         loss = self.dense_head_2d.get_loss()
+
+        if self._teacher and self._anchor_pred:
+            w = float(self.anchor_cfg.get('WEIGHT', 4.0))
+            pred = self.dense_head_2d.forward_loss_dict['pred_center_dict']
+            fg = self.dense_head_2d.forward_loss_dict.get('fg_mask', None)
+            for k, tv in self._anchor_pred.items():
+                p = pred[k]
+                if fg is not None:
+                    m = (fg.expand(-1, -1, p.shape[-3], -1, -1).reshape(-1) > 0)
+                    if m.sum() == 0:
+                        continue
+                    term = torch.abs(p.reshape(-1)[m] - tv.reshape(-1)[m]).mean()
+                else:
+                    term = torch.abs(p - tv).mean()
+                self.dense_head_2d.loss_terms['anchor_' + k] = float(term.detach())
+                loss = loss + w * term
 
         return loss
 
@@ -65,12 +112,17 @@ class CenterDet(DetectorTemplate):
         # 不用自由回归的 center_dis（见 object_encoder_mav6d.center_point_decoder 里的说明）
         size2d = batch_dict['pred_center_dict'].get('size2d', None) \
             if self.model_cfg.POST_PROCESSING.get('DEPTH_FROM_SIZE2D', False) else None
+        # 关键点 + PnP：位姿完全由 8 个角点解出（2026-09-18）。能跨域迁移的是定位类的 2D 量，
+        # 尺度类的量（size2d 头：域内 0.99、真实域宽 0.85 高 0.53）不迁移，所以把位姿交给几何求解。
+        kp2d = batch_dict['pred_center_dict'].get('kp2d', None) \
+            if self.model_cfg.POST_PROCESSING.get('POSE_FROM_KP2D', False) else None
 
         def reshape_t(tensor, batch_size):
             BK, C, W, H = tensor.shape
             return tensor.reshape(batch_size, -1, C, W, H)
 
         size2d = reshape_t(size2d, batch_size) if size2d is not None else None
+        kp2d = reshape_t(kp2d, batch_size) if kp2d is not None else None
         hm = reshape_t(hm, batch_size)
         center_res = reshape_t(center_res, batch_size)
         center_dis = reshape_t(center_dis, batch_size)
@@ -94,25 +146,21 @@ class CenterDet(DetectorTemplate):
             # this_center_dis = torch.exp(center_dis[batch_id])*self.dataset.dataset_cfg.MAX_DIS
             # this_dim = torch.exp(dim[batch_id]) #*self.dataset.dataset_cfg.MAX_SIZE
 
-            # 与 pre_processor 的 TARGET_NORM 严格互逆（只从 DATA_CONFIG 读一处，避免两边写岔）
-            dcfg = self.dataset.dataset_cfg
-            if str(dcfg.get('TARGET_NORM', 'maxdis')) == 'standard':
-                import numpy as _np
-                _smu = torch.as_tensor(_np.asarray(dcfg.SIZE_MEAN, _np.float32).reshape(3, 1, 1),
-                                       device=dim.device)
-                _ssd = torch.as_tensor(_np.asarray(dcfg.SIZE_STD, _np.float32).reshape(3, 1, 1),
-                                       device=dim.device).clamp(min=1e-6)
-                this_center_dis = center_dis[batch_id] * float(dcfg.DEPTH_STD) + float(dcfg.DEPTH_MEAN)
-                this_dim = dim[batch_id] * _ssd + _smu
-            else:
-                this_center_dis = center_dis[batch_id] * dcfg.MAX_DIS
-                this_dim = dim[batch_id] * dcfg.MAX_SIZE
+            # 与 pre_processor 的 TARGET_NORM / DEPTH_TARGET 严格互逆（共用 denormalize_regression，只从 DATA_CONFIG 读）
+            this_center_dis, this_dim = denormalize_regression(self.dataset.dataset_cfg, self.model_cfg.POST_PROCESSING,
+                                                               center_dis[batch_id], dim[batch_id])
             this_rot = rot[batch_id]
             this_size2d = size2d[batch_id] if size2d is not None else None
+            this_kp2d = kp2d[batch_id] if kp2d is not None else None
 
             dec_kwargs = dict(self.dec_kwargs)
             if this_size2d is not None:
                 dec_kwargs['size2d'] = this_size2d
+                dec_kwargs['size2d_mode'] = str(self.model_cfg.POST_PROCESSING.get('SIZE2D_MODE', 'both'))
+            if this_kp2d is not None:
+                from uavdet3d.datasets.pre_processor.pre_processor import KP_SCALE
+                dec_kwargs['kp2d'] = this_kp2d
+                dec_kwargs['kp_scale'] = KP_SCALE
 
             pred_boxes9d, confidence = self.center_decoder(this_hm,
                                                            this_center_res,

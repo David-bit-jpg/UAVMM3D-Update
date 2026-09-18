@@ -1,0 +1,6 @@
+# FBN 臂：最好配方 + 锁住骨干 BN 的 ImageNet running stats（不让仿真微调把统计量拉走）。
+# AdaBN 在旧模型上有效、在 Q2 上反而更差，说明 BN 统计量这条线还没被干净地验证过，这里正面测一次。
+_BASE_CONFIG_: cfgs/models/uavdet_3d/camnorm/sim_full_r34_geo_tr.yaml
+MODEL:
+    BACKBONE_2D:
+      FREEZE_BN: true

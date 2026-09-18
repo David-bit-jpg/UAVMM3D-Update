@@ -1,0 +1,4 @@
+# 评测 A 臂
+_BASE_CONFIG_: cfgs/models/uavdet_3d/camnorm/mav6d_r34_ratio_pp.yaml
+DATA_CONFIG:
+    _BASE_CONFIG_: cfgs/dataset_configs/uavdet_3d/camnorm_mav6d_ratio_full_t.yaml

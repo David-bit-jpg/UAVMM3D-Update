@@ -19,15 +19,17 @@ from easydict import EasyDict
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import diag_units as U   # noqa: E402
 from scipy.spatial.transform import Rotation as R   # noqa: E402
-from uavdet3d.config import cfg_from_yaml_file   # noqa: E402
+from uavdet3d.config import cfg_from_list, cfg_from_yaml_file   # noqa: E402
 from uavdet3d.datasets import build_dataloader   # noqa: E402
-from uavdet3d.datasets.pre_processor.pre_processor import encoder_geometry_kwargs   # noqa: E402
+from uavdet3d.datasets.pre_processor.pre_processor import encoder_geometry_kwargs, denormalize_regression   # noqa: E402
 from uavdet3d.utils import common_utils   # noqa: E402
 from uavdet3d.utils.object_encoder import all_object_encoders   # noqa: E402
 
 
-def run(cfg_file, tag, n=60):
+def run(cfg_file, tag, n=60, sets=None):
     cfg = EasyDict(); cfg_from_yaml_file(cfg_file, cfg)
+    if sets:
+        cfg_from_list(sets, cfg)
     dc = cfg.DATA_CONFIG
     mode = str(dc.get('TARGET_NORM', 'maxdis'))
     dc.SAMPLED_INTERVAL['test'] = 7
@@ -48,15 +50,8 @@ def run(cfg_file, tag, n=60):
         neg += int((cd[fg[:, :1].repeat(cd.shape[1], 1) if fg.shape[1] == 1 else fg] < 0).sum())
         tot += int(fg.sum())
         t = lambda a: torch.from_numpy(np.asarray(a)).float()
-        # 与 CenterDet.post_processing 完全一致的反归一化
-        if mode == 'standard':
-            cd_dec = t(cd) * float(dc.DEPTH_STD) + float(dc.DEPTH_MEAN)
-            smu = torch.as_tensor(np.asarray(dc.SIZE_MEAN, np.float32).reshape(3, 1, 1))
-            ssd = torch.as_tensor(np.asarray(dc.SIZE_STD, np.float32).reshape(3, 1, 1)).clamp(min=1e-6)
-            dm_dec = t(dm) * ssd + smu
-        else:
-            cd_dec = t(cd) * float(dc.MAX_DIS)
-            dm_dec = t(dm) * float(dc.MAX_SIZE)
+        # 与 CenterDet.post_processing 共用同一个函数（DEPTH_TARGET / SIZE_SOURCE 也在里面）
+        cd_dec, dm_dec = denormalize_regression(dc, cfg.MODEL.POST_PROCESSING, t(cd), t(dm))
         pred, conf = dec(t(d['hm']), t(d['center_res']), cd_dec, dm_dec, t(d['rot']),
                          np.asarray(d['intrinsic']), np.asarray(d['extrinsic']), np.asarray(d['distortion']),
                          d['new_im_size'][0], d['new_im_size'][1], d['raw_im_size'][0], d['raw_im_size'][1],
@@ -74,8 +69,8 @@ def run(cfg_file, tag, n=60):
         if len(dp) >= n:
             break
     ok = dp and max(dp) < 1e-4 and max(da) < 1e-3 and max(dsz) < 1e-4
-    print('  %-34s TARGET_NORM=%-8s n=%3d | 位置 %.2e m 角度 %.2e° 尺寸 %.2e m | %s' % (
-        tag, mode, len(dp), max(dp) if dp else -1, max(da) if da else -1, max(dsz) if dsz else -1,
+    print('  %-34s %-8s/%-9s n=%3d | 位置 %.2e m 角度 %.2e° 尺寸 %.2e m | %s' % (
+        tag, mode, dc.get('DEPTH_TARGET', 'value'), len(dp), max(dp) if dp else -1, max(da) if da else -1, max(dsz) if dsz else -1,
         'PASS' if ok else '**FAIL**'))
     if mode == 'standard':
         print('        标准化后真值为负的前景格子: %d / %d (%.1f%%) —— 旧的 `center_dis > 0` 掩码会把这些漏掉' % (
@@ -85,11 +80,15 @@ def run(cfg_file, tag, n=60):
 
 def main():
     allok = True
-    for cfg, tag in (('cfgs/models/uavdet_3d/camnorm/sim_pp_realsize.yaml', '仿真 pp_realsize（老路径）'),
-                     ('cfgs/models/uavdet_3d/camnorm/mav6d.yaml', 'MAV6D（老路径）'),
-                     ('cfgs/models/uavdet_3d/camnorm/sim_pp_std.yaml', '仿真 pp_std（标准化）'),
-                     ('cfgs/models/uavdet_3d/camnorm/mav6d_std_pp.yaml', 'MAV6D + 训练域常数（评测口径）')):
-        allok &= run(cfg, tag)
+    K = ['MODEL.POST_PROCESSING.SIZE_SOURCE', 'known']
+    for cfg, tag, sets in (('cfgs/models/uavdet_3d/camnorm/sim_pp_realsize.yaml', '仿真 pp_realsize（老路径）', None),
+                           ('cfgs/models/uavdet_3d/camnorm/mav6d.yaml', 'MAV6D（老路径）', None),
+                           ('cfgs/models/uavdet_3d/camnorm/sim_pp_std.yaml', '仿真 pp_std（标准化）', None),
+                           ('cfgs/models/uavdet_3d/camnorm/mav6d_std_pp.yaml', 'MAV6D + 训练域常数（评测口径）', None),
+                           ('cfgs/models/uavdet_3d/camnorm/sim_pp_ratio.yaml', '仿真 pp_ratio（机身倍数）', None),
+                           ('cfgs/models/uavdet_3d/camnorm/mav6d_ratio_pp.yaml', 'MAV6D 机身倍数 + 预测尺寸', None),
+                           ('cfgs/models/uavdet_3d/camnorm/mav6d_ratio_pp.yaml', 'MAV6D 机身倍数 + 已知尺寸', K)):
+        allok &= run(cfg, tag, sets=sets)
     print('\n==== %s ====' % ('全部通过' if allok else '有 FAIL，不许开训'))
 
 

@@ -1,0 +1,6 @@
+# KA 臂：K30（kp2d 权重 12）+ 热力图权重 1.0 -> 2.0。K30 域内检出只有 0.52（D 系列 0.70），
+# 16 通道的强监督把梯度抢走了，先把检测补回来。
+_BASE_CONFIG_: cfgs/models/uavdet_3d/camnorm/sim_full_r34_kp_w12.yaml
+MODEL:
+    DENSE_HEAD_2D:
+      LOSS_WEIGHTS: {hm: 2.0, center_res: 2.0, center_dis: 8.0, dim: 2.0, rot: 4.0, kp2d: 12.0}

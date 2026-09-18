@@ -1,0 +1,9 @@
+# C 臂数据：A 臂（裁窗按机身倍数对齐 + 机身倍数深度）再加【目标级随机化】。
+# 为什么：实测模型对目标外圈结构极度敏感 —— 仿真图上抹掉框内 0.64~1.0 环带，深度被推远 24%
+# （抹背景 1.0~1.5 完全无影响），而真实域的偏移正好是这个量级。真实相机下旋转桨叶几乎不可见、
+# 细机臂又暗，「框内被填满的程度」本来就随机型/曝光/运动而变，模型必须自己 cover 这一档变化。
+# 两项都只改像素、不动几何与标签：外圈随机衰减 + 目标区域随机运动模糊。
+_BASE_CONFIG_: cfgs/dataset_configs/uavdet_3d/camnorm_sim_full_ratio_t.yaml
+AUG: {hflip: 0.5, scale: [1.0, 1.0], photometric: true, noise: 0.01, blur: 2.5, blur_prob: 0.5,
+      target_ring: 0.5, target_ring_core: [0.55, 1.0], target_ring_alpha: [0.4, 1.0],
+      target_blur: 0.3, target_blur_len: 7}

@@ -1,0 +1,22 @@
+# K30 臂：同 sim_full_r34_kp，但 kp2d 损失权重 4 -> 12。16 轮实测仿真域内角点误差 9.3 px、隐含尺度 0.82（size2d 是 0.99），
+# 即这个头欠拟合：16 个通道比 2 个难学得多，先加权重和轮数，域内收敛了再看真实域。
+_BASE_CONFIG_: cfgs/models/uavdet_3d/camnorm/sim_pp_r34_ratio.yaml
+DATA_CONFIG:
+    _BASE_CONFIG_: cfgs/dataset_configs/uavdet_3d/camnorm_sim_full_kp_t.yaml
+MODEL:
+    DENSE_HEAD_2D:
+      HEAD_BIAS: true
+      LOSS_WEIGHTS: {hm: 1.0, center_res: 2.0, center_dis: 8.0, dim: 2.0, rot: 4.0, kp2d: 12.0}
+      SEPARATE_HEAD_CFG:
+          HEAD_ORDER: ["hm", "center_res", "center_dis", "dim", "rot", "kp2d"]
+          HEAD_DICT: {
+              "hm": {"out_channels": 1, "conv_dim": 128},
+              "center_res": {"out_channels": 2, "conv_dim": 128},
+              "center_dis": {"out_channels": 1, "conv_dim": 128},
+              "dim": {"out_channels": 3, "conv_dim": 128},
+              "rot": {"out_channels": 6, "conv_dim": 128},
+              "kp2d": {"out_channels": 16, "conv_dim": 128},
+          }
+    POST_PROCESSING:
+      MAX_OBJ: 5
+      POSE_FROM_KP2D: true

@@ -1,0 +1,11 @@
+# B 臂数据：裁窗按机身倍数对齐 + 产出 size2d 监督图（显式监督「目标在图上多大」，深度由几何解出）。
+# center_dis 仍按标准化的虚拟深度训练，作为几何解不出来时的兜底。
+_BASE_CONFIG_: cfgs/dataset_configs/uavdet_3d/camnorm_sim_full_t.yaml
+TARGET_NORM: 'standard'
+MAKE_SIZE2D: true
+# 自洽标准化（tools/calc_target_stats.py 实测，只来自训练集本身）
+# 自洽标准化（tools/calc_target_stats.py 实测，只来自训练集本身）
+DEPTH_MEAN: 5.9527
+DEPTH_STD: 3.7845
+SIZE_MEAN: [0.6609, 0.6330, 0.2555]
+SIZE_STD: [0.5517, 0.5008, 0.1951]
