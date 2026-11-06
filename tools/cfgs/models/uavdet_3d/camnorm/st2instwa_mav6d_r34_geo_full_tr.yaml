@@ -1,0 +1,4 @@
+# 11-05 实例原型修正伪标签 + 弱化自训练数据增强（关光度+噪声，只留翻转），导师建议。
+_BASE_CONFIG_: cfgs/models/uavdet_3d/camnorm/st2pluswa_mav6d_r34_geo_full_tr.yaml
+DATA_CONFIG:
+    INDEX_FILE: 'index_pseudo_st2inst.pkl'

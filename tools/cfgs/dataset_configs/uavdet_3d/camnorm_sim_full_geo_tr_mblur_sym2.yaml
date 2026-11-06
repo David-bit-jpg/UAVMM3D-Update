@@ -1,0 +1,4 @@
+# SYM8 + MBLUR 数据（2026-09-19）：长核运动模糊 + 旋转目标前后 2 重对称（不带明暗反转 —— INV 单独就让 phantom4 检出掉 8 个点，
+# ALL 叠加检出崩溃多半来自它）。
+_BASE_CONFIG_: cfgs/dataset_configs/uavdet_3d/camnorm_sim_full_geo_tr_mblur.yaml
+ROT_SYMMETRY: 2

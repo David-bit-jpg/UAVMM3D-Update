@@ -31,3 +31,7 @@ tools/ap3d_evaluation_results/
 tools/dof6_evaluation_results/
 __pycache__/
 *.pyc
+
+# release/
+runs/
+release/.paths_state.json

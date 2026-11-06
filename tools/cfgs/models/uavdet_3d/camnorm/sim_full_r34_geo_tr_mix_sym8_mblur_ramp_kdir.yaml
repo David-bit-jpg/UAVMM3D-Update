@@ -1,0 +1,9 @@
+# 蒸馏学生 KDir（2026-09-25）：RGB 学生 ← IR 教师 T_IR。蒸馏项同 KDmm2（特征余弦 / 中心余弦 / 热图软标签 / 前景回归，CrossKD 关）。
+# 数据吐 rgb+ir 4 通道：学生切前 3，教师骨干自己取 IR 通道。
+_BASE_CONFIG_: cfgs/models/uavdet_3d/camnorm/sim_full_r34_geo_tr_mix_sym8_mblur_ramp_kdmm2.yaml
+DATA_CONFIG:
+    _BASE_CONFIG_: cfgs/dataset_configs/uavdet_3d/camnorm_sim_full_geo_tr_mblur_sym2_ir.yaml
+MODEL:
+    DISTILL:
+        TEACHER_CFG: cfgs/models/uavdet_3d/camnorm/sim_full_r34_geo_tr_mix_sym8_mblur_ramp_irT.yaml
+        TEACHER_CHANNELS: 4

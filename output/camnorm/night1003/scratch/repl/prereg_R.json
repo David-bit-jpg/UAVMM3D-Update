@@ -1,0 +1,270 @@
+{
+ "experiment": "R -- replication of the stage-1 AdaBN + SA-TM heading gain on the MAV6D VAL split",
+ "written_at": "2026-10-03 20:52:43",
+ "statement": "Written before any val ground truth was read in this experiment: no val member dump, no sealed val ground truth and no val evaluation exist at this time (asserted). The val split was inspected only through seq / frame / cls of index.pkl (overlap_check.py).",
+ "spec": {
+  "version": "R-1 (2026-10-03)",
+  "question": "Does AdaBN KZ (BN statistics re-estimated on real MAV6D TRAIN crops; the exact stage-1 checkpoints) + SA-TM beat the original KZ + SA-TM on the MAV6D VAL split?",
+  "split": "val",
+  "expected_frames": 2336,
+  "expected_sequences": 16,
+  "sampled_interval": 1,
+  "positions": "pure-sim release_20260920 ramp_s0..s4 5-ensemble + flip TTA + causal100 temporal background + label-free self-calibrated lwh (val images, conf >= 0.7, interval 2) + KZ zoom 95 crops; one GPU dump (dump_members_repl.py --split val --pos sim --members kz); the AdaBN members are forwarded on the SAME recorded crops (replay_members_repl.py), so positions / detections / crops are identical by construction (asserted)",
+  "arms": {
+   "KZ": "release_20260923/kz_s0..s4.pth, SA-TM of the 5 members at the recorded deployed read cell (kz_fuse_offline.fuse_subset SATM, deployed decoder, fallback = dumped rotation)",
+   "BN": "kzst1/adabn/kz_s{0..4}_adabn.pth (sha256 = stage-1 json), read cell = argmax of the 5-member mean hm in the recorded 5x5 window, same SA-TM code"
+  },
+  "frames": "all val frames; metric frames = greedy 1 m matched frames of dump_real_preds (identical in both arms); the top detection carries the arm rotation when it is the hook cell, else the frame is unchanged (stage-1 rule)",
+  "heading": "fold-180 heading error min(a, 180 - a), a = |atan2(E[1,0], E[0,0])|, E = R_gt^T R_pred (annot_audit/summarize_dumps.stats); statistic = median over matched frames",
+  "primary": {
+   "delta_max_deg": -1.0,
+   "delta": "median heading(BN) - median heading(KZ) over all matched val frames",
+   "ci_upper_lt": 0.0,
+   "ci": "sequence-cluster bootstrap (kz_fuse_offline.boot_draws / cluster_boot: resample the val sequences with replacement, statistic = delta on the pooled frames), B = 10000, seed 20261003; upper bound = 97.5th percentile",
+   "seq_better_frac_min": 0.6,
+   "seq_rule": "per val sequence with >= 1 matched frame: median(BN) - median(KZ) < 0 counts as improved (ties = not improved); fraction = improved / sequences with >= 1 matched frame"
+  },
+  "guardrails": {
+   "tilt_delta_max_deg": 0.3,
+   "tilt": "median tilt (angle between body z axes, summarize_dumps.stats) over matched frames, BN - KZ <= +0.3 deg",
+   "ads_indoor_delta_min": 0.0,
+   "ads": "repository LAA3D_ADS, profile indoor (tools/eval_camnorm.ads_eval, as KZ_SUMMARY), value parsed from the report (2 decimals); BN - KZ >= 0.00 (\"not worse\")"
+  },
+  "B": 10000,
+  "seed": 20261003,
+  "decision": {
+   "replicated": "all three primary criteria AND both guardrails pass",
+   "primary_only": "all primary criteria pass but a guardrail fails -> not replicated as a deployable gain",
+   "not_replicated": "any primary criterion fails"
+  },
+  "validity_checks_before_ground_truth": [
+   "byte copies of kz_fuse_offline / kzst_common / dump_kz_members / adabn_kz unchanged (sha256)",
+   "KZ dump: split val, interval 1, pos_set sim, members = release KZ, finished, 2336 frames = all val frames",
+   "BN file: arm adabn, replay check passed, crops copied from the KZ npz (sha256), checkpoints sha256 == stage-1 AdaBN json",
+   "positions / crops / geometry fields identical between the two member files; same top detection per frame",
+   "deployed decoder replicated on the KZ dump: top conf == hook peak on >= 99 % of detected frames (others stay unchanged in both arms), PnP(recorded vector) == dumped rotation and offline C0 == dumped rotation on >= 99.9 % of hook frames"
+  ],
+  "report_only": [
+   "per class (phantom4 / mavic2) heading, <10 / <20 deg, tilt, 10deg10cm, ADD(0.5d)",
+   "C0 (plain mean) arms",
+   "ADS laa",
+   "one-sided bootstrap p",
+   "per-sequence deltas",
+   "unfolded flip rate (> 90 deg)",
+   "E5 strata of the KZ arm",
+   "comparison with the stage-1 TEST effect (-3.54 deg)"
+  ]
+ },
+ "seq_better_needed": "10 of 16 val sequences (if all 16 have >= 1 matched frame; otherwise ceil(0.60 x n))",
+ "code_sha256": {
+  "eval_R.py": "64cd50cd1ec0fe11f3b92d6abe13be4001662c513b1f19761de163bde082c7b7",
+  "repl_common.py": "8d0032c0c42407742a13fad4410973ffed54975dbad52d682108860c8fe27421",
+  "kz_fuse_offline.py": "9ae9e963eec9dfb14c8c1b6d027ff65ab9891c90e5228960aab8db4f48d80f2f",
+  "kzst_common.py": "76353febd5b9990a9c6f66d8435aee88ae8be37f69a081fe39a8fdaae98aa512",
+  "adabn_kz.py": "066984cf07a8536f0c93fa80a5e8f4b703dc2a5502a2383d93aa701b1acdfed9",
+  "dump_kz_members.py": "c25c6e33f67287d3af37e6a427891a8ab8a33cbaaacdac204d8252fa58ca236d",
+  "dump_members_repl.py": "80cc347158f10fca74fd4ded5d0e7b3a8dcc6102bc2e55f67de7f67e7f10b416",
+  "replay_members_repl.py": "54dcc4b3c601d94733286e55b4fd144af7933a21a459780ca317b865612e4b68",
+  "overlap_check.py": "851f29ee55e08c7d69594065a63332e958bb2a85254852931b1779272fbe81d9"
+ },
+ "checkpoints_sha256": {
+  "adabn_stage1": {
+   "kz_s0_adabn.pth": "5d8ace5e2e499010045a6ad12a41129bbce1c67e7f9892997ccb7286c9363aac",
+   "kz_s1_adabn.pth": "f75417f716b7877d1398c5d3eb916e17ee0200382693d32659d4fbe49b493e2d",
+   "kz_s2_adabn.pth": "17aacce86f665d33e0f8787f886ce9309fd5f64f2627eba156f43fbfd300582d",
+   "kz_s3_adabn.pth": "db892dd465fded68014e9aa07196248400eb9f59ed1b711b264e9076edaa81e9",
+   "kz_s4_adabn.pth": "b16dc2a360548bc554a788ddac28a81c8fd26f53ba5177e27a6bab51d696fe3a"
+  },
+  "release_kz": {
+   "kz_s0.pth": "989737e71af2d43d77fea9f9fdf6fdb080e609113153c5c67125f6b789198fb4",
+   "kz_s1.pth": "d4f1fab60aab23e715858d02291d7b953a65fb31c1435ef1aafa90689e9320f0",
+   "kz_s2.pth": "8dd0e128bf778eb956a4c14d99593c8e1b7bf0afa152ecc8940c9e6346eeab2b",
+   "kz_s3.pth": "616883e2792527d6e067e9a3b23dfaa290456a6aa03ad0d322d39ff7b35e9af4",
+   "kz_s4.pth": "78d1707200fff238f30df1468443d367539cdee795b6081d80690c2fec006556"
+  },
+  "positions_ramp20": {
+   "ramp_s0.pth": "9e055e3d34fd859ad7dd859fdad23e91479c26255ed17dc76f10173f4b666161",
+   "ramp_s1.pth": "f80741656649c033b69413c3669543d182994e53384f3724807bd116f61484d1",
+   "ramp_s2.pth": "34f9f1aefe7ef004b142d3ec0705b93b37715b3c65dcb65b5350710cb9918578",
+   "ramp_s3.pth": "8912a9222011b72088f4c6ccad9cbf0bcf09996dd806ffe5ae70dc990e3406f2",
+   "ramp_s4.pth": "9411664ea0ffa7484da189468d240bd3e072223e4aa1025c2b8f70cc2ea35b37"
+  }
+ },
+ "adabn_recipe": {
+  "stage1_json": "C:\\Users\\jiang\\AppData\\Local\\Temp\\claude\\D--\\b5f0a477-30aa-4e77-bec5-d0ab9694d91d\\scratchpad\\kzst1\\adabn\\kz_members_adabn_test.json",
+  "reestimation": {
+   "n_crops": 4040,
+   "n_batches": 253,
+   "batch": 16,
+   "order_seed": 0,
+   "frames_json": "adabn_frames_train5.json",
+   "train_npz_sha256": "a033070e94634a6e7f0d5d86b32b48458249a0ad68bec32df71860bfe0894224"
+  },
+  "frames_json_sha256": "a9a2af3b6858712c69db5f115550678a83065593d66ecb27fea9752117ebd281",
+  "stage1_prereg_sha256": "e7e390c9541becdcd003bd8d9a8506297d1b5be5ee79cfefd2431d8a6a43583d"
+ },
+ "split_facts_labelfree": {
+  "overlap_json": "C:\\Users\\jiang\\AppData\\Local\\Temp\\claude\\D--\\b5f0a477-30aa-4e77-bec5-d0ab9694d91d\\scratchpad\\repl\\overlap_R.json",
+  "overlap_json_sha256": "84d4328efcc1348a597ba50a3943908afea109ce60310c5e6cfd0e6345e6ea30",
+  "per_split": {
+   "train": {
+    "frames": 12866,
+    "sequences": 61,
+    "scenes": [
+     "mavic2/01",
+     "mavic2/02",
+     "mavic2/03",
+     "phantom4/01",
+     "phantom4/02"
+    ],
+    "per_class": {
+     "phantom4": {
+      "frames": 5414,
+      "sequences": 31,
+      "scenes": [
+       "phantom4/01",
+       "phantom4/02"
+      ]
+     },
+     "mavic2": {
+      "frames": 7452,
+      "sequences": 30,
+      "scenes": [
+       "mavic2/01",
+       "mavic2/02",
+       "mavic2/03"
+      ]
+     }
+    }
+   },
+   "val": {
+    "frames": 2336,
+    "sequences": 16,
+    "scenes": [
+     "mavic2/02",
+     "mavic2/03",
+     "phantom4/01",
+     "phantom4/02"
+    ],
+    "per_class": {
+     "phantom4": {
+      "frames": 1077,
+      "sequences": 9,
+      "scenes": [
+       "phantom4/01",
+       "phantom4/02"
+      ]
+     },
+     "mavic2": {
+      "frames": 1259,
+      "sequences": 7,
+      "scenes": [
+       "mavic2/02",
+       "mavic2/03"
+      ]
+     }
+    }
+   },
+   "test": {
+    "frames": 4800,
+    "sequences": 10,
+    "scenes": [
+     "mavic2/01",
+     "mavic2/02",
+     "phantom4/01",
+     "phantom4/02"
+    ],
+    "per_class": {
+     "phantom4": {
+      "frames": 3510,
+      "sequences": 7,
+      "scenes": [
+       "phantom4/01",
+       "phantom4/02"
+      ]
+     },
+     "mavic2": {
+      "frames": 1290,
+      "sequences": 3,
+      "scenes": [
+       "mavic2/01",
+       "mavic2/02"
+      ]
+     }
+    }
+   }
+  },
+  "overlap": {
+   "seq_train_val": [],
+   "seq_train_test": [],
+   "seq_val_test": [],
+   "frame_train_val": 0,
+   "frame_train_test": 0,
+   "frame_val_test": 0,
+   "scene_train_val": [
+    "mavic2/02",
+    "mavic2/03",
+    "phantom4/01",
+    "phantom4/02"
+   ],
+   "scene_train_test": [
+    "mavic2/01",
+    "mavic2/02",
+    "phantom4/01",
+    "phantom4/02"
+   ],
+   "scene_val_test": [
+    "mavic2/02",
+    "phantom4/01",
+    "phantom4/02"
+   ],
+   "val_scenes_not_in_train": [],
+   "test_scenes_not_in_train": []
+  },
+  "adabn_frames_in_val": 0,
+  "adabn_seq_in_val": [],
+  "val_frames_per_sequence": {
+   "mavic2/02/0202": 16,
+   "mavic2/02/0204": 211,
+   "mavic2/02/0214": 65,
+   "mavic2/02/0221": 121,
+   "mavic2/02/0223": 100,
+   "mavic2/03/0301": 323,
+   "mavic2/03/0304": 423,
+   "phantom4/01/0110": 47,
+   "phantom4/01/0112": 180,
+   "phantom4/01/0120": 44,
+   "phantom4/01/0126": 55,
+   "phantom4/01/0130": 108,
+   "phantom4/01/0131": 75,
+   "phantom4/01/0132": 180,
+   "phantom4/01/0133": 120,
+   "phantom4/02/0206": 268
+  }
+ },
+ "stage1_test_reference": {
+  "results_json_sha256": "343b61df997cc76bb208431217a0f1427773f1c5455aec1dc85cb1ee3c4d7d5e",
+  "KZ_SATM": 12.596766405655806,
+  "BN_SATM": 9.058097097458393,
+  "delta": -3.538669308197413,
+  "single_level_ci95": [
+   -6.883224116152282,
+   -1.3436293176645697
+  ],
+  "ads_indoor": {
+   "A0": 50.88,
+   "A0p": 50.83,
+   "BN": 52.9
+  }
+ },
+ "planned_commands": [
+  "dump_members_repl.py --split val --pos sim --members kz --tag val_kz   (GPU)",
+  "replay_members_repl.py --src-tag val_kz --tag val_adabn                (GPU, after the first)",
+  "eval_R.py all                                                          (CPU, after both)"
+ ],
+ "caveats_known_before_data": [
+  "val sequences are held out from the official MAV6D train list by sequence; every val scene (mavic2/02, mavic2/03, phantom4/01, phantom4/02) also occurs in train and therefore among the AdaBN re-estimation frames (as do all test scenes)",
+  "the self-calibrated lwh of the val dump is estimated on val images themselves (label-free; identical for both arms)",
+  "16 sequences only: the sequence-cluster interval is wide; mavic2/02/0202 has 16 frames"
+ ]
+}

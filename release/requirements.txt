@@ -1,0 +1,20 @@
+# 与原机器 conda 环境 "city" 一致（Python 3.10）。torch 单独装，见 setup/install.sh
+numpy==1.26.4
+scipy==1.15.3
+opencv-python-headless==4.11.0.86
+easydict==1.13
+einops==0.8.2
+imageio==2.37.3
+iopath==0.1.10
+matplotlib==3.10.9
+numexpr==2.14.1
+pandas==2.3.3
+pillow==12.2.0
+PyYAML==6.0.3
+shapely==2.1.2
+tensorboardX==2.6.5
+termcolor==3.3.0
+timm==1.0.27
+tqdm==4.68.3
+transforms3d==0.4.2
+yacs==0.1.8

@@ -1,0 +1,25 @@
+# 蒸馏学生 KDmm（2026-09-23）：RGB 学生 ← 多模态教师 T6（sim_full_r34_geo_tr_mix_sym8_mblur_ramp_mmT）。
+# 数据吐 6 通道，学生在 CenterDetKD 里只取前 3（rgb）—— 与 RAMP 基线看到的像素逐位相同；教师冻结、永远 eval（MixStyle 关）。
+# 蒸馏项（第五版实验的教训：特征项必须尺度不变，逐元素 L2 会吞掉主任务）：
+#   W_FEAT        features_2d 逐像素 1-cos
+#   W_CENTER_COS  GT 中心像素特征 1-cos
+#   W_HM          热图软标签 BCE
+#   W_REG         前景像素上各回归头（center_res/center_dis/dim/rot/size2d）对教师输出的 L1
+#   W_CROSS       CrossKD：学生的头接教师特征，仍用 GT 监督
+# 存下来的 ckpt 是干净的 RGB CenterDet（教师不进 state_dict），评测用 mav6d_r34_geo_full_tr.yaml 原样加载。
+_BASE_CONFIG_: cfgs/models/uavdet_3d/camnorm/sim_full_r34_geo_tr_mix_sym8_mblur_ramp.yaml
+DATA_CONFIG:
+    _BASE_CONFIG_: cfgs/dataset_configs/uavdet_3d/camnorm_sim_full_geo_tr_mblur_sym2_mm.yaml
+MODEL:
+    NAME: CenterDetKD
+    DISTILL:
+        TEACHER_CFG: cfgs/models/uavdet_3d/camnorm/sim_full_r34_geo_tr_mix_sym8_mblur_ramp_mmT.yaml
+        TEACHER_CKPT: 'SET_AT_LAUNCH.pth'     # --set MODEL.DISTILL.TEACHER_CKPT <path>
+        STUDENT_CHANNELS: 3
+        TEACHER_CHANNELS: 6
+        FEAT_MODE: 'cos'
+        W_FEAT: 1.0
+        W_CENTER_COS: 1.0
+        W_HM: 1.0
+        W_REG: 1.0
+        W_CROSS: 0.5

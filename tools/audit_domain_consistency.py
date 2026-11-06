@@ -5,7 +5,7 @@
 网络实际看到的输入是 均值 [+0.25,+0.11,-0.13] 而不是 0 —— 这类问题配置 diff 能看出来，
 但「标签手性、机头轴、上轴朝向、内参主点、分辨率、锐度」这些只能从数据量。建新缓存后都该跑一次。
 
-    python tools/audit_domain_consistency.py --sim E:/mmcache/pp_realsize --real E:/mmcache/mav6d_cn
+    python tools/audit_domain_consistency.py --sim @@MMCACHE@@/pp_realsize --real @@MMCACHE@@/mav6d_cn
 """
 import argparse
 import os
@@ -93,8 +93,8 @@ def report(tag, root, split, nimg=120):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument('--sim', default='E:/mmcache/pp_realsize')
-    ap.add_argument('--real', default='E:/mmcache/mav6d_cn')
+    ap.add_argument('--sim', default='@@MMCACHE@@/pp_realsize')
+    ap.add_argument('--real', default='@@MMCACHE@@/mav6d_cn')
     ap.add_argument('--also', nargs='*', default=[])
     a = ap.parse_args()
     report('仿真（训练域）', a.sim, 'train')

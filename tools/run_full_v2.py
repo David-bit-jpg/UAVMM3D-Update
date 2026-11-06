@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """全量新仿真数据一条龙（2026-09-18）：选帧 -> 建缓存 -> 统计量 -> 自检 -> 训练 Q3 -> MAV6D 评测（预测尺寸 / 已知尺寸）。
 
-数据：D:/data_collect 四场景主批次 + 仰拍 + _near + _near2，<=8 m 整帧，按序列 8:2。
+数据：@@DATA_COLLECT@@ 四场景主批次 + 仰拍 + _near + _near2，<=8 m 整帧，按序列 8:2。
 每一步有产物就跳过，可断点续跑；自检不过直接停，不训练。脱离会话启动：
     PowerShell Start-Process python run_full_v2.py
 """
@@ -14,7 +14,7 @@ import sys
 TOOLS = os.path.dirname(os.path.abspath(__file__))
 PY = sys.executable
 OUT = os.path.join(TOOLS, '..', 'output', 'camnorm', 'full_v2')
-CACHE = 'E:/mmcache/full_v2'
+CACHE = '@@MMCACHE@@/full_v2'
 SUBSET = 'cfgs/subsets/full_v2'
 DS = 'cfgs/dataset_configs/uavdet_3d/'
 MD = 'cfgs/models/uavdet_3d/camnorm/'
@@ -31,7 +31,7 @@ def log(msg):
 
 
 def run(cmd, name):
-    env = dict(os.environ, PYTHONUTF8='1', PYTHONPATH=os.path.dirname(TOOLS), TORCH_HOME='E:/torch_home')
+    env = dict(os.environ, PYTHONUTF8='1', PYTHONPATH=os.path.dirname(TOOLS), TORCH_HOME='@@TORCH_HOME@@')
     with open(os.path.join(OUT, name + '.log'), 'w', encoding='utf-8') as f:
         rc = subprocess.call(cmd, cwd=TOOLS, env=env, stdout=f, stderr=subprocess.STDOUT)
     log('%s rc=%d' % (name, rc))
@@ -48,15 +48,15 @@ def main():
     log('==== 开始 ====')
     # 1. 选帧
     if not os.path.exists(os.path.join(TOOLS, SUBSET, 'near_test.txt')):
-        if run([PY, 'build_near_subset.py', 'scan', '--root', 'D:/data_collect', '--cache', 'full_v2_scan.pkl'], 'subset_scan'):
+        if run([PY, 'build_near_subset.py', 'scan', '--root', '@@DATA_COLLECT@@', '--cache', 'full_v2_scan.pkl'], 'subset_scan'):
             return
-        if run([PY, 'build_near_subset.py', 'build', '--root', 'D:/data_collect', '--cache', 'full_v2_scan.pkl',
+        if run([PY, 'build_near_subset.py', 'build', '--root', '@@DATA_COLLECT@@', '--cache', 'full_v2_scan.pkl',
                 '--max-dist', '8', '--mode', 'all', '--metric', 'z', '--out-dir', SUBSET], 'subset_build'):
             return
     # 2. 缓存
     for sp in ('train', 'test'):
         if not os.path.exists(os.path.join(CACHE, sp, 'index.pkl')):
-            if run([PY, 'build_mm_cache.py', '--list', '%s/near_%s.txt' % (SUBSET, sp), '--split', sp, '--root', 'D:/data_collect',
+            if run([PY, 'build_mm_cache.py', '--list', '%s/near_%s.txt' % (SUBSET, sp), '--split', sp, '--root', '@@DATA_COLLECT@@',
                     '--out', CACHE, '--every', '3', '--max-label-range', '40', '--workers', '8', '--rgb-only',
                     '--intrinsic', 'auto', '--store', 'jpeg'], 'cache_' + sp):
                 return
@@ -74,7 +74,7 @@ def main():
     if run([PY, 'verify_camnorm.py', '--real', '--sim-cache', CACHE], 'verify_camnorm'):
         log('verify_camnorm 不通过，停止')
         return
-    if run([PY, 'audit_domain_consistency.py', '--sim', CACHE, '--real', 'E:/mmcache/mav6d_cn'], 'audit_domain'):
+    if run([PY, 'audit_domain_consistency.py', '--sim', CACHE, '--real', '@@MMCACHE@@/mav6d_cn'], 'audit_domain'):
         log('audit_domain_consistency 报错，停止')
         return
     # 5. 训练

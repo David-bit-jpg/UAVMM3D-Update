@@ -1,0 +1,143 @@
+{
+ "prereg_sha256": "e70fbc42a658e5cd99d72e7f474a0fb08dea34614180a4636c7a5d3b89402c8b",
+ "npz_sha256": "4f5776a42adac6c760b86420df0f4b4867081204ec8a57bb0584304a46524145",
+ "dump_sha256": "3152b968d85d6bcff77b6dfdc3cfa03d75cd5b943cfc0e70a23bbb5e2bdb07da",
+ "dec_kwargs": {
+  "rot_repr": "euler6",
+  "euler_seq": "xyz",
+  "depth_mode": "virtual",
+  "f_ref": 512,
+  "rot_frame": "allo",
+  "rot_target": "euler"
+ },
+ "iii_position_mismatch_frames": 0,
+ "iii_deployed_rot_vs_old_max_deg": 0.0,
+ "iii_deployed_rot_vs_old_frac_lt_0p05": 1.0,
+ "n_frames_with_detection": 4800,
+ "top_conf_equals_hook_peak_frac": 1.0,
+ "n_top_not_hook_cell": 0,
+ "n_deployed_pnp_failed": 5,
+ "n_offline_C0_pnp_failed": 5,
+ "single_pnp_failed": {
+  "KZs0": 1,
+  "KZs1": 15,
+  "KZs2": 8,
+  "KZs3": 11,
+  "KZs4": 4,
+  "KZKD_s0": 3,
+  "KZKD_s1": 0,
+  "KZKDir_s0": 5,
+  "KZKDir_s1": 5,
+  "KZMMH_s0": 1,
+  "KZMMH_s1": 3
+ },
+ "i_pnp_on_deployed_vector_frac_lt_1e-3": 1.0,
+ "i_pnp_on_deployed_vector_max_deg": 6.799249321339251e-14,
+ "i_offline_C0_frac_lt_0p05": 1.0,
+ "i_offline_C0_median_deg": 1.317766329297129e-06,
+ "v_cell_reselect_frac": 1.0,
+ "ii_single": {
+  "KZs0": {
+   "n": 4799,
+   "frac_lt_0p05": 1.0,
+   "median_deg": 6.515365634594902e-07,
+   "pnp_failed": 1
+  },
+  "KZs1": {
+   "n": 4785,
+   "frac_lt_0p05": 1.0,
+   "median_deg": 6.323719354850646e-07,
+   "pnp_failed": 15
+  },
+  "KZs2": {
+   "n": 4792,
+   "frac_lt_0p05": 1.0,
+   "median_deg": 6.362432730843429e-07,
+   "pnp_failed": 8
+  },
+  "KZs3": {
+   "n": 4789,
+   "frac_lt_0p05": 1.0,
+   "median_deg": 6.455562678187597e-07,
+   "pnp_failed": 11
+  },
+  "KZs4": {
+   "n": 4796,
+   "frac_lt_0p05": 1.0,
+   "median_deg": 6.414805279631456e-07,
+   "pnp_failed": 4
+  },
+  "KZKD_s0": {
+   "n": 4797,
+   "frac_lt_0p05": 1.0,
+   "median_deg": 6.689414996661663e-07,
+   "pnp_failed": 3
+  },
+  "KZKD_s1": {
+   "n": 4800,
+   "frac_lt_0p05": 1.0,
+   "median_deg": 6.496168008511064e-07,
+   "pnp_failed": 0
+  },
+  "KZKDir_s0": {
+   "n": 4795,
+   "frac_lt_0p05": 1.0,
+   "median_deg": 6.429287269541846e-07,
+   "pnp_failed": 5
+  },
+  "KZKDir_s1": {
+   "n": 4795,
+   "frac_lt_0p05": 1.0,
+   "median_deg": 6.475353747916558e-07,
+   "pnp_failed": 5
+  },
+  "KZMMH_s0": {
+   "n": 4799,
+   "frac_lt_0p05": 1.0,
+   "median_deg": 6.529349336743575e-07,
+   "pnp_failed": 1
+  },
+  "KZMMH_s1": {
+   "n": 4797,
+   "frac_lt_0p05": 1.0,
+   "median_deg": 6.383604812165676e-07,
+   "pnp_failed": 3
+  }
+ },
+ "iv_mm2": {
+  "KZKD": {
+   "n": 4800,
+   "frac_lt_0p05": 0.9991666666666666
+  },
+  "KZKDir": {
+   "n": 4800,
+   "frac_lt_0p05": 0.9989583333333333
+  },
+  "KZMMH": {
+   "n": 4800,
+   "frac_lt_0p05": 0.9995833333333334
+  }
+ },
+ "fails": [],
+ "pass": true,
+ "log": [
+  "[check] members npz 4800 frames, 11 members ['KZs0', 'KZs1', 'KZs2', 'KZs3', 'KZs4', 'KZKD_s0', 'KZKD_s1', 'KZKDir_s0', 'KZKDir_s1', 'KZMMH_s0', 'KZMMH_s1']; dump 4800 frames; old avg dump 4800 frames",
+  "[check] (iii) position/conf mismatches vs deployed KZ dump: 0 / 4800; deployed rotation vs old: max 0.00e+00 deg, <0.05 deg 1.0000",
+  "[check] top detections not at the hook cell: 0; PnP failed: deployed 5, offline C0 5",
+  "[check] top conf == hook peak: 1.0000 | (i) PnP(deployed vector) <1e-3 deg: 1.0000 (max 6.80e-14) | offline C0 <0.05 deg: 1.0000 (median 1.32e-06) | (v) cell re-select 1.0000",
+  "[check] (ii) single KZs0       self-peak vs existing dump: <0.05 deg 1.0000 (n=4799, median 6.52e-07)",
+  "[check] (ii) single KZs1       self-peak vs existing dump: <0.05 deg 1.0000 (n=4785, median 6.32e-07)",
+  "[check] (ii) single KZs2       self-peak vs existing dump: <0.05 deg 1.0000 (n=4792, median 6.36e-07)",
+  "[check] (ii) single KZs3       self-peak vs existing dump: <0.05 deg 1.0000 (n=4789, median 6.46e-07)",
+  "[check] (ii) single KZs4       self-peak vs existing dump: <0.05 deg 1.0000 (n=4796, median 6.41e-07)",
+  "[check] (ii) single KZKD_s0    self-peak vs existing dump: <0.05 deg 1.0000 (n=4797, median 6.69e-07)",
+  "[check] (ii) single KZKD_s1    self-peak vs existing dump: <0.05 deg 1.0000 (n=4800, median 6.50e-07)",
+  "[check] (ii) single KZKDir_s0  self-peak vs existing dump: <0.05 deg 1.0000 (n=4795, median 6.43e-07)",
+  "[check] (ii) single KZKDir_s1  self-peak vs existing dump: <0.05 deg 1.0000 (n=4795, median 6.48e-07)",
+  "[check] (ii) single KZMMH_s0   self-peak vs existing dump: <0.05 deg 1.0000 (n=4799, median 6.53e-07)",
+  "[check] (ii) single KZMMH_s1   self-peak vs existing dump: <0.05 deg 1.0000 (n=4797, median 6.38e-07)",
+  "[check] (iv) 2-member KZKD C0 vs existing avg dump: <0.05 deg 0.9992 (n=4800)",
+  "[check] (iv) 2-member KZKDir C0 vs existing avg dump: <0.05 deg 0.9990 (n=4800)",
+  "[check] (iv) 2-member KZMMH C0 vs existing avg dump: <0.05 deg 0.9996 (n=4800)"
+ ]
+}

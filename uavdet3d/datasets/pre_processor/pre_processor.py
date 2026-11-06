@@ -103,6 +103,7 @@ def encoder_geometry_kwargs(dataset_cfg, fn, fn_name):
     DEPTH_MODE  metric = 学米制 Z；virtual = 学 Z*f_ref/f（相机自适应，见 camera_geometry.py）
     DEPTH_F_REF 虚拟深度的参考焦距（网络输入像素）
     ROT_FRAME   ego = 学相机系旋转；allo = 学视线相对旋转（相机自适应）
+    ROT_TARGET  euler = 按 EULER_SEQ 分解；rest_xzy = 去掉静止姿态偏置后按 'xzy' 分解（避开正对相机时的万向锁）
     缺省值与历史行为一致；编码器不支持某项而配置要求非缺省值时直接报错，不静默忽略。
     """
     params = inspect.signature(fn).parameters
@@ -112,6 +113,7 @@ def encoder_geometry_kwargs(dataset_cfg, fn, fn_name):
         'depth_mode': (dataset_cfg.get('DEPTH_MODE', 'metric'), 'metric'),
         'f_ref': (dataset_cfg.get('DEPTH_F_REF', None), None),
         'rot_frame': (dataset_cfg.get('ROT_FRAME', 'ego'), 'ego'),
+        'rot_target': (dataset_cfg.get('ROT_TARGET', 'euler'), 'euler'),
     }
     kwargs = {}
     for k, (v, default) in wanted.items():
@@ -122,7 +124,7 @@ def encoder_geometry_kwargs(dataset_cfg, fn, fn_name):
     return kwargs
 
 
-def denormalize_regression(dataset_cfg, post_cfg, center_dis, dim):
+def denormalize_regression(dataset_cfg, post_cfg, center_dis, dim, known_lwh=None):
     """网络输出的 center_dis / dim 监督量 -> (虚拟深度 Zv, 尺寸 lwh)。CenterDet 解码与自检脚本共用这一份。
 
     center_dis, dim: torch 张量 (K, 1, H, W) / (K, 3, H, W)
@@ -132,14 +134,23 @@ def denormalize_regression(dataset_cfg, post_cfg, center_dis, dim):
     POST_PROCESSING.SIZE_SOURCE（2026-09-17）
                   pred（缺省）= L 与输出尺寸用网络自己预测的 dim
                   known       = 用 POST_PROCESSING.KNOWN_SIZE [l, w, h]（已知机型给精确值，只知大概给近似值）
+                  gt          = 「事先知道尺寸」的逐帧版（2026-09-22）：用该帧目标自己的真实尺寸 known_lwh（调用方从标签的
+                                l w h 取，只取尺寸、不碰位姿）。MAV6D 两机型尺寸不同（mavic2 0.284x0.333x0.12，phantom4
+                                0.34x0.34x0.23），单个 KNOWN_SIZE 会让 mavic2 用错尺寸。只用于「给定尺寸」这一档的评测。
     """
     import torch
+    dim_target = str(dataset_cfg.get('DIM_TARGET', 'value'))
     if str(dataset_cfg.get('TARGET_NORM', 'maxdis')) == 'standard':
-        smu = torch.as_tensor(np.asarray(dataset_cfg.SIZE_MEAN, np.float32).reshape(1, 3, 1, 1), device=dim.device)
-        ssd = torch.as_tensor(np.asarray(dataset_cfg.SIZE_STD, np.float32).reshape(1, 3, 1, 1),
+        sk = 'LOG_SIZE' if dim_target == 'log' else 'SIZE'
+        smu = torch.as_tensor(np.asarray(dataset_cfg[sk + '_MEAN'], np.float32).reshape(1, 3, 1, 1), device=dim.device)
+        ssd = torch.as_tensor(np.asarray(dataset_cfg[sk + '_STD'], np.float32).reshape(1, 3, 1, 1),
                               device=dim.device).clamp(min=1e-6)
         dis = center_dis * float(dataset_cfg.DEPTH_STD) + float(dataset_cfg.DEPTH_MEAN)
         dim = dim * ssd + smu
+        if dim_target == 'log':
+            dim = torch.exp(dim.clamp(-6.0, 3.0))
+    elif dim_target == 'log':
+        raise ValueError('DIM_TARGET=log 需要 TARGET_NORM=standard')
     else:
         dis = center_dis * float(dataset_cfg.MAX_DIS)
         dim = dim * float(dataset_cfg.MAX_SIZE)
@@ -148,8 +159,13 @@ def denormalize_regression(dataset_cfg, post_cfg, center_dis, dim):
         ks = torch.as_tensor(np.asarray(post_cfg.KNOWN_SIZE, np.float32).reshape(1, 3, 1, 1), device=dim.device)
         assert float(ks.min()) > 0, 'SIZE_SOURCE=known 需要 POST_PROCESSING.KNOWN_SIZE（米，l w h 都 > 0）'
         dim = ks.expand_as(dim).clone()
+    elif size_source == 'gt':
+        assert known_lwh is not None, 'SIZE_SOURCE=gt 需要调用方给出该帧目标的真实尺寸 known_lwh'
+        ks = torch.as_tensor(np.asarray(known_lwh, np.float32).reshape(1, 3, 1, 1), device=dim.device)
+        assert float(ks.min()) > 0, 'SIZE_SOURCE=gt：真实尺寸必须 > 0，收到 %s' % (known_lwh,)
+        dim = ks.expand_as(dim).clone()
     elif size_source != 'pred':
-        raise ValueError('SIZE_SOURCE 只能是 pred / known，收到 %r' % size_source)
+        raise ValueError('SIZE_SOURCE 只能是 pred / known / gt，收到 %r' % size_source)
     depth_target = str(dataset_cfg.get('DEPTH_TARGET', 'value'))
     if depth_target == 'log_ratio':
         L = torch.linalg.norm(dim, dim=1, keepdim=True).clamp(min=1e-3)
@@ -292,6 +308,13 @@ class DataPreProcessor():
         # 换 r6d 的理由见 uavdet3d/utils/rotation_repr.py 的说明与自检。
         rot_repr = self.dataset_cfg.get('ROT_REPR', 'euler6')
         enc_kwargs = encoder_geometry_kwargs(self.dataset_cfg, center_point_encoder, config.ENCODER)
+        # ROT_SYMMETRY（2026-09-19）：只给编码器（解码器也走 encoder_geometry_kwargs，不能放进那里）。
+        # k > 1 时 rot 真值是 6k 通道，center_head 对 k 个对称变体取最小。缺省 1 = 与之前逐位一致。
+        rot_sym = int(self.dataset_cfg.get('ROT_SYMMETRY', 1))
+        if rot_sym != 1:
+            if 'rot_sym' not in inspect.signature(center_point_encoder).parameters:
+                raise ValueError('编码器 %s 不支持 ROT_SYMMETRY=%d' % (config.ENCODER, rot_sym))
+            enc_kwargs['rot_sym'] = rot_sym
 
         if 'gt_box9d' not in data_dict:
             return data_dict
@@ -340,6 +363,38 @@ class DataPreProcessor():
         # 不能再拿 `center_dis > 0` 当前景指示
         data_dict['fg_mask'] = (np.abs(gt_center_dis) > 0).astype(np.float32)
 
+        # AUG.rot_mask_damaged（2026-09-22）：数据集把被目标级增广抹掉/拖糊的目标标成 gt_rot_ok=False（与 gt_box9d 逐行对齐），
+        # 这里生成 rot_mask（= fg_mask，但这些目标的中心格置 0），center_head 的旋转损失只在 rot_mask 上算，
+        # 检出/深度/尺寸照常。落格方式与 center_point_encoder_mav6d 相同。键只在开关打开的训练样本里出现，缺省逐位不变。
+        rot_ok = data_dict.pop('gt_rot_ok', None)
+        if rot_ok is not None:
+            from uavdet3d.utils.object_encoder_mav6d import project_points
+            rot_mask = data_dict['fg_mask'].copy()
+            rot_ok = np.asarray(rot_ok, bool).reshape(-1)
+            assert len(rot_ok) == len(gt_box9d), 'gt_rot_ok 与 gt_box9d 行数不一致'
+            if len(gt_box9d) and not rot_ok.all():
+                sx = float(new_im_size[0]) / float(raw_im_size[0]) / float(stride)
+                sy = float(new_im_size[1]) / float(raw_im_size[1]) / float(stride)
+                hm_h, hm_w = rot_mask.shape[-2:]
+                for im_id in range(int(im_num)):
+                    uv, dep = project_points(np.asarray(gt_box9d, np.float64)[:, :3], intrinsic[im_id], distortion[im_id],
+                                             enc_kwargs.get('use_distortion', True))
+                    for j in np.where(~rot_ok)[0]:
+                        if not (np.isfinite(uv[j]).all() and np.isfinite(dep[j]) and dep[j] > 1e-6):
+                            continue
+                        wi, hi = int(uv[j, 0] * sx), int(uv[j, 1] * sy)
+                        if 0 <= hi < hm_h and 0 <= wi < hm_w:
+                            rot_mask[im_id, ..., hi, wi] = 0.0
+            data_dict['rot_mask'] = rot_mask
+
+        # 11-05 分项监督：gt_dis_ok=False 的目标中心格置 0 → dis_mask，center_head 的 center_dis / size2d 只在上面算
+        dis_ok = data_dict.pop('gt_dis_ok', None)
+        if dis_ok is not None:
+            dis_ok = np.asarray(dis_ok, bool).reshape(-1)
+            assert len(dis_ok) == len(gt_box9d), 'gt_dis_ok 与 gt_box9d 行数不一致'
+            # 每帧只有一个目标且整帧同值，所以直接整图置 0 / 置 fg
+            data_dict['dis_mask'] = data_dict['fg_mask'].copy() * float(dis_ok.all())
+
         # DEPTH_TARGET（2026-09-17）：log_ratio = 学 log(Zv / L)，L = ||lwh||，即「离几个机身长度远」。
         # 为什么：零样本深度 x2 的根源是尺寸判断（真实图上认不出机型，猜大 1.5~2 倍），而 Zv/L = f_ref / 表观大小
         # 只由目标在图上的大小决定，和 2D 一样能迁移。尺寸交给 dim 头，推理时 深度 = 倍数 x 尺寸，
@@ -355,6 +410,21 @@ class DataPreProcessor():
         elif depth_target != 'value':
             raise ValueError('DEPTH_TARGET 只能是 value / log_ratio，收到 %r' % depth_target)
 
+        # DIM_TARGET（2026-09-19）：log = 学 log(l), log(w), log(h)，用 LOG_SIZE_MEAN/STD 标准化。
+        # 为什么：几何解深度 z = a·L/w2d 里，深度的【相对】误差就是尺寸的【相对】误差；
+        # 而线性归一化下的 L1 惩罚的是【绝对】米数。本机队对角 p5/p50/p95 = 0.27 / 0.53 / 2.59 m，
+        # 大机的绝对误差主导梯度，小机（MAV6D 对角 0.53 m）的相对误差几乎拿不到权重。
+        # 实测真实域上 dim 头偏 x0.78、log 散布 0.27，是「不给尺寸」这一列的唯一瓶颈。
+        dim_target = str(self.dataset_cfg.get('DIM_TARGET', 'value'))
+        if dim_target == 'log':
+            assert str(self.dataset_cfg.get('TARGET_NORM', 'maxdis')) == 'standard', 'DIM_TARGET=log 需要 TARGET_NORM=standard'
+            fg3 = np.broadcast_to(data_dict['fg_mask'] > 0, gt_dim.shape)
+            t = np.zeros_like(gt_dim)
+            t[fg3] = np.log(np.clip(gt_dim, 1e-3, None))[fg3]
+            gt_dim = t
+        elif dim_target != 'value':
+            raise ValueError('DIM_TARGET 只能是 value / log，收到 %r' % dim_target)
+
         # TARGET_NORM（2026-09-16）：
         #   'maxdis'  （缺省，逐位等同历史）真值 = 量 / MAX_DIS、量 / MAX_SIZE，两个手填常数
         #   'standard' 真值 = (量 − mu) / sigma，mu/sigma 由 tools/calc_target_stats.py 从训练集自身算
@@ -364,8 +434,9 @@ class DataPreProcessor():
         if str(self.dataset_cfg.get('TARGET_NORM', 'maxdis')) == 'standard':
             dmu = float(self.dataset_cfg.DEPTH_MEAN)
             dsd = max(float(self.dataset_cfg.DEPTH_STD), 1e-6)
-            smu = np.asarray(self.dataset_cfg.SIZE_MEAN, np.float32).reshape(1, 3, 1, 1)
-            ssd = np.maximum(np.asarray(self.dataset_cfg.SIZE_STD, np.float32).reshape(1, 3, 1, 1), 1e-6)
+            sk = 'LOG_SIZE' if dim_target == 'log' else 'SIZE'
+            smu = np.asarray(self.dataset_cfg[sk + '_MEAN'], np.float32).reshape(1, 3, 1, 1)
+            ssd = np.maximum(np.asarray(self.dataset_cfg[sk + '_STD'], np.float32).reshape(1, 3, 1, 1), 1e-6)
             m = data_dict['fg_mask']
             data_dict['center_dis'] = ((gt_center_dis - dmu) / dsd * m).astype(np.float32)
             data_dict['dim'] = ((gt_dim - smu) / ssd * m).astype(np.float32)

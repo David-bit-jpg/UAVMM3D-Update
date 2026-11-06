@@ -1,3 +1,5 @@
+> **clean_release 分支**：定稿方法（无人机单目 3D 检测，仿真 → 真实，实例原型修正距离 + 弱增强自训练 3 种子）的代码、运行脚本和结果，见 [release/README.md](release/README.md)。下面是代码库原来的说明。
+
 # Open 3D UAV Detection Codebase (2D UAV, 3D UAV detection, 6D UAV pose estimation)
 
 6D pose estimation require object shape and class prior, 3D UAV detection does not require such prior.

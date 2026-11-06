@@ -1,0 +1,7 @@
+# 多模态版（2026-09-23，导师方向：多模态纯仿真教师 → 单模态学生蒸馏）：SYM2+MBLUR 数据原样，
+# 只多吐 ir / depth / tag 三个通道（tools/build_mm_sidecar.py 的边车文件，与 rgb 同一裁窗、同一几何增广；
+# 光度 / 带宽 / 目标级随机化仍只动 rgb）。教师吃全部 6 通道；蒸馏学生在 CenterDetKD 里切前 3 通道（rgb），
+# 增广不多消耗随机数，所以同种子下学生看到的像素与 RGB 基线逐位相同。
+_BASE_CONFIG_: cfgs/dataset_configs/uavdet_3d/camnorm_sim_full_geo_tr_mblur_sym2.yaml
+MODALITIES: ['rgb', 'ir', 'depth', 'tag']
+DEPTH_MAX: 24

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """camnorm 管线的回归测试。任何一项不过都不许开训。
 
-    cd E:/Open3DUAVDet/tools && python verify_camnorm.py [--real]
+    cd @@ROOT@@/tools && python verify_camnorm.py [--real]
 
   1 geometry     camera_geometry.self_check（K 缩放 / 翻转 / 视线相对旋转 / 虚拟深度 / 假内参识别）
   2 roundtrip    编码 -> 解码往返：随机焦距 120~2000 px、主点偏移、多种输入分辨率，
@@ -102,9 +102,10 @@ def t_roundtrip(seed=0):
         gt = random_scene(rng, W, H, K, n_obj=3)
         if len(gt) == 0:
             continue
-        for depth_mode in ('metric', 'virtual'):
-            for rot_frame in ('ego', 'allo'):
-                kw = dict(rot_repr='euler6', euler_seq='xyz', depth_mode=depth_mode, f_ref=512, rot_frame=rot_frame)
+        modes = [(dm, rf, 'euler') for dm in ('metric', 'virtual') for rf in ('ego', 'allo')] +                 [(dm, 'allo', 'rest_xzy') for dm in ('metric', 'virtual')]          # ROT_TARGET（2026-09-21）
+        for depth_mode, rot_frame, rot_target in modes:
+                kw = dict(rot_repr='euler6', euler_seq='xyz', depth_mode=depth_mode, f_ref=512, rot_frame=rot_frame,
+                          rot_target=rot_target)
                 withcls = np.concatenate([gt, np.zeros((len(gt), 1))], 1)
                 hm, res, dis, dim, rot = center_point_encoder(withcls, np.array([K]), np.array([np.eye(4)]),
                                                               np.zeros((1, 5)), W, H, W, H, 8, 1, ['drone'], 2, **kw)
@@ -121,8 +122,8 @@ def t_roundtrip(seed=0):
                     worst['ang'] = max(worst['ang'], ang_err(dec[k, 6:9], g[6:9]))
                     worst['size'] = max(worst['size'], np.abs(dec[k, 3:6] - g[3:6]).max())
     ok = worst['miss'] == 0 and worst['pos'] < 1e-4 and worst['ang'] < 1e-3 and worst['size'] < 1e-5
-    report('roundtrip', ok, '%d 个目标 x 4 种模式：漏检 %d，位置最大误差 %.2e m，角度 %.2e°，尺寸 %.2e m'
-           % (worst['n'] // 4, worst['miss'], worst['pos'], worst['ang'], worst['size']))
+    report('roundtrip', ok, '%d 个目标 x 6 种模式（含 ROT_TARGET=rest_xzy）：漏检 %d，位置最大误差 %.2e m，角度 %.2e°，尺寸 %.2e m'
+           % (worst['n'] // 6, worst['miss'], worst['pos'], worst['ang'], worst['size']))
 
 
 # --------------------------------------------------------------------------- #
@@ -506,9 +507,9 @@ def t_real_caches(sim_root, mav_root, data_root):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--real', action='store_true')
-    ap.add_argument('--sim-cache', default='E:/mmcache/indoor8cn')
-    ap.add_argument('--mav-cache', default='E:/mmcache/mav6d_cn')
-    ap.add_argument('--data-root', default='D:/data_collect')
+    ap.add_argument('--sim-cache', default='@@MMCACHE@@/indoor8cn')
+    ap.add_argument('--mav-cache', default='@@MMCACHE@@/mav6d_cn_obj')
+    ap.add_argument('--data-root', default='@@DATA_COLLECT@@')
     ap.add_argument('--only', default=None)
     args = ap.parse_args()
     tests = [('geometry', lambda: report('geometry', cg.self_check(), 'camera_geometry.self_check')),

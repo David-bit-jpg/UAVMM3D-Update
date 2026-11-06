@@ -1,0 +1,6 @@
+# 自训练 ST2+（2026-10-11，PREREG_st2plus）：同 st2_mav6d_r34_geo_full_tr，伪标签换成 index_pseudo_st2plus（ST2 五集成 + 第二段 + 整体校正 ×0.75 的预测）。
+# 为什么：ST1 用 KZ 航向做伪框，size2d 目标（伪框投影 2D 宽）编码的是 KZ 的偏航，而部署解深度时用的是 rot 头的偏航
+# （Z = f·L_perp(lwh, R_rot头) / w2d），两者不一致 → 位置 0.287 → 0.580 m 崩掉。伪框旋转必须与解码器用的旋转同源。
+_BASE_CONFIG_: cfgs/models/uavdet_3d/camnorm/st_mav6d_r34_geo_full_tr.yaml
+DATA_CONFIG:
+    INDEX_FILE: 'index_pseudo_st2plus.pkl'

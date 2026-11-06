@@ -1,0 +1,188 @@
+{
+ "id": "E1-SATM-20261003",
+ "title": "想法1（修订版）：KZ 集成改用对称感知截尾融合 SA-TM；唯一主臂事先登记，其余臂只报告",
+ "written_at": "2026-10-03 14:30:23",
+ "written_before_any_ground_truth_of_this_experiment_is_read": true,
+ "source_protocol": "scratchpad/idea_1.json -> revised.experiment（评委 3 人 + 裁判 2 人意见已并入）",
+ "data": {
+  "split": "MAV6D real test, 4800 frames, 10 sequences (phantom4 7, mavic2 3); cache @@MMCACHE@@/mav6d_cn_obj",
+  "position_pipeline": "release_20260920 ramp_s0..s4 五集成 + 水平翻转 TTA + 在线热图时序背景 causal100 + 无标签自标定 lwh（val, conf>=0.7, interval 2）；greedy 1 m 匹配",
+  "kz_zoom": "kp_zoom.install_zoom_kp2d_hook，target_w2d=95，z_range=[1,4]，search=2（5x5 窗，图边处被裁）",
+  "ground_truth_read_only_in": "kz_fuse_offline.py evaluate（第 5 步）；check / freeze 两步不读 gt / matched 字段"
+ },
+ "members": {
+  "rgb_kz": [
+   "@@ROOT@@/output/release_20260923/kz_s0.pth",
+   "@@ROOT@@/output/release_20260923/kz_s1.pth",
+   "@@ROOT@@/output/release_20260923/kz_s2.pth",
+   "@@ROOT@@/output/release_20260923/kz_s3.pth",
+   "@@ROOT@@/output/release_20260923/kz_s4.pth"
+  ],
+  "rgb_kz_note": "与生成 kz/real_ens5flip_kpKZavg_zoom.pkl 的 sim_full_r34_kp_w12_zoom/KZs{i}/ckpt/checkpoint_epoch_30.pth 逐张量 bit 相同（verify_weights.py 已验证）；run_kd_0923.py K.KZ 用的也是这 5 个文件",
+  "mm_kz_students": {
+   "KZKD_s0": "@@ROOT@@/output/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom_kdmm2/KZKD_s0/ckpt/checkpoint_epoch_30.pth",
+   "KZKD_s1": "@@ROOT@@/output/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom_kdmm2/KZKD_s1/ckpt/checkpoint_epoch_30.pth",
+   "KZKDir_s0": "@@ROOT@@/output/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom_kdir/KZKDir_s0/ckpt/checkpoint_epoch_30.pth",
+   "KZKDir_s1": "@@ROOT@@/output/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom_kdir/KZKDir_s1/ckpt/checkpoint_epoch_30.pth",
+   "KZMMH_s0": "@@ROOT@@/output/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom_mmh/KZMMH_s0/ckpt/checkpoint_epoch_30.pth",
+   "KZMMH_s1": "@@ROOT@@/output/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom_mmh/KZMMH_s1/ckpt/checkpoint_epoch_30.pth"
+  },
+  "kp2d_cfg": "cfgs/models/uavdet_3d/camnorm/mav6d_r34_kp.yaml（KZ 与 6 个学生的已有 dump 都用它）",
+  "deployed_value_rule": "写回管线的始终是 5 个 RGB 成员 kp2d 图的逐格均值（torch.stack(maps[:5]).mean(0)），读出格按 5 个 RGB 成员 sigmoid hm 均值在窗内取 argmax —— 部署输出逐位不变；6 个学生只前向、只记录"
+ },
+ "notation": {
+  "corner_order": "PROTO8（pre_processor.py / object_encoder_mav6d.py）：底面 0(-,-,-) 1(+,-,-) 2(+,+,-) 3(-,+,-)，顶面 4..7 同序",
+  "Pi180": [
+   2,
+   3,
+   0,
+   1,
+   6,
+   7,
+   4,
+   5
+  ],
+  "Pi180_action": "x -> x.reshape(8,2)[Pi180]（Rz(pi) 下长方体精确不变：PnP(Pi180 x) = R Rz(pi)）",
+  "member_vector": "x_m = float64(kp2d_m[:, cell]) / z，16 维（输入像素 / KP_SCALE=64）；cell = 公共读出格（部署方式），自峰值臂例外",
+  "fused_vector_cast": "任何臂融合得到的 16 维向量先转 float32（与部署时写进 float32 kp2d 图一致）再进 PnP",
+  "pnp": "逐字复刻 object_encoder_mav6d.center_point_decoder 第 435-468 行：img = x.reshape(8,2)*64；u = img_u*sx + uv_raw_u，v = img_v*sy + uv_raw_v（uv_raw 按解码器 float32 路径复算）；obj = PROTO8*clip(|lwh|,0.02,50)，lwh = 该帧顶检测的 pred[3:6]（自标定常数）；K_in、畸变取 batch 原值；SOLVEPNP_SQPNP 后接 SOLVEPNP_ITERATIVE(useExtrinsicGuess)；解码器的所有失败判据（非有限、ptp<1e-3、var<1e-6、tz<=1e-6、cv2.error）照搬",
+  "rel_yaw": "r_mn = |atan2(E[1,0], E[0,0])|（度，[0,180]），E = R_m^T R_n；与 summarize_dumps 的航向误差同一定义",
+  "fold": "f_mn = min(r_mn, 180 - r_mn)",
+  "tilt_between": "arccos(R_a[:,2] . R_b[:,2])（度）",
+  "top_detection": "每帧置信度最高的预测（argmax conf），即 KZ 钩子写入 kp2d 的那一格；各臂只替换它的旋转，位置 / 尺寸 / 置信度 / 其余检测一概不动"
+ },
+ "primary_arm_SATM": {
+  "members": "5 个 RGB-KZ，公共读出格（部署方式）",
+  "steps": [
+   "(1) 每个成员在公共格上单独 PnP 得 R_m；PnP 失败的成员记为无效，不参与 (2)-(6)",
+   "(2) 对有效成员两两算 r_mn、f_mn",
+   "(3) medoid m* = argmin_m sum_n f_mn；平局（差 <=1e-9）取公共格上自身 sigmoid hm 较高者，再平局取下标小者",
+   "(4) 保留集 K = {n 有效: f_{m*n} <= 45°}（含等号），medoid 恒在其中",
+   "(5) K 中 r_{m*n} > 90°（严格）的成员替换为 Pi180·x_n",
+   "(6) x_hat = K 内成员（按成员下标顺序）逐元素均值；若 K 中被翻转成员数 > |K|/2，再对 x_hat 做一次 Pi180（保多数分支，只影响不折叠指标）",
+   "(7) x_hat 转 float32 后用与部署相同的 PnP 解旋转"
+  ],
+  "thresholds_deg": {
+   "keep_fold_le": 45.0,
+   "flip_raw_gt": 90.0
+  },
+  "threshold_origin": "45° 由正方形底面（自标定 l/w=1.0006）角点对应的等距边界推出，90° 是 Pi180 两支的分界；都不看标签、不调",
+  "fallbacks": [
+   "有效成员 <1：该帧 SA-TM = C0",
+   "x_hat 的 PnP 失败：该帧 SA-TM 取 C0 的旋转（部署时 C0 总是可得），计数并报告",
+   "无检测的帧：不变"
+  ]
+ },
+ "baseline_C0": "逐元素均值：5 个 RGB 成员在公共格上的 x_m 均值（float64，成员下标顺序）-> float32 -> PnP；它必须逐帧复现新 dump 里的部署旋转（见 replication_checks）",
+ "report_only_arms": {
+  "rule": "以下各臂只报告；无论结果如何都不会被采用。将来想采用必须在仿真 test 或 MAV6D train 无标签时序一致性上另行事先登记",
+  "a_medoid": "只用 medoid 成员（等于 R_{m*}）",
+  "b_TMnoalign": "K 内成员不做 Pi180、直接平均（无多数分支规则）",
+  "c_coordmedian": "全部成员 16 维逐坐标中位数，不对齐",
+  "d_geoL1": "全部有效成员旋转的测地 L1 均值（Hartley 2013 §5.4，Weiszfeld，弦距 L2 均值初始化，<=100 次迭代，步长 <1e-10 停），不对齐，直接输出旋转不走 PnP",
+  "e_C1": "只做 Pi180 对齐：全部有效成员 r>90 的翻转，全部平均，同 (6) 多数分支规则",
+  "f_C1b": "4 元群对齐：带符号相对航向 delta=atan2(E[1,0],E[0,0])，k=round(delta/90) mod 4，按 Rz(90k) 的角点置换把成员重新编号到 medoid 的编号，全部平均（输出保持 medoid 分支）；置换方向由单元测试数值确认",
+  "g_C2": "SA-TM 保留集（已对齐）上做离散度加权 PnP：sigma_i = sqrt(var_u+var_v)（第 i 角点在保留成员间的总体方差，原图像素），sigma0 = 该帧 8 个 sigma_i 的中位数，w_i = 1/(sigma_i+sigma0)；以 SA-TM 解为初值最小化 sum_i ||w_i (pi(R P_i + t) - x_hat_i)||^2（EPro-PnP 式 1，带畸变，LM）；|K|=1 或 sigma0=0 时退化为 SA-TM",
+  "h_SATM_selfpeak": "每个成员在自己 hm 的窗内峰值格读出，其余同 SA-TM（medoid 平局按自峰值 hm）",
+  "i_LOO4": "对 i=0..4 去掉 RGB_i：读出格按剩余 4 个成员 hm 均值在已存窗内重选（float64 均值，窗内行优先首个最大），算 C0_{-i} 与 SA-TM_{-i}",
+  "j_MM2": "两成员多模态集成 KZKD(s0,s1)、KZKDir(s0,s1)、KZMMH(s0,s1)：读出格按两成员 hm 均值重选，算 C0 与 SA-TM",
+  "MM_substitution": "对 i=0..4、j=1..6：成员 = 4 个 RGB（去掉 RGB_i）+ MM_j，读出格按这 5 个成员 hm 均值重选，SA-TM 融合；与全 5 RGB 的 SA-TM 比",
+  "MM11_reference": "11 成员 SA-TM（读出格按 11 成员 hm 均值），只作参考"
+ },
+ "strata_label_free": {
+  "computed_on": "5 个 RGB 成员、公共读出格（主分层）；自峰值读出另算一份只报告占比",
+  "member_classes": "非 medoid 有效成员 n：same = r<=45；flipped_kept = r>=135；trimmed = 45<r<135（与 SA-TM 门限完全一致）",
+  "strata": {
+   "agree": "全部非 medoid 成员为 same（且无 PnP 失败成员）",
+   "flip_only": ">=1 个 flipped_kept，0 个 trimmed",
+   "trim_only": ">=1 个 trimmed，0 个 flipped_kept",
+   "both": "两类都有",
+   "degenerate": "有成员 PnP 失败或有效成员 <2（预计约 0，单列报告）",
+   "no_det": "无检测"
+  },
+  "structural_identities_asserted": [
+   "agree 层：SA-TM == C0（逐位，同一代码路径同一成员顺序）",
+   "flip_only 层：SA-TM == C1(e)，TMnoalign(b) == C0",
+   "trim_only 层：SA-TM == TMnoalign(b)"
+  ],
+  "gate": "SA-TM 相对 C0 航向改动（f180(r(R_C0,R_SATM))）>5° 或倾斜改动 >2° 的帧，占有检测帧的比例必须 >=5%（代理预计 59%）；否则停止，判定为无作用，不读真值",
+  "freeze": "freeze 步把每帧各臂旋转、分层标签、保留集写盘并记录 sha256；evaluate 步先核对哈希"
+ },
+ "metrics_KZ_SUMMARY_protocol": {
+  "heading_fold180": "summarize_dumps.stats：匹配帧上 E=Rg^T Rp，a=|atan2(E[1,0],E[0,0])|，min(a,180-a) 的中位；同时报 <10°、<20°",
+  "tilt": "summarize_dumps.stats：arccos(Rg[:,2].Rp[:,2]) 的中位",
+  "unfolded_10deg10cm": "paper_metrics：pos<0.1 m 且测地角（不折叠）<10°，分母 = 全部 4800 真值帧",
+  "ADD_0p5d": "paper_metrics：ADD（真值尺寸 8 角点、预测 R,t）< 0.5 * nanmedian(真值对角)，分母 4800",
+  "ADS_indoor": "eval_camnorm.ads_eval indoor 口径（LAA3D_ADS，全部预测），输出目录在 scratchpad",
+  "per_class": "phantom4 / mavic2 / 全部 分开报",
+  "matching": "dump 里已有的 greedy 1 m 匹配（位置不变，所以各臂共用同一 matched 下标）",
+  "implementation_check": "evaluate 里逐帧误差的中位必须与直接调用 summarize_dumps.stats 的 head / tilt 完全相等（断言）"
+ },
+ "statistics": {
+  "unit": "序列（10 个）",
+  "cluster_bootstrap": {
+   "B": 10000,
+   "seed": 20261003,
+   "resample": "有放回重采 10 个序列（不分层），合并所选序列的匹配帧重算统计量",
+   "statistic": "Delta = median(arm) - median(C0)",
+   "p_one_sided": "p = (1 + #{Delta* >= 0}) / (B + 1)（检验 Delta < 0）",
+   "ci": "95% 百分位区间"
+  },
+  "holm": "H1、H2 两个假设，alpha = 0.05（最小 p <= 0.025 拒绝后，另一个 p <= 0.05 才拒绝）",
+  "sign_count": "每序列 Delta_s = median_s(SA-TM) - median_s(C0)；Delta_s <= 0 算方向一致（打平算一致），报 x/10",
+  "paired_frame": "匹配帧且匹配预测就是顶检测的帧中，测地角(R_SATM, R_C0) > 1° 的帧：SA-TM 误差更小的比例 = #(e_S<e_C0)/#(e_S!=e_C0)，以及配对中位差 median(e_S - e_C0)；航向、倾斜各一份",
+  "mavic2": "只有 3 个序列：只报逐序列点值，不报 bootstrap 区间"
+ },
+ "success_criteria": {
+  "H1": "SA-TM 对 C0（全 5 RGB，公共格）：折 180 航向中位下降（基线 16.5°）",
+  "H2": "SA-TM 对 C0：倾斜中位下降（基线 8.7°）",
+  "hypothesis_holds_iff": "Holm 校正后聚类 bootstrap 单侧检验显著 且 序列符号 >= 8/10",
+  "guardrails_all_required": [
+   "G1 不折叠 10°10cm 点估计：SA-TM - C0 >= -0.5 个百分点",
+   "G2 ADD(0.5d) 点估计：SA-TM - C0 >= -0.5 个百分点",
+   "G3 ADS indoor（报告值，2 位小数）：SA-TM >= C0",
+   "G4 位置 / 置信度 / 检出逐帧相同（构造保证 + 断言；新 dump 对已有 KZavg dump 也逐帧相同）"
+  ],
+  "deploy_decision": "采用 SA-TM 当且仅当：H1、H2 至少一个成立，另一个的点估计 Delta <= +0.2°，且 G1-G4 全部满足。这是对唯一事先登记臂的确认性检验，不在多个变体之间挑选"
+ },
+ "mechanism_predictions_report_only": {
+  "agree": "SA-TM 改动为 0（断言）",
+  "flip_only": "SA-TM == C1：预测航向、倾斜都改善；若该层倾斜 Delta 点估计 > 0，判定「带符号权重 / 压扁框」机理在真实数据上不成立（评委 1 标准）",
+  "trim_only": "SA-TM == TMnoalign：预测航向改善；mavic2 该层占比更高，若 mavic2 收益更大应体现在这一层",
+  "LOO4": "预测 mean_i(SA-TM_{-i} - C0_{-i}) 比全 5 的 Delta 更负（M 偶数时 C0 可 2:2 退化；5 个留一子集两两共享 3 个成员，不独立，偏向本方法）",
+  "MM2": "两成员相差 r>135° 的帧上，C0 航向误差中位应远大于 SA-TM（报比值）",
+  "reported_per_stratum": "Delta 航向 / 倾斜 + 聚类 bootstrap 95% 区间（B=10000，同种子）"
+ },
+ "attribution_rule": {
+  "alignment_credited_iff": "flip_only 层：SA-TM - C0 的航向 Delta 点估计 < 0 且 bootstrap 95% 上界 < 0，并且 (c)、(d) 在该层的航向中位都比 SA-TM 高出 > 0.2°",
+  "otherwise": "若前半成立但 (c) 或 (d) 与 SA-TM 相差 <= 0.2°（或更好），结论写成「稳健融合即可」，不归功于对称对齐",
+  "tie_margin_deg": 0.2
+ },
+ "MM_value_claim": {
+  "Delta_i": "Delta_i = mean_j[ median_head(4RGB_{-i}+MM_j, SA-TM) - median_head(5RGB, SA-TM) ]，j 取 6 个学生；倾斜同样报告",
+  "claim_iff": "mean_i Delta_i < 0，且其序列聚类 bootstrap 95% 区间上界 < 0，且 >= 4/5 个 Delta_i < 0",
+  "prediction": "无差别（无标签：RGB-MM 两两差 20.1-20.4°，RGB-RGB 19.4°）",
+  "deployment": "无论结果如何部署成员不变"
+ },
+ "replication_checks_stop_if_fail": {
+  "i_C0": "离线 C0（5 RGB 公共格）与新 dump 顶检测旋转逐帧比：>=99.5% 的帧测地差 <0.05°；直接对 dump 记录的部署向量做 PnP 应 >=99.9% 的帧 <1e-3°；全集 C0 航向 / 倾斜中位与已有 KZavg dump 的 summarize_dumps 值差 <=0.2°（这一项在 evaluate 开头算，未过即停，不算任何 SA-TM 指标）",
+  "ii_single": "离线单成员自峰值读出逐帧复现 kz/real_ens5flip_kpKZs{i}_zoom.pkl（>=99.5% 帧 <0.05°）；6 个学生同样对 kd/real_ens5flip_kp{tag}_zoom.pkl",
+  "iii_position": "新 dump 与 kz/real_ens5flip_kpKZavg_zoom.pkl 的 pred[:, :6]、conf 逐帧完全相同（断言），部署旋转差报告最大值",
+  "iv_mm2": "两成员 C0 逐帧复现 kd/real_ens5flip_kp{KZKD,KZKDir,KZMMH}avg_zoom.pkl（>=99.5% 帧 <0.05°，只报告）",
+  "v_cell": "离线 float64 重选的 5-RGB 公共格与 dump 记录的 (rb,cb) 一致 >=99.9%",
+  "cudnn_note": "cudnn 可能带来极小的非确定性，所以复现门限用 0.05° 而不是 0"
+ },
+ "failure_interpretation": {
+  "gate_fail": "公共读出格已让成员趋同，代理里的分歧来自自峰值读出；KZ 融合方式不是瓶颈，转向 KZ 真实域自训练",
+  "flip_only_worse": "真实成员的翻转不是独立噪声，翻转的成员恰恰更差；KZ 误差以共同偏差为主",
+  "flip_better_trim_worse": "对齐有效但截尾丢信息；需另行事先登记软权重方案（如 C2）",
+  "all_flat": "16.5° 主要是共同偏差；但 KD_2026-09-23.md 197-198 行的集成伪角点仍建议用 SA-TM 生成（构造上避开偶数成员退化与负权重）",
+  "MM_null": "关闭「多模态 KZ 学生作为集成多样性」这条线"
+ },
+ "not_done": [
+  "不训练",
+  "不改数据",
+  "不在真实标签上选变体或超参",
+  "位置管线逐帧不变（深度仍用位置网络 rot 头，PnP 只换 eul2）"
+ ]
+}

@@ -1,0 +1,10 @@
+# KZ 臂数据（2026-09-22 夜）：K30（camnorm_sim_full_kp_t）原样，只把裁窗改成「放大裁窗」——
+# 目标在网络输入上的表观尺寸固定在一个窄区间，抹掉仿真（45 px）/ 真实（65 px）的表观尺寸差，
+# 也让角点回归有更多像素可用（K30 真实角点误差 24.6 px，仿真 6.4 px）。
+#   t = log(Zv / ||lwh||)，表观对角 = 512·e^-t：t ∈ [1.15, 1.75] → 对角 162~89 px，2D 框宽约 133~73 px（中位 ~100 px）
+#   原 K30 是 t ∈ [1.0, 3.0]（对角 188~25 px）。max_upscale 2：远目标要放大时最多放大 2 倍。
+# 推理时位置网络先检出，再按它预测的 2D 宽把真实原图裁到同一表观尺寸喂给本网络（eval_camnorm 的 zoom 钩子）。
+# 验证 / 测试：VAL_ZOOMS 2.5（仿真 45 px 目标 → 约 112 px，落在训练区间中央），窗口以第一个目标为中心。
+_BASE_CONFIG_: cfgs/dataset_configs/uavdet_3d/camnorm_sim_full_kp_t.yaml
+VIEW_AUG: {zoom: [1.0, 4.0], no_upscale: false, t_range: [1.15, 1.75], max_upscale: 2.0}
+VAL_ZOOMS: [2.5]

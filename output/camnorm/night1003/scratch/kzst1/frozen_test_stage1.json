@@ -1,0 +1,144 @@
+{
+ "prereg_sha256": "e7e390c9541becdcd003bd8d9a8506297d1b5be5ee79cfefd2431d8a6a43583d",
+ "frozen_train_sha256": "1a6848b366aa52ca658756c23e0e68092785732c6d6af2dc98322afa4fa8080e",
+ "test_npz_sha256": "4f5776a42adac6c760b86420df0f4b4867081204ec8a57bb0584304a46524145",
+ "test_dump_sha256": "3152b968d85d6bcff77b6dfdc3cfa03d75cd5b943cfc0e70a23bbb5e2bdb07da",
+ "rho": {
+  "phantom4": [
+   0.5950162077186898,
+   0.65282748400364
+  ],
+  "mavic2": [
+   0.6176582963641472,
+   0.5473048109885202
+  ]
+ },
+ "rho_agree_report_only": {
+  "phantom4": [
+   0.6899001181994716,
+   0.6952676782171677
+  ],
+  "mavic2": [
+   0.6992301956865051,
+   0.5663946104192409
+  ]
+ },
+ "strata_A0p": {
+  "phantom4": {
+   "agree": 0.49401709401709404,
+   "flip_only": 0.14871794871794872,
+   "trim_only": 0.2116809116809117,
+   "both": 0.1452991452991453,
+   "degenerate": 0.0002849002849002849,
+   "no_det": 0.0
+  },
+  "mavic2": {
+   "agree": 0.36589147286821705,
+   "flip_only": 0.11550387596899225,
+   "trim_only": 0.3426356589147287,
+   "both": 0.175968992248062,
+   "degenerate": 0.0,
+   "no_det": 0.0
+  }
+ },
+ "changed_A0p_vs_A0_heading_gt5_or_tilt_gt2": 0.010208333333333333,
+ "bn_npz_sha256": "d3275e00528917510fa70496d9c3a7294102d4819c06657ca1d92b3581e68f70",
+ "bn_info": {
+  "replay_check": {
+   "train": {
+    "n": 24,
+    "max_abs_kp": 0.0,
+    "max_abs_hm": 0.0,
+    "read_cell_same": 24,
+    "tol_kp": 0.002,
+    "tol_hm": 0.0002,
+    "pass": true
+   },
+   "test": {
+    "n": 24,
+    "max_abs_kp": 0.0,
+    "max_abs_hm": 0.0,
+    "read_cell_same": 24,
+    "tol_kp": 0.002,
+    "tol_hm": 0.0002,
+    "pass": true
+   }
+  },
+  "bn_stat_shift": [
+   {
+    "median_abs_mean_shift_in_sim_std": 0.02900308556854725,
+    "median_var_ratio_real_over_sim": 0.9582508206367493,
+    "first_layer_mean_shift": 0.0686069130897522,
+    "last_layer_mean_shift": 0.002569064497947693
+   },
+   {
+    "median_abs_mean_shift_in_sim_std": 0.02870498225092888,
+    "median_var_ratio_real_over_sim": 0.9820743799209595,
+    "first_layer_mean_shift": 0.02612638846039772,
+    "last_layer_mean_shift": 0.005979428067803383
+   },
+   {
+    "median_abs_mean_shift_in_sim_std": 0.036447931081056595,
+    "median_var_ratio_real_over_sim": 0.996084064245224,
+    "first_layer_mean_shift": 0.0355864018201828,
+    "last_layer_mean_shift": 0.008310850709676743
+   },
+   {
+    "median_abs_mean_shift_in_sim_std": 0.03967948071658611,
+    "median_var_ratio_real_over_sim": 0.9912258088588715,
+    "first_layer_mean_shift": 0.05337565392255783,
+    "last_layer_mean_shift": 0.009206550195813179
+   },
+   {
+    "median_abs_mean_shift_in_sim_std": 0.028314517810940742,
+    "median_var_ratio_real_over_sim": 0.9806266725063324,
+    "first_layer_mean_shift": 0.03951390087604523,
+    "last_layer_mean_shift": 0.004344514571130276
+   }
+  ],
+  "reestimation": {
+   "n_crops": 4040,
+   "n_batches": 253,
+   "batch": 16,
+   "order_seed": 0,
+   "frames_json": "adabn_frames_train5.json",
+   "train_npz_sha256": "a033070e94634a6e7f0d5d86b32b48458249a0ad68bec32df71860bfe0894224"
+  },
+  "checkpoints_sha256": {
+   "kz_s0_adabn.pth": "5d8ace5e2e499010045a6ad12a41129bbce1c67e7f9892997ccb7286c9363aac",
+   "kz_s1_adabn.pth": "f75417f716b7877d1398c5d3eb916e17ee0200382693d32659d4fbe49b493e2d",
+   "kz_s2_adabn.pth": "17aacce86f665d33e0f8787f886ce9309fd5f64f2627eba156f43fbfd300582d",
+   "kz_s3_adabn.pth": "db892dd465fded68014e9aa07196248400eb9f59ed1b711b264e9076edaa81e9",
+   "kz_s4_adabn.pth": "b16dc2a360548bc554a788ddac28a81c8fd26f53ba5177e27a6bab51d696fe3a"
+  },
+  "n_bn_layers": 44
+ },
+ "strata_BN": {
+  "phantom4": {
+   "agree": 0.5131054131054131,
+   "flip_only": 0.15413105413105413,
+   "trim_only": 0.2150997150997151,
+   "both": 0.11737891737891738,
+   "degenerate": 0.0002849002849002849,
+   "no_det": 0.0
+  },
+  "mavic2": {
+   "agree": 0.4201550387596899,
+   "flip_only": 0.13023255813953488,
+   "trim_only": 0.31007751937984496,
+   "both": 0.1372093023255814,
+   "degenerate": 0.002325581395348837,
+   "no_det": 0.0
+  }
+ },
+ "have_bn": true,
+ "frozen_sha256": "8e4155e3b3830afc0ba8c7c324de8a4285d2c44cecc341145cab1f7c423a17da",
+ "script_sha256": "d39c4c84f5b784e4f7eeaa790b78f1a67f90d880e514a28e2805709466bc01ae",
+ "common_sha256": "76353febd5b9990a9c6f66d8435aee88ae8be37f69a081fe39a8fdaae98aa512",
+ "written_at": "2026-10-03 18:57:13",
+ "elapsed_s": 158.89622831344604,
+ "log": [
+  "[freeze-test] 4800 test frames; rho (train) {'phantom4': (0.5950162077186898, 0.65282748400364), 'mavic2': (0.6176582963641472, 0.5473048109885202)}",
+  "[freeze-test] 126 multisets x 3 configs done in 116 s (identity multiset == full arms: asserted)"
+ ]
+}

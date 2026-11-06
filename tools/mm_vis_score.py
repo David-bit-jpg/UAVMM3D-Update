@@ -9,7 +9,7 @@
 按对比度筛（而不是按天气标签）能保留有路灯的夜景和白天雾雨雪里仍看得见的目标。
 
 数据集通过 MIN_RGB_VIS 读取 <split>/vis_score.npy 做过滤。用法：
-    python tools/mm_vis_score.py --cache E:/mmcache/mm20
+    python tools/mm_vis_score.py --cache @@MMCACHE@@/mm20
 """
 import argparse
 import collections
@@ -83,7 +83,7 @@ def score_split(cache, split):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument('--cache', default='E:/mmcache/mm20')
+    ap.add_argument('--cache', default='@@MMCACHE@@/mm20')
     ap.add_argument('--splits', nargs='*', default=['train', 'test'])
     args = ap.parse_args()
     t0 = time.time()

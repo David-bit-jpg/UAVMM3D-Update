@@ -1,0 +1,14 @@
+# 真实无标签帧自训练（2026-09-24，用户拍板）：从纯仿真权重（发布版 ramp_s*）出发，在 MAV6D train 划分的【伪标签】上续训。
+# 伪标签 = 部署管线（5 集成 + 翻转 + 时序背景 + 无标签自标定尺寸 + KZ 旋转）自己的预测，经置信度 + 时序一致性筛选
+# （tools/make_pseudo_index.py 写成 index_pseudo_<tag>.pkl，图像不变，DATA_CONFIG.INDEX_FILE 指过去）。真值标签全程不用。
+# rot 权重 0：部署里旋转来自 KZ 网络，位置网络的 rot 头不训（伪航向噪声大）。dim 头学到的是自标定常数尺寸，部署也不用它。
+# 学习率降到 2e-4、3 轮 OneCycle：伪标签有噪声，只做温和适应（BN 统计 + 检测 / 2D 尺寸头对真实外观）。
+_BASE_CONFIG_: cfgs/models/uavdet_3d/camnorm/mav6d_r34_geo_full_tr.yaml
+DATA_CONFIG:
+    INDEX_FILE: 'index_pseudo_st1.pkl'
+MODEL:
+    DENSE_HEAD_2D:
+      LOSS_WEIGHTS: {hm: 1.0, center_res: 2.0, center_dis: 8.0, dim: 2.0, rot: 0.0, size2d: 4.0}
+OPTIMIZATION:
+    LR: 0.0002
+    NUM_EPOCHS: 3

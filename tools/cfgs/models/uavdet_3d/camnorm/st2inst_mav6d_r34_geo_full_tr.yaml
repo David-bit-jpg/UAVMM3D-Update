@@ -1,0 +1,4 @@
+# 11-05 实例原型修正伪标签距离：同 st2plus_mav6d_r34_geo_full_tr，伪标签距离按「同一架飞机自己的剪影」帧间相对尺度 + 伪标签距离最小二乘修正（proto/inst/make_inst_index.py）。
+_BASE_CONFIG_: cfgs/models/uavdet_3d/camnorm/st2plus_mav6d_r34_geo_full_tr.yaml
+DATA_CONFIG:
+    INDEX_FILE: 'index_pseudo_st2inst.pkl'

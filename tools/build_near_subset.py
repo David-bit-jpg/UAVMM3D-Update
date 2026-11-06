@@ -28,14 +28,14 @@
 用法
 ----
     # 扫描 + 统计分布（结果缓存，后续 build 秒出）
-    python tools/build_near_subset.py scan --root E:/data_collect
+    python tools/build_near_subset.py scan --root @@DATA_COLLECT@@
 
     # 生成子集（默认 <=8m、整帧所有目标都在范围内、按序列切 train/test）
-    python tools/build_near_subset.py build --root E:/data_collect \\
+    python tools/build_near_subset.py build --root @@DATA_COLLECT@@ \\
         --max-dist 8 --mode all --out-dir cfgs/subsets/near8
 
     # 核对选出来的帧真实的相机系深度
-    python tools/build_near_subset.py build --root E:/data_collect --verify 300
+    python tools/build_near_subset.py build --root @@DATA_COLLECT@@ --verify 300
 """
 import argparse
 import json
@@ -377,7 +377,7 @@ def main():
     sub = ap.add_subparsers(dest='cmd', required=True)
 
     def common(p):
-        p.add_argument('--root', default='E:/data_collect')
+        p.add_argument('--root', default='@@DATA_COLLECT@@')
         p.add_argument('--cache', default='near_subset_cache.pkl')
 
     p = sub.add_parser('scan', help='扫描并统计距离分布')

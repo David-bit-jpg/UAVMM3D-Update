@@ -1,0 +1,20 @@
+# 真实评测 RAMPKP 臂（2026-09-22）：mav6d_r34_geo_full_tr + kp2d 头，旋转由角点 + PnP 解出，位置管线不变。
+_BASE_CONFIG_: cfgs/models/uavdet_3d/camnorm/mav6d_r34_geo_full_tr.yaml
+DATA_CONFIG:
+    _BASE_CONFIG_: cfgs/dataset_configs/uavdet_3d/camnorm_mav6d_geo_full_t_kp.yaml
+MODEL:
+    DENSE_HEAD_2D:
+      SEPARATE_HEAD_CFG:
+          HEAD_ORDER: ["hm", "center_res", "center_dis", "dim", "rot", "size2d", "kp2d"]
+          HEAD_DICT: {
+              "hm": {"out_channels": 1, "conv_dim": 128},
+              "center_res": {"out_channels": 2, "conv_dim": 128},
+              "center_dis": {"out_channels": 1, "conv_dim": 128},
+              "dim": {"out_channels": 3, "conv_dim": 128},
+              "rot": {"out_channels": 6, "conv_dim": 128},
+              "size2d": {"out_channels": 2, "conv_dim": 128},
+              "kp2d": {"out_channels": 16, "conv_dim": 128},
+          }
+    POST_PROCESSING:
+      POSE_FROM_KP2D: true
+      KP2D_POSE_PARTS: 'rot'

@@ -1,0 +1,4 @@
+# 11-05 导师「弱化一点前期的数据增强，突出原型效果」：同 st2plus_mav6d_r34_geo_full_tr，自训练时关掉光度增强和噪声（亮度/对比度/gamma/逐通道增益/高斯噪声），只留水平翻转。
+_BASE_CONFIG_: cfgs/models/uavdet_3d/camnorm/st2plus_mav6d_r34_geo_full_tr.yaml
+DATA_CONFIG:
+    AUG: {hflip: 0.5, scale: [1.0, 1.0], photometric: false, noise: 0.0, blur: 0.0, blur_prob: 0.5}

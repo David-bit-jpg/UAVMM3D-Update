@@ -14,8 +14,8 @@
   - 全部写完才在序列目录落标记 label_fix_nose_x.json；有标记的序列跳过。
   - 恢复：tools/fix_raw_nose_labels.py --restore <同样的 roots>（从 zip 还原并删除标记）。
 
-    cd E:/Open3DUAVDet/tools
-    python fix_raw_nose_labels.py --roots D:/data_collect --backup D:/data_collect_label_backup_20260915 [--limit 1] [--workers 6]
+    cd @@ROOT@@/tools
+    python fix_raw_nose_labels.py --roots @@DATA_COLLECT@@ --backup D:/data_collect_label_backup_20260915 [--limit 1] [--workers 6]
 """
 import argparse
 import glob

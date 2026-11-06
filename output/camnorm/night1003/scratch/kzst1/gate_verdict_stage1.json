@@ -1,0 +1,109 @@
+{
+ "prereg_sha256": "e7e390c9541becdcd003bd8d9a8506297d1b5be5ee79cfefd2431d8a6a43583d",
+ "frozen_npz_sha256": "1a6848b366aa52ca658756c23e0e68092785732c6d6af2dc98322afa4fa8080e",
+ "gate": {
+  "phantom4": {
+   "share": true,
+   "jump": true,
+   "pairwise": true,
+   "pass": true,
+   "values": {
+    "gated_share": 0.5733284078315478,
+    "jump_median": 7.139526017942529,
+    "pairwise_fold_median": 12.856872119302889,
+    "n_gated": 3104,
+    "n_jump_pairs": 2031
+   },
+   "ratios_to_test": {
+    "share_minus_test": -0.0686715921684522,
+    "jump_ratio": 1.2957397491728728,
+    "pairwise_ratio": 1.1982173456945842
+   }
+  },
+  "mavic2": {
+   "share": true,
+   "jump": true,
+   "pairwise": true,
+   "pass": true,
+   "values": {
+    "gated_share": 0.4592055823939882,
+    "jump_median": 14.727048714889975,
+    "pairwise_fold_median": 17.072029960564773,
+    "n_gated": 3422,
+    "n_jump_pairs": 1841
+   },
+   "ratios_to_test": {
+    "share_minus_test": -0.016794417606011802,
+    "jump_ratio": 1.1819461247905276,
+    "pairwise_ratio": 1.1246396548461643
+   }
+  }
+ },
+ "bounds": {
+  "phantom4": {
+   "test_gated_share": 0.642,
+   "test_jump_gap2_median": 5.51,
+   "test_pairwise_fold_median": 10.73,
+   "share_min": 0.542,
+   "jump_max": 7.163,
+   "pairwise_max": 13.949000000000002
+  },
+  "mavic2": {
+   "test_gated_share": 0.476,
+   "test_jump_gap2_median": 12.46,
+   "test_pairwise_fold_median": 15.18,
+   "share_min": 0.376,
+   "jump_max": 16.198,
+   "pairwise_max": 19.734
+  }
+ },
+ "disposition_by_gate": "train_both",
+ "sample_size": {
+  "n_total": 3021,
+  "n_seq": 60,
+  "per_class": {
+   "phantom4": 1632,
+   "mavic2": 1389
+  },
+  "trained_classes": [
+   "phantom4",
+   "mavic2"
+  ],
+  "checks": {
+   "total": true,
+   "n_seq": true,
+   "per_class": true
+  },
+  "pass": true
+ },
+ "final_disposition": "train_both",
+ "rho": {
+  "phantom4": [
+   0.5950162077186898,
+   0.65282748400364
+  ],
+  "mavic2": [
+   0.6176582963641472,
+   0.5473048109885202
+  ]
+ },
+ "rho_agree_report_only": {
+  "phantom4": [
+   0.6899001181994716,
+   0.6952676782171677
+  ],
+  "mavic2": [
+   0.6992301956865051,
+   0.5663946104192409
+  ]
+ },
+ "adabn_frames": {
+  "n": 4040,
+  "per_class": {
+   "phantom4": 2168,
+   "mavic2": 1872
+  },
+  "n_seq": 60
+ },
+ "checks_pass": true
+}

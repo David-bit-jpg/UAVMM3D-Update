@@ -27,6 +27,7 @@ LAAM6D 的行为一致，做迁移对比时可能用得上）。
 缺省 depth_mode='metric' / rot_frame='ego' 与历史行为逐位一致。
 """
 import copy
+import os
 
 import cv2
 import numpy as np
@@ -106,13 +107,24 @@ def center_point_encoder(gt_box9d_with_cls,
                          euler_seq=None,
                          depth_mode='metric',
                          f_ref=None,
-                         rot_frame='ego'):
+                         rot_frame='ego',
+                         rot_sym=1,
+                         rot_target='euler'):
     """把 (N, 10) 的 [x,y,z,l,w,h,a1,a2,a3,cls] 编码成 CenterNet 风格监督图。
 
     返回 (hm, center_res, center_dis, dim, rot)，形状依次为
     (im_num, C, H/s, W/s) / (im_num, 2, ...) / (im_num, 1, ...) /
-    (im_num, 3, ...) / (im_num, 6, ...)。
+    (im_num, 3, ...) / (im_num, 6*rot_sym, ...)。
+
+    rot_sym（2026-09-19，DATA_CONFIG.ROT_SYMMETRY）：物体绕机体竖直轴（+z）的 k 重对称。
+    k > 1 时 rot 通道依次放 R·Rz(j·360°/k)（j = 0..k-1）的编码，j = 0 就是原目标；
+    损失对这 k 个取最小（center_head）。为什么：四旋翼前后近似对称，训练图在部署尺度上
+    基本看不出机头，逼网络分辨前后只会让共享主干去抓仿真特有的线索。k = 1（缺省）逐位同原来。
     """
+    rot_sym = int(rot_sym)
+    if rot_sym < 1:
+        raise ValueError('ROT_SYMMETRY 必须 >= 1，收到 %r' % rot_sym)
+    Rz_sym = [R.from_euler('z', 360.0 * j / rot_sym, degrees=True).as_matrix() for j in range(rot_sym)]
     cls_num = len(class_name_config)
     hm_height = int(new_im_hight) // int(stride)
     hm_width = int(new_im_width) // int(stride)
@@ -133,7 +145,7 @@ def center_point_encoder(gt_box9d_with_cls,
         this_res_map = np.zeros(shape=(2, hm_height, hm_width), dtype=np.float32)
         this_dis_map = np.zeros(shape=(1, hm_height, hm_width), dtype=np.float32)
         this_size_map = np.zeros(shape=(3, hm_height, hm_width), dtype=np.float32)
-        this_angle_map = np.zeros(shape=(6, hm_height, hm_width), dtype=np.float32)
+        this_angle_map = np.zeros(shape=(6 * rot_sym, hm_height, hm_width), dtype=np.float32)
 
         if len(gt_box9d_with_cls) > 0:
             xyz = copy.deepcopy(gt_box9d_with_cls[:, 0:3])
@@ -142,9 +154,14 @@ def center_point_encoder(gt_box9d_with_cls,
             if rot_frame == 'allo':
                 # 视线方向就是 3D 中心方向；有畸变时视线仍是 xyz 本身，与解码侧 unproject 一致
                 R_allo = cg.ego_to_allo(R.from_euler(seq, gt_box9d_with_cls[:, 6:9]).as_matrix(), xyz)
-                ang_target = R.from_matrix(R_allo).as_euler(seq)
+                ang_target = rot_target_angles(R_allo, rot_target, seq)
+                R_base = R_allo
             else:
+                if rot_target != 'euler':
+                    raise ValueError('ROT_TARGET=%s 只支持 ROT_FRAME=allo' % rot_target)
                 ang_target = gt_box9d_with_cls[:, 6:9]
+                R_base = R.from_euler(seq, ang_target).as_matrix() if rot_sym > 1 else None
+            # 绕机体 z 的对称变体：R·Rz 在机体系里右乘，视线相对旋转 R_ray^T·R·Rz 同样是右乘，两种 rot_frame 一样处理
 
             for obj_i, obj in enumerate(gt_box9d_with_cls):
                 Z = depth[obj_i]
@@ -181,7 +198,10 @@ def center_point_encoder(gt_box9d_with_cls,
                 this_size_map[1, h_idx, w_idx] = w
                 this_size_map[2, h_idx, w_idx] = h
 
-                this_angle_map[:, h_idx, w_idx] = euler_to_vec((a1, a2, a3), seq, rot_repr)
+                this_angle_map[0:6, h_idx, w_idx] = euler_to_vec((a1, a2, a3), seq, rot_repr)
+                for j in range(1, rot_sym):
+                    aj = rot_target_angles((R_base[obj_i] @ Rz_sym[j])[None], rot_target, seq)[0]
+                    this_angle_map[6 * j:6 * (j + 1), h_idx, w_idx] = euler_to_vec(aj, seq, rot_repr)
 
         gt_hm.append(this_heat_map.cpu().numpy())
         gt_center_res.append(this_res_map)
@@ -191,6 +211,39 @@ def center_point_encoder(gt_box9d_with_cls,
 
     return (np.array(gt_hm), np.array(gt_center_res), np.array(gt_center_dis),
             np.array(gt_dim), np.array(gt_rot))
+
+
+# ---- ROT_TARGET（2026-09-21）：旋转回归目标的欧拉分解方式 ----
+# 'euler'（缺省）：直接把 allocentric 旋转按 EULER_SEQ（'xyz'）分解 —— 与之前逐位一致。
+# 'rest_xzy'：先去掉「静止姿态」R0 的 90° 偏置（T = R_allo · R0^T），再按外旋 'xzy' 分解。
+# 为什么（annot_audit/gimbal_diag.py）：MAV6D 与仿真里无人机基本水平，机体竖直轴 = 相机 -y；此时 'xyz' 分解的
+#   中间角 a2 = -asin(cos ψ)，无人机正对 / 背对相机（ψ≈0/180°）时 a2 = ∓90° 正好万向锁，a1、a3 单独的值病态。
+#   实测纯仿真模型在真实域上：|a2|<30° 的三分之一样本折 180° 误差中位 14°，|a2|>65° 的近一半样本 76~87°（等于乱猜）。
+#   换成 R0 偏置 + 'xzy' 后，偏航是最外层的角（绕相机竖直轴），中间角是倾斜（永远远离 ±90°），
+#   奇点挪到「机身竖起 90°」这种不会出现的姿态；前后对称变体只是偏航 +180°。
+# R0：机体 x（前）→ 相机 +z，机体 y（左）→ 相机 -x，机体 z（上）→ 相机 -y。
+ROT_REST_R0 = np.array([[0.0, -1.0, 0.0],
+                        [0.0, 0.0, -1.0],
+                        [1.0, 0.0, 0.0]])
+ROT_TARGETS = ('euler', 'rest_xzy')
+
+
+def rot_target_angles(R_mats, rot_target, seq):
+    """allocentric 旋转矩阵 (N,3,3) -> 回归目标角 (N,3)。"""
+    if rot_target == 'euler':
+        return R.from_matrix(R_mats).as_euler(seq)
+    if rot_target == 'rest_xzy':
+        return R.from_matrix(np.asarray(R_mats) @ ROT_REST_R0.T).as_euler('xzy')
+    raise ValueError('ROT_TARGET 只能是 %s，收到 %r' % (ROT_TARGETS, rot_target))
+
+
+def rot_target_to_matrix(angles, rot_target, seq):
+    """rot_target_angles 的逆：目标角 (N,3) -> allocentric 旋转矩阵 (N,3,3)。"""
+    if rot_target == 'euler':
+        return R.from_euler(seq, angles).as_matrix()
+    if rot_target == 'rest_xzy':
+        return R.from_euler('xzy', angles).as_matrix() @ ROT_REST_R0
+    raise ValueError('ROT_TARGET 只能是 %s，收到 %r' % (ROT_TARGETS, rot_target))
 
 
 def _check_modes(euler_seq, depth_mode, f_ref, rot_frame, rot_repr):
@@ -260,8 +313,13 @@ def center_point_decoder(hm,
                          size2d=None,
                          size2d_mode='both',
                          kp2d=None,
-                         kp_scale=64.0):
+                         kp_scale=64.0,
+                         rot_target='euler',
+                         kp_pose_parts='both'):
     """center_point_encoder 的逆过程，输出 (N, 10) 的 [x,y,z,l,w,h,a1,a2,a3,cls]。
+
+    kp_pose_parts（2026-09-22）：有 kp2d 时 PnP 解出的位姿用哪部分。both（缺省，与之前一致）= 位置和旋转都换成 PnP 的；
+    rot = 只换旋转，位置仍走 center_dis / size2d 几何解深度那条路（位置管线不变，只让朝向改由角点 + PnP 给出）。
 
     坐标系为 OpenCV 相机系，与 MAV6D 的 gt_box9d 一致
     （extrinsic 恒为单位阵：read_truth_Rt 已把位姿变换到相机系下）。
@@ -318,8 +376,10 @@ def center_point_decoder(hm,
             if rot_frame == 'allo':
                 # 视线取解码出的中心像素方向（unproject 已处理畸变），与编码侧用 3D 中心方向严格一致
                 rays = unproject_points(uv_raw, np.ones(len(uv_raw)), in_mat, dis_mat, use_distortion)
-                R_ego = cg.allo_to_ego(R.from_euler(seq, eul).as_matrix(), rays)
+                R_ego = cg.allo_to_ego(rot_target_to_matrix(eul, rot_target, seq), rays)
                 eul = R.from_matrix(R_ego).as_euler(seq)
+            elif rot_target != 'euler':
+                raise ValueError('ROT_TARGET=%s 只支持 ROT_FRAME=allo' % rot_target)
         eul = np.asarray(eul, dtype=np.float64).reshape(-1, 3)
         a1 = eul[:, 0:1]
         a2 = eul[:, 1:2]
@@ -393,8 +453,17 @@ def center_point_decoder(hm,
                     continue
                 dist = np.asarray(dis_mat, dtype=np.float64).reshape(1, -1) if use_distortion else np.zeros((1, 5))
                 try:
-                    ok, rvec, tvec = cv2.solvePnP(obj_pts.reshape(-1, 1, 3), img_pts.reshape(-1, 1, 2),
-                                                  in_mat, dist, flags=cv2.SOLVEPNP_SQPNP)
+                    try:
+                        ok, rvec, tvec = cv2.solvePnP(obj_pts.reshape(-1, 1, 3), img_pts.reshape(-1, 1, 2),
+                                                      in_mat, dist, flags=cv2.SOLVEPNP_SQPNP)
+                    except cv2.error:
+                        # 长焦（fx 数万像素，AntiUAV3D 变焦跟踪相机）时角点在归一化坐标里挤在一起，SQPnP 触发
+                        # point_coordinate_variance 断言；EPnP 在这些帧上能精确解出（10-27 核验往返 0.00°）。
+                        # 只在环境变量 UAV_PNP_EPNP_FALLBACK=1 时启用，缺省行为（MAV6D 等）逐位不变。
+                        if os.environ.get('UAV_PNP_EPNP_FALLBACK') != '1':
+                            raise
+                        ok, rvec, tvec = cv2.solvePnP(obj_pts.reshape(-1, 1, 3), img_pts.reshape(-1, 1, 2),
+                                                      in_mat, dist, flags=cv2.SOLVEPNP_EPNP)
                     if not ok or not np.isfinite(tvec).all() or tvec[2, 0] <= 1e-6:
                         continue
                     ok2, rvec, tvec = cv2.solvePnP(obj_pts.reshape(-1, 1, 3), img_pts.reshape(-1, 1, 2),
@@ -404,7 +473,8 @@ def center_point_decoder(hm,
                         continue
                 except cv2.error:
                     continue                    # 解不出来就保留 center_dis 那条路的结果
-                pts[i] = tvec.reshape(3)
+                if kp_pose_parts == 'both':
+                    pts[i] = tvec.reshape(3)
                 eul2[i] = R.from_matrix(cv2.Rodrigues(rvec)[0]).as_euler(seq)
             points = pts
             a1, a2, a3 = eul2[:, 0:1], eul2[:, 1:2], eul2[:, 2:3]

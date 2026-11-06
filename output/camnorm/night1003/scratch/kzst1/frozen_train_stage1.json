@@ -1,0 +1,496 @@
+{
+ "prereg_sha256": "e7e390c9541becdcd003bd8d9a8506297d1b5be5ee79cfefd2431d8a6a43583d",
+ "npz_sha256": "a033070e94634a6e7f0d5d86b32b48458249a0ad68bec32df71860bfe0894224",
+ "dump_sha256": "80be13c8f4b80d3adb4996d05f80d18ed42336af5e662c58a7c1b656a416241f",
+ "split": "train",
+ "sampled_interval": 1,
+ "gap_ranks": 2,
+ "n_frames": 12866,
+ "script_sha256": "2e01a0c7e882910ff385efc8e15ec02e9bd4fa5c0027d3b8118e70862875ea11",
+ "common_sha256": "76353febd5b9990a9c6f66d8435aee88ae8be37f69a081fe39a8fdaae98aa512",
+ "kfo_sha256": "9ae9e963eec9dfb14c8c1b6d027ff65ab9891c90e5228960aab8db4f48d80f2f",
+ "started_at": "2026-10-03 18:43:14",
+ "checks": {
+  "n_with_detection": 12866,
+  "n_top_at_hook_cell": 12866,
+  "n_top_not_hook_cell": 0,
+  "n_deployed_pnp_failed": 53,
+  "n_offline_C0_pnp_failed": 53,
+  "i_pnp_on_deployed_vector_frac_lt_1e-3": 1.0,
+  "i_pnp_on_deployed_vector_max_deg": 8.546168776150394e-14,
+  "i_offline_C0_frac_lt_0p05": 1.0,
+  "v_cell_reselect_frac": 1.0,
+  "fallback_SATM": 15,
+  "fallback_C0": 53,
+  "iii_position_conf_mismatch_vs_ST1": 0,
+  "iii_deployed_rot_vs_ST1_max_deg": 0.0,
+  "iii_deployed_rot_vs_ST1_frac_lt_0p05": 1.0,
+  "fails": [],
+  "pass": true
+ },
+ "g0": {
+  "reasons": {
+   "no_pred_or_low_conf": 431,
+   "few_neighbors": 10,
+   "pos_jump": 2467,
+   "accepted": 9958
+  },
+  "n_g0": 9958,
+  "n_g0_at_hook_cell": 9958,
+  "per_class": {
+   "phantom4": 4988,
+   "mavic2": 4970
+  },
+  "equals_ST1_accepted_set": true,
+  "ST1_accepted": 9958
+ },
+ "gate": {
+  "bounds": {
+   "phantom4": {
+    "test_gated_share": 0.642,
+    "test_jump_gap2_median": 5.51,
+    "test_pairwise_fold_median": 10.73,
+    "share_min": 0.542,
+    "jump_max": 7.163,
+    "pairwise_max": 13.949000000000002
+   },
+   "mavic2": {
+    "test_gated_share": 0.476,
+    "test_jump_gap2_median": 12.46,
+    "test_pairwise_fold_median": 15.18,
+    "share_min": 0.376,
+    "jump_max": 16.198,
+    "pairwise_max": 19.734
+   }
+  },
+  "stats_deployed_decoder": {
+   "phantom4": {
+    "n_frames": 5414,
+    "n_seq": 31,
+    "strata": {
+     "agree": 0.46361285555966014,
+     "flip_only": 0.1097155522718877,
+     "trim_only": 0.28075360177318065,
+     "both": 0.14277798300701883,
+     "degenerate": 0.003140007388252678,
+     "no_det": 0.0
+    },
+    "gated_share": 0.5733284078315478,
+    "gated": {
+     "n": 3104,
+     "jump_median": 7.139526017942529,
+     "n_pairs": 2031,
+     "jump_gt20": 0.19793205317577547,
+     "pairwise_fold_median": 12.856872119302889
+    },
+    "all_det": {
+     "n": 5414,
+     "jump_median": 14.515416217665916,
+     "n_pairs": 5352,
+     "jump_gt20": 0.41050074738415543,
+     "pairwise_fold_median": 22.233643505332914
+    }
+   },
+   "mavic2": {
+    "n_frames": 7452,
+    "n_seq": 30,
+    "strata": {
+     "agree": 0.3423242082662373,
+     "flip_only": 0.11688137412775094,
+     "trim_only": 0.35050993022007515,
+     "both": 0.17780461621041332,
+     "degenerate": 0.01247987117552335,
+     "no_det": 0.0
+    },
+    "gated_share": 0.4592055823939882,
+    "gated": {
+     "n": 3422,
+     "jump_median": 14.727048714889975,
+     "n_pairs": 1841,
+     "jump_gt20": 0.4160782183595872,
+     "pairwise_fold_median": 17.072029960564773
+    },
+    "all_det": {
+     "n": 7452,
+     "jump_median": 23.91797535007896,
+     "n_pairs": 7392,
+     "jump_gt20": 0.557224025974026,
+     "pairwise_fold_median": 28.4242841251387
+    }
+   }
+  },
+  "verdict": {
+   "phantom4": {
+    "share": true,
+    "jump": true,
+    "pairwise": true,
+    "pass": true,
+    "values": {
+     "gated_share": 0.5733284078315478,
+     "jump_median": 7.139526017942529,
+     "pairwise_fold_median": 12.856872119302889,
+     "n_gated": 3104,
+     "n_jump_pairs": 2031
+    },
+    "ratios_to_test": {
+     "share_minus_test": -0.0686715921684522,
+     "jump_ratio": 1.2957397491728728,
+     "pairwise_ratio": 1.1982173456945842
+    }
+   },
+   "mavic2": {
+    "share": true,
+    "jump": true,
+    "pairwise": true,
+    "pass": true,
+    "values": {
+     "gated_share": 0.4592055823939882,
+     "jump_median": 14.727048714889975,
+     "pairwise_fold_median": 17.072029960564773,
+     "n_gated": 3422,
+     "n_jump_pairs": 1841
+    },
+    "ratios_to_test": {
+     "share_minus_test": -0.016794417606011802,
+     "jump_ratio": 1.1819461247905276,
+     "pairwise_ratio": 1.1246396548461643
+    }
+   }
+  },
+  "disposition_by_gate": "train_both",
+  "reference_files": {
+   "test_ref_gated.json": "b8ce34fffc0471860b8d2f8f766e5711e514c09f30645a5c5cc998ced83ee9c4",
+   "test_ref_labelfree.json": "4ea83888c373614ea78c35087958ea280617f60b8ccfb79b931bd5216c985c48"
+  }
+ },
+ "rho": {
+  "phantom4": {
+   "rho_u": 0.5950162077186898,
+   "rho_v": 0.65282748400364,
+   "n_samples": 24925,
+   "n_frames": 4988,
+   "iqr_u": [
+    0.3876904963562021,
+    0.7287877967778609
+   ],
+   "iqr_v": [
+    0.5135034960262697,
+    0.7307559101867227
+   ],
+   "by_stratum": {
+    "agree": [
+     0.6899001181994716,
+     0.6952676782171677
+    ],
+    "flip_only": [
+     0.4935007046754508,
+     0.6336332166787562
+    ],
+    "trim_only": [
+     0.51232471589332,
+     0.6124946376576927
+    ],
+    "both": [
+     0.37800694737775586,
+     0.5564486897289422
+    ]
+   }
+  },
+  "mavic2": {
+   "rho_u": 0.6176582963641472,
+   "rho_v": 0.5473048109885202,
+   "n_samples": 24815,
+   "n_frames": 4970,
+   "iqr_u": [
+    0.42907472776032335,
+    0.7661021276550466
+   ],
+   "iqr_v": [
+    0.4624369567584984,
+    0.6228944923285986
+   ],
+   "by_stratum": {
+    "agree": [
+     0.6992301956865051,
+     0.5663946104192409
+    ],
+    "flip_only": [
+     0.551441147642965,
+     0.5352990124864511
+    ],
+    "trim_only": [
+     0.5914065671902056,
+     0.5404281229891761
+    ],
+    "both": [
+     0.4756874997006868,
+     0.5302934401853694
+    ]
+   }
+  }
+ },
+ "rho_agree_report_only": {
+  "phantom4": [
+   0.6899001181994716,
+   0.6952676782171677
+  ],
+  "mavic2": [
+   0.6992301956865051,
+   0.5663946104192409
+  ]
+ },
+ "report_gate_stats_under_D_rho": {
+  "phantom4": {
+   "n_frames": 5414,
+   "n_seq": 31,
+   "strata": {
+    "agree": 0.46324344292574804,
+    "flip_only": 0.1106390838566679,
+    "trim_only": 0.28260066494274105,
+    "both": 0.143516808274843,
+    "degenerate": 0.0,
+    "no_det": 0.0
+   },
+   "gated_share": 0.5738825267824159,
+   "gated": {
+    "n": 3107,
+    "jump_median": 7.150277215705557,
+    "n_pairs": 2027,
+    "jump_gt20": 0.19930932412432165,
+    "pairwise_fold_median": 12.96437906623979
+   },
+   "all_det": {
+    "n": 5414,
+    "jump_median": 14.47046067358393,
+    "n_pairs": 5352,
+    "jump_gt20": 0.41050074738415543,
+    "pairwise_fold_median": 22.268168412388043
+   }
+  },
+  "mavic2": {
+   "n_frames": 7452,
+   "n_seq": 30,
+   "strata": {
+    "agree": 0.34406870638754694,
+    "flip_only": 0.11862587224906065,
+    "trim_only": 0.35292538915727323,
+    "both": 0.18035426731078905,
+    "degenerate": 0.004025764895330112,
+    "no_det": 0.0
+   },
+   "gated_share": 0.4626945786366076,
+   "gated": {
+    "n": 3448,
+    "jump_median": 14.714136881443324,
+    "n_pairs": 1866,
+    "jump_gt20": 0.41693461950696675,
+    "pairwise_fold_median": 17.180695080509643
+   },
+   "all_det": {
+    "n": 7452,
+    "jump_median": 24.082569000923797,
+    "n_pairs": 7392,
+    "jump_gt20": 0.5580357142857143,
+    "pairwise_fold_median": 28.60497649016896
+   }
+  }
+ },
+ "selection": {
+  "trained_classes": [
+   "phantom4",
+   "mavic2"
+  ],
+  "planned_classes_for_report": [
+   "phantom4",
+   "mavic2"
+  ],
+  "n_eligible": 5275,
+  "sample_size": {
+   "n_total": 3021,
+   "n_seq": 60,
+   "per_class": {
+    "phantom4": 1632,
+    "mavic2": 1389
+   },
+   "trained_classes": [
+    "phantom4",
+    "mavic2"
+   ],
+   "checks": {
+    "total": true,
+    "n_seq": true,
+    "per_class": true
+   },
+   "pass": true
+  },
+  "loo_go": true,
+  "final_disposition": "train_both",
+  "per_seq": {
+   "mavic2/01/0101": 10,
+   "mavic2/01/0104": 4,
+   "mavic2/01/0105": 35,
+   "mavic2/01/0106": 32,
+   "mavic2/01/0108": 31,
+   "mavic2/01/0111": 34,
+   "mavic2/01/0112": 30,
+   "mavic2/02/0201": 80,
+   "mavic2/02/0203": 60,
+   "mavic2/02/0205": 80,
+   "mavic2/02/0207": 15,
+   "mavic2/02/0208": 13,
+   "mavic2/02/0209": 23,
+   "mavic2/02/0210": 80,
+   "mavic2/02/0212": 80,
+   "mavic2/02/0213": 32,
+   "mavic2/02/0215": 8,
+   "mavic2/02/0216": 80,
+   "mavic2/02/0217": 69,
+   "mavic2/02/0218": 17,
+   "mavic2/02/0219": 24,
+   "mavic2/02/0222": 40,
+   "mavic2/02/0224": 80,
+   "mavic2/02/0225": 66,
+   "mavic2/02/0226": 61,
+   "mavic2/03/0302": 65,
+   "mavic2/03/0303": 80,
+   "mavic2/03/0305": 80,
+   "mavic2/03/0306": 80,
+   "phantom4/01/0101": 41,
+   "phantom4/01/0102": 80,
+   "phantom4/01/0103": 60,
+   "phantom4/01/0104": 80,
+   "phantom4/01/0105": 66,
+   "phantom4/01/0106": 45,
+   "phantom4/01/0107": 25,
+   "phantom4/01/0108": 55,
+   "phantom4/01/0111": 80,
+   "phantom4/01/0113": 67,
+   "phantom4/01/0114": 24,
+   "phantom4/01/0115": 24,
+   "phantom4/01/0117": 28,
+   "phantom4/01/0118": 48,
+   "phantom4/01/0119": 62,
+   "phantom4/01/0121": 45,
+   "phantom4/01/0122": 63,
+   "phantom4/01/0124": 35,
+   "phantom4/01/0125": 25,
+   "phantom4/01/0127": 28,
+   "phantom4/01/0128": 38,
+   "phantom4/02/0203": 80,
+   "phantom4/02/0204": 73,
+   "phantom4/02/0205": 39,
+   "phantom4/02/0207": 80,
+   "phantom4/02/0209": 33,
+   "phantom4/02/0211": 80,
+   "phantom4/02/0212": 60,
+   "phantom4/02/0214": 75,
+   "phantom4/02/0215": 80,
+   "phantom4/02/0216": 13
+  }
+ },
+ "report_label_free": {
+  "phantom4": {
+   "n_dumped": 5414,
+   "n_g0": 4988,
+   "n_g1_rho_and_g0": 2906,
+   "n_selected": 1632,
+   "strata_deployed": {
+    "agree": 0.46361285555966014,
+    "flip_only": 0.1097155522718877,
+    "trim_only": 0.28075360177318065,
+    "both": 0.14277798300701883,
+    "degenerate": 0.003140007388252678,
+    "no_det": 0.0
+   },
+   "strata_D_rho": {
+    "agree": 0.46324344292574804,
+    "flip_only": 0.1106390838566679,
+    "trim_only": 0.28260066494274105,
+    "both": 0.143516808274843,
+    "degenerate": 0.0,
+    "no_det": 0.0
+   },
+   "teacher_view_g0": {
+    "side": 0.3835204490777867,
+    "oblique": 0.29971932638332,
+    "along": 0.31676022453889335,
+    "n": 4988
+   },
+   "teacher_view_selected": {
+    "side": 0.40931372549019607,
+    "oblique": 0.2757352941176471,
+    "along": 0.31495098039215685,
+    "n": 1632
+   }
+  },
+  "mavic2": {
+   "n_dumped": 7452,
+   "n_g0": 4970,
+   "n_g1_rho_and_g0": 2369,
+   "n_selected": 1389,
+   "strata_deployed": {
+    "agree": 0.3423242082662373,
+    "flip_only": 0.11688137412775094,
+    "trim_only": 0.35050993022007515,
+    "both": 0.17780461621041332,
+    "degenerate": 0.01247987117552335,
+    "no_det": 0.0
+   },
+   "strata_D_rho": {
+    "agree": 0.34406870638754694,
+    "flip_only": 0.11862587224906065,
+    "trim_only": 0.35292538915727323,
+    "both": 0.18035426731078905,
+    "degenerate": 0.004025764895330112,
+    "no_det": 0.0
+   },
+   "teacher_view_g0": {
+    "side": 0.28712273641851105,
+    "oblique": 0.28993963782696175,
+    "along": 0.42293762575452715,
+    "n": 4970
+   },
+   "teacher_view_selected": {
+    "side": 0.24046076313894887,
+    "oblique": 0.25341972642188626,
+    "along": 0.5061195104391649,
+    "n": 1389
+   }
+  },
+  "rigid_residual_selected": {
+   "phantom4": {
+    "median_rms_over_width": 0.03250044909558561
+   },
+   "mavic2": {
+    "median_rms_over_width": 0.034339895220895006
+   }
+  },
+  "loo_quotient_frac": 0.1731214829526647,
+  "loo_teacher_strata": {
+   "agree": 11578,
+   "flip_only": 2376,
+   "both": 239,
+   "trim_only": 912
+  }
+ },
+ "adabn_frames": {
+  "n": 4040,
+  "per_class": {
+   "phantom4": 2168,
+   "mavic2": 1872
+  },
+  "n_seq": 60
+ },
+ "frozen_npz_sha256": "1a6848b366aa52ca658756c23e0e68092785732c6d6af2dc98322afa4fa8080e",
+ "elapsed_s": 58.487775802612305,
+ "written_at": "2026-10-03 18:44:12",
+ "log": [
+  "[freeze] train: 12866 frames, 61 sequences ({'mavic2': 7452, 'phantom4': 5414}), members ['KZs0', 'KZs1', 'KZs2', 'KZs3', 'KZs4'], interval 1 -> jump gap 2 ranks",
+  "[freeze] checks: {'n_with_detection': 12866, 'n_top_at_hook_cell': 12866, 'n_top_not_hook_cell': 0, 'n_deployed_pnp_failed': 53, 'n_offline_C0_pnp_failed': 53, 'i_pnp_on_deployed_vector_frac_lt_1e-3': 1.0, 'i_pnp_on_deployed_vector_max_deg': 8.546168776150394e-14, 'i_offline_C0_frac_lt_0p05': 1.0, 'v_cell_reselect_frac': 1.0, 'fallback_SATM': 15, 'fallback_C0': 53, 'iii_position_conf_mismatch_vs_ST1': 0, 'iii_deployed_rot_vs_ST1_max_deg': 0.0, 'iii_deployed_rot_vs_ST1_frac_lt_0p05': 1.0, 'pass': True}",
+  "[gate] phantom4  share 0.573 (>= 0.542: True) | SA-TM gap-2 jump 7.14 (<= 7.16: True) | pairwise 12.86 (<= 13.95: True) -> PASS   [n gated 3104, pairs 2031]",
+  "[gate] mavic2    share 0.459 (>= 0.376: True) | SA-TM gap-2 jump 14.73 (<= 16.20: True) | pairwise 17.07 (<= 19.73: True) -> PASS   [n gated 3422, pairs 1841]",
+  "[rho] phantom4  rho = (0.5950, 0.6528) from 24925 samples / 4988 g0 frames | report-only agree-stratum rho (0.6899, 0.6953) (protocol expectation, taken from the test agree stratum: ~(0.72, 0.74))",
+  "[rho] mavic2    rho = (0.6177, 0.5473) from 24815 samples / 4970 g0 frames | report-only agree-stratum rho (0.6992, 0.5664) (protocol expectation, taken from the test agree stratum: ~(0.73, 0.52))",
+  "[select] disposition by gate: train_both | eligible 5275 -> selected 3021 ({'phantom4': 1632, 'mavic2': 1389}, 60 seqs) | sample sizes {'total': True, 'n_seq': True, 'per_class': True} -> LOO GO"
+ ]
+}

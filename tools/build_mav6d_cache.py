@@ -6,8 +6,10 @@
        camera_geometry.undistorted_pinhole_K；MAV6D 为 0.932 倍），之后全链路按针孔处理
     2. 等比缩放到 --width x --height（1920x1080 -> 512x288，审查 P18：原来 512x256 不等比）
     3. K_in = K_pin 按 cv2.resize 像素中心约定精确换算到缓存分辨率，写进 meta
-    4. 标签：read_truth_Rt（MAV 坐标系 -> 相机系），欧拉 'xyz'，尺寸用官方 phantom4 角点范围 0.34x0.34x0.23
-       （两机型共用，审查 P13：尺寸误差在 MAV6D 上无意义，报告不引用）
+    4. 标签：read_truth_Rt（MAV 坐标系 -> 相机系），欧拉 'xyz'。
+       --object-frame official（2026-09-22 起缺省，输出 @@MMCACHE@@/mav6d_cn_obj）：中心 = 官方物体框中心、尺寸 = 各机型官方尺寸
+       （OFFICIAL_BOX，与官方 labels_yolo6d 逐点一致）；旋转不变（官方框轴与 Vicon 机体系相同）。
+       --object-frame vicon（旧缓存 @@MMCACHE@@/mav6d_cn）：中心 = Vicon 标记原点，两机型都用 phantom4 的 0.34x0.34x0.23
 
 划分：
     test  = 官方 test.txt（两机型全部帧，与旧评测同一批 4800 帧）
@@ -17,7 +19,8 @@
 帧按 机型/场景/序列/时间戳 排序，SAMPLED_INTERVAL 抽帧即序列内均匀抽样。
 
 用法：
-    python tools/build_mav6d_cache.py --root E:/MAV6D --out E:/mmcache/mav6d_cn
+    python tools/build_mav6d_cache.py                          # 官方物体框 -> @@MMCACHE@@/mav6d_cn_obj
+    python tools/build_mav6d_cache.py --object-frame vicon     # 旧约定 -> @@MMCACHE@@/mav6d_cn
 """
 import argparse
 import multiprocessing as mp
@@ -38,6 +41,14 @@ K_CALIB = np.array([[1979.4, 0.3984, 976.8189], [0.0, 1979.1, 533.9717], [0.0, 0
 D_CALIB = np.array([-0.2306, 0.1497, -0.00089582, -0.00086321, -0.0522086113480487])
 RAW_WH = (1920, 1080)
 OB_SIZE = (0.34, 0.34, 0.23)
+# MAV6D 官方物体框（MAV 机体系下的 min/max，米）。物体中心 = 框中心，【不是】Vicon 标记原点（2026-09-22 全链路审计问题 3、4）：
+#   phantom4：MAV6D 自带 util.py get_projection 的 min/max 原值；与官方 labels_yolo6d 逐点一致（残差 0.001 px = 标注的 6 位小数）
+#   mavic2  ：util.py 只写了 phantom4。按官方 labels_yolo6d（8 角点 + 中心）最小二乘反解，官方旋转与 Vicon 机体系相同（差 0.00°），
+#             残差 0.001 px。旧缓存两机型都用 phantom4 的 0.34x0.34x0.23、中心取 Vicon 原点 —— 中心偏 5.7 cm（P4）/ 9.2 cm（Mavic2）
+OFFICIAL_BOX = {
+    'phantom4': ((-0.18, -0.16, -0.17), (0.16, 0.18, 0.06)),
+    'mavic2': ((-0.22503, -0.16151, -0.10), (0.05875, 0.17152, 0.02)),
+}
 CAMERA2VICON = np.array([[0.6685859, -0.74342, 0.01787715, -0.3814142759180792],
                          [0.01558769, -0.01002444, -0.99982825, 1.604836888783723],
                          [0.74347153, 0.66874974, 0.004886, 3.035574156448842],
@@ -97,8 +108,16 @@ def pick_val_sequences(rows, frac, seed):
     return val
 
 
+def object_box(cls, Rm, t, object_frame):
+    """Vicon 位姿 (Rm, t) -> 9 参数框的 (中心, 尺寸)。official：官方物体框中心 t + Rm·c、官方尺寸；vicon：旧约定。"""
+    if object_frame == 'official':
+        lo, hi = (np.asarray(v, np.float64) for v in OFFICIAL_BOX[cls])
+        return t + Rm @ ((lo + hi) / 2.0), hi - lo
+    return t, np.asarray(OB_SIZE, np.float64)
+
+
 def process(task):
-    root, cls, scene, seq, fname, W, H = task
+    root, cls, scene, seq, fname, W, H, object_frame = task
     img = cv2.imread(os.path.join(root, cls, 'JPEGImages', scene, seq, fname), cv2.IMREAD_COLOR)
     if img is None or (img.shape[1], img.shape[0]) != RAW_WH:
         return None
@@ -109,7 +128,8 @@ def process(task):
 
     Rm, t = read_truth_Rt(os.path.join(root, cls, 'labels', scene, seq, os.path.splitext(fname)[0] + '.txt'))
     eul = R.from_matrix(Rm).as_euler('xyz')
-    box = np.concatenate([t, OB_SIZE, eul]).astype(np.float32)[None]
+    t, dims = object_box(cls, Rm, t, object_frame)
+    box = np.concatenate([t, dims, eul]).astype(np.float32)[None]
     uv = K_in @ t
     inside = bool(t[2] > 0 and 0 <= uv[0] / uv[2] < W and 0 <= uv[1] / uv[2] < H)
     # 原始（带畸变）图上中心是否在画面内：用于统计去畸变裁掉了多少边缘目标
@@ -121,6 +141,7 @@ def process(task):
         'K_in': K_in, 'K_raw': K_pin, 'raw_wh': RAW_WH, 'undistorted': True,
         'boxes9d': box, 'names': ['drone'], 'qualified': np.array([True]),
         'center_inside': inside, 'center_inside_raw': inside_raw,
+        'object_frame': 'official-box-v1' if object_frame == 'official' else 'vicon-origin',
     }
     return small, meta
 
@@ -131,7 +152,7 @@ def build_split(args, name, rows):
     N, H, W = len(rows), args.height, args.width
     rgb_mm = np.lib.format.open_memmap(os.path.join(out_dir, 'rgb.npy'), 'w+', np.uint8, (N, H, W, 3))
     metas = [None] * N
-    tasks = [(args.root, c, sc, sq, fn, W, H) for (c, sc, sq, _k, fn) in rows]
+    tasks = [(args.root, c, sc, sq, fn, W, H, args.object_frame) for (c, sc, sq, _k, fn) in rows]
     t0 = time.time()
     with mp.Pool(args.workers) as pool:
         for i, res in enumerate(pool.imap(process, tasks, chunksize=16)):
@@ -144,7 +165,8 @@ def build_split(args, name, rows):
     valid = np.array([i for i, m in enumerate(metas) if m is not None], np.int64)
     index = {'valid_idx': valid, 'metas': metas, 'H': H, 'W': W, 'classes': ['drone'], 'split': name,
              'root': args.root, 'format': 'camnorm-v1', 'undistorted': True,
-             'val_frac': args.val_frac, 'seed': args.seed}
+             'val_frac': args.val_frac, 'seed': args.seed,
+             'object_frame': 'official-box-v1' if args.object_frame == 'official' else 'vicon-origin'}
     with open(os.path.join(out_dir, 'index.pkl'), 'wb') as f:
         pickle.dump(index, f)
     ms = [m for m in metas if m]
@@ -178,8 +200,11 @@ def compute_norm(out, n=600):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument('--root', default='E:/MAV6D')
-    ap.add_argument('--out', default='E:/mmcache/mav6d_cn')
+    ap.add_argument('--root', default='@@MAV6D@@')
+    ap.add_argument('--out', default=None, help='缺省：official -> @@MMCACHE@@/mav6d_cn_obj，vicon -> @@MMCACHE@@/mav6d_cn')
+    ap.add_argument('--object-frame', default='official', choices=['official', 'vicon'],
+                    help='official = 官方物体框中心与各机型官方尺寸（2026-09-22 起）；vicon = 旧约定（Vicon 原点 + phantom4 尺寸）')
+    ap.add_argument('--overwrite', action='store_true', help='允许写进已有缓存的目录（缺省拒绝，免得覆盖旧缓存）')
     ap.add_argument('--width', type=int, default=512)
     ap.add_argument('--height', type=int, default=288)
     ap.add_argument('--val-frac', type=float, default=0.15)
@@ -190,6 +215,11 @@ def main():
     ap.add_argument('--list-out', default=os.path.join(os.path.dirname(os.path.abspath(__file__)),
                                                        'cfgs', 'subsets', 'mav6d_camnorm'))
     args = ap.parse_args()
+    if args.out is None:
+        args.out = '@@MMCACHE@@/mav6d_cn_obj' if args.object_frame == 'official' else '@@MMCACHE@@/mav6d_cn'
+    existing = [s for s in args.splits if os.path.exists(os.path.join(args.out, s, 'index.pkl'))]
+    if existing and not args.overwrite:
+        raise SystemExit('%s 下已有缓存 %s；不覆盖。确认要重建请加 --overwrite' % (args.out, existing))
     assert abs(args.width / args.height - RAW_WH[0] / RAW_WH[1]) < 1e-6, '必须等比缩放'
 
     train_all = sum([read_split(args.root, c, 'train') for c in CLASSES], [])

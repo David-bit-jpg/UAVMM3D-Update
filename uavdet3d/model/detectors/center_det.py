@@ -147,8 +147,17 @@ class CenterDet(DetectorTemplate):
             # this_dim = torch.exp(dim[batch_id]) #*self.dataset.dataset_cfg.MAX_SIZE
 
             # 与 pre_processor 的 TARGET_NORM / DEPTH_TARGET 严格互逆（共用 denormalize_regression，只从 DATA_CONFIG 读）
+            known_lwh = None
+            if str(self.model_cfg.POST_PROCESSING.get('SIZE_SOURCE', 'pred')) == 'gt':
+                # 「事先知道尺寸」逐帧版：取该帧第一个真值框的 l w h（只用尺寸）。MAV6D 每帧恰一架
+                g = batch_dict['gt_box9d'][batch_id]
+                g = g.detach().cpu().numpy() if hasattr(g, 'detach') else np.asarray(g)
+                g = np.asarray(g, np.float64).reshape(-1, 9)
+                g = g[np.abs(g).sum(1) > 0]
+                assert len(g), 'SIZE_SOURCE=gt 需要该帧有真值框'
+                known_lwh = g[0, 3:6]
             this_center_dis, this_dim = denormalize_regression(self.dataset.dataset_cfg, self.model_cfg.POST_PROCESSING,
-                                                               center_dis[batch_id], dim[batch_id])
+                                                               center_dis[batch_id], dim[batch_id], known_lwh=known_lwh)
             this_rot = rot[batch_id]
             this_size2d = size2d[batch_id] if size2d is not None else None
             this_kp2d = kp2d[batch_id] if kp2d is not None else None
@@ -161,6 +170,9 @@ class CenterDet(DetectorTemplate):
                 from uavdet3d.datasets.pre_processor.pre_processor import KP_SCALE
                 dec_kwargs['kp2d'] = this_kp2d
                 dec_kwargs['kp_scale'] = KP_SCALE
+                kpp = str(self.model_cfg.POST_PROCESSING.get('KP2D_POSE_PARTS', 'both'))
+                assert kpp in ('both', 'rot'), 'KP2D_POSE_PARTS 只能是 both / rot，收到 %r' % kpp
+                dec_kwargs['kp_pose_parts'] = kpp
 
             pred_boxes9d, confidence = self.center_decoder(this_hm,
                                                            this_center_res,

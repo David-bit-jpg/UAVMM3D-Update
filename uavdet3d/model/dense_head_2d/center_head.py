@@ -84,6 +84,15 @@ class CenterHead(nn.Module):
         # 每项的当前值，供训练日志打印，省得再单独跑一遍 loss_term_audit
         self.loss_terms = {}
 
+        # ---- 旋转损失按目标 2D 大小加权（2026-09-22）----
+        # [lo, hi]（网络输入像素，按 2D 框长边）：长边 <= lo 的目标不算旋转损失，>= hi 满权重，中间线性。
+        # 为什么（annot_audit/target_size_stats.py）：仿真训练集 45.7% 的目标 < 40 px（真实只有 2~3%），
+        # 这个尺寸下机头看不清，旋转标签对网络是不可学的噪声；L1 面对大量不可学标签的最优解是输出均值，
+        # 正是真实域上「偏航几乎是常数」的表现。位置 / 检测各项不受影响。需要 size2d 真值（MAKE_SIZE2D）。
+        # 缺省 None = 与之前逐位一致。
+        rsw = self.model_cfg.get('ROT_SIZE_WEIGHT', None)
+        self.rot_size_weight = (float(rsw[0]), float(rsw[1])) if rsw else None
+
     @staticmethod
     def focal_loss(logits, gt, alpha=2.0, beta=4.0):
         """CenterNet penalty-reduced focal loss。gt 是高斯热图，目标中心格恰好为 1。"""
@@ -107,11 +116,20 @@ class CenterHead(nn.Module):
         else:
             fg = (gt['center_dis'] > 0) if self.fg_mask_mode == 'center_dis' else None
 
+        # AUG.rot_mask_damaged（2026-09-22）：被目标级增广抹掉/拖糊的目标不算旋转损失（rot_mask 由预处理器生成）。
+        # 没有 rot_mask 时 rot_fg 就是 fg，逐位不变。
+        rot_fg = fg
+        if self.forward_loss_dict.get('rot_mask', None) is not None and fg is not None:
+            rot_fg = fg & (self.forward_loss_dict['rot_mask'] > 0)
+
         loss = 0
         self.loss_terms = {}
         for cur_name in self.head_keys:
             w = self.loss_weights.get(cur_name, 1.0)
             p, g = pred[cur_name], gt[cur_name]
+            # 每个头都必须在本轮自己算出 term。2026-09-18 加 KP_NEIGHBOR 时 kp2d 分支只算了掩码、漏了 term，
+            # 循环变量沿用了上一个头（rot）的值 —— kp2d 头零梯度、rot 被加了双倍权重，KA/KC 两条臂因此作废。
+            term = None
 
             if cur_name == 'hm' and self.hm_loss_type == 'focal':
                 term = self.focal_loss(p, g)
@@ -119,12 +137,21 @@ class CenterHead(nn.Module):
                 l = F.binary_cross_entropy(torch.sigmoid(p.reshape(-1)), g.reshape(-1),
                                            reduction='none')
                 term = l.sum() / ((g > 0).sum() + 1)
-            elif cur_name == 'kp2d':
-                # kp2d 可以写在中心格的邻域里（DATA_CONFIG.KP_NEIGHBOR），所以用它自己的非零掩码，
-                # 不跟着只写中心格的 center_dis/dim/rot 用同一个前景掩码。
-                m = torch.abs(g).sum(dim=-3, keepdim=True).expand_as(g) > 0
+            elif cur_name == 'rot' and self.rot_size_weight is not None:
+                term = self._sized_rot_loss(p, g, rot_fg, gt.get('size2d', None), self.rot_size_weight)
+            elif cur_name == 'rot' and g.shape[-3] > p.shape[-3]:
+                term = self._sym_rot_loss(p, g, rot_fg)
             else:
-                m = (torch.abs(g) > 0) if fg is None else fg.expand_as(g)
+                if cur_name == 'kp2d':
+                    # kp2d 可以写在中心格的邻域里（DATA_CONFIG.KP_NEIGHBOR），所以用它自己的非零掩码，
+                    # 不跟着只写中心格的 center_dis/dim/rot 用同一个前景掩码。
+                    m = torch.abs(g).sum(dim=-3, keepdim=True).expand_as(g) > 0
+                else:
+                    fgc = rot_fg if cur_name == 'rot' else fg
+                    # 11-05 分项监督：距离类两项只在 dis_mask 上算（没有 dis_mask 时逐位不变）
+                    if cur_name in ('center_dis', 'size2d') and fg is not None and self.forward_loss_dict.get('dis_mask', None) is not None:
+                        fgc = fg & (self.forward_loss_dict['dis_mask'] > 0)
+                    m = (torch.abs(g) > 0) if fgc is None else fgc.expand_as(g)
                 m = m.reshape(-1)
                 if m.sum() == 0:
                     # 整个 batch 没有有效目标（例如全被 filter_box_outside 滤掉），
@@ -133,10 +160,61 @@ class CenterHead(nn.Module):
                 else:
                     term = torch.abs(g.reshape(-1)[m] - p.reshape(-1)[m]).mean()
 
+            assert term is not None, '头 %s 没有算出损失项' % cur_name
             self.loss_terms[cur_name] = float(term.detach())
             loss = loss + w * term
 
         return loss
+
+    @staticmethod
+    def _sym_rot_loss(p, g, fg):
+        """对称感知的旋转损失（DATA_CONFIG.ROT_SYMMETRY = k > 1）。
+
+        真值 g 是 6k 通道：k 个绕机体竖直轴 j·360°/k 的等价旋转的编码（见 object_encoder_mav6d）。
+        逐前景格对 k 个取最小的 L1（按 6 个通道求和），再按「格数 × 6」归一 —— k = 1 时与普通 L1 逐位相同。
+        为什么：四旋翼前后近似对称，训练图在部署尺度上基本看不出机头；硬逼网络分辨前后，
+        共享主干只能去抓仿真特有的线索，迁移不过去还会带偏同一张特征图上的深度。
+        """
+        C = p.shape[-3]
+        k = g.shape[-3] // C
+        assert g.shape[-3] == k * C, (g.shape, p.shape)
+        B, K = g.shape[0], g.shape[1]
+        p6 = p.reshape(B, K, C, *p.shape[-2:])
+        gk = g.reshape(B, K, k, C, *g.shape[-2:])
+        best = (gk - p6.unsqueeze(2)).abs().sum(dim=3).min(dim=2).values      # (B, K, H, W)
+        if fg is not None:
+            m = fg.reshape(B, K, *fg.shape[-2:])
+            m = m if m.dtype == torch.bool else (m > 0)
+        else:
+            m = gk.abs().sum(dim=(2, 3)) > 0
+        if m.sum() == 0:
+            return (p.reshape(-1) * 0).sum()
+        return best[m].sum() / (m.sum() * C)
+
+    @staticmethod
+    def _sized_rot_loss(p, g, fg, size2d, lohi):
+        """旋转损失（对称感知，k >= 1），逐前景格乘「目标 2D 大小」权重后按权重和归一。
+        size2d 真值是 (log 宽, log 高)（网络输入像素），长边 = exp(max)。权重全为 0 的 batch 返回连着图的 0。"""
+        assert size2d is not None, 'ROT_SIZE_WEIGHT 需要 size2d 真值（DATA_CONFIG.MAKE_SIZE2D）'
+        C = p.shape[-3]
+        k = g.shape[-3] // C
+        assert g.shape[-3] == k * C, (g.shape, p.shape)
+        B, K = g.shape[0], g.shape[1]
+        p6 = p.reshape(B, K, C, *p.shape[-2:])
+        gk = g.reshape(B, K, k, C, *g.shape[-2:])
+        best = (gk - p6.unsqueeze(2)).abs().sum(dim=3).min(dim=2).values      # (B, K, H, W)
+        if fg is not None:
+            m = fg.reshape(B, K, *fg.shape[-2:])
+            m = m if m.dtype == torch.bool else (m > 0)
+        else:
+            m = gk.abs().sum(dim=(2, 3)) > 0
+        s2 = size2d.reshape(B, K, -1, *size2d.shape[-2:]).float()
+        L = torch.exp(s2.max(dim=2).values)                                     # 长边像素 (B, K, H, W)
+        lo, hi = lohi
+        w = ((L - lo) / max(hi - lo, 1e-6)).clamp(0.0, 1.0) * m.float()
+        if float(w.sum()) <= 0:
+            return (p.reshape(-1) * 0).sum()
+        return (best * w).sum() / (w.sum() * C)
 
     def forward(self, batch_dict):
 
@@ -165,5 +243,7 @@ class CenterHead(nn.Module):
             batch_dict['gt_dict'] = gt_dict
             self.forward_loss_dict['gt_center_dict'] = gt_dict
             self.forward_loss_dict['fg_mask'] = batch_dict.get('fg_mask', None)
+            self.forward_loss_dict['rot_mask'] = batch_dict.get('rot_mask', None)
+            self.forward_loss_dict['dis_mask'] = batch_dict.get('dis_mask', None)
 
         return batch_dict

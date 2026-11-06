@@ -9,7 +9,7 @@
 
 约定与 build_mav6d_cache.py 一致：缓存原始帧（不裁窗、不增广）、BGR 顺序、x/255 后、float64 累加。
 
-    python tools/calc_cache_norm.py E:/mmcache/pp_realsize [--split train] [--frames 600]
+    python tools/calc_cache_norm.py @@MMCACHE@@/pp_realsize [--split train] [--frames 600]
 """
 import argparse
 import os

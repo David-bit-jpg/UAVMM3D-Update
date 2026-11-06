@@ -10,10 +10,12 @@ from uavdet3d.model.backbone_2d.vit_l import VitL
 from uavdet3d.model.backbone_2d.vit_b import VitB
 from .resnet8x_attention import ResNet8xAttention
 from .tv_resnet import TvResNet
+from .mm_fusion import MMFusionTv
 
 __all__ = {
     'ResNet8x': ResNet8x,
     'TvResNet': TvResNet,
+    'MMFusionTv': MMFusionTv,
     'ResNet50': ResNet50,
     'ResNet50V2': ResNet50V2,
     'ResNet101': ResNet101,
