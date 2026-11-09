@@ -50,6 +50,12 @@ def tag_paths(tag, out_root=RC.OUT_ROOT):
 RC.tag_paths = tag_paths
 
 
+def MEMS():
+    """FE_MEMS='0,1,5,6' 显式指定成员下标（11-09 精简实验：成员子集）；缺省 = 前 FE_NMEM 个"""
+    s = os.environ.get('FE_MEMS', '')
+    return [int(x) for x in s.split(',')] if s else list(range(int(os.environ.get('FE_NMEM', '5'))))
+
+
 def km2(v, it=50):
     c = np.quantile(v, [0.25, 0.75])
     for _ in range(it):
@@ -71,6 +77,8 @@ def lum_of(sp, U):
 
 
 def shape_of(sp):
+    if CFG['kps'] == 'strict' and os.environ.get('FE_KPSSFX') and os.path.exists(STRICT + '/kps/shape_%s_wsfnb%s.pkl' % (sp, os.environ['FE_KPSSFX'])):
+        return pickle.load(open(STRICT + '/kps/shape_%s_wsfnb%s.pkl' % (sp, os.environ['FE_KPSSFX']), 'rb'))   # 11-09：只用一个高度网络的读数
     return pickle.load(open((STRICT + '/kps/shape_%s_wsfnb.pkl' if CFG['kps'] == 'strict' else G + '/lidar/kpsize/shape_%s_wsfnb.pkl') % sp, 'rb'))
 
 
@@ -137,6 +145,8 @@ def build(sp):
     rk = shape_of(sp)
 
     def height(k):
+        if os.environ.get('FE_HTR'):                    # 11-09 精简实验：不用高度网络，所有帧同一个高宽比（= 常数尺寸 s̄ 的高 / 长宽均值）
+            return float(os.environ['FE_HTR'])
         if CFG['ht'] == 'color':
             lu = lum.get((str(k[0]), str(k[1])))
             if lu is not None:
@@ -151,10 +161,10 @@ def build(sp):
         if len(p) and h is not None:
             p[:, 5] = h * p[:, 3:5].mean(1)
         f['pred'] = p
-    keys, B = RC.compute_arms(D, info, frames, members=list(range(int(os.environ.get('FE_NMEM', '5')))))
+    keys, B = RC.compute_arms(D, info, frames, members=MEMS())
     ZKP = {}
     if os.environ.get('FE_ZKP') == '1':                 # wf23 方案二：朝向网络 SA-TM 融合角点 + PnP 的平移深度（第二种独立测距）
-        mem = list(range(int(os.environ.get('FE_NMEM', '5'))))
+        mem = MEMS()
         search_ = int(info.get('search', 2)); ks_ = float(info.get('KP_SCALE') or KFO.KP_SCALE_DEFAULT)
         for i_, k_ in enumerate(keys):
             a_ = C.frame_arms(D, i_, frames[k_], mem, search_, ks_)
@@ -171,7 +181,9 @@ def build(sp):
                 ZKP[k_] = (float(rt_[2][2, 0]), float(np.std(zm_)) if len(zm_) >= 3 else np.nan)
     frames_gt, _ = RC.load_frames(P['pkl'], P['sealed'], with_gt=True)
     Fr = KFO.build_arm_frames(frames_gt, keys, B['SATM'], B['top'])
-    votes = T.member_votes(D, info, frames, keys, B['SATM'])
+    roles = [str(m.get('role', '')) for m in info.get('members', [])] if isinstance(info.get('members'), list) else []
+    vmem = [m for m in MEMS() if not (m < len(roles) and roles[m] == 'recut-mirror')]   # 机头象限投票只用原图读数（10 成员时 = 前 5 个，与原来相同）
+    votes = T.member_votes(D, info, frames, keys, B['SATM'], members=vmem)
     recs = [{'gt': np.asarray(f['gt'], np.float64).reshape(-1, 9), 'pred': np.asarray(f['pred'], np.float64).reshape(-1, 9),
              'conf': np.asarray(f['conf'], np.float64), 'K': f['K_in'], 'seq_id': f['seq'], 'frame_id': f['frame']} for f in Fr]
     fac, ncol = factors(sp, U, lum, K)

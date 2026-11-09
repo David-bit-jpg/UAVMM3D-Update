@@ -44,7 +44,7 @@ def build(split):
 RZ = [Rot.from_euler('z', 90 * k, degrees=True).as_matrix() for k in range(4)]
 
 
-def member_votes(D, info, frames, keys, S):
+def member_votes(D, info, frames, keys, S, members=None):
     """每帧 4 个象限（融合朝向绕机体竖轴转 0/90/180/270°）各得几票：5 个成员各投离自己最近的象限"""
     search = int(info.get('search', 2))
     ks = float(info.get('KP_SCALE') or KFO.KP_SCALE_DEFAULT)
@@ -52,7 +52,7 @@ def member_votes(D, info, frames, keys, S):
     for i, k in enumerate(keys):
         if not np.isfinite(S[i]).all():
             continue
-        a = C.frame_arms(D, i, frames[k], list(range(5)), search, ks)
+        a = C.frame_arms(D, i, frames[k], list(range(5)) if members is None else list(members), search, ks)   # 11-09：可指定成员（缺省 = 前 5 个，行为不变）
         if a is None:
             continue
         for Rm in a['member_R']:

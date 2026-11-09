@@ -33,7 +33,7 @@ def main():
     for s in a.sets.split(';'):
         n, c = s.split('=')
         cks = [os.path.abspath(x) for x in c.split(',')]
-        assert len(cks) == 5 and all(os.path.exists(x) for x in cks), (n, cks)
+        assert len(cks) >= 1 and all(os.path.exists(x) for x in cks), (n, cks)
         if os.path.exists('%s/%s/kz_members_%s.json' % (TAGS, n, n)):
             print('[recut] exists, skip', n); continue
         sets.append((n, cks))
@@ -63,9 +63,9 @@ def main():
     PI = [int(np.argmin(np.abs(P8 - P8[i] * np.array([1, -1, 1])).sum(1))) for i in range(8)]   # 机身 y 轴镜像：镜像成员的第 i 个角点 = 原机身第 PI[i] 个角点
     assert sorted(PI) == list(range(8))
     print('[recut] 机身镜像角点重排', PI, flush=True)
-    NM = 10
     MS, OUT = [], []
     for n, cks in sets:
+        NM = 2 * len(cks)          # 11-09：成员数不再写死 5（原图 + 镜像各 len(cks) 个）
         MS.append(AB.build_models(torch, dev, cks)[0])
         OUT.append(dict(HM=np.full((N, NM, S_, S_), np.nan, np.float32), KP=np.full((N, NM, 16, S_, S_), np.nan, np.float32),
                         RB=np.zeros((N, 2), np.int64), KD=np.zeros((N, 16), np.float32)))
@@ -129,7 +129,7 @@ def main():
         inf = dict(base_inf)
         inf.update({'src_tag': a.src_tag, 'members': [{'name': 'KZs%d' % k, 'path': c, 'role': 'recut'} for k, c in enumerate(cks)] +
                     [{'name': 'KZs%dM' % k, 'path': c, 'role': 'recut-mirror'} for k, c in enumerate(cks)],
-                    'member_names': ['KZs%d' % k for k in range(5)] + ['KZs%dM' % k for k in range(5)], 'replay_check': vr, 'batch_vs_single': BCHK, 'n_frames': N,
+                    'member_names': ['KZs%d' % k for k in range(len(cks))] + ['KZs%dM' % k for k in range(len(cks))], 'replay_check': vr, 'batch_vs_single': BCHK, 'n_frames': N,
                     'elapsed_s': time.time() - t00, 'written_at': time.strftime('%Y-%m-%d %H:%M:%S'), 'script': os.path.abspath(__file__)})
         json.dump(inf, open(od + '/kz_members_%s.json' % n, 'w', encoding='utf-8'), ensure_ascii=False, indent=1, default=str)
         print('[recut] wrote', out_npz, flush=True)

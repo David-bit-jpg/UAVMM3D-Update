@@ -42,7 +42,7 @@ def shape(sp):
     idx = list(range(0, len(keys), 3)) if sp == 'train' else list(range(len(keys)))
     src = AB.NpzSource(D)
     out = {keys[i]: [] for i in idx}
-    for seed in (0, 1):
+    for seed in [int(x) for x in os.environ.get('KPS_SEEDS', '0,1').split(',')]:   # 11-09：可只用一个高度网络
         m = KE.E.build(ADA % seed, torch, dev)
         t0 = time.time()
         for c0 in range(0, len(idx), 16):
@@ -63,11 +63,11 @@ def shape(sp):
         del m
         torch.cuda.empty_cache()
     r = {k: float(np.mean(v)) for k, v in out.items()}
-    pickle.dump(r, open(HERE + '/kps/shape_%s_wsfnb.pkl' % sp, 'wb'))
+    pickle.dump(r, open(HERE + '/kps/shape_%s_wsfnb%s.pkl' % (sp, os.environ.get('KPS_SFX', '')), 'wb'))
     print('%s 关键点高度比中位（全部）%.3f，帧数 %d' % (sp, float(np.median(list(r.values()))), len(r)), flush=True)
 
 
 if __name__ == '__main__':
     for sp in sys.argv[1:]:
-        if not os.path.exists(HERE + '/kps/shape_%s_wsfnb.pkl' % sp):
+        if not os.path.exists(HERE + '/kps/shape_%s_wsfnb%s.pkl' % (sp, os.environ.get('KPS_SFX', ''))):
             shape(sp)

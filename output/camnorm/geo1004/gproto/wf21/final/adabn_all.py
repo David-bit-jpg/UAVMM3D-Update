@@ -27,11 +27,12 @@ def main():
     import kzst_common as C
     import teach_dump as TD
     arm = sys.argv[1]
+    SEEDS = [int(x) for x in os.environ.get('AB_SEEDS', '0,1,2,3,4').split(',')]   # 11-09：可只重估部分种子
     if arm == 'R5':   # 合规基线 ⑤ 的成员：红外+LiDAR 辅助训练、未做目标域自训练
         cks = ['@@ROOT@@/output/camnorm/geo1004/lidar/irlid/release/kzm_s%d.pth' % k for k in range(5)]
     else:
-        cks = ['%s/runs/%s_s%d/ckpt_last.pth' % (OU, arm, k) for k in range(5)]
-    outs = ['%s/adabn_all/%s_s%d.pth' % (HERE, arm, k) for k in range(5)]
+        cks = ['%s/runs/%s_s%d/ckpt_last.pth' % (OU, arm, k) for k in SEEDS]
+    outs = ['%s/adabn_all/%s_s%d.pth' % (HERE, arm, k) for k in (SEEDS if arm != 'R5' else range(5))]
     if all(os.path.exists(o) for o in outs):
         print('exists'); return
     D, info = C.load_npz_info('%s/tags/%s/kz_members_%s.npz' % (ST, TAG, TAG))
