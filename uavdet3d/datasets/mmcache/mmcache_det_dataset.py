@@ -112,6 +112,10 @@ class MMCache_Det_Dataset(DatasetTemplate):
         self.t_range = [float(tr[0]), float(tr[1])] if tr else None
         self.max_upscale = float(va.get('max_upscale', 1.0))
         self.f_ref = float(dataset_cfg.get('DEPTH_F_REF', 512))
+        # 11-07 红外教师抠图混合（MIX_PASTE，缺省关、逐位不变）：自训练时按概率把"红外剪影抠出的仿真机身"贴进真实帧，
+        # 带精确 3D 标签；贴的距离/位置按目标域伪标签的分布抽（目标域原型）。见 output/camnorm/geo1004/tproto/build_paste_bank.py
+        self.mix_paste = dataset_cfg.get('MIX_PASTE', None)
+        self._pbank, self._ppool = None, None
         # RGB 可见度过滤：vis_score.npy 是每帧「最近合格目标处 RGB 局部对比度」(灰度级)。
         # mm20 有 61% 是夜间帧，夜间目标对比度中位只有 2.3-2.9（亮度 3-21/255），对 RGB 学生
         # 就是不可见的纯噪声；白天中位 8.5-15.4。按对比度筛而不按天气标签：有路灯的夜景能留下。
@@ -203,9 +207,17 @@ class MMCache_Det_Dataset(DatasetTemplate):
         meta = self.metas[i]
 
         chans = []
+        pasted = None
         for m in (self.modalities if self.store != 'jpeg' else []):
             if m == 'rgb':
-                chans.append(np.ascontiguousarray(mm['rgb'][i]).astype(np.float32).transpose(2, 0, 1) / 255.0)
+                img8 = np.ascontiguousarray(mm['rgb'][i])
+                if self.training and self.mix_paste and np.random.rand() < float(self.mix_paste.get('PROB', 0.5)):
+                    nm0 = list(meta['names'])
+                    if self.agnostic_name is not None:
+                        nm0 = [self.agnostic_name] * len(nm0)
+                    img8, pb, pn = self._mix_paste(img8, self.cache_intrinsic(meta), meta['boxes9d'].astype(np.float64).copy(), nm0)
+                    pasted = (pb, pn)
+                chans.append(img8.astype(np.float32).transpose(2, 0, 1) / 255.0)
             elif m == 'ir':
                 chans.append(np.ascontiguousarray(mm['ir'][i]).astype(np.float32)[None] / 255.0)
             elif m == 'depth':
@@ -220,9 +232,13 @@ class MMCache_Det_Dataset(DatasetTemplate):
         if self.agnostic_name is not None:
             names = [self.agnostic_name] * len(names)
         K = self.cache_intrinsic(meta)                    # 缓存分辨率上的针孔内参（jpeg 存储时是原图分辨率）
+        if pasted is not None:
+            boxes, names = pasted
         if self.store == 'jpeg':
             o, ln = mm['rgb_jpg_index'][i]
             src = cv2.imdecode(np.asarray(mm['rgb_jpg'][int(o):int(o) + int(ln)]), cv2.IMREAD_COLOR)
+            if self.training and self.mix_paste and np.random.rand() < float(self.mix_paste.get('PROB', 0.5)):
+                src, boxes, names = self._mix_paste(src, K, boxes, names)
             extra = []
             for m in self.modalities[1:]:
                 f = SIDECAR_FILE[m]
@@ -294,6 +310,64 @@ class MMCache_Det_Dataset(DatasetTemplate):
         return data_dict
 
     # ------------------------------------------------------------------ #
+    def _mix_paste(self, img, K, boxes, names):
+        """红外教师抠图混合：从抠图库取一架仿真机身（alpha = 红外剪影），按目标域原型（随机一个真实伪标签的距离与图上位置，
+        加小扰动）定贴的距离与位置，缩放后 alpha 混合进真实原图；3D 标签 = 新视线上的位置 + 仿真尺寸 + 把仿真视线转到新视线后的姿态
+        （保持相对视线的朝向，外观才对得上）。放大倍数超过 MAX_UP 或与已有目标重叠就换一个，10 次不成就原样返回。"""
+        if self._pbank is None:
+            self._pbank = pickle.load(open(self.mix_paste['BANK'], 'rb'))
+            pool = []
+            for vi in self.valid_idx:
+                m = self.metas[int(vi)]
+                b = np.asarray(m['boxes9d'], np.float64).reshape(-1, 9)
+                if not len(b):
+                    continue
+                Km = self.cache_intrinsic(m); p = Km @ b[0, :3]
+                pool.append((float(b[0, 2]), float(p[0] / p[2]), float(p[1] / p[2])))
+            self._ppool = pool
+        Hh, Ww = img.shape[:2]
+        f_real = float(np.sqrt(K[0, 0] * K[1, 1]))
+        max_up = float(self.mix_paste.get('MAX_UP', 2.5))
+        Kinv = np.linalg.inv(K)
+        ex = []
+        for b in boxes:
+            pc = K @ b[:3]
+            ex.append((pc[0] / pc[2], pc[1] / pc[2], 0.5 * f_real * float(np.linalg.norm(b[3:5])) / max(float(b[2]), 1e-3)))
+        for _ in range(10):
+            z_p, u_p, v_p = self._ppool[np.random.randint(len(self._ppool))]
+            x = self._pbank[np.random.randint(len(self._pbank))]
+            z_new = z_p * float(np.exp(np.random.uniform(-0.1, 0.1)))
+            s = (f_real / z_new) / (x['f'] / float(x['box'][2]))
+            if not (float(self.mix_paste.get('MIN_S', 0.3)) <= s <= max_up):
+                continue
+            u = float(np.clip(u_p + np.random.uniform(-0.15, 0.15) * Ww, 0.08 * Ww, 0.92 * Ww))
+            v = float(np.clip(v_p + np.random.uniform(-0.15, 0.15) * Hh, 0.08 * Hh, 0.92 * Hh))
+            h0, w0 = x['rgb'].shape[:2]
+            r_new = 0.5 * s * max(h0, w0)
+            if any(np.hypot(u - eu, v - ev) < r_new + er for eu, ev, er in ex):
+                continue
+            nw, nh = max(2, int(round(w0 * s))), max(2, int(round(h0 * s)))
+            rgb = cv2.resize(x['rgb'], (nw, nh), interpolation=cv2.INTER_LINEAR if s > 1 else cv2.INTER_AREA)
+            al = cv2.resize(x['alpha'].astype(np.float32), (nw, nh), interpolation=cv2.INTER_LINEAR)[..., None]
+            x0, y0 = int(round(u - x['ctr'][0] * s)), int(round(v - x['ctr'][1] * s))
+            xa, ya, xb, yb = max(0, x0), max(0, y0), min(Ww, x0 + nw), min(Hh, y0 + nh)
+            if xb - xa < nw * 0.9 or yb - ya < nh * 0.9:
+                continue
+            img = img.copy()
+            reg = img[ya:yb, xa:xb].astype(np.float32)
+            sr, sa = rgb[ya - y0:yb - y0, xa - x0:xb - x0].astype(np.float32), al[ya - y0:yb - y0, xa - x0:xb - x0]
+            img[ya:yb, xa:xb] = np.clip(sa * sr + (1 - sa) * reg, 0, 255).astype(np.uint8)
+            t_new = z_new * (Kinv @ np.array([u, v, 1.0]))
+            bb = np.asarray(x['box'], np.float64)
+            d_s, d_n = bb[:3] / np.linalg.norm(bb[:3]), t_new / np.linalg.norm(t_new)
+            Ra = R.align_vectors(d_n[None], d_s[None])[0]
+            eul = (Ra * R.from_euler(self.euler_seq, bb[6:9])).as_euler(self.euler_seq)
+            nb = np.concatenate([t_new, bb[3:6], eul])[None]
+            boxes = np.concatenate([np.asarray(boxes, np.float64).reshape(-1, 9), nb], 0)
+            names = list(names) + [names[0] if len(names) else 'drone']
+            return img, boxes, names
+        return img, boxes, names
+
     def cache_intrinsic(self, meta):
         """meta -> 缓存分辨率 (W,H) 上的内参。新缓存直接存 K_in；旧缓存存原图 K_raw + raw_wh。"""
         if 'K_in' in meta:

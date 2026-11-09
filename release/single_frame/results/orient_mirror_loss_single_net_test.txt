@@ -1,0 +1,16 @@
+[adabn] PSP_s0 <- @@ROOT@@/output/camnorm/geo1004/gproto/wf21/orient_uda/adabn_out/PSP_s0.pth | PSPM_s0 <- E:\Open3DUAVDet\output\camnorm\geo1004\gproto\wf23/adabn_out/PSPM_s0.pth | PSP_s1 <- @@ROOT@@/output/camnorm/geo1004/gproto/wf21/orient_uda/adabn_out/PSP_s1.pth | PSPM_s1 <- E:\Open3DUAVDet\output\camnorm\geo1004\gproto\wf23/adabn_out/PSPM_s1.pth | PSP_s2 <- @@ROOT@@/output/camnorm/geo1004/gproto/wf21/orient_uda/adabn_out/PSP_s2.pth | PSPM_s2 <- E:\Open3DUAVDet\output\camnorm\geo1004\gproto\wf23/adabn_out/PSPM_s2.pth
+2026-11-09 07:08:08,416   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-09 07:08:08,416   INFO  MMCache[test]: 2336 帧, 模态 ['rgb'] -> 3 通道, 缓存 E:\mmcache\mav6d_cn_obj\val
+loading weights: 载入 289/289 个张量, 27.95M/27.95M 参数 (100.0%)
+loading weights: 载入 289/289 个张量, 27.95M/27.95M 参数 (100.0%)
+loading weights: 载入 289/289 个张量, 27.95M/27.95M 参数 (100.0%)
+loading weights: 载入 289/289 个张量, 27.95M/27.95M 参数 (100.0%)
+loading weights: 载入 289/289 个张量, 27.95M/27.95M 参数 (100.0%)
+loading weights: 载入 289/289 个张量, 27.95M/27.95M 参数 (100.0%)
+PSP_s0+BN          test 几何 中位 11.25 均值 14.66 | 航向 中位  6.64 均值 10.32 | 倾斜 中位  7.24 | p4 航向均值  8.52 m2 15.40
+PSPM_s0+BN         test 几何 中位 10.71 均值 13.66 | 航向 中位  5.79 均值  9.12 | 倾斜 中位  7.33 | p4 航向均值  7.40 m2 13.95
+PSP_s1+BN          test 几何 中位 11.40 均值 14.97 | 航向 中位  6.60 均值 10.79 | 倾斜 中位  7.04 | p4 航向均值  8.86 m2 16.20
+PSPM_s1+BN         test 几何 中位 11.25 均值 14.21 | 航向 中位  6.41 均值  9.86 | 倾斜 中位  7.17 | p4 航向均值  7.97 m2 15.16
+PSP_s2+BN          test 几何 中位 11.40 均值 14.64 | 航向 中位  7.01 均值 10.41 | 倾斜 中位  6.89 | p4 航向均值  8.53 m2 15.68
+PSPM_s2+BN         test 几何 中位 10.52 均值 13.49 | 航向 中位  5.88 均值  9.12 | 倾斜 中位  7.00 | p4 航向均值  7.57 m2 13.50
+[eval] 131 s

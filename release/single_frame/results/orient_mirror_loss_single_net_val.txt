@@ -1,0 +1,23 @@
+2026-11-09 07:02:41,461   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-09 07:02:41,461   INFO  MMCache[test]: 2336 帧, 模态 ['rgb'] -> 3 通道, 缓存 E:\mmcache\mav6d_cn_obj\val
+loading weights: 载入 289/289 个张量, 27.95M/27.95M 参数 (100.0%)
+loading weights: 载入 289/289 个张量, 27.95M/27.95M 参数 (100.0%)
+loading weights: 载入 289/289 个张量, 27.95M/27.95M 参数 (100.0%)
+[adabn] PSP_s0 <- @@ROOT@@/output/camnorm/geo1004/gproto/wf21/orient_uda/adabn_out/PSP_s0.pth | PSPM_s0 <- E:\Open3DUAVDet\output\camnorm\geo1004\gproto\wf23/adabn_out/PSPM_s0.pth | PSP_s1 <- @@ROOT@@/output/camnorm/geo1004/gproto/wf21/orient_uda/adabn_out/PSP_s1.pth | PSPM_s1 <- E:\Open3DUAVDet\output\camnorm\geo1004\gproto\wf23/adabn_out/PSPM_s1.pth | PSP_s2 <- @@ROOT@@/output/camnorm/geo1004/gproto/wf21/orient_uda/adabn_out/PSP_s2.pth | PSPM_s2 <- E:\Open3DUAVDet\output\camnorm\geo1004\gproto\wf23/adabn_out/PSPM_s2.pth
+2026-11-09 07:03:58,797   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-09 07:03:58,797   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-09 07:03:58,798   INFO  MMCache[test]: 2336 帧, 模态 ['rgb'] -> 3 通道, 缓存 E:\mmcache\mav6d_cn_obj\val
+2026-11-09 07:03:58,798   INFO  MMCache[test]: 2336 帧, 模态 ['rgb'] -> 3 通道, 缓存 E:\mmcache\mav6d_cn_obj\val
+loading weights: 载入 289/289 个张量, 27.95M/27.95M 参数 (100.0%)
+loading weights: 载入 289/289 个张量, 27.95M/27.95M 参数 (100.0%)
+loading weights: 载入 289/289 个张量, 27.95M/27.95M 参数 (100.0%)
+loading weights: 载入 289/289 个张量, 27.95M/27.95M 参数 (100.0%)
+loading weights: 载入 289/289 个张量, 27.95M/27.95M 参数 (100.0%)
+loading weights: 载入 289/289 个张量, 27.95M/27.95M 参数 (100.0%)
+PSP_s0+BN          val 几何 中位 17.33 均值 20.91 | 航向 中位 12.42 均值 15.91 | 倾斜 中位  9.30 | p4 航向均值 11.11 m2 19.97
+PSPM_s0+BN         val 几何 中位 16.33 均值 19.93 | 航向 中位 11.38 均值 15.05 | 倾斜 中位  9.22 | p4 航向均值 10.65 m2 18.77
+PSP_s1+BN          val 几何 中位 19.09 均值 21.89 | 航向 中位 14.73 均值 17.30 | 倾斜 中位  8.78 | p4 航向均值 12.97 m2 20.95
+PSPM_s1+BN         val 几何 中位 17.73 均值 20.91 | 航向 中位 12.93 均值 16.18 | 倾斜 中位  8.74 | p4 航向均值 12.08 m2 19.64
+PSP_s2+BN          val 几何 中位 18.80 均值 21.46 | 航向 中位 13.27 均值 16.82 | 倾斜 中位  8.92 | p4 航向均值 12.64 m2 20.36
+PSPM_s2+BN         val 几何 中位 17.13 均值 20.31 | 航向 中位 12.06 均值 15.45 | 倾斜 中位  9.19 | p4 航向均值 11.70 m2 18.63
+[eval] 65 s

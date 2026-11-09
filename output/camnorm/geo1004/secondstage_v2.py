@@ -44,6 +44,45 @@ SFX = '_smoke' if (LIMIT or EPOCHS < 30 or STEPS < 2000) else ''
 NOADV = os.environ.get('V2_NOADV') == '1'   # 11-02 特征对齐消融：真实适应时去掉 c4 特征对抗对齐（其余不变），存档加后缀 _noadv
 if NOADV:
     SFX += '_noadv'
+if os.environ.get('V2_TAG'):                  # 11-08：小规模试验的存档后缀（基础网络与真实适应同后缀，互相能找到）
+    SFX += '_' + os.environ['V2_TAG']
+XP_PROB = float(os.environ.get('V2_XP_PROB', '0.5'))    # 11-08：跨域贴图比例（默认 0.5 = 原配方）
+XP_REAL = os.environ.get('V2_XP_REAL') == '1'           # 11-08：贴图真实感——机身颜色统计换成随机真实无人机裁窗中心的统计 + 剪影边缘按随机 σ 柔化
+PW = os.environ.get('V2_PW') == '1'          # 11-08：原型密度比加权的贴图真值损失（只在真实适应段；RGB 原型 = 滑动平均网络读数头 256 维隐层）
+PW_K = int(os.environ.get('V2_PW_K', '32'))
+PW_CLIP = float(os.environ.get('V2_PW_CLIP', '4'))
+PW_EVERY = int(os.environ.get('V2_PW_EVERY', '250'))
+PW_GATE = os.environ.get('V2_GATE') == '1'   # 11-08：红外⇄LiDAR 双向体检守门权重 gproto/wf16/synthesis_matte/gate_s{j%5}.npy（1/0），只在 V2_PW=1 时生效
+TP = float(os.environ.get('V2_TP', '0'))     # 11-08：真实外观移植——被贴图样本以此概率把机身颜色场换成真实无人机机身（供体库 selftrain/real_s{j}_tpbank.npz，红外蒸馏剪影头抠出），几何与标签仍是仿真；需 V2_XP_REAL=1
+FG_PC = float(os.environ.get('V2_FG_COL', '0'))         # wf23 前景中间域：贴图样本以此概率按教师统计的真实机身亮度重上色（色彩偏离压到 0.3）
+FG_PB = float(os.environ.get('V2_FG_BLUR', '0'))        # wf23 前景中间域：贴图样本以此概率加运动模糊（机身层与剪影一起拖影）
+FG_L = tuple(int(v) for v in os.environ.get('V2_FG_L', '3,12').split(','))
+_FG = {}
+
+
+def fg_init(j):
+    """前景中间域的独立随机数与教师统计（gproto/wf23/fgstats_kz.npz：教师从过滤通过的真实帧里抠出的机身 RGB 均值/标准差 → 换成 BGR）"""
+    _FG.clear()
+    if FG_PC > 0 or FG_PB > 0:
+        _FG['rng'] = np.random.default_rng(50000 + j)
+        _FG['col'] = np.load(G + '/gproto/wf23/fgstats_kz.npz')['col_real'][:, [2, 1, 0, 5, 4, 3]].astype(np.float32)
+
+
+def _mker(L, ang):
+    k = np.zeros((L, L), np.float32)
+    c = (L - 1) / 2.0
+    for t in np.linspace(-c, c, 4 * L):
+        x, y = int(round(c + t * np.cos(ang))), int(round(c + t * np.sin(ang)))
+        k[min(max(y, 0), L - 1), min(max(x, 0), L - 1)] = 1
+    return k / k.sum()
+
+
+TDP = os.environ.get('V2_TDP') == '1'      # wf23：教师分歧引导的原型再分配——真实裁窗按 RGB 原型聚类，原型内"红外教师 vs LiDAR 教师"距离分歧的稳健散布 s_p 定可靠度 ρ_p=(s_全/s_p)²；
+#   真实伪目标损失 × ρ_p（教师吵得凶的外观少信伪目标），中间域（贴图）样本的精确标签损失 × 1/ρ_p（那些外观多靠精确标签）；需 V2_DR（逐裁窗分歧文件）
+DEP = float(os.environ.get('V2_DEPLOY', '0'))          # 11-08：部署口径标签输运——档内且被贴图的样本，标量换成真实部署口径（常数尺寸、按常数尺寸重算 z0），标签 δ 按同一参照点换算（真值距离不变）
+DEP_BAND = float(os.environ.get('V2_DEPLOY_BAND', '0.22314'))   # |尺寸项| ≤ log 1.25 才输运
+_TPB = {}
+_UV = np.meshgrid(np.arange(128, dtype=np.float32), np.arange(128, dtype=np.float32))
 
 
 class DCNetG(skt.DCNetU):
@@ -253,7 +292,7 @@ _BANK = []
 
 def bank():
     if not _BANK:
-        _BANK.append(np.load(G + '/xpaste/bank_bg.npy'))      # 10-12：整个读进内存（同数据，只改读法）
+        _BANK.append(np.load(G + {'sf': '/xpaste/bank_bg_sf.npy', 'sf2': '/xpaste/bank_bg_sf2.npy'}.get(os.environ.get('V2_BANK'), '/xpaste/bank_bg.npy')))      # 10-12：整个读进内存；11-08 V2_BANK=sf → 单帧背景库（同帧平移窗，不跨帧）；V2_BANK=sf2 → 单帧检测器选窗的单帧背景库（wf21/strict，xpaste_bank_sf2.py）
     return _BANK[0]
 
 
@@ -274,12 +313,72 @@ def recolor_body(body, b, a, rng):
     return np.clip(gm + d + k * (body - bm), 0, 255)
 
 
-def xpaste(im, sil, bk, rng, rng2=None):
+_REALC = []
+
+
+def real_centers():
+    """11-08：真实无人机外观样本——真实训练小图（纯仿真检测器裁窗，无人机居中）中心 24×24 块的逐通道均值/标准差"""
+    if not _REALC:
+        r = np.load('%s/selftrain/real_s0_rgb.npy' % G, mmap_mode='r')
+        c = np.asarray(r[:, 52:76, 52:76], np.float32).reshape(len(r), -1, 3)
+        _REALC.append((c.mean(1), c.std(1) + 1e-3))
+    return _REALC[0]
+
+
+def deploy_conv(S, dl, j):
+    """11-08 部署口径标签输运：真实帧的尺寸标量是自标定常数 logSc、z0 按常数尺寸算；仿真样本用检测器逐帧预测尺寸。
+    Δ = 预测尺寸横向两轴 log 均值 − 常数尺寸横向两轴 log 均值；标量 (lw, lz, ldims) → (lw, lz − Δ, logSc)，标签 δ → δ + Δ（z* = exp(lz+δ) 不变）"""
+    rs = np.load('%s/selftrain/real_s%d_scal.npy' % (G, j % 5))
+    assert float(rs[:, 2:5].std(0).max()) < 1e-3
+    logSc = rs[0, 2:5].astype(np.float64)
+    dsz = S[:, 2:4].astype(np.float64).mean(1) - logSc[:2].mean()
+    Sd = S.astype(np.float64).copy()
+    Sd[:, 2:5] = logSc
+    Sd[:, 1] = S[:, 1] - dsz
+    dd = dl.astype(np.float64) + dsz
+    return Sd.astype(np.float32), dd.astype(np.float32), np.abs(dsz) <= DEP_BAND
+
+
+def tp_bank(j):
+    if j % 5 not in _TPB:
+        z = np.load('%s/selftrain/real_s%d_tpbank.npz' % (G, j % 5))
+        _TPB[j % 5] = dict(tex=z['tex'], mom=z['mom'], logw=z['logw'])
+    return _TPB[j % 5]
+
+
+def tp_body(m, w, B, rng):
+    """11-08 真实外观移植：从分辨率可接纳（|Δlog w|≤0.2，不足 15 个取最近 15）的真实供体里随机取一个（50% 镜像），
+    按剪影矩（质心 + 两轴标准差）对齐，把真实机身颜色场搬进仿真剪影 m 的坐标系"""
+    import cv2
+    ys, xs = np.nonzero(m)
+    cxi, cyi, sxi, syi = xs.mean(), ys.mean(), xs.std() + 0.5, ys.std() + 0.5
+    L = B['logw']
+    lw = np.log(max(w, 1e-3))
+    lo, hi = int(np.searchsorted(L, lw - 0.2)), int(np.searchsorted(L, lw + 0.2))
+    if hi - lo < 15:
+        c = int(np.searchsorted(L, lw))
+        hi = min(len(L), max(c + 8, 15))
+        lo = max(0, hi - 15)
+    k = int(rng.integers(lo, hi))
+    cxj, cyj, sxj, syj = [float(t) for t in B['mom'][k]]
+    sg = -1.0 if rng.random() < 0.5 else 1.0
+    u, v = _UV
+    mx = (cxj + (sxj / sxi) * (u - cxi) * sg).astype(np.float32)
+    my = (cyj + (syj / syi) * (v - cyi)).astype(np.float32)
+    return cv2.remap(B['tex'][k], mx, my, cv2.INTER_LINEAR, borderMode=cv2.BORDER_REPLICATE).astype(np.float32)
+
+
+def xpaste(im, sil, bk, rng, rng2=None, ws=None, tpj=None, rtp=None, pm=None):
     """PREREG_xpaste：以 0.5 概率把仿真机身按红外软剪影贴到真实空背景窗上。im (N,128,128,3) uint8，sil (N,128,128) uint8（与 im 同翻转）
-    rng2 不为 None 时（PREREG_kpaste）被贴图样本再以 0.5 概率随机改机身明暗；rng2 独立，贴图本身与 V2P 逐位相同"""
+    rng2 不为 None 时（PREREG_kpaste）被贴图样本再以 0.5 概率随机改机身明暗；rng2 独立，贴图本身与 V2P 逐位相同
+    11-08：比例由 V2_XP_PROB 控制（默认 0.5）；V2_XP_REAL=1 时机身颜色统计迁移到随机真实无人机中心块、剪影 alpha 按 σ~U(0.5,1.5) 高斯柔化"""
+    import cv2
     out = im.astype(np.float32)
     for i in range(len(im)):
-        if rng.random() < 0.5 and sil[i].max() > 128:
+        hit = rng.random() < XP_PROB and sil[i].max() > 128
+        if pm is not None:
+            pm.append(bool(hit))
+        if hit:
             b = np.asarray(bk[int(rng.integers(len(bk)))], np.float32)
             if rng.random() < 0.5:
                 b = b[:, ::-1]
@@ -287,8 +386,112 @@ def xpaste(im, sil, bk, rng, rng2=None):
             body = out[i]
             if rng2 is not None and rng2.random() < 0.5:
                 body = recolor_body(body, b, a, rng2)
+            if XP_REAL:
+                mu_r, sd_r = real_centers(); k = int(rng.integers(len(mu_r)))
+                m = a[..., 0] > 0.5
+                if TP > 0 and rtp is not None and m.sum() > 10 and rtp.random() < TP:   # 11-08：真实外观移植（不动主随机数流 rng）
+                    body = tp_body(m, float(ws[i]), tp_bank(tpj), rtp)
+                elif m.sum() > 10:
+                    mu_s = body[m].mean(0); sd_s = body[m].std(0) + 1e-3
+                    body = np.clip((body - mu_s) / sd_s * sd_r[k] + mu_r[k], 0, 255)
+                a = cv2.GaussianBlur(a[..., 0], (0, 0), float(rng.uniform(0.5, 1.5)))[..., None]
+            if _FG:                                                       # wf23 前景中间域（独立随机数，不动主随机数流）
+                r_ = _FG['rng']; m_ = a[..., 0] > 0.5
+                if FG_PC > 0 and r_.random() < FG_PC and m_.sum() > 10:
+                    t_ = _FG['col'][int(r_.integers(len(_FG['col'])))]
+                    Y_ = body.mean(2, keepdims=True)
+                    sc_ = float(np.clip(np.mean(t_[3:6]) / (float(Y_[m_].std()) + 1e-3), 0.3, 3.0))
+                    body = np.clip(t_[:3] + sc_ * (Y_ - float(Y_[m_].mean())) + 0.3 * ((body - Y_) - (body[m_] - Y_[m_]).mean(0)), 0, 255)
+                if FG_PB > 0 and r_.random() < FG_PB:
+                    k_ = _mker(int(r_.integers(FG_L[0], FG_L[1] + 1)), float(r_.uniform(0, np.pi)))
+                    ba_ = cv2.filter2D(body * a, -1, k_)
+                    a = cv2.filter2D(a[..., 0], -1, k_)[..., None]
+                    out[i] = ba_ + (1 - a) * b
+                    continue
             out[i] = a * body + (1 - a) * b
     return np.clip(out, 0, 255).round().astype(np.uint8)
+
+
+def _hid(net, x, s):
+    """读数头 ReLU 之后的 256 维隐层（RGB 原型空间）"""
+    box = {}
+    h = net.head[1].register_forward_hook(lambda m, i, o: box.__setitem__('h', o))
+    net(x, s)
+    h.remove()
+    return box['h'].float()
+
+
+@torch.no_grad()
+def proto_rel(ema, real, rs, dr, rng, K=32, clip=4.0):
+    """wf23 TDP：RGB 原型 = 滑动平均网络读数头 256 维隐层（标准化 + PCA 32 维）在全部真实裁窗上的 k 均值（K 个）。
+    每个原型内两教师分歧 dr（去偏后的 log z_kp − log z_伪，缺失为 NaN）的稳健散布 s_p；ρ_p = (s_全/s_p)²，截在 [1/clip, clip]；成员 < 8 的原型 ρ=1。
+    返回 (mu, sd, P, C, rho, 每个真实裁窗的原型号)。"""
+    feats = []
+    for b in range(0, len(real), 256):
+        ii = np.arange(b, min(b + 256, len(real)))
+        with torch.autocast('cuda', dtype=torch.bfloat16):
+            feats.append(_hid(ema, dt.prep(np.stack([real[i] for i in ii]), None, False).cuda(), torch.from_numpy(rs[ii]).cuda()))
+    Fz = torch.cat(feats)
+    mu = Fz.mean(0)
+    sd = Fz.std(0) + 1e-4
+    Z = (Fz - mu) / sd
+    _, _, V = torch.linalg.svd(Z, full_matrices=False)
+    P = V[:32].T.contiguous()
+    Y = Z @ P
+    C = Y[torch.from_numpy(rng.choice(len(Y), K, replace=False)).cuda()].clone()
+    for _ in range(30):
+        a = torch.cdist(Y, C).argmin(1)
+        for k in range(K):
+            m = a == k
+            if bool(m.any()):
+                C[k] = Y[m].mean(0)
+    a = torch.cdist(Y, C).argmin(1).cpu().numpy()
+    fin = np.isfinite(dr)
+    mad = lambda x: 1.4826 * float(np.median(np.abs(x - np.median(x))))
+    sg = mad(dr[fin])
+    rho = np.ones(K, np.float32)
+    for k in range(K):
+        x = dr[(a == k) & fin]
+        if len(x) >= 8:
+            rho[k] = float(np.clip((sg / max(mad(x), 1e-4)) ** 2, 1.0 / clip, clip))
+    return mu, sd, P, C, torch.from_numpy(rho).cuda(), a
+
+
+@torch.no_grad()
+def proto_ratio(ema, rgb, sil, S, real, rs, rng_pw, K=32, clip=4.0, n=4096):
+    """11-08：原型密度比 ρ_k = 真实帧占比 / 仿真批（按当前贴图配方渲染）占比，截在 [1/clip, clip]。
+    返回 (mu, sd, P, C, rho)：特征标准化参数、PCA 主方向 (256,32)、k 均值中心 (K,32)、ρ̃ (K,)。只用独立随机数流 rng_pw。"""
+    feats = []
+    si = rng_pw.integers(0, len(rgb), n)
+    for b in range(0, n, 256):
+        ii = si[b:b + 256]
+        im = xpaste(np.stack([rgb[i] for i in ii]), np.stack([sil[i] for i in ii]), bank(), rng_pw)
+        with torch.autocast('cuda', dtype=torch.bfloat16):
+            feats.append(_hid(ema, dt.prep(im, None, False).cuda(), torch.from_numpy(S[ii]).cuda()))
+    ri = rng_pw.integers(0, len(rs), n)
+    for b in range(0, n, 256):
+        ii = ri[b:b + 256]
+        with torch.autocast('cuda', dtype=torch.bfloat16):
+            feats.append(_hid(ema, dt.prep(np.stack([real[i] for i in ii]), None, False).cuda(), torch.from_numpy(rs[ii]).cuda()))
+    Fz = torch.cat(feats)
+    mu = Fz.mean(0)
+    sd = Fz.std(0) + 1e-4
+    Z = (Fz - mu) / sd
+    _, _, V = torch.linalg.svd(Z, full_matrices=False)
+    P = V[:32].T.contiguous()
+    Y = Z @ P
+    C = Y[torch.from_numpy(rng_pw.choice(len(Y), K, replace=False)).cuda()].clone()
+    for _ in range(30):
+        a = torch.cdist(Y, C).argmin(1)
+        for k in range(K):
+            m = a == k
+            if bool(m.any()):
+                C[k] = Y[m].mean(0)
+    a = torch.cdist(Y, C).argmin(1)
+    nP = torch.bincount(a[:n], minlength=K).float()
+    nR = torch.bincount(a[n:], minlength=K).float()
+    rho = ((nR / n) / (nP / n).clamp(min=1e-9)).clamp(1.0 / clip, clip)
+    return mu, sd, P, C, rho
 
 
 @torch.no_grad()
@@ -394,7 +597,7 @@ class Ctx:
         n = self.inet
         return n.l4(n.l3(n.l2(n.l1(n.pool(n.stem(x))))))
 
-    def sim_loss(self, net, x, s, t, mk, idx, fl, rng_tf, lid=None):
+    def sim_loss(self, net, x, s, t, mk, idx, fl, rng_tf, lid=None, wv=None):
         lt = torch.from_numpy(np.stack([self.tl[i][:, ::-1] if f else self.tl[i] for i, f in zip(idx, fl)]).astype(np.float32)).cuda() if self.kd else None
         if self.geo:
             tf = torch.from_numpy(rng_tf.random(len(idx)) < 0.5).cuda()
@@ -403,7 +606,10 @@ class Ctx:
         else:
             dh, lb, lg = net(x, s)
         c4 = self.feat['c4']
-        loss = skt.nll(dh, lb, t)
+        if wv is None:
+            loss = skt.nll(dh, lb, t)
+        else:                                   # 11-08 V2_PW：逐样本加权的拉普拉斯似然（wv 已在批内归一到均值 1）
+            loss = (((dh.float() - t).abs() * torch.exp(-lb.float()) + lb.float()) * wv).sum() / wv.sum().clamp(min=1e-6)
         if self.lidar:
             loss = loss + (lid_loss_bg(net._lid, lid) if self.lidbg else lid_loss(net._lid, lid))
         if self.gate:
@@ -422,6 +628,7 @@ class Ctx:
 
 
 def base_train(arm, j, log):
+    fg_init(j)
     rgb, _, sil, meta = skt.load(j % 5)
     lid = load_lid(arm, j)
     if LIMIT:
@@ -435,6 +642,12 @@ def base_train(arm, j, log):
     rng_rc = np.random.default_rng(8000 + j)
     rng_xp = np.random.default_rng(10000 + j)
     rng_kc = np.random.default_rng(12000 + j)
+    rng_tp = np.random.default_rng(16000 + j) if TP > 0 else None     # 11-08 真实外观移植的独立随机数
+    w_s = np.array([m['w'] for m in meta], np.float32)
+    if DEP > 0:                                                         # 11-08 部署口径标签输运
+        Sd, dd, elig = deploy_conv(S, dl, j)
+        rng_dep = np.random.default_rng(18000 + j)
+        dep_acc = []
     net = make(arm).cuda()
     net.s_mean.copy_(torch.from_numpy(S.mean(0)))
     net.s_std.copy_(torch.from_numpy(S.std(0) + 1e-6))
@@ -454,11 +667,18 @@ def base_train(arm, j, log):
             mk = torch.from_numpy(np.stack([sil[i][:, ::-1] if f else sil[i] for i, f in zip(idx, fl)]).astype(np.float32) / 255.0).cuda()
             if arm.startswith('V2E'):
                 im = recolor(im, np.stack([sil[i][:, ::-1] if f else sil[i] for i, f in zip(idx, fl)]), rng_rc)
+            pmk = [] if DEP > 0 else None
             if ctx.paste:
-                im = xpaste(im, np.stack([sil[i][:, ::-1] if f else sil[i] for i, f in zip(idx, fl)]), bank(), rng_xp, rng_kc if ctx.kc else None)
+                im = xpaste(im, np.stack([sil[i][:, ::-1] if f else sil[i] for i, f in zip(idx, fl)]), bank(), rng_xp, rng_kc if ctx.kc else None, ws=w_s[idx], tpj=j, rtp=rng_tp, pm=pmk)
             x = dt.prep(appearance(im, rng2), rng, True).cuda(non_blocking=True)
-            s = torch.from_numpy(S[idx]).cuda()
-            t = torch.from_numpy(dl[idx]).cuda()
+            if DEP > 0:
+                cv = (np.array(pmk, bool) if pmk else np.zeros(len(idx), bool)) & elig[idx] & (rng_dep.random(len(idx)) < DEP)
+                dep_acc.append(float(cv.mean()))
+                s = torch.from_numpy(np.where(cv[:, None], Sd[idx], S[idx])).cuda()
+                t = torch.from_numpy(np.where(cv, dd[idx], dl[idx])).cuda()
+            else:
+                s = torch.from_numpy(S[idx]).cuda()
+                t = torch.from_numpy(dl[idx]).cuda()
             lt = lid_batch(lid, idx, fl) if ctx.lidar else None
             with torch.autocast('cuda', dtype=torch.bfloat16):
                 loss, dh, _, lk, lf = ctx.sim_loss(net, x, s, t, mk, idx, fl, rng_tf, lt)
@@ -470,19 +690,38 @@ def base_train(arm, j, log):
         if (ep + 1) % 5 == 0 or ep == 0:
             a = np.mean(acc, 0)
             log('%s_s%d 第 %d 轮 |δ̂−δ| %.4f 边界蒸馏 %.4f ImageNet 特征蒸馏 %.4f  %.0fs' % (arm, j, ep + 1, a[0], a[1], a[2], time.time() - t0))
+            if DEP > 0:
+                log('%s_s%d 部署口径输运比例 %.3f' % (arm, j, float(np.mean(dep_acc[-nb:]))))
     net.eval()
     return net
 
 
 def adapt(arm, j, log):
+    fg_init(j)
     base = arm.rstrip('p')
     rgb, _, sil, meta = skt.load(j % 5)
     S = dt.scalars(meta)
     dl = np.array([m['delta'] for m in meta], np.float32)
-    real = np.load('%s/selftrain/real_s%d_rgb.npy' % (G, j % 5))      # 10-12：整个读进内存（同数据，只改读法）
-    rs = np.load('%s/selftrain/real_s%d_scal.npy' % (G, j % 5))
-    dps = np.load('%s/selftrain/real_s%d_dpseudo.npy' % (G, j % 5)) if base in ('V2R', 'V2M', 'V2J') else None
+    RSX = os.environ.get('V2_REAL', '')                                   # 11-08 wf21/strict：V2_REAL=nb → 真实裁窗换成单帧检测（P0 不开热图时序背景）版 real_s{j}_nb{rgb,scal}.npy；缺省不变
+    real = np.load('%s/selftrain/real_s%d_%srgb.npy' % (G, j % 5, RSX))      # 10-12：整个读进内存（同数据，只改读法）
+    rs = np.load('%s/selftrain/real_s%d_%sscal.npy' % (G, j % 5, RSX))
+    dps = np.load('%s/selftrain/real_s%d_%s.npy' % (G, j % 5, os.environ.get('V2_DPS', 'dpseudo'))) if base in ('V2R', 'V2M', 'V2J') else None   # 11-08：V2_DPS 换伪目标文件（默认原 dpseudo）
+    dpw = np.load('%s/selftrain/real_s%d_%s.npy' % (G, j % 5, os.environ['V2_DPW'])).astype(np.float32) if (os.environ.get('V2_DPW') and dps is not None) else None   # 11-08：伪目标逐样本权重（导师打分器软加权），缺省不用
     lid = load_lid(arm, j)
+    if TDP:
+        assert not PW, 'TDP 与 PW 互斥'
+        dr = np.load('%s/selftrain/real_s%d_%s.npy' % (G, j % 5, os.environ.get('V2_DR', 'nbmdr_fz'))).astype(np.float32)
+        assert len(dr) == len(real), (len(dr), len(real))
+        rng_td = np.random.default_rng(23000 + j)
+        td, td_acc = None, []
+    RCP = float(os.environ.get('V2_RC', '0'))                           # wf23：真实机身换景（学生看换景图，教师/伪目标对应原图；只用红外⇄LiDAR 互验过滤通过的裁窗）
+    if RCP > 0:
+        assert RSX == 'nbm', '换景蒙版按 real_s*_nbmrgb 计算'
+        rcA = np.load('%s/gproto/wf23/realcut/masks_dist_s%d.npy' % (G, j % 5))
+        rcok = np.load('%s/gproto/wf23/realcut/q_dist_s%d.npz' % (G, j % 5))['passed']
+        assert len(rcA) == len(real) and len(rcok) == len(real)
+        rng_rcx = np.random.default_rng(21000 + j)
+        rc_acc = []
     torch.manual_seed(j)
     rng = np.random.default_rng(2000 + j)
     rng2 = np.random.default_rng(5000 + j)
@@ -490,6 +729,12 @@ def adapt(arm, j, log):
     rng_rc = np.random.default_rng(9000 + j)
     rng_xp = np.random.default_rng(11000 + j)
     rng_kc = np.random.default_rng(13000 + j)
+    rng_tp = np.random.default_rng(17000 + j) if TP > 0 else None
+    w_s = np.array([m['w'] for m in meta], np.float32)
+    if DEP > 0:
+        Sd, dd, elig = deploy_conv(S, dl, j)
+        rng_dep = np.random.default_rng(19000 + j)
+        dep_acc = []
     net = make(arm).cuda()
     net.load_state_dict(torch.load('%s/%s_s%d%s.pt' % (O, {'V2S': 'V2P', 'V2R': 'V2Pp', 'V2M': 'V2Lp', 'V2J': 'V2Hp'}.get(base, base), j, SFX), map_location='cuda'))
     ema = copy.deepcopy(net).eval()
@@ -497,6 +742,12 @@ def adapt(arm, j, log):
         p.requires_grad_(False)
     net.train()
     ctx = Ctx(arm, j, net)
+    if PW:
+        rng_pw = np.random.default_rng(15000 + j)
+        gate = np.load('%s/gproto/wf16/synthesis_matte/gate_s%d.npy' % (G, j % 5)) if PW_GATE else None
+        if gate is not None:
+            assert len(gate) == len(dl), (len(gate), len(dl))
+        pw, pw_acc = None, []
     dfeat = nn.Sequential(nn.Linear(512, 256), nn.ReLU(inplace=True), nn.Linear(256, 1)).cuda()
     if ctx.ssa:
         ss = ssa_stats(net, ctx, rgb, S, np.random.default_rng(14000 + j))
@@ -514,24 +765,69 @@ def adapt(arm, j, log):
         mk = torch.from_numpy(np.stack([sil[i][:, ::-1] if f else sil[i] for i, f in zip(idx, fl)]).astype(np.float32) / 255.0).cuda()
         if arm.startswith('V2E'):
             im = recolor(im, np.stack([sil[i][:, ::-1] if f else sil[i] for i, f in zip(idx, fl)]), rng_rc)
+        pmk = [] if (DEP > 0 or TDP) else None
         if ctx.paste:
-            im = xpaste(im, np.stack([sil[i][:, ::-1] if f else sil[i] for i, f in zip(idx, fl)]), bank(), rng_xp, rng_kc if ctx.kc else None)
+            im = xpaste(im, np.stack([sil[i][:, ::-1] if f else sil[i] for i, f in zip(idx, fl)]), bank(), rng_xp, rng_kc if ctx.kc else None, ws=w_s[idx], tpj=j, rtp=rng_tp, pm=pmk)
         x = dt.prep(appearance(im, rng2), rng, True).cuda(non_blocking=True)
-        s = torch.from_numpy(S[idx]).cuda()
-        t = torch.from_numpy(dl[idx]).cuda()
+        if DEP > 0:
+            cv = (np.array(pmk, bool) if pmk else np.zeros(len(idx), bool)) & elig[idx] & (rng_dep.random(len(idx)) < DEP)
+            dep_acc.append(float(cv.mean()))
+            s = torch.from_numpy(np.where(cv[:, None], Sd[idx], S[idx])).cuda()
+            t = torch.from_numpy(np.where(cv, dd[idx], dl[idx])).cuda()
+        else:
+            s = torch.from_numpy(S[idx]).cuda()
+            t = torch.from_numpy(dl[idx]).cuda()
         ridx = rng.integers(0, len(rs), BH)
         rfl = rng.random(BH) < 0.5
         rim = np.stack([real[i][:, ::-1] if f else real[i] for i, f in zip(ridx, rfl)])
-        rstrong = dt.prep(appearance(rim, rng2), rng, True).cuda(non_blocking=True)
+        if RCP > 0:
+            rim_s = rim.copy()
+            nrc = 0
+            for k_, (i_, f_) in enumerate(zip(ridx, rfl)):
+                if rcok[i_] and rng_rcx.random() < RCP:
+                    a_ = (rcA[i_][:, ::-1] if f_ else rcA[i_]).astype(np.float32)[..., None] / 255.0
+                    bg_ = bank()[int(rng_rcx.integers(len(bank())))]
+                    if rng_rcx.random() < 0.5:
+                        bg_ = bg_[:, ::-1]
+                    rim_s[k_] = np.clip(a_ * rim[k_].astype(np.float32) + (1 - a_) * bg_.astype(np.float32) + 0.5, 0, 255).astype(np.uint8)
+                    nrc += 1
+            rc_acc.append(nrc / BH)
+            rstrong = dt.prep(appearance(rim_s, rng2), rng, True).cuda(non_blocking=True)
+        else:
+            rstrong = dt.prep(appearance(rim, rng2), rng, True).cuda(non_blocking=True)
         rweak = dt.prep(rim, None, False).cuda(non_blocking=True)
         rsc = torch.from_numpy(rs[ridx]).cuda()
         ramp = 2.0 / (1.0 + np.exp(-10.0 * step / STEPS)) - 1.0
         lt = lid_batch(lid, idx, fl) if ctx.lidar else None
+        wv = None
+        if TDP:
+            if step % PW_EVERY == 0:
+                td = proto_rel(ema, real, rs, dr, rng_td)
+                log('%s_s%d 第 %d 步 教师分歧原型 ρ 范围 %.2f–%.2f，截顶/截底 %d/%d，真实裁窗平均 ρ %.2f' % (arm, j, step, float(td[4].min()), float(td[4].max()), int((td[4] >= 4.0).sum()), int((td[4] <= 0.25).sum()), float(td[4][torch.from_numpy(td[5]).cuda()].mean())))
+            with torch.no_grad(), torch.autocast('cuda', dtype=torch.bfloat16):
+                hb = _hid(ema, dt.prep(im, None, False).cuda(non_blocking=True), s)
+            pa_ = torch.cdist(((hb - td[0]) / td[1]) @ td[2], td[3]).argmin(1)
+            pmt = torch.from_numpy(np.array(pmk, bool) if pmk else np.zeros(len(idx), bool)).cuda()
+            wv = torch.where(pmt, 1.0 / td[4][pa_], torch.ones_like(td[4][pa_]))
+            wv = wv / wv.mean().clamp(min=1e-6)
+            td_acc.append([float(pmt.float().mean()), float(wv[pmt].mean()) if bool(pmt.any()) else 1.0])
+        if PW:
+            if step % PW_EVERY == 0:
+                pw = proto_ratio(ema, rgb, sil, S, real, rs, rng_pw, PW_K, PW_CLIP)
+                log('%s_s%d 第 %d 步 原型密度比 ρ̃ 范围 %.2f–%.2f，截顶/截底原型 %d/%d' % (arm, j, step, float(pw[4].min()), float(pw[4].max()), int((pw[4] >= PW_CLIP).sum()), int((pw[4] <= 1.0 / PW_CLIP).sum())))
+            with torch.no_grad(), torch.autocast('cuda', dtype=torch.bfloat16):
+                hb = _hid(ema, dt.prep(im, None, False).cuda(non_blocking=True), s)
+            mu_, sd_, P_, C_, rho_ = pw
+            wv = rho_[torch.cdist(((hb - mu_) / sd_) @ P_, C_).argmin(1)]
+            if gate is not None:
+                wv = wv * torch.from_numpy(gate[idx]).cuda()
+            wv = wv / wv.mean().clamp(min=1e-6)
+            pw_acc.append([float(wv.sum() ** 2 / (wv.pow(2).sum() * len(wv)).clamp(min=1e-9)), float((wv == 0).float().mean())])
         with torch.no_grad(), torch.autocast('cuda', dtype=torch.bfloat16):
             dE, lbE, lgE = ema(rweak, rsc)
             ldE = ema._lid if ctx.lidar else None
         with torch.autocast('cuda', dtype=torch.bfloat16):
-            loss, dh, c4s, _, _ = ctx.sim_loss(net, x, s, t, mk, idx, fl, rng_tf, lt)
+            loss, dh, c4s, _, _ = ctx.sim_loss(net, x, s, t, mk, idx, fl, rng_tf, lt, wv=wv)
             fs = c4s.mean(dim=(2, 3))
             dS, lbS, lgS = net(rstrong, rsc)
             ldS = net._lid if ctx.lidar else None
@@ -540,7 +836,16 @@ def adapt(arm, j, log):
         if ctx.rps:
             tr = torch.from_numpy(dps[ridx]).cuda()
             mm = torch.isfinite(tr)
-            lreg = skt.nll(dS.float()[mm], lbS.float()[mm], tr[mm]) if bool(mm.any()) else torch.zeros((), device='cuda')
+            if (dpw is not None or TDP) and bool(mm.any()):
+                wr = torch.ones(len(ridx), device='cuda')
+                if dpw is not None:
+                    wr = wr * torch.from_numpy(dpw[ridx]).cuda()
+                if TDP:
+                    wr = wr * td[4][torch.from_numpy(td[5][ridx]).cuda()]
+                wr = wr[mm]
+                lreg = (((dS.float()[mm] - tr[mm]).abs() * torch.exp(-lbS.float()[mm]) + lbS.float()[mm]) * wr).sum() / wr.sum().clamp(min=1e-6)
+            else:
+                lreg = skt.nll(dS.float()[mm], lbS.float()[mm], tr[mm]) if bool(mm.any()) else torch.zeros((), device='cuda')
             lcons = lreg + F.binary_cross_entropy_with_logits(lgS.float(), torch.sigmoid(lgE.float()))
             if ctx.lidar:
                 pE = torch.sigmoid(ldE[:, 0].float())
@@ -568,6 +873,21 @@ def adapt(arm, j, log):
             a = np.mean(acc, 0)
             acc = []
             log('%s_s%d 第 %d 步 仿真|δ̂−δ| %.4f 一致性 %.4f 特征域 %.4f  %.0fs' % (arm, j, step + 1, a[0], a[1], a[2], time.time() - t0))
+            if RCP > 0:
+                log('%s_s%d 真实机身换景比例 %.3f' % (arm, j, float(np.mean(rc_acc[-250:]))))
+            if DEP > 0:
+                log('%s_s%d 部署口径输运比例 %.3f' % (arm, j, float(np.mean(dep_acc[-250:]))))
+            if TDP and td_acc:
+                b_ = np.mean(td_acc, 0)
+                td_acc = []
+                log('%s_s%d 中间域样本比例 %.3f，其精确标签损失平均权重 %.2f' % (arm, j, b_[0], b_[1]))
+            if PW and pw_acc:
+                b_ = np.mean(pw_acc, 0)
+                pw_acc = []
+                log('%s_s%d 第 %d 步 加权有效样本比 %.3f，守门剔除 %.3f' % (arm, j, step + 1, b_[0], b_[1]))
+        se = int(os.environ.get('V2_SAVE_EVERY', '0'))          # 11-08：早期学习检验——每 se 步存一次滑动平均权重
+        if se and (step + 1) % se == 0 and (step + 1) < STEPS:
+            torch.save(ema.state_dict(), '%s/%s_s%d%s_step%d.pt' % (O, os.environ.get('V2_OUTARM', arm), j, SFX, step + 1))
     return ema
 
 
@@ -584,7 +904,7 @@ def main():
         logf.flush()
     for j in seeds:
         for arm in arms:
-            ck = '%s/%s_s%d%s.pt' % (O, arm, j, SFX)
+            ck = '%s/%s_s%d%s.pt' % (O, os.environ.get('V2_OUTARM', arm), j, SFX)   # 11-08：V2_OUTARM 只改存档名（训练逻辑仍按 arm）
             if os.path.exists(ck):
                 continue
             net = adapt(arm, j, log) if arm.endswith('p') else base_train(arm, j, log)

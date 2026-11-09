@@ -1,4 +1,6 @@
-> **clean_release 分支**：定稿方法（无人机单目 3D 检测，仿真 → 真实，实例原型修正距离 + 弱增强自训练 3 种子）的代码、运行脚本和结果，见 [release/README.md](release/README.md)。下面是代码库原来的说明。
+> **最终版（11-09，完全单帧）**：两教师（红外 + LiDAR）合并伪目标训练测距学生 + 真实帧镜像一致损失训练朝向学生，部署每帧只用本帧；真实测试 UDS 68.38 → 72.31。见 [release/single_frame/README.md](release/single_frame/README.md)。
+>
+> **11-06 版（用到多帧）**：定稿方法（无人机单目 3D 检测，仿真 → 真实，实例原型修正距离 + 弱增强自训练 3 种子）的代码、运行脚本和结果，见 [release/README.md](release/README.md)。下面是代码库原来的说明。
 
 # Open 3D UAV Detection Codebase (2D UAV, 3D UAV detection, 6D UAV pose estimation)
 
