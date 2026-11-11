@@ -1,0 +1,4 @@
+# 11-10 无标签版：index_pseudo_nl075（距离修正系数见 gproto/nolabel/PREREG.md；只按置信度筛帧；不读真值）+ 弱增强自训练，其余同 st2sfnbwa
+_BASE_CONFIG_: cfgs/models/uavdet_3d/camnorm/st2pluswa_mav6d_r34_geo_full_tr.yaml
+DATA_CONFIG:
+    INDEX_FILE: 'index_pseudo_nl075.pkl'

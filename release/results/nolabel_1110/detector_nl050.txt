@@ -1,0 +1,37 @@
+11-10 17:51:11 开始：组 ['nl050']，3 种子
+11-10 17:51:12 开始 train.py --cfg_file st2nl050wa_mav6d_r34_geo_full_tr.yaml → nl050_train_s0.log
+11-10 18:01:11 心跳：进行中
+11-10 18:11:11 心跳：进行中
+11-10 18:18:59 训练完成 nl050 种子 0
+11-10 18:21:00 开始 train.py --cfg_file st2nl050wa_mav6d_r34_geo_full_tr.yaml → nl050_train_s2.log
+11-10 18:21:12 心跳：进行中
+11-10 18:31:12 心跳：进行中
+11-10 18:37:52 训练完成 nl050 种子 2
+11-10 18:41:12 心跳：进行中
+11-10 18:51:12 心跳：进行中
+11-10 19:01:12 心跳：进行中
+11-10 19:11:12 心跳：进行中
+11-10 19:11:48 开始 train.py --cfg_file st2nl050wa_mav6d_r34_geo_full_tr.yaml → nl050_train_s1.log
+11-10 19:21:12 心跳：进行中
+11-10 19:27:26 训练完成 nl050 种子 1
+11-10 19:31:12 心跳：进行中
+11-10 19:41:12 心跳：进行中
+11-10 19:51:12 心跳：进行中
+11-10 20:00:33 开始 eval_dump.py --cfg mav6d_r34_geo_full_tr.yaml → nl050_ensdump.log
+11-10 20:01:13 心跳：进行中
+11-10 20:11:13 心跳：进行中
+11-10 20:21:13 心跳：进行中
+11-10 20:23:42 开始 eval_dump.py --cfg mav6d_r34_geo_full_tr.yaml → nl050_ensdump.log
+11-10 20:27:06 开始 dump_orient_p.py val nl050 → nl050_orient_val.log
+11-10 20:31:13 心跳：进行中
+11-10 20:36:27 开始 dump_orient_p.py test nl050 → nl050_orient_test.log
+11-10 20:41:13 心跳：进行中
+11-10 20:51:13 心跳：进行中
+11-10 20:54:35 开始 kps_shape_chain.py shape val → nl050_kps_val.log
+11-10 20:56:31 开始 kps_shape_chain.py shape test → nl050_kps_test.log
+11-10 21:00:40 开始 ablation.py unc V2Rp → nl050_unc.log
+11-10 21:01:13 心跳：进行中
+11-10 21:01:18 nl050 推理全部完成
+11-10 21:01:18 推理完成 nl050
+11-10 21:01:18 开始 compare_gen.py → compare_gen_run_nl050.log
+11-10 21:02:59 全部结束，结果 proto/compare_gen_run_nl050.log

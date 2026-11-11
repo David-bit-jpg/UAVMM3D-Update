@@ -1,6 +1,6 @@
-> **最终版（11-09 精简版，完全单帧，15 个网络）**：红外和 LiDAR 两位只在仿真里存在的老师把知识塑形进彩色网络；朝向伪标签取红外⇄LiDAR 一致的帧，朝向学生加真实帧镜像一致损失；测距学生用两教师合并伪距离；部署每帧只用本帧。真实测试 UDS 68.38 → 72.16（验证 62.76 → 66.06）。见 [release/single_frame/README.md](release/single_frame/README.md)。
+> **最终方法（11-10 无标签版，论文所写的版本）**：仿真 → 真实的无人机单目 3D 检测，部署完全单帧；红外和 LiDAR 只在仿真里当老师；真实标签不当训练目标、也不在任何一次运行里被读入，只在链冻结后对验证 / 测试集打一次分。真实测试 UDS 70.16、AP 56.44（验证 62.49 / 48.33）。代码、运行脚本和结果见 [release/README.md](release/README.md)。
 >
-> **11-06 版（用到多帧）**：定稿方法（无人机单目 3D 检测，仿真 → 真实，实例原型修正距离 + 弱增强自训练 3 种子）的代码、运行脚本和结果，见 [release/README.md](release/README.md)。下面是代码库原来的说明。
+> 旧版说明（已被取代，只作历史记录）：11-09 精简版 [release/single_frame/README.md](release/single_frame/README.md)；11-06 多帧版 [release/history/README_1106_multiframe.md](release/history/README_1106_multiframe.md)。下面是代码库原来的说明。
 
 # Open 3D UAV Detection Codebase (2D UAV, 3D UAV detection, 6D UAV pose estimation)
 

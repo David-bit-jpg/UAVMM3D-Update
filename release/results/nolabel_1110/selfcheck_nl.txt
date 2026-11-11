@@ -1,0 +1,72 @@
+# 无标签链自查 11-10 13:38
+## 链上脚本（@@ROOT@@/output/camnorm/geo1004/gproto/nolabel/run_chain_nl.sh @@ROOT@@/output/camnorm/geo1004/gproto/nolabel/make_train_nogt_index.py @@ROOT@@/output/camnorm/geo1004/gproto/nolabel/eval_dump_nl.py @@ROOT@@/output/camnorm/geo1004/gproto/nolabel/dump_train_kz_nl.py @@ROOT@@/output/camnorm/geo1004/gproto/nolabel/xpaste_bank_sf2_nl.py @@ROOT@@/output/camnorm/geo1004/gproto/nolabel/extract_nbm_nl.py @@ROOT@@/output/camnorm/geo1004/gproto/nolabel/secondstage_v2_nl.py @@ROOT@@/output/camnorm/geo1004/gproto/nolabel/adabn_all_nl.py @@ROOT@@/output/camnorm/geo1004/gproto/nolabel/kps_nl.py @@ROOT@@/output/camnorm/geo1004/gproto/wf23/fusetrain/recut_mirror_t.py @@ROOT@@/output/camnorm/geo1004/gproto/nolabel/w_sim.py @@ROOT@@/output/camnorm/geo1004/gproto/nolabel/final_unc_nl.py @@ROOT@@/output/camnorm/geo1004/gproto/nolabel/ztrain_nl.py @@ROOT@@/output/camnorm/geo1004/gproto/nolabel/build_targets_nl.py @@ROOT@@/output/camnorm/geo1004/gproto/nolabel/chain_eval_m_nl.py @@ROOT@@/output/camnorm/geo1004/gproto/nolabel/fuse_eval_nl.py @@ROOT@@/output/camnorm/geo1004/gproto/nolabel/make_nolabel_pseudo.py）
+
+=== @@ROOT@@/output/camnorm/geo1004/gproto/nolabel/run_chain_nl.sh
+
+=== @@ROOT@@/output/camnorm/geo1004/gproto/nolabel/make_train_nogt_index.py
+  2:"""11-10 无标签链："去真值帧表"。只从各划分 index.pkl 取每一行的 seq / frame / K_in（图像几何，非标签），
+  3:丢掉 boxes9d / names / qualified / center_inside / cls 等全部真值字段。下游脚本只读本文件取图像与内参，不再打开 index.pkl。
+  7:    d = pickle.load(open('@@MMCACHE@@/mav6d_cn_obj/%s/index.pkl' % sp, 'rb'))
+
+=== @@ROOT@@/output/camnorm/geo1004/gproto/nolabel/eval_dump_nl.py
+  2:"""geo1004/eval_dump.py 的无标签副本（11-10）：eval_camnorm 原样推理，逐帧记录只存 pred / conf / K / seq_id / frame_id（不存 gt），
+  17:        pickle.dump(dict(records=keep, seq=seq, match=match, dist_thresh=dist_thresh, gt='not stored'), f)
+
+=== @@ROOT@@/output/camnorm/geo1004/gproto/nolabel/dump_train_kz_nl.py
+  3:输出到 nolabel/<arm>/tags/<tag>。dump_members_repl 推理后把真值封存进 sealed_gt_*.pkl（本链任何脚本都不读它），记录 pkl 只含无标签字段。
+
+=== @@ROOT@@/output/camnorm/geo1004/gproto/nolabel/xpaste_bank_sf2_nl.py
+  3:只改：选窗检测 = 新检测器 <arm> 在真实 train 全部帧的单帧检测（nolabel/<arm>/recs/<arm>_train.pkl）；图像按去真值帧表取（不打开 index.pkl、不用 diag_bgs.Frames）；
+
+=== @@ROOT@@/output/camnorm/geo1004/gproto/nolabel/extract_nbm_nl.py
+  5:按 extract_nb.py 的同一规则重放每个裁窗属于哪一帧（只读检测记录的 pred / conf / K，不读 gt），再按新伪标签挑行。
+  18:ps = {(str(ix['metas'][i]['seq']), str(ix['metas'][i]['frame'])): np.asarray(ix['metas'][i]['boxes9d'], np.float64)[0] for i in ix['valid_idx']}
+
+=== @@ROOT@@/output/camnorm/geo1004/gproto/nolabel/secondstage_v2_nl.py
+
+=== @@ROOT@@/output/camnorm/geo1004/gproto/nolabel/adabn_all_nl.py
+  4:不再按机型（cls，来自序列路径 = 真值）统计选帧数；输出 nolabel/<arm>/adabn_all/S6I_s{0,1}.pth。
+  21:    """kzst_common.frame_table 去掉 cls（序列路径前缀 = 机型真值）：只留 keys / top-1 置信 / 钩子标志"""
+
+=== @@ROOT@@/output/camnorm/geo1004/gproto/nolabel/kps_nl.py
+  4:    选帧与 adabn_strict.select('sf') 相同（top-1 在钩子格且置信 ≥0.5，每段视频随机 ≤80 张，rng 种子 0），去掉按机型（cls）统计。
+
+=== @@ROOT@@/output/camnorm/geo1004/gproto/wf23/fusetrain/recut_mirror_t.py
+
+=== @@ROOT@@/output/camnorm/geo1004/gproto/nolabel/w_sim.py
+  60:        if len(r['pred']) == 0 or len(r['gt']) == 0:
+  66:        gt = np.asarray(r['gt'], np.float64).reshape(-1, 9)
+  67:        k = int(np.argmin(np.linalg.norm(gt[:, :3] - p[:3], axis=1)))
+  68:        if np.linalg.norm(gt[k, :3] - p[:3]) >= 1.0 or p[2] <= 1e-3:
+  70:        out.append(dict(seq=str(r['seq_id']), frame=str(r['frame_id']), pred=p, gt=gt[k]))
+  166:        rows.append(dict(seq=d['seq'], frame=d['frame'], view=view, scal=np.array(scal, np.float32), z_det=float(p[2]), z_gt=float(d['gt'][2]), z_kp=zkp))
+
+=== @@ROOT@@/output/camnorm/geo1004/gproto/nolabel/final_unc_nl.py
+  3:图像与内参只从去真值帧表取（不打开 index.pkl），输出 nolabel/<arm>/unc/。其余逐字相同。用法：python final_unc_nl.py <arm> <标签> <网络名> <种子,...> <split,...>】
+
+=== @@ROOT@@/output/camnorm/geo1004/gproto/nolabel/ztrain_nl.py
+
+=== @@ROOT@@/output/camnorm/geo1004/gproto/nolabel/build_targets_nl.py
+  7:改动：伪标签换 index_pseudo_<arm>；裁窗行与帧的对应直接读 extract_nbm_nl.py 存的 keys；删去全部真值诊断（不打开 index.pkl）；不再写一致度权重 / 分歧文件（最终版不用）。
+  20:ps = {(str(ix['metas'][i]['seq']), str(ix['metas'][i]['frame'])): np.asarray(ix['metas'][i]['boxes9d'], np.float64)[0] for i in ix['valid_idx']}
+  24:cls = lambda k: int(np.argmin(np.abs(cc - lum[k]))) if k in lum else -1
+  31:    v = np.array([x for k, x in dd.items() if cls(k) == c])
+  40:    r = np.array([dd[k] - B[cls(k)] if (k in dd and cls(k) in B) else np.nan for k in kk])
+
+=== @@ROOT@@/output/camnorm/geo1004/gproto/nolabel/chain_eval_m_nl.py
+  3:#   整链组装时不载入封存真值（recs 的 gt 置空），真值只在 fuse_eval_nl.py 最后一次性打分时由 cmpeval 元数据读入。main() 删去。】
+  185:    recs = [{'gt': np.zeros((0, 9)), 'pred': np.asarray(f['pred'], np.float64).reshape(-1, 9),
+  223:    g = M['gt']; Km = M['K']
+
+=== @@ROOT@@/output/camnorm/geo1004/gproto/nolabel/fuse_eval_nl.py
+  64:    valid = np.where(M['n_gt'] > 0)[0]
+  72:    pe = float(np.nanmedian(np.linalg.norm(P['pt'] - M['gt'][:, :3], axis=1)[valid]))
+  75:    d = np.linalg.norm(M['gt'][:, :3], axis=1)
+
+=== @@ROOT@@/output/camnorm/geo1004/gproto/nolabel/make_nolabel_pseudo.py
+  4:  - 全程不读任何真值（不读 dump 里的 gt、不做真值诊断）；
+  7:  - 写出的索引只保留图像信息 + 伪框，不从真值索引复制 cls / center_inside / object_frame。
+  22:# 只取预测与置信度，不碰 frames 里的 gt / matched / cls
+  33:idx = pickle.load(open('@@MMCACHE@@/mav6d_cn_obj/train/index.pkl', 'rb'))
+  45:    m['boxes9d'] = np.concatenate([p[:3], lwh, p[6:9]]).astype(np.float32)[None]
+  46:    m['names'] = ['drone']; m['qualified'] = np.array([True]); m['pseudo'] = True; m['rot_ok'] = True

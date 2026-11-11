@@ -1,0 +1,37 @@
+11-10 14:38:55 开始：组 ['nl075']，3 种子
+11-10 14:48:55 心跳：进行中
+11-10 14:58:56 心跳：进行中
+11-10 15:08:56 心跳：进行中
+11-10 15:18:56 心跳：进行中
+11-10 15:28:56 心跳：进行中
+11-10 15:38:56 心跳：进行中
+11-10 15:44:08 开始 train.py --cfg_file st2nl075wa_mav6d_r34_geo_full_tr.yaml → nl075_train_s0.log
+11-10 15:44:27 开始 train.py --cfg_file st2nl075wa_mav6d_r34_geo_full_tr.yaml → nl075_train_s1.log
+11-10 15:48:56 心跳：进行中
+11-10 15:58:57 心跳：进行中
+11-10 16:03:22 训练完成 nl075 种子 1
+11-10 16:04:02 训练完成 nl075 种子 0
+11-10 16:08:57 心跳：进行中
+11-10 16:18:26 开始 train.py --cfg_file st2nl075wa_mav6d_r34_geo_full_tr.yaml → nl075_train_s2.log
+11-10 16:18:57 心跳：进行中
+11-10 16:28:57 心跳：进行中
+11-10 16:38:57 心跳：进行中
+11-10 16:41:29 训练完成 nl075 种子 2
+11-10 16:48:57 心跳：进行中
+11-10 16:58:57 心跳：进行中
+11-10 17:05:42 开始 eval_dump.py --cfg mav6d_r34_geo_full_tr.yaml → nl075_ensdump.log
+11-10 17:08:57 心跳：进行中
+11-10 17:11:34 开始 eval_dump.py --cfg mav6d_r34_geo_full_tr.yaml → nl075_ensdump.log
+11-10 17:14:41 开始 dump_orient_p.py val nl075 → nl075_orient_val.log
+11-10 17:18:57 心跳：进行中
+11-10 17:24:28 开始 dump_orient_p.py test nl075 → nl075_orient_test.log
+11-10 17:28:57 心跳：进行中
+11-10 17:38:57 心跳：进行中
+11-10 17:42:54 开始 kps_shape_chain.py shape val → nl075_kps_val.log
+11-10 17:44:50 开始 kps_shape_chain.py shape test → nl075_kps_test.log
+11-10 17:48:45 开始 ablation.py unc V2Rp → nl075_unc.log
+11-10 17:48:57 心跳：进行中
+11-10 17:49:22 nl075 推理全部完成
+11-10 17:49:22 推理完成 nl075
+11-10 17:49:22 开始 compare_gen.py → compare_gen_run_nl075.log
+11-10 17:51:03 全部结束，结果 proto/compare_gen_run_nl075.log
