@@ -1,0 +1,5 @@
+# KZ 数据的多模态版（2026-09-24，旋转线蒸馏）：camnorm_sim_full_kp_t_zoom 原样（放大裁窗 t_range [1.15,1.75]、kp2d 监督图），
+# 只多吐 ir / depth / tag 三个通道（边车），与 rgb 同一裁窗、同一几何增广。教师吃 6 通道；学生在 CenterDetKD 里切前 3。
+_BASE_CONFIG_: cfgs/dataset_configs/uavdet_3d/camnorm_sim_full_kp_t_zoom.yaml
+MODALITIES: ['rgb', 'ir', 'depth', 'tag']
+DEPTH_MAX: 24

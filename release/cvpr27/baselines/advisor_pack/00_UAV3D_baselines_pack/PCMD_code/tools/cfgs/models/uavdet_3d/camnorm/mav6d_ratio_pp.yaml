@@ -1,0 +1,8 @@
+# 评测 Q1：MAV6D + 机身倍数深度 + 训练域常数。已知尺寸口径加 --set MODEL.POST_PROCESSING.SIZE_SOURCE known
+# （KNOWN_SIZE 在 mav6d.yaml 里 = 官方框 0.34 x 0.34 x 0.23）。
+_BASE_CONFIG_: cfgs/models/uavdet_3d/camnorm/mav6d.yaml
+DATA_CONFIG:
+    _BASE_CONFIG_: cfgs/dataset_configs/uavdet_3d/camnorm_mav6d_ratio_pp.yaml
+MODEL:
+    DENSE_HEAD_2D:
+      HEAD_BIAS: true

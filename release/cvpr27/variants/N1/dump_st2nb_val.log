@@ -1,0 +1,11 @@
+2026-11-13 02:36:33,123   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-13 02:36:33,123   INFO  MMCache[test]: 2336 帧, 模态 ['rgb'] -> 3 通道, 缓存 E:\mmcache\mav6d_cn_obj\val
+2026-11-13 02:37:33,241   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-13 02:37:33,241   INFO  MMCache[test]: 1168 帧, 模态 ['rgb'] -> 3 通道, 缓存 E:\mmcache\mav6d_cn_obj\val
+loading weights: 载入 289/289 个张量, 27.93M/27.93M 参数 (100.0%)
+loading weights: 载入 289/289 个张量, 27.93M/27.93M 参数 (100.0%)
+loading weights: 载入 289/289 个张量, 27.93M/27.93M 参数 (100.0%)
+loading weights: 载入 289/289 个张量, 27.93M/27.93M 参数 (100.0%)
+loading weights: 载入 289/289 个张量, 27.93M/27.93M 参数 (100.0%)
+DUMP: GT 2336 检出 85.7% | 位置 中位 0.314 m 均值 0.356 p90 0.739 | 深度 中位 0.304 | 角度 中位 81.7° (折算 56.4°) | pos<0.1 12.9% rot<10 0.1% 双<0.1m&10° 0.0% | score 0.1793
+写出 E:\Open3DUAVDet\output\camnorm\geo1004\gproto\review1113\N1\real_val_preds_st2nb.pkl：2336 帧，检出 85.7%，自标定 lwh [0.35, 0.349, 0.2]，用时 936 s

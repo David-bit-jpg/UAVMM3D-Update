@@ -1,0 +1,44 @@
+# 任务队列：从上往下领。格式：方法 种子 源域(in/out/mix) 步骤(sim/st/kd) 目标域(mav/anti/both)   # 单张 4090 预计小时数，必需/可选
+#   sim = 只用源域仿真训练，同一个模型测 MAV6D 和 AntiUAV3D 两个测试集（目标域写 both）
+#   st  = 无标签自训练；kd = 加我们 PCMD 教师伪标签。MAV6D 的 st/kd 从 in 源域出发，AntiUAV3D 的从 out 出发
+# 不在队列里（我们本机已有/在跑）：gupnet/monocd/monodgp 种子 0 的 in sim（gupnet、monodgp 的模型随包附带在 pretrained/，给 MAV6D 的 st 用）；monocd 在 MAV6D 上的 st/kd
+# 合计 34 个任务，约 721 卡·时 = 30.0 卡·天（必需 27.5 卡·天）
+# ---- 第 0 档：关键路径，先开（MonoDETR / MonoCoP 的 in 源域模型；它们在 MAV6D 上的 st 要等这两个训完，整条链约 4.4 天，所以放最前）----
+monodetr  0 in  sim both   #  42.3 h  必需
+monocop   0 in  sim both   #  42.3 h  必需
+# ---- 第 1 档：快（单卡每个约 2–8 小时）。MAV6D 相关在前，然后 out / mix 源域，AntiUAV3D 的 st / kd 在后 ----
+gupnet    1 in  sim both   #   6.3 h  必需
+gupnet    2 in  sim both   #   6.3 h  必需
+monocd    1 in  sim both   #   6.3 h  必需
+monocd    2 in  sim both   #   6.3 h  必需
+gupnet    0 in  st  mav    #   7.0 h  必需
+gupnet    0 in  kd  mav    #   6.3 h  必需
+gupnet    0 out sim both   #   6.3 h  必需
+monocd    0 out sim both   #   2.0 h  必需
+gupnet    0 mix sim both   #   6.3 h  必需
+monocd    0 mix sim both   #   8.4 h  必需
+monodgp   0 out sim both   #   6.9 h  必需
+gupnet    0 out st  anti   #   7.0 h  必需
+gupnet    0 out kd  anti   #   6.3 h  必需
+monocd    0 out st  anti   #   3.1 h  必需
+monocd    0 out kd  anti   #   2.0 h  必需
+monodgp   0 out kd  anti   #   7.3 h  必需
+# ---- 第 2 档：中（单卡每个约 0.5–1.5 天）----
+monodgp   0 in  st  mav    #  37.7 h  必需
+monodgp   0 in  kd  mav    #  29.3 h  必需
+monodetr  0 out sim both   #  11.9 h  必需
+monocop   0 out sim both   #  11.9 h  必需
+monodgp   0 mix sim both   #  32.8 h  必需
+monodgp   0 out st  anti   #  10.5 h  必需
+# ---- 第 3 档：慢（单卡每个约 2–2.7 天；st 自动等第 0 档的源域模型）----
+monodetr  0 in  st  mav    #  65.2 h  必需
+monocop   0 in  st  mav    #  65.2 h  必需
+monodetr  0 in  kd  mav    #  51.1 h  必需
+monocop   0 in  kd  mav    #  51.1 h  必需
+monodetr  0 mix sim both   #  57.2 h  必需
+monocop   0 mix sim both   #  57.2 h  必需
+# ---- 第 4 档：可选（最慢两个方法在 AntiUAV3D 上的 st / kd，有空卡再跑）----
+monodetr  0 out kd  anti   #  12.5 h  可选
+monodetr  0 out st  anti   #  18.0 h  可选
+monocop   0 out kd  anti   #  12.5 h  可选
+monocop   0 out st  anti   #  18.0 h  可选

@@ -1,0 +1,1 @@
+E4 mav pooled vs RGB-only none (3 seed pairs) [mav, 3 pair(s)] arm UDS 58.00 AP 39.26 ATE 0.331 ASE 2.57 AOE 16.93 mDR 95.28 | ref UDS 58.08 AP 39.41 ATE 0.333 ASE 2.59 AOE 16.66 mDR 95.26 | diff UDS -0.09 [-0.71, +0.80] AP -0.15 [-0.97, +0.98] ATE -0.002 [-0.013, +0.008] ASE -0.02 AOE +0.26 [-0.71, +1.00] mDR +0.01

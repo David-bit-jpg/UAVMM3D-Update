@@ -1,0 +1,329 @@
+{
+ "cg_train": 0.12626953423023224,
+ "check_index_pseudo_nl075": {
+  "n": 12257,
+  "max_abs_logz_diff": 5.8657738056170173e-08
+ },
+ "nl075_train": {
+  "name": "final detector nl075 (3-seed ens) / train frames",
+  "n": 11893,
+  "n_seq": 61,
+  "pearson": 0.970235214397696,
+  "pearson_clip": 0.9699561559522808,
+  "spearman": 0.9627672583704383,
+  "pearson_demean": 0.9659168476529808,
+  "pearson_demean_clip": 0.9655742022742564,
+  "med_rel_student_gt": 0.056305244856236336,
+  "med_rel_pl_gt": 0.053288822045442163,
+  "med_rel_student_pl": 0.012391078980202308,
+  "bias_student": 0.016950669809893522,
+  "bias_pl": 0.013877637329435935,
+  "frac_between_seq_var_pl": 0.15485085002958465,
+  "frac_between_seq_var_student": 0.1689475144642083,
+  "pearson_ci": [
+   0.96672099969121,
+   0.9734416385294901
+  ],
+  "pearson_demean_ci": [
+   0.9615153324307057,
+   0.9700013071272371
+  ],
+  "counts": {
+   "teacher_conf_ok": 12257,
+   "both_within_1m": 11893
+  }
+ },
+ "nl075_val": {
+  "name": "final detector nl075 (3-seed ens) / val held-out sequences",
+  "n": 1966,
+  "n_seq": 16,
+  "pearson": 0.9449149690241576,
+  "pearson_clip": 0.9448546469985761,
+  "spearman": 0.9397066167805692,
+  "pearson_demean": 0.9375983035816237,
+  "pearson_demean_clip": 0.936836857142537,
+  "med_rel_student_gt": 0.06354340767023925,
+  "med_rel_pl_gt": 0.053876767844159845,
+  "med_rel_student_pl": 0.018654537704701768,
+  "bias_student": -0.0040599035521375944,
+  "bias_pl": -0.004286186114737259,
+  "frac_between_seq_var_pl": 0.2542274470115212,
+  "frac_between_seq_var_student": 0.26512842368004574,
+  "pearson_ci": [
+   0.9249597583723186,
+   0.9608305146221838
+  ],
+  "pearson_demean_ci": [
+   0.9202253934372202,
+   0.9532765877233607
+  ],
+  "counts": {
+   "teacher_conf_ok": 2110,
+   "both_within_1m": 1966
+  }
+ },
+ "nl075_val_ctrl_ST2raw_vs_pl": {
+  "name": "control: teacher raw detector (ST2) vs pseudo label / val",
+  "n": 1871,
+  "n_seq": 16,
+  "pearson": 0.8925695272044483,
+  "pearson_clip": 0.8925049239780453,
+  "spearman": 0.8736876780066957,
+  "pearson_demean": 0.9198850465920491,
+  "pearson_demean_clip": 0.9188465106036494,
+  "med_rel_student_gt": 0.08936215243154577,
+  "med_rel_pl_gt": 0.051070558901503915,
+  "med_rel_student_pl": 0.055550742878594295,
+  "bias_student": -0.054122313353392286,
+  "bias_pl": -0.002534444535255949,
+  "frac_between_seq_var_pl": 0.22548395699404544,
+  "frac_between_seq_var_student": 0.31319651997580567,
+  "pearson_ci": [
+   0.8397843676045184,
+   0.9355319125049705
+  ],
+  "pearson_demean_ci": [
+   0.892860939997165,
+   0.9395235903681929
+  ],
+  "counts": {
+   "teacher_conf_ok": 2110,
+   "both_within_1m": 1871
+  }
+ },
+ "nl075_val_ctrl_student_vs_ST2raw": {
+  "name": "control: student vs teacher raw detector (ST2) / val",
+  "n": 1869,
+  "n_seq": 16,
+  "pearson": 0.860814829029435,
+  "pearson_clip": 0.860769726122257,
+  "spearman": 0.8368550438594354,
+  "pearson_demean": 0.9065645548172854,
+  "pearson_demean_clip": 0.905408159703856,
+  "med_rel_student_gt": 0.060223333668803614,
+  "med_rel_pl_gt": 0.08935610252928228,
+  "med_rel_student_pl": 0.057410072692081204,
+  "bias_student": -0.0032085434868248342,
+  "bias_pl": -0.054122313353392286,
+  "frac_between_seq_var_pl": 0.3149910637480692,
+  "frac_between_seq_var_student": 0.2459898043554729,
+  "pearson_ci": [
+   0.7902519491021768,
+   0.921795164144047
+  ],
+  "pearson_demean_ci": [
+   0.8810552474079112,
+   0.9287248319336824
+  ],
+  "counts": {
+   "teacher_conf_ok": 2110,
+   "both_within_1m": 1869
+  }
+ },
+ "nl075_train_ctrl_student_vs_ST2raw": {
+  "name": "control: student vs teacher raw detector (ST2) / train",
+  "n": 11339,
+  "n_seq": 61,
+  "pearson": 0.8640159434917856,
+  "pearson_clip": 0.8636461036077409,
+  "spearman": 0.8491802222589294,
+  "pearson_demean": 0.8954976078469782,
+  "pearson_demean_clip": 0.8940999666565924,
+  "med_rel_student_gt": 0.053051080885527346,
+  "med_rel_pl_gt": 0.0897911249490535,
+  "med_rel_student_pl": 0.061031628151243744,
+  "bias_student": 0.015593318043424155,
+  "bias_pl": -0.02666172596763778,
+  "frac_between_seq_var_pl": 0.22025890874803422,
+  "frac_between_seq_var_student": 0.1597647158837462,
+  "pearson_ci": [
+   0.8320470988345434,
+   0.8918911707539895
+  ],
+  "pearson_demean_ci": [
+   0.8745241464270113,
+   0.910657439109691
+  ],
+  "counts": {
+   "teacher_conf_ok": 12257,
+   "both_within_1m": 11339
+  }
+ },
+ "wa_val": {
+  "name": "11-07 wa (3-seed ens, temporal bg) / val held-out sequences",
+  "n": 2094,
+  "n_seq": 16,
+  "pearson": 0.9075461491226033,
+  "pearson_clip": 0.907595557444582,
+  "spearman": 0.9187673974643846,
+  "pearson_demean": 0.9011285889808507,
+  "pearson_demean_clip": 0.9006525654720481,
+  "med_rel_student_gt": 0.06498271536890665,
+  "med_rel_pl_gt": 0.06333377444536958,
+  "med_rel_student_pl": 0.022092921247599484,
+  "bias_student": -0.02336662080629127,
+  "bias_pl": -0.024676496318850737,
+  "frac_between_seq_var_pl": 0.19158019427980866,
+  "frac_between_seq_var_student": 0.22159162631823326,
+  "pearson_ci": [
+   0.8859075336064465,
+   0.9287275752043875
+  ],
+  "pearson_demean_ci": [
+   0.873037210060631,
+   0.9256748834949668
+  ],
+  "counts": {
+   "teacher_conf_ok": 2316,
+   "both_within_1m": 2094
+  },
+  "c0_val": 0.13251952826976776
+ },
+ "wa_val_nobg": {
+  "name": "11-07 wa (3-seed ens, no temporal bg) / val held-out sequences",
+  "n": 2079,
+  "n_seq": 16,
+  "pearson": 0.8898063546210161,
+  "pearson_clip": 0.8898609077433062,
+  "spearman": 0.9054445888300559,
+  "pearson_demean": 0.8794274302042495,
+  "pearson_demean_clip": 0.8789175098025743,
+  "med_rel_student_gt": 0.06522036042535251,
+  "med_rel_pl_gt": 0.06294556241062277,
+  "med_rel_student_pl": 0.02269854058144727,
+  "bias_student": -0.024897292267188252,
+  "bias_pl": -0.024702854024717016,
+  "frac_between_seq_var_pl": 0.19495563896316193,
+  "frac_between_seq_var_student": 0.24249296818253274,
+  "pearson_ci": [
+   0.8573645304114776,
+   0.9219278717994879
+  ],
+  "pearson_demean_ci": [
+   0.8311020075339844,
+   0.914900827405771
+  ],
+  "counts": {
+   "teacher_conf_ok": 2316,
+   "both_within_1m": 2079
+  },
+  "c0_val": 0.13251952826976776
+ },
+ "wa_train_seed0": {
+  "name": "11-07 wa seed 0 / train frames (diag_trainfit repro)",
+  "n": 11906,
+  "n_seq": 61,
+  "pearson": 0.9706254755315964,
+  "pearson_clip": 0.9601000476186948,
+  "spearman": 0.937881564169916,
+  "pearson_demean": 0.9674887824486175,
+  "pearson_demean_clip": 0.9545718677251267,
+  "med_rel_student_gt": 0.058070042776874886,
+  "med_rel_pl_gt": 0.055092121259297466,
+  "med_rel_student_pl": 0.017286855743546825,
+  "bias_student": -0.0019209617488772613,
+  "bias_pl": -0.004667870603422041,
+  "frac_between_seq_var_pl": 0.13233059867862962,
+  "frac_between_seq_var_student": 0.13568213274588603,
+  "pearson_ci": [
+   0.9607588321028508,
+   0.9777450527186295
+  ],
+  "pearson_demean_ci": [
+   0.9547965570085746,
+   0.976172075959049
+  ]
+ },
+ "wa_train_seed1": {
+  "name": "11-07 wa seed 1 / train frames (diag_trainfit repro)",
+  "n": 11906,
+  "n_seq": 61,
+  "pearson": 0.9688548874564858,
+  "pearson_clip": 0.9580869780661473,
+  "spearman": 0.9379943118742996,
+  "pearson_demean": 0.9656528627425242,
+  "pearson_demean_clip": 0.9521123519033113,
+  "med_rel_student_gt": 0.059072216778399134,
+  "med_rel_pl_gt": 0.055092121259297466,
+  "med_rel_student_pl": 0.01813530775124783,
+  "bias_student": -0.0029774778592396613,
+  "bias_pl": -0.004667870603422041,
+  "frac_between_seq_var_pl": 0.1319160153401312,
+  "frac_between_seq_var_student": 0.13410202329918486,
+  "pearson_ci": [
+   0.9577019838792973,
+   0.9772290482941671
+  ],
+  "pearson_demean_ci": [
+   0.9510844608942495,
+   0.9761687243961827
+  ]
+ },
+ "wa_train_seed2": {
+  "name": "11-07 wa seed 2 / train frames (diag_trainfit repro)",
+  "n": 11905,
+  "n_seq": 61,
+  "pearson": 0.9681692103476691,
+  "pearson_clip": 0.9562028109937737,
+  "spearman": 0.9352436037450225,
+  "pearson_demean": 0.9645822555911833,
+  "pearson_demean_clip": 0.95011004562504,
+  "med_rel_student_gt": 0.058644744688753914,
+  "med_rel_pl_gt": 0.05507754851708091,
+  "med_rel_student_pl": 0.017396420693188253,
+  "bias_student": -0.00297434681752692,
+  "bias_pl": -0.004680929914066376,
+  "frac_between_seq_var_pl": 0.13227261092071918,
+  "frac_between_seq_var_student": 0.1386209309525266,
+  "pearson_ci": [
+   0.9573862593581441,
+   0.9761747288033421
+  ],
+  "pearson_demean_ci": [
+   0.950374010397445,
+   0.9744624651857623
+  ]
+ },
+ "wa_train_mean3": {
+  "name": "11-07 wa 3-seed log-mean / train frames",
+  "n": 11902,
+  "n_seq": 61,
+  "pearson": 0.9788732290772197,
+  "pearson_clip": 0.9710747192525699,
+  "spearman": 0.9540323236853627,
+  "pearson_demean": 0.9766179953895648,
+  "pearson_demean_clip": 0.9670695489407598,
+  "med_rel_student_gt": 0.05691960715615901,
+  "med_rel_pl_gt": 0.055063839767777234,
+  "med_rel_student_pl": 0.014789107182144323,
+  "bias_student": -0.002591529199268217,
+  "bias_pl": -0.004688854251701985,
+  "frac_between_seq_var_pl": 0.13216471679364938,
+  "frac_between_seq_var_student": 0.1380873303845973,
+  "pearson_ci": [
+   0.9707769045414502,
+   0.9846853109094437
+  ],
+  "pearson_demean_ci": [
+   0.9659953030711544,
+   0.9837822470000972
+  ]
+ },
+ "seq_overlap": {
+  "n_train_seq": 61,
+  "n_val_seq": 16,
+  "shared_seq": 0,
+  "val_scenes": [
+   "mavic2/02",
+   "mavic2/03",
+   "phantom4/01",
+   "phantom4/02"
+  ],
+  "val_scenes_also_in_train": [
+   "mavic2/02",
+   "mavic2/03",
+   "phantom4/01",
+   "phantom4/02"
+  ]
+ }
+}

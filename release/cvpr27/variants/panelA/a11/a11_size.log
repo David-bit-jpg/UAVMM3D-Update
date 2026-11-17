@@ -1,0 +1,97 @@
+MAV6D PST {"s_bar": [0.34782981872558594, 0.3484771102666855, 0.19545264542102814], "n_pred": 4800, "n_missing_rec": 0, "global_medians_TP": {"size_pure": 0.022612454357550906, "size_c1": -0.09986343370478945, "w2d": 0.18101098591111675}}
+   deployed                                         UDS 60.81 AP 40.93 ATE 0.3059 medlog +0.046 med|rel| 0.062
+   perfect size (per-frame size_pure)               UDS 61.83 AP 42.48 ATE 0.2864 medlog -0.003 med|rel| 0.060
+   remove size bias, per-frame (size_c1)            UDS 40.53 AP 10.56 ATE 0.7133 medlog +0.162 med|rel| 0.178
+   remove width over-read (global median w2d)       UDS 51.18 AP 25.14 ATE 0.4449 medlog -0.135 med|rel| 0.131
+   remove both: per-frame size_c1 + global w2d      UDS 56.73 AP 34.03 ATE 0.3560 medlog -0.019 med|rel| 0.078
+   remove size bias, global median size_c1          UDS 43.53 AP 14.31 ATE 0.6236 medlog +0.145 med|rel| 0.158
+   remove both: global size_c1 + global w2d         UDS 63.57 AP 45.26 ATE 0.2579 medlog -0.035 med|rel| 0.062
+   remove own global bias (median final log, ref.)  UDS 65.10 AP 48.17 ATE 0.2527 medlog -0.000 med|rel| 0.052
+   sweep b=-40%                                     UDS 31.67 AP 0.00 ATE 1.4211 medlog -0.535 med|rel| 0.414
+   sweep b=-20%                                     UDS 40.09 AP 10.05 ATE 0.7285 medlog -0.238 med|rel| 0.212
+   sweep b=-10%                                     UDS 53.82 AP 29.40 ATE 0.4042 medlog -0.114 med|rel| 0.110
+   sweep b=+0%                                      UDS 61.83 AP 42.48 ATE 0.2864 medlog -0.003 med|rel| 0.060
+   sweep b=+10%                                     UDS 49.02 AP 21.56 ATE 0.4745 medlog +0.098 med|rel| 0.116
+   sweep b=+20%                                     UDS 37.96 AP 7.08 ATE 0.7796 medlog +0.191 med|rel| 0.212
+   sweep b=+40%                                     UDS 31.70 AP 0.09 ATE 1.4987 medlog +0.357 med|rel| 0.429
+MAV6D RGB-only {"s_bar": [0.3476424217224121, 0.3486102819442749, 0.19541510939598083], "n_pred": 4800, "n_missing_rec": 0, "global_medians_TP": {"size_pure": 0.022171834334626817, "size_c1": -0.10092280448305636, "w2d": 0.22156208225159305}}
+   deployed                                         UDS 57.38 AP 38.04 ATE 0.3476 medlog +0.052 med|rel| 0.068
+   perfect size (per-frame size_pure)               UDS 59.40 AP 40.98 ATE 0.3039 medlog -0.000 med|rel| 0.064
+   remove size bias, per-frame (size_c1)            UDS 38.70 AP 10.53 ATE 0.7415 medlog +0.163 med|rel| 0.182
+   remove width over-read (global median w2d)       UDS 44.79 AP 18.16 ATE 0.5597 medlog -0.170 med|rel| 0.159
+   remove both: per-frame size_c1 + global w2d      UDS 52.23 AP 29.22 ATE 0.4070 medlog -0.059 med|rel| 0.093
+   remove size bias, global median size_c1          UDS 41.19 AP 13.47 ATE 0.6601 medlog +0.153 med|rel| 0.168
+   remove both: global size_c1 + global w2d         UDS 56.33 AP 35.63 ATE 0.3350 medlog -0.069 med|rel| 0.083
+   remove own global bias (median final log, ref.)  UDS 61.71 AP 45.13 ATE 0.2846 medlog +0.000 med|rel| 0.055
+   sweep b=-40%                                     UDS 30.16 AP 0.00 ATE 1.4152 medlog -0.531 med|rel| 0.412
+   sweep b=-20%                                     UDS 38.50 AP 9.80 ATE 0.7286 medlog -0.234 med|rel| 0.210
+   sweep b=-10%                                     UDS 51.60 AP 28.23 ATE 0.4177 medlog -0.111 med|rel| 0.110
+   sweep b=+0%                                      UDS 59.40 AP 40.98 ATE 0.3039 medlog -0.000 med|rel| 0.064
+   sweep b=+10%                                     UDS 47.40 AP 21.53 ATE 0.4856 medlog +0.101 med|rel| 0.118
+   sweep b=+20%                                     UDS 36.10 AP 6.78 ATE 0.7996 medlog +0.194 med|rel| 0.215
+   sweep b=+40%                                     UDS 30.22 AP 0.06 ATE 1.5188 medlog +0.360 med|rel| 0.434
+MAV6D Sim-only {"s_bar": [0.34744247794151306, 0.3474541902542114, 0.19538597762584686], "n_pred": 4800, "n_missing_rec": 0, "global_medians_TP": {"size_pure": 0.021083401450053336, "size_c1": -0.1085408339418469, "w2d": 0.0868177767509356}}
+   deployed                                         UDS 49.51 AP 26.87 ATE 0.2833 medlog -0.033 med|rel| 0.068
+   perfect size (per-frame size_pure)               UDS 48.37 AP 25.14 ATE 0.3055 medlog -0.058 med|rel| 0.074
+   remove size bias, per-frame (size_c1)            UDS 42.13 AP 16.71 ATE 0.4673 medlog +0.089 med|rel| 0.108
+   remove width over-read (global median w2d)       UDS 42.42 AP 16.57 ATE 0.4387 medlog -0.120 med|rel| 0.117
+   remove both: per-frame size_c1 + global w2d      UDS 47.40 AP 23.99 ATE 0.3373 medlog +0.002 med|rel| 0.071
+   remove size bias, global median size_c1          UDS 45.55 AP 21.11 ATE 0.3699 medlog +0.075 med|rel| 0.087
+   remove both: global size_c1 + global w2d         UDS 50.14 AP 27.89 ATE 0.2738 medlog -0.012 med|rel| 0.067
+   remove own global bias (median final log, ref.)  UDS 50.17 AP 27.98 ATE 0.2747 medlog +0.000 med|rel| 0.065
+   sweep b=-40%                                     UDS 27.12 AP 0.00 ATE 1.5750 medlog -0.588 med|rel| 0.444
+   sweep b=-20%                                     UDS 29.17 AP 1.51 ATE 0.8964 medlog -0.291 med|rel| 0.253
+   sweep b=-10%                                     UDS 37.54 AP 9.91 ATE 0.5623 medlog -0.169 med|rel| 0.156
+   sweep b=+0%                                      UDS 48.37 AP 25.14 ATE 0.3055 medlog -0.058 med|rel| 0.074
+   sweep b=+10%                                     UDS 48.56 AP 25.56 ATE 0.3072 medlog +0.042 med|rel| 0.072
+   sweep b=+20%                                     UDS 38.44 AP 11.27 ATE 0.5452 medlog +0.134 med|rel| 0.146
+   sweep b=+40%                                     UDS 27.21 AP 0.20 ATE 1.2500 medlog +0.299 med|rel| 0.349
+AntiUAV3D PST {"s_bar": [0.5307252407073975, 0.5268434286117554, 0.23441798985004425], "n_pred": 2624, "n_missing_rec": 0, "global_medians_TP": {"size_pure": 0.5404364702553728, "size_c1": 0.22124428986079697, "w2d": -0.3000087244911337}}
+   deployed                                         UDS 41.73 AP 27.89 ATE 0.0993 medlog -0.056 med|rel| 0.078
+   perfect size (per-frame size_pure)               UDS 19.99 AP 0.00 ATE 0.4339 medlog -0.590 med|rel| 0.446
+   remove size bias, per-frame (size_c1)            UDS 21.84 AP 1.30 ATE 0.2305 medlog -0.267 med|rel| 0.235
+   remove width over-read (global median w2d)       UDS 20.54 AP 0.57 ATE 0.3002 medlog +0.244 med|rel| 0.282
+   remove both: per-frame size_c1 + global w2d      UDS 41.65 AP 27.58 ATE 0.0978 medlog +0.032 med|rel| 0.070
+   remove size bias, global median size_c1          UDS 21.06 AP 0.81 ATE 0.2421 medlog -0.278 med|rel| 0.243
+   remove both: global size_c1 + global w2d         UDS 43.42 AP 30.91 ATE 0.0960 medlog +0.022 med|rel| 0.065
+   remove own global bias (median final log, ref.)  UDS 44.25 AP 32.14 ATE 0.0916 medlog -0.000 med|rel| 0.063
+   sweep b=-40%                                     UDS 8.32 AP 0.00 ATE 0.5428 medlog -0.780 med|rel| 0.542
+   sweep b=-20%                                     UDS 14.48 AP 0.00 ATE 0.5210 medlog -0.763 med|rel| 0.534
+   sweep b=-10%                                     UDS 18.74 AP 0.00 ATE 0.4844 medlog -0.684 med|rel| 0.495
+   sweep b=+0%                                      UDS 19.99 AP 0.00 ATE 0.4339 medlog -0.590 med|rel| 0.446
+   sweep b=+10%                                     UDS 20.23 AP 0.00 ATE 0.3794 medlog -0.496 med|rel| 0.391
+   sweep b=+20%                                     UDS 20.26 AP 0.00 ATE 0.3242 medlog -0.410 med|rel| 0.336
+   sweep b=+40%                                     UDS 22.66 AP 1.70 ATE 0.2188 medlog -0.255 med|rel| 0.226
+AntiUAV3D RGB-only {"s_bar": [0.5307080149650574, 0.5269094705581665, 0.23503288626670837], "n_pred": 2624, "n_missing_rec": 0, "global_medians_TP": {"size_pure": 0.5407631417908316, "size_c1": 0.21992702854189816, "w2d": -0.3195702173930526}}
+   deployed                                         UDS 38.92 AP 23.39 ATE 0.1110 medlog -0.086 med|rel| 0.097
+   perfect size (per-frame size_pure)               UDS 19.80 AP 0.00 ATE 0.4485 medlog -0.617 med|rel| 0.460
+   remove size bias, per-frame (size_c1)            UDS 20.58 AP 0.65 ATE 0.2490 medlog -0.289 med|rel| 0.252
+   remove width over-read (global median w2d)       UDS 20.85 AP 1.15 ATE 0.2870 medlog +0.234 med|rel| 0.270
+   remove both: per-frame size_c1 + global w2d      UDS 40.64 AP 25.93 ATE 0.1016 medlog +0.029 med|rel| 0.073
+   remove size bias, global median size_c1          UDS 20.39 AP 0.22 ATE 0.2622 medlog -0.306 med|rel| 0.264
+   remove both: global size_c1 + global w2d         UDS 43.59 AP 30.97 ATE 0.0934 medlog +0.014 med|rel| 0.065
+   remove own global bias (median final log, ref.)  UDS 43.86 AP 31.30 ATE 0.0913 medlog +0.000 med|rel| 0.065
+   sweep b=-40%                                     UDS 7.44 AP 0.00 ATE 0.5184 medlog -0.716 med|rel| 0.511
+   sweep b=-20%                                     UDS 14.01 AP 0.00 ATE 0.5311 medlog -0.790 med|rel| 0.546
+   sweep b=-10%                                     UDS 18.14 AP 0.00 ATE 0.4966 medlog -0.712 med|rel| 0.510
+   sweep b=+0%                                      UDS 19.80 AP 0.00 ATE 0.4485 medlog -0.617 med|rel| 0.460
+   sweep b=+10%                                     UDS 20.22 AP 0.00 ATE 0.3966 medlog -0.525 med|rel| 0.408
+   sweep b=+20%                                     UDS 20.28 AP 0.00 ATE 0.3435 medlog -0.439 med|rel| 0.355
+   sweep b=+40%                                     UDS 21.00 AP 0.56 ATE 0.2413 medlog -0.284 med|rel| 0.248
+AntiUAV3D Sim-only {"s_bar": [0.5317676663398743, 0.526567280292511, 0.23570121824741364], "n_pred": 2624, "n_missing_rec": 0, "global_medians_TP": {"size_pure": 0.5413550908420456, "size_c1": 0.22440817050143297, "w2d": -0.2820273578138799}}
+   deployed                                         UDS 30.55 AP 16.04 ATE 0.1320 medlog -0.062 med|rel| 0.115
+   perfect size (per-frame size_pure)               UDS 13.32 AP 0.00 ATE 0.4078 medlog -0.532 med|rel| 0.412
+   remove size bias, per-frame (size_c1)            UDS 17.94 AP 2.04 ATE 0.2313 medlog -0.268 med|rel| 0.236
+   remove width over-read (global median w2d)       UDS 17.46 AP 1.66 ATE 0.2725 medlog +0.220 med|rel| 0.260
+   remove both: per-frame size_c1 + global w2d      UDS 28.58 AP 12.63 ATE 0.1362 medlog +0.002 med|rel| 0.113
+   remove size bias, global median size_c1          UDS 17.50 AP 1.90 ATE 0.2514 medlog -0.284 med|rel| 0.247
+   remove both: global size_c1 + global w2d         UDS 30.23 AP 15.21 ATE 0.1303 medlog -0.005 med|rel| 0.110
+   remove own global bias (median final log, ref.)  UDS 30.13 AP 15.09 ATE 0.1309 medlog +0.000 med|rel| 0.109
+   sweep b=-40%                                     UDS 7.19 AP 0.00 ATE 0.5898 medlog -0.892 med|rel| 0.590
+   sweep b=-20%                                     UDS 8.41 AP 0.00 ATE 0.4727 medlog -0.638 med|rel| 0.472
+   sweep b=-10%                                     UDS 10.74 AP 0.00 ATE 0.4401 medlog -0.580 med|rel| 0.440
+   sweep b=+0%                                      UDS 13.32 AP 0.00 ATE 0.4078 medlog -0.532 med|rel| 0.412
+   sweep b=+10%                                     UDS 15.37 AP 0.00 ATE 0.3735 medlog -0.472 med|rel| 0.376
+   sweep b=+20%                                     UDS 16.16 AP 0.00 ATE 0.3266 medlog -0.402 med|rel| 0.331
+   sweep b=+40%                                     UDS 19.51 AP 3.22 ATE 0.2230 medlog -0.257 med|rel| 0.227
+done

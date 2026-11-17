@@ -1,0 +1,14 @@
+# [review1113 ourdet_baseproto, 11-17] UPPER BOUND (real supervised) WITH the sim recipe's view augmentation (VIEW_AUG).
+# = out2antifs_ub.yaml (our outdoor recipe sim_out_r34_geo_ramp_out, ImageNet init, sealed train labels index_ub_gt.pkl, user-approved
+# for this row only), but the train frames are read from the full-resolution JPEG store (lib/build_ub_jpeg.py, K_in = K_raw) through
+# the repository VIEW_AUG code path (dataset lib/ub_zoom_dataset.py, registered by ub_zoom_train.py). VIEW_AUG = the recipe's own
+# values + zoom_out_max 8 (window may be up to 8x the frame, mean-colour canvas; see ub_zoom_dataset.py for why).
+_BASE_CONFIG_: cfgs/models/uavdet_3d/camnorm/sim_out_r34_geo_ramp_out.yaml
+DATA_CONFIG:
+    DATASET: 'UBZoom_Det_Dataset'
+    DATA_PATH: 'F:/ourdet_baseproto_cache/outdoor_real_fs_jpeg'
+    INDEX_FILE: 'index_ub_gt.pkl'
+    NORM_MEAN: [0.4968, 0.5059, 0.5084]
+    NORM_STD: [0.1854, 0.1816, 0.1970]
+    MIN_RGB_VIS: 0.0
+    VIEW_AUG: {zoom: [1.0, 4.0], no_upscale: false, t_range: [1.0, 4.6], max_upscale: 2.0, zoom_out_max: 8.0}

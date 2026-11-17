@@ -1,0 +1,75 @@
+{
+ "L_pl": 2.2291880559921267,
+ "L_feat": 0.7564143562316894,
+ "L_hm": 0.9371261340379715,
+ "L_kp": 0.11396179169416427,
+ "L_soft": 2.304667603969574,
+ "L_mir": 0.1427775067090988,
+ "w_feat": 2.947046202424703,
+ "w_soft": 0.9672492693317505,
+ "feat_target": "adapt",
+ "n_batches": 50,
+ "bs_tgt": 4,
+ "seed": 0,
+ "init": "E:/Open3DUAVDet/output/camnorm/geo1004/lidar/irlid/release/kzm_s0.pth",
+ "teachers": [
+  "E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/in2mav/ou/T_irlid0.pth",
+  "E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/in2mav/ou/T_irlid1.pth",
+  "E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/in2mav/ou/T_kdir0.pth",
+  "E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/in2mav/ou/T_kdir1.pth",
+  "E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/in2mav/ou/T_lid0.pth",
+  "E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/in2mav/ou/T_lid1.pth"
+ ],
+ "rule": "w_feat = mean L_pl^ori / mean L_feat; w_soft = mean L_pl^ori / mean L_soft; at init, seed-0 target loader, no grad",
+ "teacher_feature_cos": [
+  [
+   1.0,
+   0.0898,
+   0.1264,
+   0.1148,
+   0.1387,
+   0.0884
+  ],
+  [
+   0.0898,
+   1.0,
+   0.1206,
+   0.1454,
+   0.1015,
+   0.137
+  ],
+  [
+   0.1264,
+   0.1206,
+   1.0,
+   0.5991,
+   0.1396,
+   0.1122
+  ],
+  [
+   0.1148,
+   0.1454,
+   0.5991,
+   1.0,
+   0.1354,
+   0.1193
+  ],
+  [
+   0.1387,
+   0.1015,
+   0.1396,
+   0.1354,
+   1.0,
+   0.0866
+  ],
+  [
+   0.0884,
+   0.137,
+   0.1122,
+   0.1193,
+   0.0866,
+   1.0
+  ]
+ ],
+ "written_at": "2026-11-14 03:49:19"
+}

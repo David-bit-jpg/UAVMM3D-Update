@@ -1,0 +1,1 @@
+E1b mav pooled vs PST (3 seed pairs) [mav, 3 pair(s)] arm UDS 57.69 AP 38.13 ATE 0.329 ASE 2.60 AOE 15.81 mDR 95.57 | ref UDS 60.93 AP 41.24 ATE 0.300 ASE 1.72 AOE 14.83 mDR 95.49 | diff UDS -3.24 [-5.34, -1.40] AP -3.11 [-5.86, -0.59] ATE +0.030 [+0.006, +0.060] ASE +0.89 AOE +0.98 [+0.02, +2.00] mDR +0.08

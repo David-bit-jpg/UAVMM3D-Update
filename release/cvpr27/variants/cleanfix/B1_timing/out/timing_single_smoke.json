@@ -1,0 +1,62 @@
+{
+ "load": {
+  "mean": 7.192200006102212,
+  "median": 7.192200006102212,
+  "p90": 7.243960016057827
+ },
+ "det": {
+  "mean": 102.60319999360945,
+  "median": 102.60319999360945,
+  "p90": 104.64671998925041
+ },
+ "io_raw": {
+  "mean": 17.42805000685621,
+  "median": 17.42805000685621,
+  "p90": 18.97168999130372
+ },
+ "depth": {
+  "mean": 21.975650000968017,
+  "median": 21.975650000968017,
+  "p90": 22.413689995300956
+ },
+ "orient": {
+  "mean": 111.88820000097621,
+  "median": 111.88820000097621,
+  "p90": 113.08811999915633
+ },
+ "height": {
+  "mean": 119.96384999656584,
+  "median": 119.96384999656584,
+  "p90": 128.35228999319952
+ },
+ "pnp": {
+  "mean": 0.3354499931447208,
+  "median": 0.3354499931447208,
+  "p90": 0.3488499787636101
+ },
+ "total_gpu_chain": {
+  "mean": 356.76634998526424,
+  "median": 356.76634998526424,
+  "p90": 368.82286998443305
+ },
+ "n_frames": 2,
+ "warmup": 1,
+ "mode": "single",
+ "weights_resident_MB": NaN,
+ "refiner_width_gate_clipped": 0,
+ "peak_mem_MB_inference": null,
+ "gpu": "cpu (SMOKE)",
+ "nets": {
+  "det": [
+   "E:/Open3DUAVDet/output/models/uavdet_3d/camnorm/srcx/st_in2mav/DET1_s0/ckpt/checkpoint_epoch_3.pth"
+  ],
+  "ref": [
+   "E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/in2mav/ref/ref_st3_s5.pt"
+  ],
+  "stu": [
+   "E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/in2mav/ou/S_ab0.pth"
+  ],
+  "kps": "E:/Open3DUAVDet/output/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom_irlid_kps/KPSs0/ckpt/checkpoint_epoch_8.pth"
+ },
+ "nvidia_smi_used_MB_at_end": "15619 MiB, 70 %"
+}

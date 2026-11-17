@@ -1,0 +1,618 @@
+### DRY run 11-16 11:21:36 (machine time)
+### check_cfg_drift.py (current yaml vs cfg dump in the reported networks' train logs)
+in   det    SAME  (log train_20260920-063059.log, 116 keys)
+in   rgb    SAME  (log train_20260922-201655.log, 115 keys)
+in   irT    SAME  (log train_20260925-123501.log, 116 keys)
+in   kdir   SAME  (log train_20260925-162007.log, 125 keys)
+in   irlid  SAME  (log train_20261013-053657.log, 122 keys)
+in   lid    SAME  (log train_20261012-160004.log, 120 keys)
+in   kps    SAME  (log train_20261015-002601.log, 125 keys)
+out  det    SAME  (log train_20261111-015231.log, 116 keys)
+out  rgb    SAME  (log train_20261112-100632.log, 116 keys)
+out  irT    SAME  (log train_20261111-015448.log, 117 keys)
+out  kdir   SAME  (log train_20261111-031552.log, 125 keys)
+out  irlid  SAME  (log train_20261111-021001.log, 122 keys)
+out  lid    SAME  (log train_20261111-032322.log, 120 keys)
+out  kps    SAME  (log train_20261111-043537.log, 125 keys)
+cfg drift check: all SAME
+### DRY=1 train_stage1.sh in 30
+  == in sd30 det:0  seed 30  tag S1X_DET_s30  (recipe of RAMP)
+     cd E:/Open3DUAVDet/tools && D:/Miniconda3/envs/city/python.exe E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/s1_train.py E:/Open3DUAVDet/tools/train.py --cfg_file cfgs/models/uavdet_3d/camnorm/sim_full_r34_geo_tr_mix_sym8_mblur_ramp.yaml --batch_size 8 --workers 2 --fix_random_seed --cudnn_benchmark --use_amp --logger_iter_interval 500 --val_split test --val_interval 10 --val_every 100 --val_match greedy --skip_test_eval --max_ckpt_save_num 10 --epochs 5 --seed 30 --extra_tag S1X_DET_s30
+     -> D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_full_r34_geo_tr_mix_sym8_mblur_ramp/S1X_DET_s30/ckpt/checkpoint_epoch_5.pth   chain uses: E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/release/in_sd30/ramp_s30.pth
+     cfg ok
+     trainer ok
+     new run dir (does not exist yet): D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_full_r34_geo_tr_mix_sym8_mblur_ramp/S1X_DET_s30
+  == in sd30 det:1  seed 31  tag S1X_DET_s31  (recipe of RAMP)
+     cd E:/Open3DUAVDet/tools && D:/Miniconda3/envs/city/python.exe E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/s1_train.py E:/Open3DUAVDet/tools/train.py --cfg_file cfgs/models/uavdet_3d/camnorm/sim_full_r34_geo_tr_mix_sym8_mblur_ramp.yaml --batch_size 8 --workers 2 --fix_random_seed --cudnn_benchmark --use_amp --logger_iter_interval 500 --val_split test --val_interval 10 --val_every 100 --val_match greedy --skip_test_eval --max_ckpt_save_num 10 --epochs 5 --seed 31 --extra_tag S1X_DET_s31
+     -> D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_full_r34_geo_tr_mix_sym8_mblur_ramp/S1X_DET_s31/ckpt/checkpoint_epoch_5.pth   chain uses: E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/release/in_sd30/ramp_s31.pth
+     cfg ok
+     trainer ok
+     new run dir (does not exist yet): D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_full_r34_geo_tr_mix_sym8_mblur_ramp/S1X_DET_s31
+  == in sd30 det:2  seed 32  tag S1X_DET_s32  (recipe of RAMP)
+     cd E:/Open3DUAVDet/tools && D:/Miniconda3/envs/city/python.exe E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/s1_train.py E:/Open3DUAVDet/tools/train.py --cfg_file cfgs/models/uavdet_3d/camnorm/sim_full_r34_geo_tr_mix_sym8_mblur_ramp.yaml --batch_size 8 --workers 2 --fix_random_seed --cudnn_benchmark --use_amp --logger_iter_interval 500 --val_split test --val_interval 10 --val_every 100 --val_match greedy --skip_test_eval --max_ckpt_save_num 10 --epochs 5 --seed 32 --extra_tag S1X_DET_s32
+     -> D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_full_r34_geo_tr_mix_sym8_mblur_ramp/S1X_DET_s32/ckpt/checkpoint_epoch_5.pth   chain uses: E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/release/in_sd30/ramp_s32.pth
+     cfg ok
+     trainer ok
+     new run dir (does not exist yet): D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_full_r34_geo_tr_mix_sym8_mblur_ramp/S1X_DET_s32
+  == in sd30 rgb:0  seed 30  tag S1X_KZ_s30  (recipe of KZs0)
+     cd E:/Open3DUAVDet/tools && D:/Miniconda3/envs/city/python.exe E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/s1_train.py E:/Open3DUAVDet/tools/train.py --cfg_file cfgs/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom.yaml --batch_size 8 --workers 2 --fix_random_seed --cudnn_benchmark --use_amp --logger_iter_interval 500 --val_split test --val_interval 10 --val_every 100 --val_match greedy --skip_test_eval --max_ckpt_save_num 3 --epochs 30 --seed 30 --extra_tag S1X_KZ_s30
+     -> D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom/S1X_KZ_s30/ckpt/checkpoint_epoch_30.pth   chain uses: D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom/S1X_KZ_s30/ckpt/checkpoint_epoch_30.pth
+     cfg ok
+     trainer ok
+     new run dir (does not exist yet): D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom/S1X_KZ_s30
+  == in sd30 rgb:1  seed 31  tag S1X_KZ_s31  (recipe of KZs0)
+     cd E:/Open3DUAVDet/tools && D:/Miniconda3/envs/city/python.exe E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/s1_train.py E:/Open3DUAVDet/tools/train.py --cfg_file cfgs/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom.yaml --batch_size 8 --workers 2 --fix_random_seed --cudnn_benchmark --use_amp --logger_iter_interval 500 --val_split test --val_interval 10 --val_every 100 --val_match greedy --skip_test_eval --max_ckpt_save_num 3 --epochs 30 --seed 31 --extra_tag S1X_KZ_s31
+     -> D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom/S1X_KZ_s31/ckpt/checkpoint_epoch_30.pth   chain uses: D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom/S1X_KZ_s31/ckpt/checkpoint_epoch_30.pth
+     cfg ok
+     trainer ok
+     new run dir (does not exist yet): D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom/S1X_KZ_s31
+  == in sd30 irT:0  seed 30  tag S1X_KZTIR_s30  (recipe of KZTIRs0)
+     cd E:/Open3DUAVDet/tools && D:/Miniconda3/envs/city/python.exe E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/s1_train.py E:/Open3DUAVDet/tools/train.py --cfg_file cfgs/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom_irT.yaml --batch_size 8 --workers 2 --fix_random_seed --cudnn_benchmark --use_amp --logger_iter_interval 500 --val_split test --val_interval 10 --val_every 100 --val_match greedy --skip_test_eval --max_ckpt_save_num 2 --epochs 30 --seed 30 --extra_tag S1X_KZTIR_s30
+     -> D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom_irT/S1X_KZTIR_s30/ckpt/checkpoint_epoch_30.pth   chain uses: D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom_irT/S1X_KZTIR_s30/ckpt/checkpoint_epoch_30.pth
+     cfg ok
+     trainer ok
+     new run dir (does not exist yet): D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom_irT/S1X_KZTIR_s30
+  == in sd30 kdir:0  seed 30  tag S1X_KZKDir_s30  (recipe of KZKDir_s0)
+     cd E:/Open3DUAVDet/tools && D:/Miniconda3/envs/city/python.exe E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/s1_train.py E:/Open3DUAVDet/tools/train.py --cfg_file cfgs/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom_kdir.yaml --batch_size 8 --workers 2 --fix_random_seed --cudnn_benchmark --use_amp --logger_iter_interval 500 --val_split test --val_interval 10 --val_every 100 --val_match greedy --skip_test_eval --max_ckpt_save_num 2 --epochs 30 --seed 30 --extra_tag S1X_KZKDir_s30 --set MODEL.DISTILL.TEACHER_CKPT D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom_irT/S1X_KZTIR_s30/ckpt/checkpoint_epoch_30.pth
+     -> D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom_kdir/S1X_KZKDir_s30/ckpt/checkpoint_epoch_30.pth   chain uses: D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom_kdir/S1X_KZKDir_s30/ckpt/checkpoint_epoch_30.pth
+     cfg ok
+     trainer ok
+     depends on D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom_irT/S1X_KZTIR_s30/ckpt/checkpoint_epoch_30.pth (trained earlier in this seed set; exists now: no)
+     new run dir (does not exist yet): D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom_kdir/S1X_KZKDir_s30
+  == in sd30 kdir:1  seed 31  tag S1X_KZKDir_s31  (recipe of KZKDir_s0)
+     cd E:/Open3DUAVDet/tools && D:/Miniconda3/envs/city/python.exe E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/s1_train.py E:/Open3DUAVDet/tools/train.py --cfg_file cfgs/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom_kdir.yaml --batch_size 8 --workers 2 --fix_random_seed --cudnn_benchmark --use_amp --logger_iter_interval 500 --val_split test --val_interval 10 --val_every 100 --val_match greedy --skip_test_eval --max_ckpt_save_num 2 --epochs 30 --seed 31 --extra_tag S1X_KZKDir_s31 --set MODEL.DISTILL.TEACHER_CKPT D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom_irT/S1X_KZTIR_s30/ckpt/checkpoint_epoch_30.pth
+     -> D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom_kdir/S1X_KZKDir_s31/ckpt/checkpoint_epoch_30.pth   chain uses: D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom_kdir/S1X_KZKDir_s31/ckpt/checkpoint_epoch_30.pth
+     cfg ok
+     trainer ok
+     depends on D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom_irT/S1X_KZTIR_s30/ckpt/checkpoint_epoch_30.pth (trained earlier in this seed set; exists now: no)
+     new run dir (does not exist yet): D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom_kdir/S1X_KZKDir_s31
+  == in sd30 irlid:0  seed 30  tag S1X_KZM_s30  (recipe of KZMs0)
+     cd E:/Open3DUAVDet/tools && D:/Miniconda3/envs/city/python.exe E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/s1_train.py E:/Open3DUAVDet/output/camnorm/geo1004/lidar/kzlid/train_mm.py --cfg_file cfgs/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom_irlid.yaml --batch_size 8 --workers 2 --fix_random_seed --cudnn_benchmark --use_amp --logger_iter_interval 500 --val_split test --val_interval 10 --val_every 100 --val_match greedy --skip_test_eval --max_ckpt_save_num 3 --epochs 30 --seed 30 --extra_tag S1X_KZM_s30
+     -> D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom_irlid/S1X_KZM_s30/ckpt/checkpoint_epoch_30.pth   chain uses: E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/release/in_sd30/kzm_s30.pth
+     cfg ok
+     trainer ok
+     new run dir (does not exist yet): D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom_irlid/S1X_KZM_s30
+  == in sd30 irlid:1  seed 31  tag S1X_KZM_s31  (recipe of KZMs0)
+     cd E:/Open3DUAVDet/tools && D:/Miniconda3/envs/city/python.exe E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/s1_train.py E:/Open3DUAVDet/output/camnorm/geo1004/lidar/kzlid/train_mm.py --cfg_file cfgs/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom_irlid.yaml --batch_size 8 --workers 2 --fix_random_seed --cudnn_benchmark --use_amp --logger_iter_interval 500 --val_split test --val_interval 10 --val_every 100 --val_match greedy --skip_test_eval --max_ckpt_save_num 3 --epochs 30 --seed 31 --extra_tag S1X_KZM_s31
+     -> D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom_irlid/S1X_KZM_s31/ckpt/checkpoint_epoch_30.pth   chain uses: E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/release/in_sd30/kzm_s31.pth
+     cfg ok
+     trainer ok
+     new run dir (does not exist yet): D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom_irlid/S1X_KZM_s31
+  == in sd30 kps:0  seed 30  tag S1X_KPS_s30  (recipe of KPSs0)
+     cd E:/Open3DUAVDet/tools && D:/Miniconda3/envs/city/python.exe E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/s1_train.py E:/Open3DUAVDet/output/camnorm/geo1004/lidar/kpsize/train_mmk.py --cfg_file cfgs/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom_irlid_kps.yaml --batch_size 8 --workers 2 --fix_random_seed --cudnn_benchmark --use_amp --logger_iter_interval 500 --val_split test --val_interval 10 --val_every 100 --val_match greedy --skip_test_eval --max_ckpt_save_num 2 --epochs 8 --seed 30 --extra_tag S1X_KPS_s30 --pretrained_model D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom_irlid/S1X_KZM_s30/ckpt/checkpoint_epoch_30.pth
+     -> D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom_irlid_kps/S1X_KPS_s30/ckpt/checkpoint_epoch_8.pth   chain uses: D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom_irlid_kps/S1X_KPS_s30/ckpt/checkpoint_epoch_8.pth
+     cfg ok
+     trainer ok
+     depends on D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom_irlid/S1X_KZM_s30/ckpt/checkpoint_epoch_30.pth (trained earlier in this seed set; exists now: no)
+     new run dir (does not exist yet): D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom_irlid_kps/S1X_KPS_s30
+  == in sd30 lid:0  seed 30  tag S1X_KZL_s30  (recipe of KZLs0)
+     cd E:/Open3DUAVDet/tools && D:/Miniconda3/envs/city/python.exe E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/s1_train.py E:/Open3DUAVDet/output/camnorm/geo1004/lidar/kzlid/train_kz_lid.py --cfg_file cfgs/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom_lid.yaml --batch_size 8 --workers 2 --fix_random_seed --cudnn_benchmark --use_amp --logger_iter_interval 500 --val_split test --val_interval 10 --val_every 100 --val_match greedy --skip_test_eval --max_ckpt_save_num 3 --epochs 30 --seed 30 --extra_tag S1X_KZL_s30
+     -> D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom_lid/S1X_KZL_s30/ckpt/checkpoint_epoch_30.pth   chain uses: E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/release/in_sd30/kzl_s30.pth
+     cfg ok
+     trainer ok
+     new run dir (does not exist yet): D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom_lid/S1X_KZL_s30
+  == in sd30 lid:1  seed 31  tag S1X_KZL_s31  (recipe of KZLs0)
+     cd E:/Open3DUAVDet/tools && D:/Miniconda3/envs/city/python.exe E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/s1_train.py E:/Open3DUAVDet/output/camnorm/geo1004/lidar/kzlid/train_kz_lid.py --cfg_file cfgs/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom_lid.yaml --batch_size 8 --workers 2 --fix_random_seed --cudnn_benchmark --use_amp --logger_iter_interval 500 --val_split test --val_interval 10 --val_every 100 --val_match greedy --skip_test_eval --max_ckpt_save_num 3 --epochs 30 --seed 31 --extra_tag S1X_KZL_s31
+     -> D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom_lid/S1X_KZL_s31/ckpt/checkpoint_epoch_30.pth   chain uses: E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/release/in_sd30/kzl_s31.pth
+     cfg ok
+     trainer ok
+     new run dir (does not exist yet): D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom_lid/S1X_KZL_s31
+### DRY=1 train_stage1.sh in 40
+  == in sd40 det:0  seed 40  tag S1X_DET_s40  (recipe of RAMP)
+     cd E:/Open3DUAVDet/tools && D:/Miniconda3/envs/city/python.exe E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/s1_train.py E:/Open3DUAVDet/tools/train.py --cfg_file cfgs/models/uavdet_3d/camnorm/sim_full_r34_geo_tr_mix_sym8_mblur_ramp.yaml --batch_size 8 --workers 2 --fix_random_seed --cudnn_benchmark --use_amp --logger_iter_interval 500 --val_split test --val_interval 10 --val_every 100 --val_match greedy --skip_test_eval --max_ckpt_save_num 10 --epochs 5 --seed 40 --extra_tag S1X_DET_s40
+     -> D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_full_r34_geo_tr_mix_sym8_mblur_ramp/S1X_DET_s40/ckpt/checkpoint_epoch_5.pth   chain uses: E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/release/in_sd40/ramp_s40.pth
+     cfg ok
+     trainer ok
+     new run dir (does not exist yet): D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_full_r34_geo_tr_mix_sym8_mblur_ramp/S1X_DET_s40
+  == in sd40 det:1  seed 41  tag S1X_DET_s41  (recipe of RAMP)
+     cd E:/Open3DUAVDet/tools && D:/Miniconda3/envs/city/python.exe E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/s1_train.py E:/Open3DUAVDet/tools/train.py --cfg_file cfgs/models/uavdet_3d/camnorm/sim_full_r34_geo_tr_mix_sym8_mblur_ramp.yaml --batch_size 8 --workers 2 --fix_random_seed --cudnn_benchmark --use_amp --logger_iter_interval 500 --val_split test --val_interval 10 --val_every 100 --val_match greedy --skip_test_eval --max_ckpt_save_num 10 --epochs 5 --seed 41 --extra_tag S1X_DET_s41
+     -> D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_full_r34_geo_tr_mix_sym8_mblur_ramp/S1X_DET_s41/ckpt/checkpoint_epoch_5.pth   chain uses: E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/release/in_sd40/ramp_s41.pth
+     cfg ok
+     trainer ok
+     new run dir (does not exist yet): D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_full_r34_geo_tr_mix_sym8_mblur_ramp/S1X_DET_s41
+  == in sd40 det:2  seed 42  tag S1X_DET_s42  (recipe of RAMP)
+     cd E:/Open3DUAVDet/tools && D:/Miniconda3/envs/city/python.exe E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/s1_train.py E:/Open3DUAVDet/tools/train.py --cfg_file cfgs/models/uavdet_3d/camnorm/sim_full_r34_geo_tr_mix_sym8_mblur_ramp.yaml --batch_size 8 --workers 2 --fix_random_seed --cudnn_benchmark --use_amp --logger_iter_interval 500 --val_split test --val_interval 10 --val_every 100 --val_match greedy --skip_test_eval --max_ckpt_save_num 10 --epochs 5 --seed 42 --extra_tag S1X_DET_s42
+     -> D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_full_r34_geo_tr_mix_sym8_mblur_ramp/S1X_DET_s42/ckpt/checkpoint_epoch_5.pth   chain uses: E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/release/in_sd40/ramp_s42.pth
+     cfg ok
+     trainer ok
+     new run dir (does not exist yet): D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_full_r34_geo_tr_mix_sym8_mblur_ramp/S1X_DET_s42
+  == in sd40 rgb:0  seed 40  tag S1X_KZ_s40  (recipe of KZs0)
+     cd E:/Open3DUAVDet/tools && D:/Miniconda3/envs/city/python.exe E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/s1_train.py E:/Open3DUAVDet/tools/train.py --cfg_file cfgs/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom.yaml --batch_size 8 --workers 2 --fix_random_seed --cudnn_benchmark --use_amp --logger_iter_interval 500 --val_split test --val_interval 10 --val_every 100 --val_match greedy --skip_test_eval --max_ckpt_save_num 3 --epochs 30 --seed 40 --extra_tag S1X_KZ_s40
+     -> D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom/S1X_KZ_s40/ckpt/checkpoint_epoch_30.pth   chain uses: D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom/S1X_KZ_s40/ckpt/checkpoint_epoch_30.pth
+     cfg ok
+     trainer ok
+     new run dir (does not exist yet): D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom/S1X_KZ_s40
+  == in sd40 rgb:1  seed 41  tag S1X_KZ_s41  (recipe of KZs0)
+     cd E:/Open3DUAVDet/tools && D:/Miniconda3/envs/city/python.exe E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/s1_train.py E:/Open3DUAVDet/tools/train.py --cfg_file cfgs/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom.yaml --batch_size 8 --workers 2 --fix_random_seed --cudnn_benchmark --use_amp --logger_iter_interval 500 --val_split test --val_interval 10 --val_every 100 --val_match greedy --skip_test_eval --max_ckpt_save_num 3 --epochs 30 --seed 41 --extra_tag S1X_KZ_s41
+     -> D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom/S1X_KZ_s41/ckpt/checkpoint_epoch_30.pth   chain uses: D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom/S1X_KZ_s41/ckpt/checkpoint_epoch_30.pth
+     cfg ok
+     trainer ok
+     new run dir (does not exist yet): D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom/S1X_KZ_s41
+  == in sd40 irT:0  seed 40  tag S1X_KZTIR_s40  (recipe of KZTIRs0)
+     cd E:/Open3DUAVDet/tools && D:/Miniconda3/envs/city/python.exe E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/s1_train.py E:/Open3DUAVDet/tools/train.py --cfg_file cfgs/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom_irT.yaml --batch_size 8 --workers 2 --fix_random_seed --cudnn_benchmark --use_amp --logger_iter_interval 500 --val_split test --val_interval 10 --val_every 100 --val_match greedy --skip_test_eval --max_ckpt_save_num 2 --epochs 30 --seed 40 --extra_tag S1X_KZTIR_s40
+     -> D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom_irT/S1X_KZTIR_s40/ckpt/checkpoint_epoch_30.pth   chain uses: D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom_irT/S1X_KZTIR_s40/ckpt/checkpoint_epoch_30.pth
+     cfg ok
+     trainer ok
+     new run dir (does not exist yet): D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom_irT/S1X_KZTIR_s40
+  == in sd40 kdir:0  seed 40  tag S1X_KZKDir_s40  (recipe of KZKDir_s0)
+     cd E:/Open3DUAVDet/tools && D:/Miniconda3/envs/city/python.exe E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/s1_train.py E:/Open3DUAVDet/tools/train.py --cfg_file cfgs/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom_kdir.yaml --batch_size 8 --workers 2 --fix_random_seed --cudnn_benchmark --use_amp --logger_iter_interval 500 --val_split test --val_interval 10 --val_every 100 --val_match greedy --skip_test_eval --max_ckpt_save_num 2 --epochs 30 --seed 40 --extra_tag S1X_KZKDir_s40 --set MODEL.DISTILL.TEACHER_CKPT D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom_irT/S1X_KZTIR_s40/ckpt/checkpoint_epoch_30.pth
+     -> D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom_kdir/S1X_KZKDir_s40/ckpt/checkpoint_epoch_30.pth   chain uses: D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom_kdir/S1X_KZKDir_s40/ckpt/checkpoint_epoch_30.pth
+     cfg ok
+     trainer ok
+     depends on D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom_irT/S1X_KZTIR_s40/ckpt/checkpoint_epoch_30.pth (trained earlier in this seed set; exists now: no)
+     new run dir (does not exist yet): D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom_kdir/S1X_KZKDir_s40
+  == in sd40 kdir:1  seed 41  tag S1X_KZKDir_s41  (recipe of KZKDir_s0)
+     cd E:/Open3DUAVDet/tools && D:/Miniconda3/envs/city/python.exe E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/s1_train.py E:/Open3DUAVDet/tools/train.py --cfg_file cfgs/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom_kdir.yaml --batch_size 8 --workers 2 --fix_random_seed --cudnn_benchmark --use_amp --logger_iter_interval 500 --val_split test --val_interval 10 --val_every 100 --val_match greedy --skip_test_eval --max_ckpt_save_num 2 --epochs 30 --seed 41 --extra_tag S1X_KZKDir_s41 --set MODEL.DISTILL.TEACHER_CKPT D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom_irT/S1X_KZTIR_s40/ckpt/checkpoint_epoch_30.pth
+     -> D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom_kdir/S1X_KZKDir_s41/ckpt/checkpoint_epoch_30.pth   chain uses: D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom_kdir/S1X_KZKDir_s41/ckpt/checkpoint_epoch_30.pth
+     cfg ok
+     trainer ok
+     depends on D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom_irT/S1X_KZTIR_s40/ckpt/checkpoint_epoch_30.pth (trained earlier in this seed set; exists now: no)
+     new run dir (does not exist yet): D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom_kdir/S1X_KZKDir_s41
+  == in sd40 irlid:0  seed 40  tag S1X_KZM_s40  (recipe of KZMs0)
+     cd E:/Open3DUAVDet/tools && D:/Miniconda3/envs/city/python.exe E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/s1_train.py E:/Open3DUAVDet/output/camnorm/geo1004/lidar/kzlid/train_mm.py --cfg_file cfgs/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom_irlid.yaml --batch_size 8 --workers 2 --fix_random_seed --cudnn_benchmark --use_amp --logger_iter_interval 500 --val_split test --val_interval 10 --val_every 100 --val_match greedy --skip_test_eval --max_ckpt_save_num 3 --epochs 30 --seed 40 --extra_tag S1X_KZM_s40
+     -> D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom_irlid/S1X_KZM_s40/ckpt/checkpoint_epoch_30.pth   chain uses: E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/release/in_sd40/kzm_s40.pth
+     cfg ok
+     trainer ok
+     new run dir (does not exist yet): D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom_irlid/S1X_KZM_s40
+  == in sd40 irlid:1  seed 41  tag S1X_KZM_s41  (recipe of KZMs0)
+     cd E:/Open3DUAVDet/tools && D:/Miniconda3/envs/city/python.exe E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/s1_train.py E:/Open3DUAVDet/output/camnorm/geo1004/lidar/kzlid/train_mm.py --cfg_file cfgs/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom_irlid.yaml --batch_size 8 --workers 2 --fix_random_seed --cudnn_benchmark --use_amp --logger_iter_interval 500 --val_split test --val_interval 10 --val_every 100 --val_match greedy --skip_test_eval --max_ckpt_save_num 3 --epochs 30 --seed 41 --extra_tag S1X_KZM_s41
+     -> D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom_irlid/S1X_KZM_s41/ckpt/checkpoint_epoch_30.pth   chain uses: E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/release/in_sd40/kzm_s41.pth
+     cfg ok
+     trainer ok
+     new run dir (does not exist yet): D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom_irlid/S1X_KZM_s41
+  == in sd40 kps:0  seed 40  tag S1X_KPS_s40  (recipe of KPSs0)
+     cd E:/Open3DUAVDet/tools && D:/Miniconda3/envs/city/python.exe E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/s1_train.py E:/Open3DUAVDet/output/camnorm/geo1004/lidar/kpsize/train_mmk.py --cfg_file cfgs/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom_irlid_kps.yaml --batch_size 8 --workers 2 --fix_random_seed --cudnn_benchmark --use_amp --logger_iter_interval 500 --val_split test --val_interval 10 --val_every 100 --val_match greedy --skip_test_eval --max_ckpt_save_num 2 --epochs 8 --seed 40 --extra_tag S1X_KPS_s40 --pretrained_model D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom_irlid/S1X_KZM_s40/ckpt/checkpoint_epoch_30.pth
+     -> D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom_irlid_kps/S1X_KPS_s40/ckpt/checkpoint_epoch_8.pth   chain uses: D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom_irlid_kps/S1X_KPS_s40/ckpt/checkpoint_epoch_8.pth
+     cfg ok
+     trainer ok
+     depends on D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom_irlid/S1X_KZM_s40/ckpt/checkpoint_epoch_30.pth (trained earlier in this seed set; exists now: no)
+     new run dir (does not exist yet): D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom_irlid_kps/S1X_KPS_s40
+  == in sd40 lid:0  seed 40  tag S1X_KZL_s40  (recipe of KZLs0)
+     cd E:/Open3DUAVDet/tools && D:/Miniconda3/envs/city/python.exe E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/s1_train.py E:/Open3DUAVDet/output/camnorm/geo1004/lidar/kzlid/train_kz_lid.py --cfg_file cfgs/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom_lid.yaml --batch_size 8 --workers 2 --fix_random_seed --cudnn_benchmark --use_amp --logger_iter_interval 500 --val_split test --val_interval 10 --val_every 100 --val_match greedy --skip_test_eval --max_ckpt_save_num 3 --epochs 30 --seed 40 --extra_tag S1X_KZL_s40
+     -> D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom_lid/S1X_KZL_s40/ckpt/checkpoint_epoch_30.pth   chain uses: E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/release/in_sd40/kzl_s40.pth
+     cfg ok
+     trainer ok
+     new run dir (does not exist yet): D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom_lid/S1X_KZL_s40
+  == in sd40 lid:1  seed 41  tag S1X_KZL_s41  (recipe of KZLs0)
+     cd E:/Open3DUAVDet/tools && D:/Miniconda3/envs/city/python.exe E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/s1_train.py E:/Open3DUAVDet/output/camnorm/geo1004/lidar/kzlid/train_kz_lid.py --cfg_file cfgs/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom_lid.yaml --batch_size 8 --workers 2 --fix_random_seed --cudnn_benchmark --use_amp --logger_iter_interval 500 --val_split test --val_interval 10 --val_every 100 --val_match greedy --skip_test_eval --max_ckpt_save_num 3 --epochs 30 --seed 41 --extra_tag S1X_KZL_s41
+     -> D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom_lid/S1X_KZL_s41/ckpt/checkpoint_epoch_30.pth   chain uses: E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/release/in_sd40/kzl_s41.pth
+     cfg ok
+     trainer ok
+     new run dir (does not exist yet): D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom_lid/S1X_KZL_s41
+### DRY=1 train_stage1.sh out 30
+  == out sd30 det:0  seed 30  tag S1X_DET_s30  (recipe of DET_s0)
+     cd E:/Open3DUAVDet/tools && D:/Miniconda3/envs/city/python.exe E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/s1_train.py E:/Open3DUAVDet/tools/train.py --cfg_file cfgs/models/uavdet_3d/camnorm/sim_out_r34_geo_ramp_out.yaml --batch_size 8 --workers 2 --fix_random_seed --val_split test --val_interval 10 --val_every 100 --skip_test_eval --max_ckpt_save_num 2 --epochs 5 --seed 30 --extra_tag S1X_DET_s30
+     -> D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_out_r34_geo_ramp_out/S1X_DET_s30/ckpt/checkpoint_epoch_5.pth   chain uses: D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_out_r34_geo_ramp_out/S1X_DET_s30/ckpt/checkpoint_epoch_5.pth
+     cfg ok
+     trainer ok
+     new run dir (does not exist yet): D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_out_r34_geo_ramp_out/S1X_DET_s30
+  == out sd30 det:1  seed 31  tag S1X_DET_s31  (recipe of DET_s0)
+     cd E:/Open3DUAVDet/tools && D:/Miniconda3/envs/city/python.exe E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/s1_train.py E:/Open3DUAVDet/tools/train.py --cfg_file cfgs/models/uavdet_3d/camnorm/sim_out_r34_geo_ramp_out.yaml --batch_size 8 --workers 2 --fix_random_seed --val_split test --val_interval 10 --val_every 100 --skip_test_eval --max_ckpt_save_num 2 --epochs 5 --seed 31 --extra_tag S1X_DET_s31
+     -> D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_out_r34_geo_ramp_out/S1X_DET_s31/ckpt/checkpoint_epoch_5.pth   chain uses: D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_out_r34_geo_ramp_out/S1X_DET_s31/ckpt/checkpoint_epoch_5.pth
+     cfg ok
+     trainer ok
+     new run dir (does not exist yet): D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_out_r34_geo_ramp_out/S1X_DET_s31
+  == out sd30 det:2  seed 32  tag S1X_DET_s32  (recipe of DET_s0)
+     cd E:/Open3DUAVDet/tools && D:/Miniconda3/envs/city/python.exe E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/s1_train.py E:/Open3DUAVDet/tools/train.py --cfg_file cfgs/models/uavdet_3d/camnorm/sim_out_r34_geo_ramp_out.yaml --batch_size 8 --workers 2 --fix_random_seed --val_split test --val_interval 10 --val_every 100 --skip_test_eval --max_ckpt_save_num 2 --epochs 5 --seed 32 --extra_tag S1X_DET_s32
+     -> D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_out_r34_geo_ramp_out/S1X_DET_s32/ckpt/checkpoint_epoch_5.pth   chain uses: D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_out_r34_geo_ramp_out/S1X_DET_s32/ckpt/checkpoint_epoch_5.pth
+     cfg ok
+     trainer ok
+     new run dir (does not exist yet): D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_out_r34_geo_ramp_out/S1X_DET_s32
+  == out sd30 rgb:0  seed 30  tag S1X_OKZrgb_s30  (recipe of OKZrgb_s0)
+     cd E:/Open3DUAVDet/tools && D:/Miniconda3/envs/city/python.exe E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/s1_train.py E:/Open3DUAVDet/tools/train.py --cfg_file cfgs/models/uavdet_3d/camnorm/sim_out_r34_kp_w12_zoom_out.yaml --batch_size 8 --workers 2 --fix_random_seed --cudnn_benchmark --use_amp --logger_iter_interval 500 --val_split test --val_interval 10 --val_every 100 --val_match greedy --skip_test_eval --max_ckpt_save_num 2 --epochs 30 --seed 30 --extra_tag S1X_OKZrgb_s30
+     -> D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_out_r34_kp_w12_zoom_out/S1X_OKZrgb_s30/ckpt/checkpoint_epoch_30.pth   chain uses: D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_out_r34_kp_w12_zoom_out/S1X_OKZrgb_s30/ckpt/checkpoint_epoch_30.pth
+     cfg ok
+     trainer ok
+     new run dir (does not exist yet): D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_out_r34_kp_w12_zoom_out/S1X_OKZrgb_s30
+  == out sd30 rgb:1  seed 31  tag S1X_OKZrgb_s31  (recipe of OKZrgb_s0)
+     cd E:/Open3DUAVDet/tools && D:/Miniconda3/envs/city/python.exe E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/s1_train.py E:/Open3DUAVDet/tools/train.py --cfg_file cfgs/models/uavdet_3d/camnorm/sim_out_r34_kp_w12_zoom_out.yaml --batch_size 8 --workers 2 --fix_random_seed --cudnn_benchmark --use_amp --logger_iter_interval 500 --val_split test --val_interval 10 --val_every 100 --val_match greedy --skip_test_eval --max_ckpt_save_num 2 --epochs 30 --seed 31 --extra_tag S1X_OKZrgb_s31
+     -> D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_out_r34_kp_w12_zoom_out/S1X_OKZrgb_s31/ckpt/checkpoint_epoch_30.pth   chain uses: D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_out_r34_kp_w12_zoom_out/S1X_OKZrgb_s31/ckpt/checkpoint_epoch_30.pth
+     cfg ok
+     trainer ok
+     new run dir (does not exist yet): D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_out_r34_kp_w12_zoom_out/S1X_OKZrgb_s31
+  == out sd30 irT:0  seed 30  tag S1X_OKZirT_s30  (recipe of OKZirT_s0)
+     cd E:/Open3DUAVDet/tools && D:/Miniconda3/envs/city/python.exe E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/s1_train.py E:/Open3DUAVDet/tools/train.py --cfg_file cfgs/models/uavdet_3d/camnorm/sim_out_r34_kp_w12_zoom_irT_out.yaml --batch_size 8 --workers 2 --fix_random_seed --cudnn_benchmark --use_amp --logger_iter_interval 500 --val_split test --val_interval 10 --val_every 100 --val_match greedy --skip_test_eval --max_ckpt_save_num 2 --epochs 30 --seed 30 --extra_tag S1X_OKZirT_s30
+     -> D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_out_r34_kp_w12_zoom_irT_out/S1X_OKZirT_s30/ckpt/checkpoint_epoch_30.pth   chain uses: D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_out_r34_kp_w12_zoom_irT_out/S1X_OKZirT_s30/ckpt/checkpoint_epoch_30.pth
+     cfg ok
+     trainer ok
+     new run dir (does not exist yet): D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_out_r34_kp_w12_zoom_irT_out/S1X_OKZirT_s30
+  == out sd30 kdir:0  seed 30  tag S1X_OKZkdir_s30  (recipe of OKZkdir_s0)
+     cd E:/Open3DUAVDet/tools && D:/Miniconda3/envs/city/python.exe E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/s1_train.py E:/Open3DUAVDet/tools/train.py --cfg_file cfgs/models/uavdet_3d/camnorm/sim_out_r34_kp_w12_zoom_kdir_out.yaml --batch_size 8 --workers 2 --fix_random_seed --cudnn_benchmark --use_amp --logger_iter_interval 500 --val_split test --val_interval 10 --val_every 100 --val_match greedy --skip_test_eval --max_ckpt_save_num 2 --epochs 30 --seed 30 --extra_tag S1X_OKZkdir_s30 --set MODEL.DISTILL.TEACHER_CKPT D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_out_r34_kp_w12_zoom_irT_out/S1X_OKZirT_s30/ckpt/checkpoint_epoch_30.pth
+     -> D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_out_r34_kp_w12_zoom_kdir_out/S1X_OKZkdir_s30/ckpt/checkpoint_epoch_30.pth   chain uses: D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_out_r34_kp_w12_zoom_kdir_out/S1X_OKZkdir_s30/ckpt/checkpoint_epoch_30.pth
+     cfg ok
+     trainer ok
+     depends on D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_out_r34_kp_w12_zoom_irT_out/S1X_OKZirT_s30/ckpt/checkpoint_epoch_30.pth (trained earlier in this seed set; exists now: no)
+     new run dir (does not exist yet): D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_out_r34_kp_w12_zoom_kdir_out/S1X_OKZkdir_s30
+  == out sd30 kdir:1  seed 31  tag S1X_OKZkdir_s31  (recipe of OKZkdir_s0)
+     cd E:/Open3DUAVDet/tools && D:/Miniconda3/envs/city/python.exe E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/s1_train.py E:/Open3DUAVDet/tools/train.py --cfg_file cfgs/models/uavdet_3d/camnorm/sim_out_r34_kp_w12_zoom_kdir_out.yaml --batch_size 8 --workers 2 --fix_random_seed --cudnn_benchmark --use_amp --logger_iter_interval 500 --val_split test --val_interval 10 --val_every 100 --val_match greedy --skip_test_eval --max_ckpt_save_num 2 --epochs 30 --seed 31 --extra_tag S1X_OKZkdir_s31 --set MODEL.DISTILL.TEACHER_CKPT D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_out_r34_kp_w12_zoom_irT_out/S1X_OKZirT_s30/ckpt/checkpoint_epoch_30.pth
+     -> D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_out_r34_kp_w12_zoom_kdir_out/S1X_OKZkdir_s31/ckpt/checkpoint_epoch_30.pth   chain uses: D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_out_r34_kp_w12_zoom_kdir_out/S1X_OKZkdir_s31/ckpt/checkpoint_epoch_30.pth
+     cfg ok
+     trainer ok
+     depends on D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_out_r34_kp_w12_zoom_irT_out/S1X_OKZirT_s30/ckpt/checkpoint_epoch_30.pth (trained earlier in this seed set; exists now: no)
+     new run dir (does not exist yet): D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_out_r34_kp_w12_zoom_kdir_out/S1X_OKZkdir_s31
+  == out sd30 irlid:0  seed 30  tag S1X_OKZirlid_s30  (recipe of OKZirlid_s0)
+     cd E:/Open3DUAVDet/tools && D:/Miniconda3/envs/city/python.exe E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/s1_train.py E:/Open3DUAVDet/output/camnorm/geo1004/lidar/kzlid/train_mm.py --cfg_file cfgs/models/uavdet_3d/camnorm/sim_out_r34_kp_w12_zoom_irlid_out.yaml --batch_size 8 --workers 2 --fix_random_seed --cudnn_benchmark --use_amp --logger_iter_interval 500 --val_split test --val_interval 10 --val_every 100 --val_match greedy --skip_test_eval --max_ckpt_save_num 2 --epochs 30 --seed 30 --extra_tag S1X_OKZirlid_s30
+     -> D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_out_r34_kp_w12_zoom_irlid_out/S1X_OKZirlid_s30/ckpt/checkpoint_epoch_30.pth   chain uses: D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_out_r34_kp_w12_zoom_irlid_out/S1X_OKZirlid_s30/ckpt/checkpoint_epoch_30.pth
+     cfg ok
+     trainer ok
+     new run dir (does not exist yet): D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_out_r34_kp_w12_zoom_irlid_out/S1X_OKZirlid_s30
+  == out sd30 irlid:1  seed 31  tag S1X_OKZirlid_s31  (recipe of OKZirlid_s0)
+     cd E:/Open3DUAVDet/tools && D:/Miniconda3/envs/city/python.exe E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/s1_train.py E:/Open3DUAVDet/output/camnorm/geo1004/lidar/kzlid/train_mm.py --cfg_file cfgs/models/uavdet_3d/camnorm/sim_out_r34_kp_w12_zoom_irlid_out.yaml --batch_size 8 --workers 2 --fix_random_seed --cudnn_benchmark --use_amp --logger_iter_interval 500 --val_split test --val_interval 10 --val_every 100 --val_match greedy --skip_test_eval --max_ckpt_save_num 2 --epochs 30 --seed 31 --extra_tag S1X_OKZirlid_s31
+     -> D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_out_r34_kp_w12_zoom_irlid_out/S1X_OKZirlid_s31/ckpt/checkpoint_epoch_30.pth   chain uses: D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_out_r34_kp_w12_zoom_irlid_out/S1X_OKZirlid_s31/ckpt/checkpoint_epoch_30.pth
+     cfg ok
+     trainer ok
+     new run dir (does not exist yet): D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_out_r34_kp_w12_zoom_irlid_out/S1X_OKZirlid_s31
+  == out sd30 kps:0  seed 30  tag S1X_OKZkps_s30  (recipe of OKZkps_s0)
+     cd E:/Open3DUAVDet/tools && D:/Miniconda3/envs/city/python.exe E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/s1_train.py E:/Open3DUAVDet/output/camnorm/geo1004/lidar/kpsize/train_mmk.py --cfg_file cfgs/models/uavdet_3d/camnorm/sim_out_r34_kp_w12_zoom_irlid_kps_out.yaml --batch_size 8 --workers 2 --fix_random_seed --cudnn_benchmark --use_amp --logger_iter_interval 500 --val_split test --val_interval 10 --val_every 100 --val_match greedy --skip_test_eval --max_ckpt_save_num 2 --epochs 8 --seed 30 --extra_tag S1X_OKZkps_s30 --pretrained_model D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_out_r34_kp_w12_zoom_irlid_out/S1X_OKZirlid_s30/ckpt/checkpoint_epoch_30.pth
+     -> D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_out_r34_kp_w12_zoom_irlid_kps_out/S1X_OKZkps_s30/ckpt/checkpoint_epoch_8.pth   chain uses: D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_out_r34_kp_w12_zoom_irlid_kps_out/S1X_OKZkps_s30/ckpt/checkpoint_epoch_8.pth
+     cfg ok
+     trainer ok
+     depends on D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_out_r34_kp_w12_zoom_irlid_out/S1X_OKZirlid_s30/ckpt/checkpoint_epoch_30.pth (trained earlier in this seed set; exists now: no)
+     new run dir (does not exist yet): D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_out_r34_kp_w12_zoom_irlid_kps_out/S1X_OKZkps_s30
+  == out sd30 lid:0  seed 30  tag S1X_OKZlid_s30  (recipe of OKZlid_s0)
+     cd E:/Open3DUAVDet/tools && D:/Miniconda3/envs/city/python.exe E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/s1_train.py E:/Open3DUAVDet/output/camnorm/geo1004/lidar/kzlid/train_kz_lid.py --cfg_file cfgs/models/uavdet_3d/camnorm/sim_out_r34_kp_w12_zoom_lid_out.yaml --batch_size 8 --workers 2 --fix_random_seed --cudnn_benchmark --use_amp --logger_iter_interval 500 --val_split test --val_interval 10 --val_every 100 --val_match greedy --skip_test_eval --max_ckpt_save_num 2 --epochs 30 --seed 30 --extra_tag S1X_OKZlid_s30
+     -> D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_out_r34_kp_w12_zoom_lid_out/S1X_OKZlid_s30/ckpt/checkpoint_epoch_30.pth   chain uses: D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_out_r34_kp_w12_zoom_lid_out/S1X_OKZlid_s30/ckpt/checkpoint_epoch_30.pth
+     cfg ok
+     trainer ok
+     new run dir (does not exist yet): D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_out_r34_kp_w12_zoom_lid_out/S1X_OKZlid_s30
+  == out sd30 lid:1  seed 31  tag S1X_OKZlid_s31  (recipe of OKZlid_s0)
+     cd E:/Open3DUAVDet/tools && D:/Miniconda3/envs/city/python.exe E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/s1_train.py E:/Open3DUAVDet/output/camnorm/geo1004/lidar/kzlid/train_kz_lid.py --cfg_file cfgs/models/uavdet_3d/camnorm/sim_out_r34_kp_w12_zoom_lid_out.yaml --batch_size 8 --workers 2 --fix_random_seed --cudnn_benchmark --use_amp --logger_iter_interval 500 --val_split test --val_interval 10 --val_every 100 --val_match greedy --skip_test_eval --max_ckpt_save_num 2 --epochs 30 --seed 31 --extra_tag S1X_OKZlid_s31
+     -> D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_out_r34_kp_w12_zoom_lid_out/S1X_OKZlid_s31/ckpt/checkpoint_epoch_30.pth   chain uses: D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_out_r34_kp_w12_zoom_lid_out/S1X_OKZlid_s31/ckpt/checkpoint_epoch_30.pth
+     cfg ok
+     trainer ok
+     new run dir (does not exist yet): D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_out_r34_kp_w12_zoom_lid_out/S1X_OKZlid_s31
+### DRY=1 train_stage1.sh out 40
+  == out sd40 det:0  seed 40  tag S1X_DET_s40  (recipe of DET_s0)
+     cd E:/Open3DUAVDet/tools && D:/Miniconda3/envs/city/python.exe E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/s1_train.py E:/Open3DUAVDet/tools/train.py --cfg_file cfgs/models/uavdet_3d/camnorm/sim_out_r34_geo_ramp_out.yaml --batch_size 8 --workers 2 --fix_random_seed --val_split test --val_interval 10 --val_every 100 --skip_test_eval --max_ckpt_save_num 2 --epochs 5 --seed 40 --extra_tag S1X_DET_s40
+     -> D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_out_r34_geo_ramp_out/S1X_DET_s40/ckpt/checkpoint_epoch_5.pth   chain uses: D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_out_r34_geo_ramp_out/S1X_DET_s40/ckpt/checkpoint_epoch_5.pth
+     cfg ok
+     trainer ok
+     new run dir (does not exist yet): D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_out_r34_geo_ramp_out/S1X_DET_s40
+  == out sd40 det:1  seed 41  tag S1X_DET_s41  (recipe of DET_s0)
+     cd E:/Open3DUAVDet/tools && D:/Miniconda3/envs/city/python.exe E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/s1_train.py E:/Open3DUAVDet/tools/train.py --cfg_file cfgs/models/uavdet_3d/camnorm/sim_out_r34_geo_ramp_out.yaml --batch_size 8 --workers 2 --fix_random_seed --val_split test --val_interval 10 --val_every 100 --skip_test_eval --max_ckpt_save_num 2 --epochs 5 --seed 41 --extra_tag S1X_DET_s41
+     -> D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_out_r34_geo_ramp_out/S1X_DET_s41/ckpt/checkpoint_epoch_5.pth   chain uses: D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_out_r34_geo_ramp_out/S1X_DET_s41/ckpt/checkpoint_epoch_5.pth
+     cfg ok
+     trainer ok
+     new run dir (does not exist yet): D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_out_r34_geo_ramp_out/S1X_DET_s41
+  == out sd40 det:2  seed 42  tag S1X_DET_s42  (recipe of DET_s0)
+     cd E:/Open3DUAVDet/tools && D:/Miniconda3/envs/city/python.exe E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/s1_train.py E:/Open3DUAVDet/tools/train.py --cfg_file cfgs/models/uavdet_3d/camnorm/sim_out_r34_geo_ramp_out.yaml --batch_size 8 --workers 2 --fix_random_seed --val_split test --val_interval 10 --val_every 100 --skip_test_eval --max_ckpt_save_num 2 --epochs 5 --seed 42 --extra_tag S1X_DET_s42
+     -> D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_out_r34_geo_ramp_out/S1X_DET_s42/ckpt/checkpoint_epoch_5.pth   chain uses: D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_out_r34_geo_ramp_out/S1X_DET_s42/ckpt/checkpoint_epoch_5.pth
+     cfg ok
+     trainer ok
+     new run dir (does not exist yet): D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_out_r34_geo_ramp_out/S1X_DET_s42
+  == out sd40 rgb:0  seed 40  tag S1X_OKZrgb_s40  (recipe of OKZrgb_s0)
+     cd E:/Open3DUAVDet/tools && D:/Miniconda3/envs/city/python.exe E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/s1_train.py E:/Open3DUAVDet/tools/train.py --cfg_file cfgs/models/uavdet_3d/camnorm/sim_out_r34_kp_w12_zoom_out.yaml --batch_size 8 --workers 2 --fix_random_seed --cudnn_benchmark --use_amp --logger_iter_interval 500 --val_split test --val_interval 10 --val_every 100 --val_match greedy --skip_test_eval --max_ckpt_save_num 2 --epochs 30 --seed 40 --extra_tag S1X_OKZrgb_s40
+     -> D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_out_r34_kp_w12_zoom_out/S1X_OKZrgb_s40/ckpt/checkpoint_epoch_30.pth   chain uses: D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_out_r34_kp_w12_zoom_out/S1X_OKZrgb_s40/ckpt/checkpoint_epoch_30.pth
+     cfg ok
+     trainer ok
+     new run dir (does not exist yet): D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_out_r34_kp_w12_zoom_out/S1X_OKZrgb_s40
+  == out sd40 rgb:1  seed 41  tag S1X_OKZrgb_s41  (recipe of OKZrgb_s0)
+     cd E:/Open3DUAVDet/tools && D:/Miniconda3/envs/city/python.exe E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/s1_train.py E:/Open3DUAVDet/tools/train.py --cfg_file cfgs/models/uavdet_3d/camnorm/sim_out_r34_kp_w12_zoom_out.yaml --batch_size 8 --workers 2 --fix_random_seed --cudnn_benchmark --use_amp --logger_iter_interval 500 --val_split test --val_interval 10 --val_every 100 --val_match greedy --skip_test_eval --max_ckpt_save_num 2 --epochs 30 --seed 41 --extra_tag S1X_OKZrgb_s41
+     -> D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_out_r34_kp_w12_zoom_out/S1X_OKZrgb_s41/ckpt/checkpoint_epoch_30.pth   chain uses: D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_out_r34_kp_w12_zoom_out/S1X_OKZrgb_s41/ckpt/checkpoint_epoch_30.pth
+     cfg ok
+     trainer ok
+     new run dir (does not exist yet): D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_out_r34_kp_w12_zoom_out/S1X_OKZrgb_s41
+  == out sd40 irT:0  seed 40  tag S1X_OKZirT_s40  (recipe of OKZirT_s0)
+     cd E:/Open3DUAVDet/tools && D:/Miniconda3/envs/city/python.exe E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/s1_train.py E:/Open3DUAVDet/tools/train.py --cfg_file cfgs/models/uavdet_3d/camnorm/sim_out_r34_kp_w12_zoom_irT_out.yaml --batch_size 8 --workers 2 --fix_random_seed --cudnn_benchmark --use_amp --logger_iter_interval 500 --val_split test --val_interval 10 --val_every 100 --val_match greedy --skip_test_eval --max_ckpt_save_num 2 --epochs 30 --seed 40 --extra_tag S1X_OKZirT_s40
+     -> D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_out_r34_kp_w12_zoom_irT_out/S1X_OKZirT_s40/ckpt/checkpoint_epoch_30.pth   chain uses: D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_out_r34_kp_w12_zoom_irT_out/S1X_OKZirT_s40/ckpt/checkpoint_epoch_30.pth
+     cfg ok
+     trainer ok
+     new run dir (does not exist yet): D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_out_r34_kp_w12_zoom_irT_out/S1X_OKZirT_s40
+  == out sd40 kdir:0  seed 40  tag S1X_OKZkdir_s40  (recipe of OKZkdir_s0)
+     cd E:/Open3DUAVDet/tools && D:/Miniconda3/envs/city/python.exe E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/s1_train.py E:/Open3DUAVDet/tools/train.py --cfg_file cfgs/models/uavdet_3d/camnorm/sim_out_r34_kp_w12_zoom_kdir_out.yaml --batch_size 8 --workers 2 --fix_random_seed --cudnn_benchmark --use_amp --logger_iter_interval 500 --val_split test --val_interval 10 --val_every 100 --val_match greedy --skip_test_eval --max_ckpt_save_num 2 --epochs 30 --seed 40 --extra_tag S1X_OKZkdir_s40 --set MODEL.DISTILL.TEACHER_CKPT D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_out_r34_kp_w12_zoom_irT_out/S1X_OKZirT_s40/ckpt/checkpoint_epoch_30.pth
+     -> D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_out_r34_kp_w12_zoom_kdir_out/S1X_OKZkdir_s40/ckpt/checkpoint_epoch_30.pth   chain uses: D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_out_r34_kp_w12_zoom_kdir_out/S1X_OKZkdir_s40/ckpt/checkpoint_epoch_30.pth
+     cfg ok
+     trainer ok
+     depends on D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_out_r34_kp_w12_zoom_irT_out/S1X_OKZirT_s40/ckpt/checkpoint_epoch_30.pth (trained earlier in this seed set; exists now: no)
+     new run dir (does not exist yet): D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_out_r34_kp_w12_zoom_kdir_out/S1X_OKZkdir_s40
+  == out sd40 kdir:1  seed 41  tag S1X_OKZkdir_s41  (recipe of OKZkdir_s0)
+     cd E:/Open3DUAVDet/tools && D:/Miniconda3/envs/city/python.exe E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/s1_train.py E:/Open3DUAVDet/tools/train.py --cfg_file cfgs/models/uavdet_3d/camnorm/sim_out_r34_kp_w12_zoom_kdir_out.yaml --batch_size 8 --workers 2 --fix_random_seed --cudnn_benchmark --use_amp --logger_iter_interval 500 --val_split test --val_interval 10 --val_every 100 --val_match greedy --skip_test_eval --max_ckpt_save_num 2 --epochs 30 --seed 41 --extra_tag S1X_OKZkdir_s41 --set MODEL.DISTILL.TEACHER_CKPT D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_out_r34_kp_w12_zoom_irT_out/S1X_OKZirT_s40/ckpt/checkpoint_epoch_30.pth
+     -> D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_out_r34_kp_w12_zoom_kdir_out/S1X_OKZkdir_s41/ckpt/checkpoint_epoch_30.pth   chain uses: D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_out_r34_kp_w12_zoom_kdir_out/S1X_OKZkdir_s41/ckpt/checkpoint_epoch_30.pth
+     cfg ok
+     trainer ok
+     depends on D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_out_r34_kp_w12_zoom_irT_out/S1X_OKZirT_s40/ckpt/checkpoint_epoch_30.pth (trained earlier in this seed set; exists now: no)
+     new run dir (does not exist yet): D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_out_r34_kp_w12_zoom_kdir_out/S1X_OKZkdir_s41
+  == out sd40 irlid:0  seed 40  tag S1X_OKZirlid_s40  (recipe of OKZirlid_s0)
+     cd E:/Open3DUAVDet/tools && D:/Miniconda3/envs/city/python.exe E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/s1_train.py E:/Open3DUAVDet/output/camnorm/geo1004/lidar/kzlid/train_mm.py --cfg_file cfgs/models/uavdet_3d/camnorm/sim_out_r34_kp_w12_zoom_irlid_out.yaml --batch_size 8 --workers 2 --fix_random_seed --cudnn_benchmark --use_amp --logger_iter_interval 500 --val_split test --val_interval 10 --val_every 100 --val_match greedy --skip_test_eval --max_ckpt_save_num 2 --epochs 30 --seed 40 --extra_tag S1X_OKZirlid_s40
+     -> D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_out_r34_kp_w12_zoom_irlid_out/S1X_OKZirlid_s40/ckpt/checkpoint_epoch_30.pth   chain uses: D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_out_r34_kp_w12_zoom_irlid_out/S1X_OKZirlid_s40/ckpt/checkpoint_epoch_30.pth
+     cfg ok
+     trainer ok
+     new run dir (does not exist yet): D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_out_r34_kp_w12_zoom_irlid_out/S1X_OKZirlid_s40
+  == out sd40 irlid:1  seed 41  tag S1X_OKZirlid_s41  (recipe of OKZirlid_s0)
+     cd E:/Open3DUAVDet/tools && D:/Miniconda3/envs/city/python.exe E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/s1_train.py E:/Open3DUAVDet/output/camnorm/geo1004/lidar/kzlid/train_mm.py --cfg_file cfgs/models/uavdet_3d/camnorm/sim_out_r34_kp_w12_zoom_irlid_out.yaml --batch_size 8 --workers 2 --fix_random_seed --cudnn_benchmark --use_amp --logger_iter_interval 500 --val_split test --val_interval 10 --val_every 100 --val_match greedy --skip_test_eval --max_ckpt_save_num 2 --epochs 30 --seed 41 --extra_tag S1X_OKZirlid_s41
+     -> D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_out_r34_kp_w12_zoom_irlid_out/S1X_OKZirlid_s41/ckpt/checkpoint_epoch_30.pth   chain uses: D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_out_r34_kp_w12_zoom_irlid_out/S1X_OKZirlid_s41/ckpt/checkpoint_epoch_30.pth
+     cfg ok
+     trainer ok
+     new run dir (does not exist yet): D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_out_r34_kp_w12_zoom_irlid_out/S1X_OKZirlid_s41
+  == out sd40 kps:0  seed 40  tag S1X_OKZkps_s40  (recipe of OKZkps_s0)
+     cd E:/Open3DUAVDet/tools && D:/Miniconda3/envs/city/python.exe E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/s1_train.py E:/Open3DUAVDet/output/camnorm/geo1004/lidar/kpsize/train_mmk.py --cfg_file cfgs/models/uavdet_3d/camnorm/sim_out_r34_kp_w12_zoom_irlid_kps_out.yaml --batch_size 8 --workers 2 --fix_random_seed --cudnn_benchmark --use_amp --logger_iter_interval 500 --val_split test --val_interval 10 --val_every 100 --val_match greedy --skip_test_eval --max_ckpt_save_num 2 --epochs 8 --seed 40 --extra_tag S1X_OKZkps_s40 --pretrained_model D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_out_r34_kp_w12_zoom_irlid_out/S1X_OKZirlid_s40/ckpt/checkpoint_epoch_30.pth
+     -> D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_out_r34_kp_w12_zoom_irlid_kps_out/S1X_OKZkps_s40/ckpt/checkpoint_epoch_8.pth   chain uses: D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_out_r34_kp_w12_zoom_irlid_kps_out/S1X_OKZkps_s40/ckpt/checkpoint_epoch_8.pth
+     cfg ok
+     trainer ok
+     depends on D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_out_r34_kp_w12_zoom_irlid_out/S1X_OKZirlid_s40/ckpt/checkpoint_epoch_30.pth (trained earlier in this seed set; exists now: no)
+     new run dir (does not exist yet): D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_out_r34_kp_w12_zoom_irlid_kps_out/S1X_OKZkps_s40
+  == out sd40 lid:0  seed 40  tag S1X_OKZlid_s40  (recipe of OKZlid_s0)
+     cd E:/Open3DUAVDet/tools && D:/Miniconda3/envs/city/python.exe E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/s1_train.py E:/Open3DUAVDet/output/camnorm/geo1004/lidar/kzlid/train_kz_lid.py --cfg_file cfgs/models/uavdet_3d/camnorm/sim_out_r34_kp_w12_zoom_lid_out.yaml --batch_size 8 --workers 2 --fix_random_seed --cudnn_benchmark --use_amp --logger_iter_interval 500 --val_split test --val_interval 10 --val_every 100 --val_match greedy --skip_test_eval --max_ckpt_save_num 2 --epochs 30 --seed 40 --extra_tag S1X_OKZlid_s40
+     -> D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_out_r34_kp_w12_zoom_lid_out/S1X_OKZlid_s40/ckpt/checkpoint_epoch_30.pth   chain uses: D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_out_r34_kp_w12_zoom_lid_out/S1X_OKZlid_s40/ckpt/checkpoint_epoch_30.pth
+     cfg ok
+     trainer ok
+     new run dir (does not exist yet): D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_out_r34_kp_w12_zoom_lid_out/S1X_OKZlid_s40
+  == out sd40 lid:1  seed 41  tag S1X_OKZlid_s41  (recipe of OKZlid_s0)
+     cd E:/Open3DUAVDet/tools && D:/Miniconda3/envs/city/python.exe E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/s1_train.py E:/Open3DUAVDet/output/camnorm/geo1004/lidar/kzlid/train_kz_lid.py --cfg_file cfgs/models/uavdet_3d/camnorm/sim_out_r34_kp_w12_zoom_lid_out.yaml --batch_size 8 --workers 2 --fix_random_seed --cudnn_benchmark --use_amp --logger_iter_interval 500 --val_split test --val_interval 10 --val_every 100 --val_match greedy --skip_test_eval --max_ckpt_save_num 2 --epochs 30 --seed 41 --extra_tag S1X_OKZlid_s41
+     -> D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_out_r34_kp_w12_zoom_lid_out/S1X_OKZlid_s41/ckpt/checkpoint_epoch_30.pth   chain uses: D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_out_r34_kp_w12_zoom_lid_out/S1X_OKZlid_s41/ckpt/checkpoint_epoch_30.pth
+     cfg ok
+     trainer ok
+     new run dir (does not exist yet): D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_out_r34_kp_w12_zoom_lid_out/S1X_OKZlid_s41
+### DRY=1 prep_shared.sh mav 30
+ok prep mav 30 mav_sd30 E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/shared/mav_sd30/lib
+  prep mav sd30 | O E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/shared/mav_sd30 | W D:/S2MUAV3D/srcx_work/s1seeds/prep_mav_sd30 | REAL_CFG cfgs/models/uavdet_3d/camnorm/srcx/real_in2mav_s1prepsd30.yaml
+  sim detector 0: E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/release/in_sd30/ramp_s30.pth (exists now: False)
+  sim detector 1: E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/release/in_sd30/ramp_s31.pth (exists now: False)
+  sim detector 2: E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/release/in_sd30/ramp_s32.pth (exists now: False)
+  source sim cache E:/mmcache/full_v2 exists: True | target cache E:/mmcache/mav6d_cn_obj exists: True
+  config name free: cfgs/models/uavdet_3d/camnorm/srcx/real_in2mav_s1prepsd30.yaml
+  refiner sim writes sim_hull.npy: yes
+### DRY=1 prep_shared.sh mav 40
+ok prep mav 40 mav_sd40 E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/shared/mav_sd40/lib
+  prep mav sd40 | O E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/shared/mav_sd40 | W D:/S2MUAV3D/srcx_work/s1seeds/prep_mav_sd40 | REAL_CFG cfgs/models/uavdet_3d/camnorm/srcx/real_in2mav_s1prepsd40.yaml
+  sim detector 0: E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/release/in_sd40/ramp_s40.pth (exists now: False)
+  sim detector 1: E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/release/in_sd40/ramp_s41.pth (exists now: False)
+  sim detector 2: E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/release/in_sd40/ramp_s42.pth (exists now: False)
+  source sim cache E:/mmcache/full_v2 exists: True | target cache E:/mmcache/mav6d_cn_obj exists: True
+  config name free: cfgs/models/uavdet_3d/camnorm/srcx/real_in2mav_s1prepsd40.yaml
+  refiner sim writes sim_hull.npy: yes
+### DRY=1 prep_shared.sh antifs 30
+ok prep antifs 30 antifs_sd30 E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/shared/antifs_sd30/lib
+  prep antifs sd30 | O E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/shared/antifs_sd30 | W D:/S2MUAV3D/srcx_work/s1seeds/prep_antifs_sd30 | REAL_CFG cfgs/models/uavdet_3d/camnorm/srcx/real_out2antifs_s1prepsd30.yaml
+  sim detector 0: D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_out_r34_geo_ramp_out/S1X_DET_s30/ckpt/checkpoint_epoch_5.pth (exists now: False)
+  sim detector 1: D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_out_r34_geo_ramp_out/S1X_DET_s31/ckpt/checkpoint_epoch_5.pth (exists now: False)
+  sim detector 2: D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_out_r34_geo_ramp_out/S1X_DET_s32/ckpt/checkpoint_epoch_5.pth (exists now: False)
+  source sim cache D:/S2MUAV3D/sim_outdoor_carla/cache exists: True | target cache D:/mmcache/outdoor_real_fs exists: True
+  config name free: cfgs/models/uavdet_3d/camnorm/srcx/real_out2antifs_s1prepsd30.yaml
+  refiner sim writes sim_hull.npy: yes
+### DRY=1 prep_shared.sh antifs 40
+ok prep antifs 40 antifs_sd40 E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/shared/antifs_sd40/lib
+  prep antifs sd40 | O E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/shared/antifs_sd40 | W D:/S2MUAV3D/srcx_work/s1seeds/prep_antifs_sd40 | REAL_CFG cfgs/models/uavdet_3d/camnorm/srcx/real_out2antifs_s1prepsd40.yaml
+  sim detector 0: D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_out_r34_geo_ramp_out/S1X_DET_s40/ckpt/checkpoint_epoch_5.pth (exists now: False)
+  sim detector 1: D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_out_r34_geo_ramp_out/S1X_DET_s41/ckpt/checkpoint_epoch_5.pth (exists now: False)
+  sim detector 2: D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_out_r34_geo_ramp_out/S1X_DET_s42/ckpt/checkpoint_epoch_5.pth (exists now: False)
+  source sim cache D:/S2MUAV3D/sim_outdoor_carla/cache exists: True | target cache D:/mmcache/outdoor_real_fs exists: True
+  config name free: cfgs/models/uavdet_3d/camnorm/srcx/real_out2antifs_s1prepsd40.yaml
+  refiner sim writes sim_hull.npy: yes
+### DRY=1 run_group.sh full mav 30
+ok full mav 30 mav_full_s1sd30 E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/runs/mav_full_s1sd30/lib
+  run mav_full_s1sd30 | combo in2mav | teach full NOIR False | seedshift 30 | score split real_test
+  O E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/runs/mav_full_s1sd30 | W D:/S2MUAV3D/srcx_work/s1seeds/mav_full_s1sd30
+  REAL_CFG cfgs/models/uavdet_3d/camnorm/srcx/real_in2mav_s1fullsd30.yaml | ST_CFG cfgs/models/uavdet_3d/camnorm/srcx/st_in2mav_s1fullsd30.yaml | PSEUDO_TAG srcx_in2mav_s1fullsd30
+  stage-1 det   ramp_s30.pth (to be trained) | ramp_s31.pth (to be trained) | ramp_s32.pth (to be trained)
+  stage-1 irlid kzm_s30.pth (to be trained) | kzm_s31.pth (to be trained)
+  stage-1 kdir  S1X_KZKDir_s30 (to be trained) | S1X_KZKDir_s31 (to be trained)
+  stage-1 lid   kzl_s30.pth (to be trained) | kzl_s31.pth (to be trained)
+  stage-1 kps   S1X_KPS_s30 (to be trained)
+  new names free: W, ST_CFG, pseudo index, self-trained detector dir D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/srcx/st_in2mav_s1fullsd30
+  shared stage-1 outputs: E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/shared/mav_sd30 (built by prep_shared.sh before this run)
+### DRY=1 run_group.sh full mav 40
+ok full mav 40 mav_full_s1sd40 E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/runs/mav_full_s1sd40/lib
+  run mav_full_s1sd40 | combo in2mav | teach full NOIR False | seedshift 40 | score split real_test
+  O E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/runs/mav_full_s1sd40 | W D:/S2MUAV3D/srcx_work/s1seeds/mav_full_s1sd40
+  REAL_CFG cfgs/models/uavdet_3d/camnorm/srcx/real_in2mav_s1fullsd40.yaml | ST_CFG cfgs/models/uavdet_3d/camnorm/srcx/st_in2mav_s1fullsd40.yaml | PSEUDO_TAG srcx_in2mav_s1fullsd40
+  stage-1 det   ramp_s40.pth (to be trained) | ramp_s41.pth (to be trained) | ramp_s42.pth (to be trained)
+  stage-1 irlid kzm_s40.pth (to be trained) | kzm_s41.pth (to be trained)
+  stage-1 kdir  S1X_KZKDir_s40 (to be trained) | S1X_KZKDir_s41 (to be trained)
+  stage-1 lid   kzl_s40.pth (to be trained) | kzl_s41.pth (to be trained)
+  stage-1 kps   S1X_KPS_s40 (to be trained)
+  new names free: W, ST_CFG, pseudo index, self-trained detector dir D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/srcx/st_in2mav_s1fullsd40
+  shared stage-1 outputs: E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/shared/mav_sd40 (built by prep_shared.sh before this run)
+### DRY=1 run_group.sh full antifs 30
+ok full antifs 30 antifs_full_s1sd30 E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/runs/antifs_full_s1sd30/lib
+  run antifs_full_s1sd30 | combo out2antifs | teach full NOIR False | seedshift 30 | score split antifs_test
+  O E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/runs/antifs_full_s1sd30 | W D:/S2MUAV3D/srcx_work/s1seeds/antifs_full_s1sd30
+  REAL_CFG cfgs/models/uavdet_3d/camnorm/srcx/real_out2antifs_s1fullsd30.yaml | ST_CFG cfgs/models/uavdet_3d/camnorm/srcx/st_out2antifs_s1fullsd30.yaml | PSEUDO_TAG srcx_out2antifs_s1fullsd30
+  stage-1 det   S1X_DET_s30 (to be trained) | S1X_DET_s31 (to be trained) | S1X_DET_s32 (to be trained)
+  stage-1 irlid S1X_OKZirlid_s30 (to be trained) | S1X_OKZirlid_s31 (to be trained)
+  stage-1 kdir  S1X_OKZkdir_s30 (to be trained) | S1X_OKZkdir_s31 (to be trained)
+  stage-1 lid   S1X_OKZlid_s30 (to be trained) | S1X_OKZlid_s31 (to be trained)
+  stage-1 kps   S1X_OKZkps_s30 (to be trained)
+  new names free: W, ST_CFG, pseudo index, self-trained detector dir D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/srcx/st_out2antifs_s1fullsd30
+  shared stage-1 outputs: E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/shared/antifs_sd30 (built by prep_shared.sh before this run)
+### DRY=1 run_group.sh full antifs 40
+ok full antifs 40 antifs_full_s1sd40 E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/runs/antifs_full_s1sd40/lib
+  run antifs_full_s1sd40 | combo out2antifs | teach full NOIR False | seedshift 40 | score split antifs_test
+  O E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/runs/antifs_full_s1sd40 | W D:/S2MUAV3D/srcx_work/s1seeds/antifs_full_s1sd40
+  REAL_CFG cfgs/models/uavdet_3d/camnorm/srcx/real_out2antifs_s1fullsd40.yaml | ST_CFG cfgs/models/uavdet_3d/camnorm/srcx/st_out2antifs_s1fullsd40.yaml | PSEUDO_TAG srcx_out2antifs_s1fullsd40
+  stage-1 det   S1X_DET_s40 (to be trained) | S1X_DET_s41 (to be trained) | S1X_DET_s42 (to be trained)
+  stage-1 irlid S1X_OKZirlid_s40 (to be trained) | S1X_OKZirlid_s41 (to be trained)
+  stage-1 kdir  S1X_OKZkdir_s40 (to be trained) | S1X_OKZkdir_s41 (to be trained)
+  stage-1 lid   S1X_OKZlid_s40 (to be trained) | S1X_OKZlid_s41 (to be trained)
+  stage-1 kps   S1X_OKZkps_s40 (to be trained)
+  new names free: W, ST_CFG, pseudo index, self-trained detector dir D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/srcx/st_out2antifs_s1fullsd40
+  shared stage-1 outputs: E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/shared/antifs_sd40 (built by prep_shared.sh before this run)
+### DRY=1 run_group.sh E1 mav 30
+ok E1 mav 30 mav_E1_s1sd30 E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/runs/mav_E1_s1sd30/lib
+  run mav_E1_s1sd30 | combo in2mav_none | teach none NOIR True | seedshift 30 | score split real_test
+  O E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/runs/mav_E1_s1sd30 | W D:/S2MUAV3D/srcx_work/s1seeds/mav_E1_s1sd30
+  REAL_CFG cfgs/models/uavdet_3d/camnorm/srcx/real_in2mav_none_s1E1sd30.yaml | ST_CFG cfgs/models/uavdet_3d/camnorm/srcx/st_in2mav_none_s1E1sd30.yaml | PSEUDO_TAG srcx_in2mav_none_s1E1sd30
+  stage-1 det   ramp_s30.pth (to be trained) | ramp_s31.pth (to be trained) | ramp_s32.pth (to be trained)
+  stage-1 rgb   S1X_KZ_s30 (to be trained) | S1X_KZ_s31 (to be trained)
+  new names free: W, ST_CFG, pseudo index, self-trained detector dir D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/srcx/st_in2mav_none_s1E1sd30
+  shared stage-1 outputs: E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/shared/mav_sd30 (built by prep_shared.sh before this run)
+  student box hull /d/S2MUAV3D/srcx_work/sensorfree/hull_in.npy ok
+  E1 patches present (refiner hull composites + SILW 1, student hull)
+### DRY=1 run_group.sh E1 mav 40
+ok E1 mav 40 mav_E1_s1sd40 E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/runs/mav_E1_s1sd40/lib
+  run mav_E1_s1sd40 | combo in2mav_none | teach none NOIR True | seedshift 40 | score split real_test
+  O E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/runs/mav_E1_s1sd40 | W D:/S2MUAV3D/srcx_work/s1seeds/mav_E1_s1sd40
+  REAL_CFG cfgs/models/uavdet_3d/camnorm/srcx/real_in2mav_none_s1E1sd40.yaml | ST_CFG cfgs/models/uavdet_3d/camnorm/srcx/st_in2mav_none_s1E1sd40.yaml | PSEUDO_TAG srcx_in2mav_none_s1E1sd40
+  stage-1 det   ramp_s40.pth (to be trained) | ramp_s41.pth (to be trained) | ramp_s42.pth (to be trained)
+  stage-1 rgb   S1X_KZ_s40 (to be trained) | S1X_KZ_s41 (to be trained)
+  new names free: W, ST_CFG, pseudo index, self-trained detector dir D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/srcx/st_in2mav_none_s1E1sd40
+  shared stage-1 outputs: E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/shared/mav_sd40 (built by prep_shared.sh before this run)
+  student box hull /d/S2MUAV3D/srcx_work/sensorfree/hull_in.npy ok
+  E1 patches present (refiner hull composites + SILW 1, student hull)
+### DRY=1 run_group.sh E1 antifs 30
+ok E1 antifs 30 antifs_E1_s1sd30 E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/runs/antifs_E1_s1sd30/lib
+  run antifs_E1_s1sd30 | combo out2antifs_none | teach none NOIR True | seedshift 30 | score split antifs_test
+  O E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/runs/antifs_E1_s1sd30 | W D:/S2MUAV3D/srcx_work/s1seeds/antifs_E1_s1sd30
+  REAL_CFG cfgs/models/uavdet_3d/camnorm/srcx/real_out2antifs_none_s1E1sd30.yaml | ST_CFG cfgs/models/uavdet_3d/camnorm/srcx/st_out2antifs_none_s1E1sd30.yaml | PSEUDO_TAG srcx_out2antifs_none_s1E1sd30
+  stage-1 det   S1X_DET_s30 (to be trained) | S1X_DET_s31 (to be trained) | S1X_DET_s32 (to be trained)
+  stage-1 rgb   S1X_OKZrgb_s30 (to be trained) | S1X_OKZrgb_s31 (to be trained)
+  new names free: W, ST_CFG, pseudo index, self-trained detector dir D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/srcx/st_out2antifs_none_s1E1sd30
+  shared stage-1 outputs: E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/shared/antifs_sd30 (built by prep_shared.sh before this run)
+  student box hull /d/S2MUAV3D/srcx_work/sensorfree/hull_out.npy ok
+  E1 patches present (refiner hull composites + SILW 1, student hull)
+### DRY=1 run_group.sh E1 antifs 40
+ok E1 antifs 40 antifs_E1_s1sd40 E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/runs/antifs_E1_s1sd40/lib
+  run antifs_E1_s1sd40 | combo out2antifs_none | teach none NOIR True | seedshift 40 | score split antifs_test
+  O E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/runs/antifs_E1_s1sd40 | W D:/S2MUAV3D/srcx_work/s1seeds/antifs_E1_s1sd40
+  REAL_CFG cfgs/models/uavdet_3d/camnorm/srcx/real_out2antifs_none_s1E1sd40.yaml | ST_CFG cfgs/models/uavdet_3d/camnorm/srcx/st_out2antifs_none_s1E1sd40.yaml | PSEUDO_TAG srcx_out2antifs_none_s1E1sd40
+  stage-1 det   S1X_DET_s40 (to be trained) | S1X_DET_s41 (to be trained) | S1X_DET_s42 (to be trained)
+  stage-1 rgb   S1X_OKZrgb_s40 (to be trained) | S1X_OKZrgb_s41 (to be trained)
+  new names free: W, ST_CFG, pseudo index, self-trained detector dir D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/srcx/st_out2antifs_none_s1E1sd40
+  shared stage-1 outputs: E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/shared/antifs_sd40 (built by prep_shared.sh before this run)
+  student box hull /d/S2MUAV3D/srcx_work/sensorfree/hull_out.npy ok
+  E1 patches present (refiner hull composites + SILW 1, student hull)
+### DRY=1 run_group.sh E4 mav 30
+ok E4 mav 30 mav_E4_s1sd30 E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/runs/mav_E4_s1sd30/lib
+  run mav_E4_s1sd30 | combo in2mav_none | teach none NOIR True | seedshift 30 | score split real_test
+  O E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/runs/mav_E4_s1sd30 | W D:/S2MUAV3D/srcx_work/s1seeds/mav_E4_s1sd30
+  REAL_CFG cfgs/models/uavdet_3d/camnorm/srcx/real_in2mav_none_s1E4sd30.yaml | ST_CFG cfgs/models/uavdet_3d/camnorm/srcx/st_in2mav_none_s1E4sd30.yaml | PSEUDO_TAG srcx_in2mav_none_s1E4sd30
+  stage-1 det   ramp_s30.pth (to be trained) | ramp_s31.pth (to be trained) | ramp_s32.pth (to be trained)
+  stage-1 rgb   S1X_KZ_s30 (to be trained) | S1X_KZ_s31 (to be trained)
+  new names free: W, ST_CFG, pseudo index, self-trained detector dir D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/srcx/st_in2mav_none_s1E4sd30
+  shared stage-1 outputs: E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/shared/mav_sd30 (built by prep_shared.sh before this run)
+  E4: students --paste 0; refiner none-arm (no composites, SILW 0)
+### DRY=1 run_group.sh E4 mav 40
+ok E4 mav 40 mav_E4_s1sd40 E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/runs/mav_E4_s1sd40/lib
+  run mav_E4_s1sd40 | combo in2mav_none | teach none NOIR True | seedshift 40 | score split real_test
+  O E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/runs/mav_E4_s1sd40 | W D:/S2MUAV3D/srcx_work/s1seeds/mav_E4_s1sd40
+  REAL_CFG cfgs/models/uavdet_3d/camnorm/srcx/real_in2mav_none_s1E4sd40.yaml | ST_CFG cfgs/models/uavdet_3d/camnorm/srcx/st_in2mav_none_s1E4sd40.yaml | PSEUDO_TAG srcx_in2mav_none_s1E4sd40
+  stage-1 det   ramp_s40.pth (to be trained) | ramp_s41.pth (to be trained) | ramp_s42.pth (to be trained)
+  stage-1 rgb   S1X_KZ_s40 (to be trained) | S1X_KZ_s41 (to be trained)
+  new names free: W, ST_CFG, pseudo index, self-trained detector dir D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/srcx/st_in2mav_none_s1E4sd40
+  shared stage-1 outputs: E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/shared/mav_sd40 (built by prep_shared.sh before this run)
+  E4: students --paste 0; refiner none-arm (no composites, SILW 0)
+### DRY=1 run_group.sh E4 antifs 30
+ok E4 antifs 30 antifs_E4_s1sd30 E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/runs/antifs_E4_s1sd30/lib
+  run antifs_E4_s1sd30 | combo out2antifs_none | teach none NOIR True | seedshift 30 | score split antifs_test
+  O E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/runs/antifs_E4_s1sd30 | W D:/S2MUAV3D/srcx_work/s1seeds/antifs_E4_s1sd30
+  REAL_CFG cfgs/models/uavdet_3d/camnorm/srcx/real_out2antifs_none_s1E4sd30.yaml | ST_CFG cfgs/models/uavdet_3d/camnorm/srcx/st_out2antifs_none_s1E4sd30.yaml | PSEUDO_TAG srcx_out2antifs_none_s1E4sd30
+  stage-1 det   S1X_DET_s30 (to be trained) | S1X_DET_s31 (to be trained) | S1X_DET_s32 (to be trained)
+  stage-1 rgb   S1X_OKZrgb_s30 (to be trained) | S1X_OKZrgb_s31 (to be trained)
+  new names free: W, ST_CFG, pseudo index, self-trained detector dir D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/srcx/st_out2antifs_none_s1E4sd30
+  shared stage-1 outputs: E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/shared/antifs_sd30 (built by prep_shared.sh before this run)
+  E4: students --paste 0; refiner none-arm (no composites, SILW 0)
+### DRY=1 run_group.sh E4 antifs 40
+ok E4 antifs 40 antifs_E4_s1sd40 E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/runs/antifs_E4_s1sd40/lib
+  run antifs_E4_s1sd40 | combo out2antifs_none | teach none NOIR True | seedshift 40 | score split antifs_test
+  O E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/runs/antifs_E4_s1sd40 | W D:/S2MUAV3D/srcx_work/s1seeds/antifs_E4_s1sd40
+  REAL_CFG cfgs/models/uavdet_3d/camnorm/srcx/real_out2antifs_none_s1E4sd40.yaml | ST_CFG cfgs/models/uavdet_3d/camnorm/srcx/st_out2antifs_none_s1E4sd40.yaml | PSEUDO_TAG srcx_out2antifs_none_s1E4sd40
+  stage-1 det   S1X_DET_s40 (to be trained) | S1X_DET_s41 (to be trained) | S1X_DET_s42 (to be trained)
+  stage-1 rgb   S1X_OKZrgb_s40 (to be trained) | S1X_OKZrgb_s41 (to be trained)
+  new names free: W, ST_CFG, pseudo index, self-trained detector dir D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/srcx/st_out2antifs_none_s1E4sd40
+  shared stage-1 outputs: E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/shared/antifs_sd40 (built by prep_shared.sh before this run)
+  E4: students --paste 0; refiner none-arm (no composites, SILW 0)
+### DRY=1 lane.sh C
+  lane C step 1: bash /e/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/prep_shared.sh mav 30
+  lane C step 2: bash /e/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/run_group.sh E1 mav 30
+  lane C step 3: bash /e/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/run_group.sh full mav 30
+  lane C step 4: bash /e/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/prep_shared.sh mav 40
+  lane C step 5: bash /e/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/run_group.sh E1 mav 40
+  lane C step 6: bash /e/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/run_group.sh full mav 40
+  lane C step 7: bash /e/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/prep_shared.sh antifs 30
+  lane C step 8: bash /e/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/run_group.sh full antifs 30
+  lane C step 9: bash /e/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/run_group.sh E1 antifs 30
+  lane C step 10: bash /e/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/prep_shared.sh antifs 40
+  lane C step 11: bash /e/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/run_group.sh full antifs 40
+  lane C step 12: bash /e/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/run_group.sh E1 antifs 40
+### DRY=1 lane.sh A
+  lane A step 1: bash /e/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/train_stage1.sh in 30 det:0 det:1 det:2 rgb:0 rgb:1 irT:0 kdir:0 kdir:1
+  lane A step 2: bash /e/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/train_stage1.sh in 40 det:0 det:1 det:2 rgb:0 rgb:1 irT:0 kdir:0 kdir:1
+  lane A step 3: bash /e/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/train_stage1.sh out 30 det:0 det:1 det:2 rgb:0 rgb:1 irT:0 kdir:0 kdir:1
+  lane A step 4: bash /e/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/train_stage1.sh out 40 det:0 det:1 det:2 rgb:0 rgb:1 irT:0 kdir:0 kdir:1
+  lane A step 5: bash /e/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/run_group.sh E4 mav 30
+  lane A step 6: bash /e/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/run_group.sh E4 antifs 30
+### DRY=1 lane.sh B
+  lane B step 1: bash /e/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/train_stage1.sh in 30 irlid:0 irlid:1 kps:0 lid:0 lid:1
+  lane B step 2: bash /e/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/train_stage1.sh in 40 irlid:0 irlid:1 kps:0 lid:0 lid:1
+  lane B step 3: bash /e/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/train_stage1.sh out 30 irlid:0 irlid:1 kps:0 lid:0 lid:1
+  lane B step 4: bash /e/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/train_stage1.sh out 40 irlid:0 irlid:1 kps:0 lid:0 lid:1
+  lane B step 5: bash /e/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/run_group.sh E4 mav 40
+  lane B step 6: bash /e/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/run_group.sh E4 antifs 40
+### summarize.py --dry
+  mav    full rep   pred True  score True  E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/in2mav/preds/pcmd_fused_test.pkl
+  mav    full sd30  pred False score False E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/runs/mav_full_s1sd30/preds/pcmd_fused_test.pkl
+  mav    full sd40  pred False score False E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/runs/mav_full_s1sd40/preds/pcmd_fused_test.pkl
+  mav    E1   rep   pred True  score True  E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1/mav_s0/preds/e1_fused_test.pkl
+  mav    E1   sd30  pred False score False E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/runs/mav_E1_s1sd30/preds/pcmd_fused_test.pkl
+  mav    E1   sd40  pred False score False E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/runs/mav_E1_s1sd40/preds/pcmd_fused_test.pkl
+  mav    E4   rep   pred True  score True  E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E4/mav_s0/preds/e4_fused_test.pkl
+  mav    E4   sd30  pred False score False E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/runs/mav_E4_s1sd30/preds/pcmd_fused_test.pkl
+  mav    E4   sd40  pred False score False E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/runs/mav_E4_s1sd40/preds/pcmd_fused_test.pkl
+  antifs full rep   pred True  score True  E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/out2antifs/preds/pcmd_fused_test.pkl
+  antifs full sd30  pred False score False E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/runs/antifs_full_s1sd30/preds/pcmd_fused_test.pkl
+  antifs full sd40  pred False score False E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/runs/antifs_full_s1sd40/preds/pcmd_fused_test.pkl
+  antifs E1   rep   pred True  score True  E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1/antifs_s0/preds/e1_fused_test.pkl
+  antifs E1   sd30  pred False score False E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/runs/antifs_E1_s1sd30/preds/pcmd_fused_test.pkl
+  antifs E1   sd40  pred False score False E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/runs/antifs_E1_s1sd40/preds/pcmd_fused_test.pkl
+  antifs E4   rep   pred True  score True  E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E4/antifs_s0/preds/e4_fused_test.pkl
+  antifs E4   sd30  pred False score False E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/runs/antifs_E4_s1sd30/preds/pcmd_fused_test.pkl
+  antifs E4   sd40  pred False score False E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/runs/antifs_E4_s1sd40/preds/pcmd_fused_test.pkl
+### summarize.py (existing score files only, no bootstrap)
+# 第一阶段也换种子：按轮配对汇总（只读已有打分文件）
+
+## MAV6D（测试集）
+
+| 轮 | 组 | UDS | AP | ATE | ASE | AOE | mDR |
+|---|---|---|---|---|---|---|---|
+| rep | PST | 60.81 | 40.93 | 0.306 | 1.75 | 14.48 | 96.17 |
+| rep | E1 无传感器对照 | 53.48 | 31.38 | 0.401 | 2.65 | 15.83 | 96.56 |
+| rep | E4 纯 RGB 自训练 | 56.37 | 36.31 | 0.358 | 2.59 | 16.41 | 96.00 |
+| rep | 仅仿真检测器（第一阶段） | 49.51 | 26.87 | 0.283 | 1.74 | 20.32 | 69.77 |
+| sd30 | PST | — | — | — | — | — | — |
+| sd30 | E1 无传感器对照 | — | — | — | — | — | — |
+| sd30 | E4 纯 RGB 自训练 | — | — | — | — | — | — |
+| sd30 | 仅仿真检测器（第一阶段） | — | — | — | — | — | — |
+| sd40 | PST | — | — | — | — | — | — |
+| sd40 | E1 无传感器对照 | — | — | — | — | — | — |
+| sd40 | E4 纯 RGB 自训练 | — | — | — | — | — | — |
+| sd40 | 仅仿真检测器（第一阶段） | — | — | — | — | — | — |
+
+每轮差值（同一轮内配对）与跨轮 均值 ± 标准差：
+
+| 量 | UDS | AP | ATE | ASE | AOE | mDR |
+|---|---|---|---|---|---|---|
+| PST 均值 | 60.81 (n=1) | 40.93 (n=1) | 0.306 (n=1) | 1.75 (n=1) | 14.48 (n=1) | 96.17 (n=1) |
+| E1 无传感器对照 均值 | 53.48 (n=1) | 31.38 (n=1) | 0.401 (n=1) | 2.65 (n=1) | 15.83 (n=1) | 96.56 (n=1) |
+| E4 纯 RGB 自训练 均值 | 56.37 (n=1) | 36.31 (n=1) | 0.358 (n=1) | 2.59 (n=1) | 16.41 (n=1) | 96.00 (n=1) |
+| E1 无传感器对照 − PST | -7.33 (n=1) | -9.55 (n=1) | +0.095 (n=1) | +0.90 (n=1) | +1.35 (n=1) | +0.40 (n=1) |
+| E4 纯 RGB 自训练 − PST | -4.45 (n=1) | -4.62 (n=1) | +0.052 (n=1) | +0.84 (n=1) | +1.93 (n=1) | -0.17 (n=1) |
+| E4 纯 RGB 自训练 − E1 无传感器对照 | +2.89 (n=1) | +4.93 (n=1) | -0.043 (n=1) | -0.06 (n=1) | +0.58 (n=1) | -0.56 (n=1) |
+
+## OutdoorUAV3D（测试集）
+
+| 轮 | 组 | UDS | AP | ATE | ASE | AOE | mDR |
+|---|---|---|---|---|---|---|---|
+| rep | PST | 41.73 | 27.89 | 0.099 | 16.30 | 17.11 | 91.92 |
+| rep | E1 无传感器对照 | 40.93 | 26.58 | 0.103 | 16.05 | 17.00 | 92.15 |
+| rep | E4 纯 RGB 自训练 | 38.85 | 23.40 | 0.110 | 15.99 | 17.01 | 90.93 |
+| rep | 仅仿真检测器（第一阶段） | 30.55 | 16.04 | 0.132 | 15.36 | 26.06 | 78.54 |
+| sd30 | PST | — | — | — | — | — | — |
+| sd30 | E1 无传感器对照 | — | — | — | — | — | — |
+| sd30 | E4 纯 RGB 自训练 | — | — | — | — | — | — |
+| sd30 | 仅仿真检测器（第一阶段） | — | — | — | — | — | — |
+| sd40 | PST | — | — | — | — | — | — |
+| sd40 | E1 无传感器对照 | — | — | — | — | — | — |
+| sd40 | E4 纯 RGB 自训练 | — | — | — | — | — | — |
+| sd40 | 仅仿真检测器（第一阶段） | — | — | — | — | — | — |
+
+每轮差值（同一轮内配对）与跨轮 均值 ± 标准差：
+
+| 量 | UDS | AP | ATE | ASE | AOE | mDR |
+|---|---|---|---|---|---|---|
+| PST 均值 | 41.73 (n=1) | 27.89 (n=1) | 0.099 (n=1) | 16.30 (n=1) | 17.11 (n=1) | 91.92 (n=1) |
+| E1 无传感器对照 均值 | 40.93 (n=1) | 26.58 (n=1) | 0.103 (n=1) | 16.05 (n=1) | 17.00 (n=1) | 92.15 (n=1) |
+| E4 纯 RGB 自训练 均值 | 38.85 (n=1) | 23.40 (n=1) | 0.110 (n=1) | 15.99 (n=1) | 17.01 (n=1) | 90.93 (n=1) |
+| E1 无传感器对照 − PST | -0.80 (n=1) | -1.31 (n=1) | +0.004 (n=1) | -0.25 (n=1) | -0.11 (n=1) | +0.23 (n=1) |
+| E4 纯 RGB 自训练 − PST | -2.89 (n=1) | -4.49 (n=1) | +0.011 (n=1) | -0.31 (n=1) | -0.10 (n=1) | -0.99 (n=1) |
+| E4 纯 RGB 自训练 − E1 无传感器对照 | -2.09 (n=1) | -3.18 (n=1) | +0.007 (n=1) | -0.06 (n=1) | +0.01 (n=1) | -1.22 (n=1) |
+

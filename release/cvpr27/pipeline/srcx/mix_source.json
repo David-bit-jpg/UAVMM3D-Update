@@ -1,0 +1,11 @@
+{"sim": "D:/S2MUAV3D/sim_mix_cache", "sim_wh": [1280, 720], "sim_zmax": 4.0,
+ "sim_norm": [[0.3912, 0.4095, 0.4113], [0.2708, 0.2067, 0.2361]],
+ "det_cfg": "cfgs/models/uavdet_3d/camnorm/sim_mix_r34_geo_ramp.yaml",
+ "kp_cfg": "cfgs/models/uavdet_3d/camnorm/sim_mix_r34_kp_w12_zoom.yaml", "kps_cfg": "cfgs/models/uavdet_3d/camnorm/sim_mix_r34_kp_w12_zoom_irlid_kps.yaml",
+ "sim_crops": "D:/S2MUAV3D/pcmd_mix_work/crops_12931",
+ "depth": [14.2488, 15.2051], "size": [[0.6957, 0.6691, 0.2874], [0.5128, 0.4726, 0.2116]],
+ "det": ["E:/Open3DUAVDet/output/models/uavdet_3d/camnorm/sim_mix_r34_geo_ramp/DET_s0/ckpt/checkpoint_epoch_5.pth", "E:/Open3DUAVDet/output/models/uavdet_3d/camnorm/sim_mix_r34_geo_ramp/DET_s1/ckpt/checkpoint_epoch_5.pth", "E:/Open3DUAVDet/output/models/uavdet_3d/camnorm/sim_mix_r34_geo_ramp/DET_s2/ckpt/checkpoint_epoch_5.pth"],
+ "irlid": ["E:/Open3DUAVDet/output/models/uavdet_3d/camnorm/sim_mix_r34_kp_w12_zoom_irlid/MKZirlid_s0/ckpt/checkpoint_epoch_30.pth", "E:/Open3DUAVDet/output/models/uavdet_3d/camnorm/sim_mix_r34_kp_w12_zoom_irlid/MKZirlid_s1/ckpt/checkpoint_epoch_30.pth"],
+ "kdir": ["E:/Open3DUAVDet/output/models/uavdet_3d/camnorm/sim_mix_r34_kp_w12_zoom_kdir/MKZkdir_s0/ckpt/checkpoint_epoch_30.pth", "E:/Open3DUAVDet/output/models/uavdet_3d/camnorm/sim_mix_r34_kp_w12_zoom_kdir/MKZkdir_s1/ckpt/checkpoint_epoch_30.pth"],
+ "lid": ["E:/Open3DUAVDet/output/models/uavdet_3d/camnorm/sim_mix_r34_kp_w12_zoom_lid/MKZlid_s0/ckpt/checkpoint_epoch_30.pth", "E:/Open3DUAVDet/output/models/uavdet_3d/camnorm/sim_mix_r34_kp_w12_zoom_lid/MKZlid_s1/ckpt/checkpoint_epoch_30.pth"],
+ "kps": "E:/Open3DUAVDet/output/models/uavdet_3d/camnorm/sim_mix_r34_kp_w12_zoom_irlid_kps/MKZkps_s0/ckpt/checkpoint_epoch_8.pth"}

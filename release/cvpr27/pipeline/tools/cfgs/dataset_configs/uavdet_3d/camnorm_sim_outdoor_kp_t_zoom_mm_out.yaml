@@ -1,0 +1,15 @@
+# [outdoor 11-11] clone of camnorm_sim_full_kp_t_zoom_mm on the CARLA outdoor sim cache.
+# Changes from OUTDOOR SIM stats: DATA_PATH/NORM; MIN_RGB_VIS 0 (clear day, no vis_score); max_upscale 2 -> 5
+# (outdoor sim bodies are 12-62 px wide at 1280 (p5-p95, median 22); 5x lets the median body reach the ~95 px crop target that
+# t_range [1.15,1.75] asks for; indoor 2x assumed indoor apparent sizes); DEPTH_MAX 24 -> 80 m (outdoor label range); SIZE stats below.
+_BASE_CONFIG_: cfgs/dataset_configs/uavdet_3d/camnorm_sim_full_kp_t_zoom_mm.yaml
+DATA_PATH: 'D:/S2MUAV3D/sim_outdoor_carla/cache'
+NORM_MEAN: [0.5174, 0.4442, 0.3115]
+NORM_STD: [0.2616, 0.1835, 0.2408]
+MIN_RGB_VIS: 0.0
+VIEW_AUG: {zoom: [1.0, 4.0], no_upscale: false, t_range: [1.15, 1.75], max_upscale: 5.0}
+DEPTH_MAX: 80
+DEPTH_MEAN: 1.7184
+DEPTH_STD: 0.3497
+SIZE_MEAN: [0.8036, 0.7784, 0.3668]
+SIZE_STD: [0.4473, 0.4304, 0.2376]

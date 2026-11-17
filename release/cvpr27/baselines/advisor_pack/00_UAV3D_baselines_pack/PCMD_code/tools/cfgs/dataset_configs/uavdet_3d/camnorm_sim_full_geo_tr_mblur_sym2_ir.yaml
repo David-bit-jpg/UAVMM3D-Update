@@ -1,0 +1,4 @@
+# RGB + IR 版（2026-09-25，用户：先试试用 IR 训练的模型做教师）：SYM2+MBLUR 数据原样，只多吐 ir 一个通道（边车，与 rgb 同裁窗同几何增广）。
+# IR 教师在骨干里只取第 3 通道（INPUT_SLICE [3,4]）；RGB 学生在 CenterDetKD 里切前 3 通道，像素与 RAMP 基线逐位相同。
+_BASE_CONFIG_: cfgs/dataset_configs/uavdet_3d/camnorm_sim_full_geo_tr_mblur_sym2.yaml
+MODALITIES: ['rgb', 'ir']

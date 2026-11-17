@@ -1,0 +1,7 @@
+# D 臂数据：B 臂（size2d 显式监督 2D 跨度 + 几何解深度）+ 目标级随机化（外圈随机衰减 + 目标运动模糊）。
+# 为什么：B 臂实测 2D 跨度 预测/真值 在真实图上宽 0.82、高 0.46（域内均 0.99），而深度偏移 1.22 ≈ 1/0.82，
+# 即「觉得目标多大」这件事不迁移。C 臂已证明目标级随机化能把仿真里的结构敏感性 1.24 压到 1.07。
+_BASE_CONFIG_: cfgs/dataset_configs/uavdet_3d/camnorm_sim_full_geo_t.yaml
+AUG: {hflip: 0.5, scale: [1.0, 1.0], photometric: true, noise: 0.01, blur: 2.5, blur_prob: 0.5,
+      target_ring: 0.5, target_ring_core: [0.55, 1.0], target_ring_alpha: [0.4, 1.0],
+      target_blur: 0.3, target_blur_len: 7}

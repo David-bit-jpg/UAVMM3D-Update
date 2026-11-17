@@ -1,0 +1,13 @@
+# [outdoor 11-11] real AntiUAV3D outdoor subset (npy cache built by gproto/outdoor/build_outreal_cache_out.py; placeholder boxes only).
+# Target-standardisation stats = the OUTDOOR SIM detector's training stats (decoder must match training); NORM = 600 unlabeled real train frames.
+_BASE_CONFIG_: cfgs/dataset_configs/uavdet_3d/camnorm_mav6d.yaml
+DATA_PATH: 'D:/mmcache/outdoor_real_out'
+NORM_MEAN: [0.5068, 0.5156, 0.5173]
+NORM_STD: [0.1559, 0.1533, 0.1683]
+MIN_RGB_VIS: 0.0
+TARGET_NORM: 'standard'
+MAKE_SIZE2D: true
+DEPTH_MEAN: 28.3561
+DEPTH_STD: 20.9749
+SIZE_MEAN: [0.8036, 0.7784, 0.3668]
+SIZE_STD: [0.4473, 0.4304, 0.2376]

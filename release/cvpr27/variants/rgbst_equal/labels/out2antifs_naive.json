@@ -1,0 +1,14 @@
+{
+ "combo": "out2antifs",
+ "mode": "naive",
+ "n": 909,
+ "n_train": 3293,
+ "index": "D:/S2MUAV3D/ourdet_baseproto_cache/outdoor_real_fs/train/index_naive.pkl",
+ "source": "E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/out2antifs/recs/det0.pkl",
+ "conf": 0.5,
+ "s_bar": [
+  0.5317676663398743,
+  0.526567280292511,
+  0.23570121824741364
+ ]
+}

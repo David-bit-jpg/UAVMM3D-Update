@@ -1,0 +1,4 @@
+# [11-12] detector on the AntiUAV3D outdoor subset v2 (= outreal_r34_geo_full_tr_out with the v2 data config)
+_BASE_CONFIG_: cfgs/models/uavdet_3d/camnorm/mav6d_r34_geo_full_tr.yaml
+DATA_CONFIG:
+    _BASE_CONFIG_: cfgs/dataset_configs/uavdet_3d/camnorm_outreal_fs.yaml

@@ -1,0 +1,8 @@
+# [review1113 ourdet_baseproto] MAV6D +st under the baselines' protocol: our sim-only recipe (indoor ramp detector, 5 epochs, from ImageNet)
+# on sim (indoor UE5, byte-identical F: copy of E:/mmcache/full_v2) + real pseudo labels index_st.pkl (concatenation, uniform sampling).
+_BASE_CONFIG_: cfgs/models/uavdet_3d/camnorm/sim_full_r34_geo_tr_mix_sym8_mblur_ramp.yaml
+DATA_CONFIG:
+    DATASET: 'OurdetConcat'
+    DATA_PATH: 'F:/mmcache/full_v2'
+    MIX_REAL: {DATA_PATH: 'F:/ourdet_baseproto_cache/mav6d_cn_obj', INDEX_FILE: 'index_st.pkl',
+               NORM_MEAN: [0.4360, 0.4418, 0.4374], NORM_STD: [0.2239, 0.2244, 0.2200]}

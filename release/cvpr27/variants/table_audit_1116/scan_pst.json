@@ -1,0 +1,3438 @@
+{
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/B3/both/preds/both_fused_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 0,
+"AP_default": 41.426730165724344,
+"UDS_default": 61.05984179313679,
+"AOE": 14.737709433915153,
+"ATE": 0.30128674192281685,
+"ASE": 1.754403260710084,
+"AP": 41.426730165724344,
+"UDS": 61.05984179313679,
+"mDR": 96.16666666666667
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/B3/both/preds/both_nofuse_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 0,
+"AP_default": 33.73988859901152,
+"UDS_default": 56.6100133693326,
+"AOE": 14.74412029550896,
+"ATE": 0.34985862237325505,
+"ASE": 1.7547749958703303,
+"AP": 33.73988859901152,
+"UDS": 56.6100133693326,
+"mDR": 96.1875
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/B3/both/ref/inf_fin_det1_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/B3/feat/preds/feat_fused_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 0,
+"AP_default": 41.66295353868902,
+"UDS_default": 61.19842180066897,
+"AOE": 14.374807642854451,
+"ATE": 0.3057997442106138,
+"ASE": 1.7541535361653495,
+"AP": 41.66295353868902,
+"UDS": 61.19842180066897,
+"mDR": 96.14583333333333
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/B3/feat/preds/feat_nofuse_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 0,
+"AP_default": 33.73988859901152,
+"UDS_default": 56.68902108377003,
+"AOE": 14.381975479119825,
+"ATE": 0.34985862237325505,
+"ASE": 1.7547749958703303,
+"AP": 33.73988859901152,
+"UDS": 56.68902108377003,
+"mDR": 96.1875
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/B3/feat/ref/inf_fin_det1_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/B4/run/preds/naive_det1_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 8,
+"AP_default": 36.64913163037606,
+"UDS_default": 54.8408841734757,
+"AOE": 25.492185007802405,
+"ATE": 0.33812986833789244,
+"ASE": 2.523089268403809,
+"AP": 36.64913163037606,
+"UDS": 54.8408841734757,
+"mDR": 95.66666666666667
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/B4/run/preds/pcmd_fused_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 8,
+"AP_default": 41.42520725077001,
+"UDS_default": 61.12827242570532,
+"AOE": 15.257497607087407,
+"ATE": 0.29033664990630326,
+"ASE": 1.6636637242624472,
+"AP": 41.42520725077001,
+"UDS": 61.12827242570532,
+"mDR": 95.625
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/B4/run/preds/pcmd_nofuse_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 8,
+"AP_default": 43.70148066774063,
+"UDS_default": 62.39664027747792,
+"AOE": 15.263307251578071,
+"ATE": 0.27999824269350526,
+"ASE": 1.6639322412091637,
+"AP": 43.70148066774063,
+"UDS": 62.39664027747792,
+"mDR": 95.64583333333333
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/B4/run/preds/srconly_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 6,
+"AP_default": 26.873249675726303,
+"UDS_default": 49.512697885937975,
+"AOE": 20.317841466530457,
+"ATE": 0.28328180745330805,
+"ASE": 1.7372757834178885,
+"AP": 26.873249675726303,
+"UDS": 49.512697885937975,
+"mDR": 69.77083333333334
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/B4/run/ref/fin_s5_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/B4/run/ref/fin_s6_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/B4/run/ref/inf_fin_det1_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/B8/s10/preds/w0_fused_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 12,
+"AP_default": 36.677956362016026,
+"UDS_default": 58.22136044471762,
+"AOE": 14.872676014822941,
+"ATE": 0.32412498406927653,
+"ASE": 1.8237402927503192,
+"AP": 36.677956362016026,
+"UDS": 58.22136044471762,
+"mDR": 95.66666666666667
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/B8/s10/preds/w0_nofuse_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 12,
+"AP_default": 30.478340490721056,
+"UDS_default": 54.49930521900589,
+"AOE": 14.872676014822941,
+"ATE": 0.3739047672744161,
+"ASE": 1.8237402927503192,
+"AP": 30.478340490721056,
+"UDS": 54.49930521900589,
+"mDR": 95.66666666666667
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/B8/s10/ref/fin_s5_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/B8/s10/ref/fin_s6_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/B8/s10/ref/inf_fin_det1_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/B8/s20/preds/w0_fused_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 4,
+"AP_default": 42.090100686980385,
+"UDS_default": 61.3326367934537,
+"AOE": 15.147044595974885,
+"ATE": 0.2887405287725456,
+"ASE": 1.7055351627856838,
+"AP": 42.090100686980385,
+"UDS": 61.3326367934537,
+"mDR": 94.66666666666667
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/B8/s20/preds/w0_nofuse_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 4,
+"AP_default": 32.850362771296524,
+"UDS_default": 55.958206616924954,
+"AOE": 15.206280887451834,
+"ATE": 0.34844295806176095,
+"ASE": 1.7059878319769488,
+"AP": 32.850362771296524,
+"UDS": 55.958206616924954,
+"mDR": 94.70833333333334
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/B8/s20/ref/fin_s5_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/B8/s20/ref/fin_s6_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/B8/s20/ref/inf_fin_det1_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/M12/M1/repl/nl075_test_kzt7q/real_ens5flip_nl075_test_kzt7q.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/M12/M1/repl/nl075_test_kzt7q/sealed_gt_nl075_test_kzt7q.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/M12/M1/repro_full/fe_deploy_fused_test_P.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/M12/M1/repro_full/fe_no_fusion_w0_test_P.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/M12/M1/single/kps/shape_test_nl075_k0.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/M12/M1/single/unc/unc_test_z2.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/M12/M1/single_ens/ens_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/M12/M1/single_result/fe_deploy_fused_test_P.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/M12/M1/single_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/M12/M2/sim3nb_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/M12/anti/repro/preds/pcmd_fused_test.pkl": {
+"split": "outdoor_test",
+"hit": 2624,
+"N": 2624,
+"ties": 0,
+"AP_default": 27.88630879771422,
+"UDS_default": 41.73476245402853,
+"AOE": 17.108060305090312,
+"ATE": 9.932169961791008,
+"ASE": 16.296993472454844,
+"AP": 27.88630879771422,
+"UDS": 41.73476245402853,
+"mDR": 91.92073170731707
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/M12/anti/repro/preds/pcmd_nofuse_test.pkl": {
+"split": "outdoor_test",
+"hit": 2624,
+"N": 2624,
+"ties": 0,
+"AP_default": 27.82978386378169,
+"UDS_default": 41.693778965401215,
+"AOE": 17.108060305090312,
+"ATE": 9.957612005113111,
+"ASE": 16.296993472454844,
+"AP": 27.82978386378169,
+"UDS": 41.693778965401215,
+"mDR": 91.92073170731707
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/M12/anti/repro/ref/inf_fin_det1_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/M12/anti/single/preds/single_fused_test.pkl": {
+"split": "outdoor_test",
+"hit": 2624,
+"N": 2624,
+"ties": 2,
+"AP_default": 30.068736199869228,
+"UDS_default": 42.84944547973269,
+"AOE": 17.196371157369367,
+"ATE": 10.332597838121783,
+"ASE": 16.213999768932506,
+"AP": 30.068736199869228,
+"UDS": 42.84944547973269,
+"mDR": 93.86432926829268
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/M12/anti/single/preds/single_nofuse_test.pkl": {
+"split": "outdoor_test",
+"hit": 2624,
+"N": 2624,
+"ties": 2,
+"AP_default": 29.545788767025787,
+"UDS_default": 42.61500930087482,
+"AOE": 17.196371157369367,
+"ATE": 10.278522762994067,
+"ASE": 16.213999768932506,
+"AP": 29.545788767025787,
+"UDS": 42.61500930087482,
+"mDR": 93.86432926829268
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/M12/anti/single/ref/inf_fin_det1_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/boxhull/in2mav/preds/boxhull_fused_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 0,
+"AP_default": 44.616089835537984,
+"UDS_default": 62.66469759202873,
+"AOE": 14.478897589554446,
+"ATE": 0.2871269343278787,
+"ASE": 1.9330317375923145,
+"AP": 44.616089835537984,
+"UDS": 62.66469759202873,
+"mDR": 96.16666666666667
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/boxhull/in2mav/preds/boxhull_nofuse_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 0,
+"AP_default": 35.67255819937551,
+"UDS_default": 57.56281449814218,
+"AOE": 14.484104245708311,
+"ATE": 0.3376274386086582,
+"ASE": 1.933295116157999,
+"AP": 35.67255819937551,
+"UDS": 57.56281449814218,
+"mDR": 96.1875
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/boxhull/in2mav/ref/fin_s5_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/boxhull/in2mav/ref/fin_s6_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/boxhull/in2mav/ref/inf_fin_det1_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/boxhull/out2antifs/preds/boxhull_fused_test.pkl": {
+"split": "outdoor_test",
+"hit": 2624,
+"N": 2624,
+"ties": 0,
+"AP_default": 26.752479824565345,
+"UDS_default": 41.01001506421041,
+"AOE": 17.108060305090312,
+"ATE": 10.247835768278375,
+"ASE": 16.15947933661542,
+"AP": 26.752479824565345,
+"UDS": 41.01001506421041,
+"mDR": 91.92073170731707
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/boxhull/out2antifs/preds/boxhull_nofuse_test.pkl": {
+"split": "outdoor_test",
+"hit": 2624,
+"N": 2624,
+"ties": 0,
+"AP_default": 27.16649211712822,
+"UDS_default": 41.250062649907505,
+"AOE": 17.108060305090312,
+"ATE": 10.181752889447052,
+"ASE": 16.15947933661542,
+"AP": 27.16649211712822,
+"UDS": 41.250062649907505,
+"mDR": 91.92073170731707
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/boxhull/out2antifs/ref/fin_s5_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/boxhull/out2antifs/ref/fin_s6_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/boxhull/out2antifs/ref/inf_fin_det1_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/clean/single/preds/single_fused_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 6,
+"AP_default": 38.20622550030242,
+"UDS_default": 58.82130283430992,
+"AOE": 15.200015085746452,
+"ATE": 0.3250143847839308,
+"ASE": 1.7453186040922959,
+"AP": 38.20622550030242,
+"UDS": 58.82130283430992,
+"mDR": 94.22916666666666
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/clean/single/preds/single_nofuse_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 6,
+"AP_default": 32.29710852020954,
+"UDS_default": 55.3379594596201,
+"AOE": 15.213051267209975,
+"ATE": 0.36778288637045375,
+"ASE": 1.7467195872043921,
+"AP": 32.29710852020954,
+"UDS": 55.3379594596201,
+"mDR": 94.3125
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/clean/single/ref/inf_fin_det1_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/clean2/buildup/b_det1_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 0,
+"AP_default": 34.0411584161812,
+"UDS_default": 53.3812054822605,
+"AOE": 25.4427389708975,
+"ATE": 0.3558073331794896,
+"ASE": 2.535748245656822,
+"AP": 34.0411584161812,
+"UDS": 53.3812054822605,
+"mDR": 96.22916666666667
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/clean2/buildup/c_students_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 0,
+"AP_default": 34.0411584161812,
+"UDS_default": 55.77754344786133,
+"AOE": 14.483274144914844,
+"ATE": 0.35522757424169243,
+"ASE": 2.53517889997583,
+"AP": 34.0411584161812,
+"UDS": 55.77754344786133,
+"mDR": 96.20833333333333
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/clean2/buildup/cp_students_rk_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 0,
+"AP_default": 34.0411584161812,
+"UDS_default": 56.99944881557448,
+"AOE": 14.484104245708311,
+"ATE": 0.3548192566051755,
+"ASE": 1.5595095689692597,
+"AP": 34.0411584161812,
+"UDS": 56.99944881557448,
+"mDR": 96.1875
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/clean2/w0/preds/w0_fused_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 0,
+"AP_default": 38.526970943818284,
+"UDS_default": 59.37011825479161,
+"AOE": 14.478897589554446,
+"ATE": 0.31868085693375353,
+"ASE": 1.817508424635377,
+"AP": 38.526970943818284,
+"UDS": 59.37011825479161,
+"mDR": 96.16666666666667
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/clean2/w0/preds/w0_nofuse_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 0,
+"AP_default": 30.22640099033159,
+"UDS_default": 54.450572967943685,
+"AOE": 14.484104245708311,
+"ATE": 0.3803079978587829,
+"ASE": 1.8178198641979697,
+"AP": 30.22640099033159,
+"UDS": 54.450572967943685,
+"mDR": 96.1875
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/clean2/w0/ref/fin_s5_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/clean2/w0/ref/fin_s6_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/clean2/w0/ref/inf_fin_det1_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/clean3/nomir/preds/nomir_fused_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 0,
+"AP_default": 40.65288606442432,
+"UDS_default": 60.567256893719176,
+"AOE": 14.899586479053008,
+"ATE": 0.306914483413392,
+"ASE": 1.754403260710084,
+"AP": 40.65288606442432,
+"UDS": 60.567256893719176,
+"mDR": 96.16666666666667
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/clean3/nomir/preds/nomir_nofuse_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 0,
+"AP_default": 33.73988859901152,
+"UDS_default": 56.574885407494314,
+"AOE": 14.905135069580487,
+"ATE": 0.34985862237325505,
+"ASE": 1.7547749958703303,
+"AP": 33.73988859901152,
+"UDS": 56.574885407494314,
+"mDR": 96.1875
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/clean3/nomir/ref/inf_fin_det1_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/cleanfix/A2/in2mav/preds/repro_fused_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 0,
+"AP_default": 40.93098337624802,
+"UDS_default": 60.81133166800865,
+"AOE": 14.478897589554446,
+"ATE": 0.3058547975661101,
+"ASE": 1.754403260710084,
+"AP": 40.93098337624802,
+"UDS": 60.81133166800865,
+"mDR": 96.16666666666667
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/cleanfix/A2/out2antifs/preds/repro_fused_test.pkl": {
+"split": "outdoor_test",
+"hit": 2624,
+"N": 2624,
+"ties": 0,
+"AP_default": 27.88630879771422,
+"UDS_default": 41.73476245402853,
+"AOE": 17.108060305090312,
+"ATE": 9.932169961791008,
+"ASE": 16.296993472454844,
+"AP": 27.88630879771422,
+"UDS": 41.73476245402853,
+"mDR": 91.92073170731707
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/cleanfix/A3/preds/pcmd_fused_test_base.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 0,
+"AP_default": 40.93098337624802,
+"UDS_default": 60.81133166800865,
+"AOE": 14.478897589554446,
+"ATE": 0.3058547975661101,
+"ASE": 1.754403260710084,
+"AP": 40.93098337624802,
+"UDS": 60.81133166800865,
+"mDR": 96.16666666666667
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/cleanfix/A3/preds/pcmd_fused_test_gt.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 0,
+"AP_default": 10.412376427835838,
+"UDS_default": 40.547914757979086,
+"AOE": 14.478897589554446,
+"ATE": 0.7061838724319877,
+"ASE": 1.754403260710084,
+"AP": 10.412376427835838,
+"UDS": 40.547914757979086,
+"mDR": 96.16666666666667
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/cleanfix/A3/preds/pcmd_fused_test_gtn.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 0,
+"AP_default": 37.36896469228219,
+"UDS_default": 58.777495861319636,
+"AOE": 14.478897589554446,
+"ATE": 0.32608091474259737,
+"ASE": 1.754403260710084,
+"AP": 37.36896469228219,
+"UDS": 58.777495861319636,
+"mDR": 96.16666666666667
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/cleanfix/A3/preds/pcmd_nofuse_test_base.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 0,
+"AP_default": 33.73988859901152,
+"UDS_default": 56.66674005126231,
+"AOE": 14.484104245708311,
+"ATE": 0.34985862237325505,
+"ASE": 1.7547749958703303,
+"AP": 33.73988859901152,
+"UDS": 56.66674005126231,
+"mDR": 96.1875
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/cleanfix/A3/preds/pcmd_nofuse_test_gt.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 0,
+"AP_default": 4.509019768859899,
+"UDS_default": 35.36636860167978,
+"AOE": 14.484104245708311,
+"ATE": 0.8846535851337922,
+"ASE": 1.7547749958703303,
+"AP": 4.509019768859899,
+"UDS": 35.36636860167978,
+"mDR": 96.1875
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/cleanfix/A3/preds/pcmd_nofuse_test_gtn.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 0,
+"AP_default": 35.236209216612615,
+"UDS_default": 57.52026615466256,
+"AOE": 14.484104245708311,
+"ATE": 0.34142935880527864,
+"ASE": 1.7547749958703303,
+"AP": 35.236209216612615,
+"UDS": 57.52026615466256,
+"mDR": 96.1875
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/cleanfix/B3_noself/arm/preds/noself_fused_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 0,
+"AP_default": 41.30279844441353,
+"UDS_default": 60.59118954508661,
+"AOE": 16.423661544976692,
+"ATE": 0.304560583568571,
+"ASE": 1.7548432390266777,
+"AP": 41.30279844441353,
+"UDS": 60.59118954508661,
+"mDR": 96.1875
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/cleanfix/B3_noself/arm/preds/noself_nofuse_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 0,
+"AP_default": 33.73988859901152,
+"UDS_default": 56.239083296769365,
+"AOE": 16.426915829544548,
+"ATE": 0.35032706905214595,
+"ASE": 1.755214798415275,
+"AP": 33.73988859901152,
+"UDS": 56.239083296769365,
+"mDR": 96.20833333333333
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/cleanfix/B3_noself/arm/ref/inf_fin_det1_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/cleanfix/B4_orient/nocomp/preds/nocomp_fused_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 0,
+"AP_default": 42.69683293348886,
+"UDS_default": 61.72036388207971,
+"AOE": 15.072049215760758,
+"ATE": 0.29324617373999656,
+"ASE": 1.7539957658854202,
+"AP": 42.69683293348886,
+"UDS": 61.72036388207971,
+"mDR": 96.14583333333333
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/cleanfix/B4_orient/nocomp/preds/nocomp_nofuse_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 0,
+"AP_default": 33.73988859901152,
+"UDS_default": 56.537339165851854,
+"AOE": 15.077234425732355,
+"ATE": 0.34985862237325505,
+"ASE": 1.7547749958703303,
+"AP": 33.73988859901152,
+"UDS": 56.537339165851854,
+"mDR": 96.1875
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/cleanfix/B4_orient/nocomp/ref/inf_fin_det1_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/cleanfix/B4_orient/nosym/preds/nosym_fused_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 0,
+"AP_default": 38.91547252060907,
+"UDS_default": 59.39778488382827,
+"AOE": 15.491489142443372,
+"ATE": 0.3206450558184373,
+"ASE": 1.754403260710084,
+"AP": 38.91547252060907,
+"UDS": 59.39778488382827,
+"mDR": 96.16666666666667
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/cleanfix/B4_orient/nosym/preds/nosym_nofuse_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 0,
+"AP_default": 33.73988859901152,
+"UDS_default": 56.45511510624676,
+"AOE": 15.491489142443372,
+"ATE": 0.3490352811610571,
+"ASE": 1.754403260710084,
+"AP": 33.73988859901152,
+"UDS": 56.45511510624676,
+"mDR": 96.16666666666667
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/cleanfix/B4_orient/nosym/ref/inf_fin_det1_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/cleanfix/B6_gtceil/arm/preds/gtrot_fused_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 0,
+"AP_default": 41.763199393407355,
+"UDS_default": 61.985968830695406,
+"AOE": 11.224985335594766,
+"ATE": 0.30196392733353783,
+"ASE": 1.754403260710084,
+"AP": 41.763199393407355,
+"UDS": 61.985968830695406,
+"mDR": 96.16666666666667
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/cleanfix/B6_gtceil/arm/preds/gtrot_nofuse_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 0,
+"AP_default": 33.73988859901152,
+"UDS_default": 57.37658418161126,
+"AOE": 11.230417259816534,
+"ATE": 0.34985862237325505,
+"ASE": 1.7547749958703303,
+"AP": 33.73988859901152,
+"UDS": 57.37658418161126,
+"mDR": 96.1875
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/cleanfix/B6_gtceil/arm/ref/inf_fin_det1_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/cpu5/anti_b_det1_test.pkl": {
+"split": "outdoor_test",
+"hit": 2624,
+"N": 2624,
+"ties": 0,
+"AP_default": 23.48592100391702,
+"UDS_default": 37.578776877467824,
+"AOE": 22.053797738440434,
+"ATE": 11.68576903895574,
+"ASE": 15.244680430544484,
+"AP": 23.48592100391702,
+"UDS": 37.578776877467824,
+"mDR": 91.92073170731707
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/cpu5/anti_c_students_test.pkl": {
+"split": "outdoor_test",
+"hit": 2624,
+"N": 2624,
+"ties": 0,
+"AP_default": 23.48592100391702,
+"UDS_default": 38.65776901854756,
+"AOE": 17.108060305090312,
+"ATE": 11.68576903895574,
+"ASE": 15.244680430544484,
+"AP": 23.48592100391702,
+"UDS": 38.65776901854756,
+"mDR": 91.92073170731707
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/cpu5/anti_cp_students_rk_test.pkl": {
+"split": "outdoor_test",
+"hit": 2624,
+"N": 2624,
+"ties": 0,
+"AP_default": 23.48592100391702,
+"UDS_default": 38.65776901854756,
+"AOE": 17.108060305090312,
+"ATE": 11.68576903895574,
+"ASE": 15.562262202908215,
+"AP": 23.48592100391702,
+"UDS": 38.65776901854756,
+"mDR": 91.92073170731707
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/figdata/testgap/st2_s5_det0_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/figdata/testgap/st2_s6_det0_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H1/mav_s0/preds/h1_fused_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 4,
+"AP_default": 48.418872725185395,
+"UDS_default": 63.28490282054023,
+"AOE": 14.533383528182922,
+"ATE": 0.26168040795837044,
+"ASE": 3.2466863874863776,
+"AP": 48.418872725185395,
+"UDS": 63.28490282054023,
+"mDR": 96.60416666666667
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H1/mav_s0/preds/h1_nofuse_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 4,
+"AP_default": 39.39896769348826,
+"UDS_default": 58.17176299234201,
+"AOE": 14.543099016230599,
+"ATE": 0.31073010740241097,
+"ASE": 3.2474602376499786,
+"AP": 39.39896769348826,
+"UDS": 58.17176299234201,
+"mDR": 96.70833333333333
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H1/mav_s0/ref/fin_s5_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H1/mav_s0/ref/fin_s6_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H1/mav_s0/ref/inf_fin_det1_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H1c/mav_s0/preds/h1c_fused_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 0,
+"AP_default": 44.221098957534835,
+"UDS_default": 60.702952949493124,
+"AOE": 14.478897589554446,
+"ATE": 0.2861036639535423,
+"ASE": 3.3546638041629024,
+"AP": 44.221098957534835,
+"UDS": 60.702952949493124,
+"mDR": 96.16666666666667
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H1c/mav_s0/preds/h1c_nofuse_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 0,
+"AP_default": 31.117310005879663,
+"UDS_default": 53.11229823825363,
+"AOE": 14.483274144914844,
+"ATE": 0.3695064525959009,
+"ASE": 3.3550469199992943,
+"AP": 31.117310005879663,
+"UDS": 53.11229823825363,
+"mDR": 96.20833333333333
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H1c/mav_s0/ref/inf_fin_det1_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H1c/mav_s10/preds/h1c_fused_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 12,
+"AP_default": 40.663660789289054,
+"UDS_default": 58.624385684934865,
+"AOE": 14.872676014822941,
+"ATE": 0.2983594964025421,
+"ASE": 3.3532567481530764,
+"AP": 40.663660789289054,
+"UDS": 58.624385684934865,
+"mDR": 95.66666666666667
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H1c/mav_s10/preds/h1c_nofuse_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 12,
+"AP_default": 27.576713704593004,
+"UDS_default": 50.78518189015197,
+"AOE": 14.871752662843734,
+"ATE": 0.40220342881236487,
+"ASE": 3.3536461146003815,
+"AP": 27.576713704593004,
+"UDS": 50.78518189015197,
+"mDR": 95.6875
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H1c/mav_s10/ref/inf_fin_det1_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H1c/mav_s20/preds/h1c_fused_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 4,
+"AP_default": 45.165019953387876,
+"UDS_default": 61.13880674772878,
+"AOE": 15.147961751993526,
+"ATE": 0.2743262020442418,
+"ASE": 3.238716766012759,
+"AP": 45.165019953387876,
+"UDS": 61.13880674772878,
+"mDR": 94.70833333333334
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H1c/mav_s20/preds/h1c_nofuse_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 4,
+"AP_default": 35.030103784514196,
+"UDS_default": 55.317266744230565,
+"AOE": 15.20717159076709,
+"ATE": 0.33402578452857085,
+"ASE": 3.238819080418586,
+"AP": 35.030103784514196,
+"UDS": 55.317266744230565,
+"mDR": 94.75
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H1c/mav_s20/ref/inf_fin_det1_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H2/mav_s0/preds/h2_fused_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 2,
+"AP_default": 35.816974209914385,
+"UDS_default": 57.63053573133304,
+"AOE": 14.818267918088702,
+"ATE": 0.3445303002999118,
+"ASE": 1.8449500411931032,
+"AP": 35.816974209914385,
+"UDS": 57.63053573133304,
+"mDR": 96.54166666666667
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H2/mav_s0/preds/h2_nofuse_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 2,
+"AP_default": 29.34755715400934,
+"UDS_default": 53.75333834680571,
+"AOE": 14.818267918088702,
+"ATE": 0.39592940882589617,
+"ASE": 1.8449500411931032,
+"AP": 29.34755715400934,
+"UDS": 53.75333834680571,
+"mDR": 96.54166666666667
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H2/mav_s0/ref/fin_s5_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H2/mav_s0/ref/fin_s6_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H2/mav_s0/ref/inf_fin_det1_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H2/mav_s10/preds/h2_fused_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 10,
+"AP_default": 36.954617138373195,
+"UDS_default": 58.53197493232365,
+"AOE": 14.814817205251453,
+"ATE": 0.32640390831785165,
+"ASE": 1.7461387010615679,
+"AP": 36.954617138373195,
+"UDS": 58.53197493232365,
+"mDR": 96.39583333333334
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H2/mav_s10/preds/h2_nofuse_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 10,
+"AP_default": 32.311526621237775,
+"UDS_default": 55.744773634993926,
+"AOE": 14.827090939578136,
+"ATE": 0.36382658402429074,
+"ASE": 1.7464612716842596,
+"AP": 32.311526621237775,
+"UDS": 55.744773634993926,
+"mDR": 96.4375
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H2/mav_s10/ref/fin_s5_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H2/mav_s10/ref/fin_s6_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H2/mav_s10/ref/inf_fin_det1_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H3/mav_s0/preds/h3_fused_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 4,
+"AP_default": 31.968073685836917,
+"UDS_default": 55.318995457907995,
+"AOE": 15.18585496012054,
+"ATE": 0.3752806740597346,
+"ASE": 1.6600456272659305,
+"AP": 31.968073685836917,
+"UDS": 55.318995457907995,
+"mDR": 95.3125
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H3/mav_s0/preds/h3_nofuse_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 4,
+"AP_default": 22.652760014338064,
+"UDS_default": 49.45963775134072,
+"AOE": 15.189482447935328,
+"ATE": 0.4717072539261072,
+"ASE": 1.6606740760900878,
+"AP": 22.652760014338064,
+"UDS": 49.45963775134072,
+"mDR": 95.35416666666666
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H3/mav_s0/ref/fin_s5_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H3/mav_s0/ref/fin_s6_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H3/mav_s0/ref/inf_fin_det1_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H4/mav_s0/preds/h4_fused_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 0,
+"AP_default": 39.58088768996944,
+"UDS_default": 60.00778589436844,
+"AOE": 14.441034709739352,
+"ATE": 0.3167954636869538,
+"ASE": 1.754403260710084,
+"AP": 39.58088768996944,
+"UDS": 60.00778589436844,
+"mDR": 96.16666666666667
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H4/mav_s0/preds/h4_nofuse_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 0,
+"AP_default": 33.73988859901152,
+"UDS_default": 56.67468614621385,
+"AOE": 14.44768201633834,
+"ATE": 0.34985862237325505,
+"ASE": 1.7547749958703303,
+"AP": 33.73988859901152,
+"UDS": 56.67468614621385,
+"mDR": 96.1875
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H4/mav_s0/ref/inf_fin_det1_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H4/mav_s10/preds/h4_fused_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 12,
+"AP_default": 38.43389103688729,
+"UDS_default": 59.44168310658971,
+"AOE": 14.059743074949337,
+"ATE": 0.31545390300642656,
+"ASE": 1.7763670237509788,
+"AP": 38.43389103688729,
+"UDS": 59.44168310658971,
+"mDR": 95.64583333333333
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H4/mav_s10/preds/h4_nofuse_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 12,
+"AP_default": 34.201082961997706,
+"UDS_default": 56.988679144213194,
+"AOE": 14.060366684278733,
+"ATE": 0.3425192549989441,
+"ASE": 1.7769679367829792,
+"AP": 34.201082961997706,
+"UDS": 56.988679144213194,
+"mDR": 95.66666666666667
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H4/mav_s10/ref/inf_fin_det1_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H4/mav_s20/preds/h4_fused_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 4,
+"AP_default": 44.70017862441976,
+"UDS_default": 63.03381811912946,
+"AOE": 14.765817150412644,
+"ATE": 0.2730800661624234,
+"ASE": 1.615929287437849,
+"AP": 44.70017862441976,
+"UDS": 63.03381811912946,
+"mDR": 94.70833333333334
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H4/mav_s20/preds/h4_nofuse_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 4,
+"AP_default": 37.33561886015767,
+"UDS_default": 58.7966616107519,
+"AOE": 14.765817150412644,
+"ATE": 0.3174701962621453,
+"ASE": 1.615929287437849,
+"AP": 37.33561886015767,
+"UDS": 58.7966616107519,
+"mDR": 94.70833333333334
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H4/mav_s20/ref/inf_fin_det1_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H5/mav_s0/preds/h5_fused_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 0,
+"AP_default": 42.5549727499086,
+"UDS_default": 61.53799044667817,
+"AOE": 15.409346603137918,
+"ATE": 0.296442277216632,
+"ASE": 1.754403260710084,
+"AP": 42.5549727499086,
+"UDS": 61.53799044667817,
+"mDR": 96.16666666666667
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H5/mav_s0/preds/h5_nofuse_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 0,
+"AP_default": 33.73988859901152,
+"UDS_default": 56.47303582192431,
+"AOE": 15.409346603137918,
+"ATE": 0.3490352811610571,
+"ASE": 1.754403260710084,
+"AP": 33.73988859901152,
+"UDS": 56.47303582192431,
+"mDR": 96.16666666666667
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H5/mav_s0/ref/inf_fin_det1_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H5/mav_s10/preds/h5_fused_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 12,
+"AP_default": 40.35750370825023,
+"UDS_default": 60.33279177475641,
+"AOE": 15.169334249473296,
+"ATE": 0.3017208457626922,
+"ASE": 1.7765956059809094,
+"AP": 40.35750370825023,
+"UDS": 60.33279177475641,
+"mDR": 95.64583333333333
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H5/mav_s10/preds/h5_nofuse_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 12,
+"AP_default": 34.201082961997706,
+"UDS_default": 56.7462462003703,
+"AOE": 15.171597841385491,
+"ATE": 0.3425192549989441,
+"ASE": 1.7769679367829792,
+"AP": 34.201082961997706,
+"UDS": 56.7462462003703,
+"mDR": 95.66666666666667
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H5/mav_s10/ref/inf_fin_det1_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H5/mav_s20/preds/h5_fused_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 4,
+"AP_default": 45.25650994529229,
+"UDS_default": 63.352680593547284,
+"AOE": 14.661847496186143,
+"ATE": 0.27147302847416166,
+"ASE": 1.6155050011976115,
+"AP": 45.25650994529229,
+"UDS": 63.352680593547284,
+"mDR": 94.6875
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H5/mav_s20/preds/h5_nofuse_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 4,
+"AP_default": 37.33561886015767,
+"UDS_default": 58.81879450719294,
+"AOE": 14.664367389780104,
+"ATE": 0.3174701962621453,
+"ASE": 1.615929287437849,
+"AP": 37.33561886015767,
+"UDS": 58.81879450719294,
+"mDR": 94.70833333333334
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H5/mav_s20/ref/inf_fin_det1_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H6/mav_s0/preds/h6_fused_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 0,
+"AP_default": 40.93098337624802,
+"UDS_default": 60.38131375102369,
+"AOE": 14.478897589554446,
+"ATE": 0.3058547975661101,
+"ASE": 2.098417594298056,
+"AP": 40.93098337624802,
+"UDS": 60.38131375102369,
+"mDR": 96.16666666666667
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H6/mav_s0/preds/h6_nofuse_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 0,
+"AP_default": 33.73988859901152,
+"UDS_default": 56.23684169885955,
+"AOE": 14.484104245708311,
+"ATE": 0.34985862237325505,
+"ASE": 2.0986936777925287,
+"AP": 33.73988859901152,
+"UDS": 56.23684169885955,
+"mDR": 96.1875
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H6/mav_s0/ref/inf_fin_det1_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H6/mav_s10/preds/h6_fused_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 12,
+"AP_default": 38.40488270379815,
+"UDS_default": 58.80855462218088,
+"AOE": 14.869195379510176,
+"ATE": 0.3132612508165966,
+"ASE": 2.1519169719315063,
+"AP": 38.40488270379815,
+"UDS": 58.80855462218088,
+"mDR": 95.64583333333333
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H6/mav_s10/preds/h6_nofuse_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 12,
+"AP_default": 34.201082961997706,
+"UDS_default": 56.342496704155145,
+"AOE": 14.872676014822941,
+"ATE": 0.3425192549989441,
+"ASE": 2.152139215896302,
+"AP": 34.201082961997706,
+"UDS": 56.342496704155145,
+"mDR": 95.66666666666667
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H6/mav_s10/ref/inf_fin_det1_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H6/mav_s20/preds/h6_fused_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 4,
+"AP_default": 44.37797244344742,
+"UDS_default": 62.261503106267256,
+"AOE": 15.147044595974885,
+"ATE": 0.27975397874624974,
+"ASE": 1.9674563153846047,
+"AP": 44.37797244344742,
+"UDS": 62.261503106267256,
+"mDR": 94.66666666666667
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H6/mav_s20/preds/h6_nofuse_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 4,
+"AP_default": 37.33561886015767,
+"UDS_default": 58.26077338958599,
+"AOE": 15.206280887451834,
+"ATE": 0.3174701962621453,
+"ASE": 1.9677644673887245,
+"AP": 37.33561886015767,
+"UDS": 58.26077338958599,
+"mDR": 94.70833333333334
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H6/mav_s20/ref/inf_fin_det1_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H7/mav_s10/preds/h7_fused_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 12,
+"AP_default": 39.985654144617065,
+"UDS_default": 60.01352594157432,
+"AOE": 14.872676014822941,
+"ATE": 0.30408677609211915,
+"ASE": 1.913469088076954,
+"AP": 39.985654144617065,
+"UDS": 60.01352594157432,
+"mDR": 95.66666666666667
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H7/mav_s10/preds/h7_nofuse_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 12,
+"AP_default": 33.4282164686168,
+"UDS_default": 56.202497763984496,
+"AOE": 14.871752662843734,
+"ATE": 0.34687529337267414,
+"ASE": 1.913675875540785,
+"AP": 33.4282164686168,
+"UDS": 56.202497763984496,
+"mDR": 95.6875
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H7/mav_s10/ref/fin_s5_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H7/mav_s10/ref/fin_s6_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H7/mav_s10/ref/inf_fin_det1_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H7/mav_s20/preds/h7_fused_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 4,
+"AP_default": 45.4017765510168,
+"UDS_default": 63.28359938258637,
+"AOE": 15.147044595974885,
+"ATE": 0.2665643061615935,
+"ASE": 1.6911976632036396,
+"AP": 45.4017765510168,
+"UDS": 63.28359938258637,
+"mDR": 94.66666666666667
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H7/mav_s20/preds/h7_nofuse_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 4,
+"AP_default": 40.21534891428968,
+"UDS_default": 60.36178352205788,
+"AOE": 15.20602284194741,
+"ATE": 0.29234127946644684,
+"ASE": 1.6922659217749658,
+"AP": 40.21534891428968,
+"UDS": 60.36178352205788,
+"mDR": 94.72916666666666
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H7/mav_s20/ref/fin_s5_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H7/mav_s20/ref/fin_s6_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H7/mav_s20/ref/inf_fin_det1_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/height/mav_htr/fe_deploy_fused_test_P.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/height/mav_rk/fe_deploy_fused_test_P.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/initabl/s0/preds/initb_fused_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 0,
+"AP_default": 41.87224205671455,
+"UDS_default": 61.37299233814757,
+"AOE": 14.30725488036357,
+"ATE": 0.3015680205149161,
+"ASE": 1.754403260710084,
+"AP": 41.87224205671455,
+"UDS": 61.37299233814757,
+"mDR": 96.16666666666667
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/initabl/s0/preds/initb_nofuse_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 0,
+"AP_default": 33.73988859901152,
+"UDS_default": 56.70481354866688,
+"AOE": 14.30958812630088,
+"ATE": 0.34985862237325505,
+"ASE": 1.7547749958703303,
+"AP": 33.73988859901152,
+"UDS": 56.70481354866688,
+"mDR": 96.1875
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/initabl/s0/ref/inf_fin_det1_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/initabl/s10/preds/initb_fused_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 12,
+"AP_default": 38.45540125945993,
+"UDS_default": 59.29993739782743,
+"AOE": 14.754414459799673,
+"ATE": 0.3156779120906349,
+"ASE": 1.7769679367829792,
+"AP": 38.45540125945993,
+"UDS": 59.29993739782743,
+"mDR": 95.66666666666667
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/initabl/s10/preds/initb_nofuse_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 12,
+"AP_default": 34.201082961997706,
+"UDS_default": 56.83726146274246,
+"AOE": 14.754414459799673,
+"ATE": 0.3425192549989441,
+"ASE": 1.7769679367829792,
+"AP": 34.201082961997706,
+"UDS": 56.83726146274246,
+"mDR": 95.66666666666667
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/initabl/s10/ref/inf_fin_det1_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/initabl/s20/preds/initb_fused_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 4,
+"AP_default": 44.19465660090003,
+"UDS_default": 62.73299074728407,
+"AOE": 14.699883121036471,
+"ATE": 0.27789889596450534,
+"ASE": 1.6156183990546007,
+"AP": 44.19465660090003,
+"UDS": 62.73299074728407,
+"mDR": 94.6875
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/initabl/s20/preds/initb_nofuse_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 4,
+"AP_default": 37.33561886015767,
+"UDS_default": 58.81016957531428,
+"AOE": 14.703901179534704,
+"ATE": 0.3174701962621453,
+"ASE": 1.615929287437849,
+"AP": 37.33561886015767,
+"UDS": 58.81016957531428,
+"mDR": 94.70833333333334
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/initabl/s20/ref/inf_fin_det1_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/panelA/cache/zl_PST_students_(deployed_seed_0)_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/panelA/cache/zl_PST_students_seed_run_p10_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/panelA/cache/zl_PST_students_seed_run_p20_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/panelA/cache/zl_PST_students_wo_IR-LiDAR_check_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/panelA/cache/zl_PST_students_wo_mirror_loss_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/panelA/cache/zl_RGB-only_students_(seed_0)_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/panelA/cache/zl_RGB-only_students_seed_run_p10_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/panelA/cache/zl_RGB-only_students_seed_run_p20_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/antifs_full_s10/preds/pcmd_fused_test.pkl": {
+"split": "outdoor_test",
+"hit": 2624,
+"N": 2624,
+"ties": 4,
+"AP_default": 27.252468822685223,
+"UDS_default": 41.378737239094285,
+"AOE": 16.577557965164136,
+"ATE": 10.060834305430987,
+"ASE": 16.717129676724486,
+"AP": 27.252468822685223,
+"UDS": 41.378737239094285,
+"mDR": 91.19664634146342
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/antifs_full_s10/preds/pcmd_nofuse_test.pkl": {
+"split": "outdoor_test",
+"hit": 2624,
+"N": 2624,
+"ties": 4,
+"AP_default": 27.387506453102944,
+"UDS_default": 41.42746921695846,
+"AOE": 16.577557965164136,
+"ATE": 10.098407980120369,
+"ASE": 16.717129676724486,
+"AP": 27.387506453102944,
+"UDS": 41.42746921695846,
+"mDR": 91.19664634146342
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/antifs_full_s10/preds/srconly_test.pkl": {
+"split": "outdoor_test",
+"hit": 2624,
+"N": 2624,
+"ties": 6,
+"AP_default": 16.03689619446874,
+"UDS_default": 30.55241696677245,
+"AOE": 26.057677104012754,
+"ATE": 13.198311633461987,
+"ASE": 15.362981341073343,
+"AP": 16.03689619446874,
+"UDS": 30.55241696677245,
+"mDR": 78.54420731707317
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/antifs_full_s10/ref/fin_s5_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/antifs_full_s10/ref/fin_s6_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/antifs_full_s10/ref/inf_fin_det1_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/antifs_full_s20/preds/pcmd_fused_test.pkl": {
+"split": "outdoor_test",
+"hit": 2624,
+"N": 2624,
+"ties": 2,
+"AP_default": 28.270050880696402,
+"UDS_default": 42.006486165406955,
+"AOE": 16.84700339860275,
+"ATE": 9.800625193899547,
+"ASE": 16.64696447130919,
+"AP": 28.270050880696402,
+"UDS": 42.006486165406955,
+"mDR": 91.57774390243902
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/antifs_full_s20/preds/pcmd_nofuse_test.pkl": {
+"split": "outdoor_test",
+"hit": 2624,
+"N": 2624,
+"ties": 2,
+"AP_default": 28.559430292729036,
+"UDS_default": 42.15816223268009,
+"AOE": 16.84700339860275,
+"ATE": 9.786652471385912,
+"ASE": 16.64696447130919,
+"AP": 28.559430292729036,
+"UDS": 42.15816223268009,
+"mDR": 91.57774390243902
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/antifs_full_s20/preds/srconly_test.pkl": {
+"split": "outdoor_test",
+"hit": 2624,
+"N": 2624,
+"ties": 6,
+"AP_default": 16.03689619446874,
+"UDS_default": 30.55241696677245,
+"AOE": 26.057677104012754,
+"ATE": 13.198311633461987,
+"ASE": 15.362981341073343,
+"AP": 16.03689619446874,
+"UDS": 30.55241696677245,
+"mDR": 78.54420731707317
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/antifs_full_s20/ref/fin_s5_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/antifs_full_s20/ref/fin_s6_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/antifs_full_s20/ref/inf_fin_det1_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/antifs_none_s10/preds/pcmd_fused_test.pkl": {
+"split": "outdoor_test",
+"hit": 2624,
+"N": 2624,
+"ties": 2,
+"AP_default": 15.093982634010633,
+"UDS_default": 33.49379282199625,
+"AOE": 15.782511473879614,
+"ATE": 14.038196179444274,
+"ASE": 15.284076757352693,
+"AP": 15.093982634010633,
+"UDS": 33.49379282199625,
+"mDR": 91.27286585365853
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/antifs_none_s10/preds/pcmd_nofuse_test.pkl": {
+"split": "outdoor_test",
+"hit": 2624,
+"N": 2624,
+"ties": 2,
+"AP_default": 15.725805632873685,
+"UDS_default": 33.92838660821994,
+"AOE": 15.782511473879614,
+"ATE": 13.800831605859926,
+"ASE": 15.284076757352693,
+"AP": 15.725805632873685,
+"UDS": 33.92838660821994,
+"mDR": 91.27286585365853
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/antifs_none_s10/preds/srconly_test.pkl": {
+"split": "outdoor_test",
+"hit": 2624,
+"N": 2624,
+"ties": 6,
+"AP_default": 16.03689619446874,
+"UDS_default": 30.55241696677245,
+"AOE": 26.057677104012754,
+"ATE": 13.198311633461987,
+"ASE": 15.362981341073343,
+"AP": 16.03689619446874,
+"UDS": 30.55241696677245,
+"mDR": 78.54420731707317
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/antifs_none_s10/ref/fin_s5_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/antifs_none_s10/ref/fin_s6_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/antifs_none_s10/ref/inf_fin_det1_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/antifs_none_s20/preds/pcmd_fused_test.pkl": {
+"split": "outdoor_test",
+"hit": 2624,
+"N": 2624,
+"ties": 2,
+"AP_default": 12.910495342265554,
+"UDS_default": 32.07941988871143,
+"AOE": 16.217891998329925,
+"ATE": 14.788834840683657,
+"ASE": 14.822816871250156,
+"AP": 12.910495342265554,
+"UDS": 32.07941988871143,
+"mDR": 92.45426829268293
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/antifs_none_s20/preds/pcmd_nofuse_test.pkl": {
+"split": "outdoor_test",
+"hit": 2624,
+"N": 2624,
+"ties": 2,
+"AP_default": 13.890738705193167,
+"UDS_default": 32.75509130152253,
+"AOE": 16.217891998329925,
+"ATE": 14.417735377989043,
+"ASE": 14.822816871250156,
+"AP": 13.890738705193167,
+"UDS": 32.75509130152253,
+"mDR": 92.45426829268293
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/antifs_none_s20/preds/srconly_test.pkl": {
+"split": "outdoor_test",
+"hit": 2624,
+"N": 2624,
+"ties": 6,
+"AP_default": 16.03689619446874,
+"UDS_default": 30.55241696677245,
+"AOE": 26.057677104012754,
+"ATE": 13.198311633461987,
+"ASE": 15.362981341073343,
+"AP": 16.03689619446874,
+"UDS": 30.55241696677245,
+"mDR": 78.54420731707317
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/antifs_none_s20/ref/fin_s5_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/antifs_none_s20/ref/fin_s6_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/antifs_none_s20/ref/inf_fin_det1_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/mav_full_s20/preds/pcmd_fused_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 4,
+"AP_default": 44.37797244344742,
+"UDS_default": 62.701539366012184,
+"AOE": 15.147044595974885,
+"ATE": 0.27975397874624974,
+"ASE": 1.615427307588667,
+"AP": 44.37797244344742,
+"UDS": 62.701539366012184,
+"mDR": 94.66666666666667
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/mav_full_s20/preds/pcmd_nofuse_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 4,
+"AP_default": 37.33561886015767,
+"UDS_default": 58.7005673645246,
+"AOE": 15.206280887451834,
+"ATE": 0.3174701962621453,
+"ASE": 1.615929287437849,
+"AP": 37.33561886015767,
+"UDS": 58.7005673645246,
+"mDR": 94.70833333333334
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/mav_full_s20/preds/srconly_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 6,
+"AP_default": 26.873249675726303,
+"UDS_default": 49.512697885937975,
+"AOE": 20.317841466530457,
+"ATE": 0.28328180745330805,
+"ASE": 1.7372757834178885,
+"AP": 26.873249675726303,
+"UDS": 49.512697885937975,
+"mDR": 69.77083333333334
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/mav_full_s20/ref/fin_s5_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/mav_full_s20/ref/fin_s6_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/mav_full_s20/ref/inf_fin_det1_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/mav_none_s10/preds/pcmd_fused_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 2,
+"AP_default": 39.06072677151014,
+"UDS_default": 58.01487833089717,
+"AOE": 15.948994899045099,
+"ATE": 0.33294518500277226,
+"ASE": 2.590979122128196,
+"AP": 39.06072677151014,
+"UDS": 58.01487833089717,
+"mDR": 94.91666666666667
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/mav_none_s10/preds/pcmd_nofuse_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 2,
+"AP_default": 27.95513034765036,
+"UDS_default": 51.42247547433681,
+"AOE": 15.948556515859906,
+"ATE": 0.4162764195609084,
+"ASE": 2.5915103378568576,
+"AP": 27.95513034765036,
+"UDS": 51.42247547433681,
+"mDR": 94.9375
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/mav_none_s10/preds/srconly_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 6,
+"AP_default": 26.873249675726303,
+"UDS_default": 49.512697885937975,
+"AOE": 20.317841466530457,
+"ATE": 0.28328180745330805,
+"ASE": 1.7372757834178885,
+"AP": 26.873249675726303,
+"UDS": 49.512697885937975,
+"mDR": 69.77083333333334
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/mav_none_s10/ref/fin_s5_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/mav_none_s10/ref/fin_s6_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/mav_none_s10/ref/inf_fin_det1_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/mav_none_s20/preds/pcmd_fused_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 6,
+"AP_default": 41.14188912208915,
+"UDS_default": 58.85197824194077,
+"AOE": 17.716906125084492,
+"ATE": 0.31843480296146603,
+"ASE": 2.5882260131605728,
+"AP": 41.14188912208915,
+"UDS": 58.85197824194077,
+"mDR": 94.89583333333333
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/mav_none_s20/preds/pcmd_nofuse_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 6,
+"AP_default": 35.57747038838653,
+"UDS_default": 55.76341967461873,
+"AOE": 17.717580683331875,
+"ATE": 0.34324011407001725,
+"ASE": 2.589301196536272,
+"AP": 35.57747038838653,
+"UDS": 55.76341967461873,
+"mDR": 94.9375
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/mav_none_s20/preds/srconly_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 6,
+"AP_default": 26.873249675726303,
+"UDS_default": 49.512697885937975,
+"AOE": 20.317841466530457,
+"ATE": 0.28328180745330805,
+"ASE": 1.7372757834178885,
+"AP": 26.873249675726303,
+"UDS": 49.512697885937975,
+"mDR": 69.77083333333334
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/mav_none_s20/ref/fin_s5_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/mav_none_s20/ref/fin_s6_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/mav_none_s20/ref/inf_fin_det1_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1/antifs_s0/preds/e1_fused_test.pkl": {
+"split": "outdoor_test",
+"hit": 2624,
+"N": 2624,
+"ties": 2,
+"AP_default": 26.58118122611839,
+"UDS_default": 40.933928430848624,
+"AOE": 16.999228828452647,
+"ATE": 10.333361743650167,
+"ASE": 16.04605304361528,
+"AP": 26.58118122611839,
+"UDS": 40.933928430848624,
+"mDR": 92.14939024390245
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1/antifs_s0/preds/e1_nofuse_test.pkl": {
+"split": "outdoor_test",
+"hit": 2624,
+"N": 2624,
+"ties": 2,
+"AP_default": 26.737336134292633,
+"UDS_default": 41.033679139521354,
+"AOE": 16.999228828452647,
+"ATE": 10.290015234478936,
+"ASE": 16.04605304361528,
+"AP": 26.737336134292633,
+"UDS": 41.033679139521354,
+"mDR": 92.14939024390245
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1/antifs_s0/ref/fin_s5_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1/antifs_s0/ref/fin_s6_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1/antifs_s0/ref/inf_fin_det1_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1/antifs_s10/preds/e1_fused_test.pkl": {
+"split": "outdoor_test",
+"hit": 2624,
+"N": 2624,
+"ties": 0,
+"AP_default": 22.92950103989865,
+"UDS_default": 38.61414214961478,
+"AOE": 16.58880995844985,
+"ATE": 11.30978429022468,
+"ASE": 15.898442883049354,
+"AP": 22.92950103989865,
+"UDS": 38.61414214961478,
+"mDR": 91.38719512195121
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1/antifs_s10/preds/e1_nofuse_test.pkl": {
+"split": "outdoor_test",
+"hit": 2624,
+"N": 2624,
+"ties": 0,
+"AP_default": 23.329732617861875,
+"UDS_default": 38.84576123491889,
+"AOE": 16.58880995844985,
+"ATE": 11.246777697579674,
+"ASE": 15.898442883049354,
+"AP": 23.329732617861875,
+"UDS": 38.84576123491889,
+"mDR": 91.38719512195121
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1/antifs_s10/ref/fin_s5_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1/antifs_s10/ref/fin_s6_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1/antifs_s10/ref/inf_fin_det1_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1/antifs_s20/preds/e1_fused_test.pkl": {
+"split": "outdoor_test",
+"hit": 2624,
+"N": 2624,
+"ties": 0,
+"AP_default": 22.368772652402516,
+"UDS_default": 38.15669866167559,
+"AOE": 16.327108440602615,
+"ATE": 11.759076788325833,
+"ASE": 15.84968706438471,
+"AP": 22.368772652402516,
+"UDS": 38.15669866167559,
+"mDR": 91.3109756097561
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1/antifs_s20/preds/e1_nofuse_test.pkl": {
+"split": "outdoor_test",
+"hit": 2624,
+"N": 2624,
+"ties": 0,
+"AP_default": 22.99584923764063,
+"UDS_default": 38.56755613648171,
+"AOE": 16.327108440602615,
+"ATE": 11.564438423951716,
+"ASE": 15.84968706438471,
+"AP": 22.99584923764063,
+"UDS": 38.56755613648171,
+"mDR": 91.3109756097561
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1/antifs_s20/ref/fin_s5_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1/antifs_s20/ref/fin_s6_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1/antifs_s20/ref/inf_fin_det1_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1/mav_s0/preds/e1_fused_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 2,
+"AP_default": 31.382228509372695,
+"UDS_default": 53.48043609257558,
+"AOE": 15.829154431021937,
+"ATE": 0.400962952695257,
+"ASE": 2.6524553643014794,
+"AP": 31.382228509372695,
+"UDS": 53.48043609257558,
+"mDR": 96.5625
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1/mav_s0/preds/e1_nofuse_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 2,
+"AP_default": 23.529734553973597,
+"UDS_default": 48.7026882238908,
+"AOE": 15.836000946421715,
+"ATE": 0.46929198332421024,
+"ASE": 2.65333749553392,
+"AP": 23.529734553973597,
+"UDS": 48.7026882238908,
+"mDR": 96.60416666666667
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1/mav_s0/ref/fin_s5_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1/mav_s0/ref/fin_s6_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1/mav_s0/ref/inf_fin_det1_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1/mav_s10/preds/e1_fused_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 4,
+"AP_default": 45.08782934062713,
+"UDS_default": 61.70379968507407,
+"AOE": 16.44792780817367,
+"ATE": 0.27797734892839576,
+"ASE": 2.607031238205516,
+"AP": 45.08782934062713,
+"UDS": 61.70379968507407,
+"mDR": 95.85416666666666
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1/mav_s10/preds/e1_nofuse_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 4,
+"AP_default": 39.47895898435284,
+"UDS_default": 58.59010823826429,
+"AOE": 16.45268730104234,
+"ATE": 0.30294418474426815,
+"ASE": 2.6081038737357503,
+"AP": 39.47895898435284,
+"UDS": 58.59010823826429,
+"mDR": 95.89583333333334
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1/mav_s10/ref/fin_s5_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1/mav_s10/ref/fin_s6_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1/mav_s10/ref/inf_fin_det1_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1/mav_s20/preds/e1_fused_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 4,
+"AP_default": 33.70012688801025,
+"UDS_default": 54.934179693906394,
+"AOE": 15.597772842825833,
+"ATE": 0.37062104283191544,
+"ASE": 2.5854226243106586,
+"AP": 33.70013418253909,
+"UDS": 54.934183341170815,
+"mDR": 94.8125
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1/mav_s20/preds/e1_nofuse_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 4,
+"AP_default": 22.611666203663603,
+"UDS_default": 48.34001614337357,
+"AOE": 15.597772842825833,
+"ATE": 0.4546156995006753,
+"ASE": 2.5854226243106586,
+"AP": 22.611666203663603,
+"UDS": 48.34001614337357,
+"mDR": 94.8125
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1/mav_s20/ref/fin_s5_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1/mav_s20/ref/fin_s6_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1/mav_s20/ref/inf_fin_det1_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1b/antifs_s0/preds/e1b_fused_test.pkl": {
+"split": "outdoor_test",
+"hit": 2624,
+"N": 2624,
+"ties": 0,
+"AP_default": 31.24290410455954,
+"UDS_default": 43.71265008477659,
+"AOE": 16.991457947400377,
+"ATE": 9.536306389770465,
+"ASE": 16.923086484861265,
+"AP": 31.24290410455954,
+"UDS": 43.71265008477659,
+"mDR": 92.53048780487805
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1b/antifs_s0/preds/e1b_nofuse_test.pkl": {
+"split": "outdoor_test",
+"hit": 2624,
+"N": 2624,
+"ties": 0,
+"AP_default": 31.39039014628524,
+"UDS_default": 43.758967800782614,
+"AOE": 16.991457947400377,
+"ATE": 9.591156999484133,
+"ASE": 16.923086484861265,
+"AP": 31.39039014628524,
+"UDS": 43.758967800782614,
+"mDR": 92.53048780487805
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1b/antifs_s0/ref/fin_s5_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1b/antifs_s0/ref/fin_s6_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1b/antifs_s0/ref/inf_fin_det1_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1b/antifs_s10/preds/e1b_fused_test.pkl": {
+"split": "outdoor_test",
+"hit": 2624,
+"N": 2624,
+"ties": 4,
+"AP_default": 22.34343823359179,
+"UDS_default": 38.30671751627727,
+"AOE": 16.29742866408417,
+"ATE": 11.856334779267582,
+"ASE": 15.860456617621807,
+"AP": 22.34343823359179,
+"UDS": 38.30671751627727,
+"mDR": 92.94969512195121
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1b/antifs_s10/preds/e1b_nofuse_test.pkl": {
+"split": "outdoor_test",
+"hit": 2624,
+"N": 2624,
+"ties": 4,
+"AP_default": 22.832299750602665,
+"UDS_default": 38.629570370455795,
+"AOE": 16.29742866408417,
+"ATE": 11.699490587921401,
+"ASE": 15.860456617621807,
+"AP": 22.832299750602665,
+"UDS": 38.629570370455795,
+"mDR": 92.94969512195121
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1b/antifs_s10/ref/fin_s5_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1b/antifs_s10/ref/fin_s6_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1b/antifs_s10/ref/inf_fin_det1_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1b/antifs_s20/preds/e1b_fused_test.pkl": {
+"split": "outdoor_test",
+"hit": 2624,
+"N": 2624,
+"ties": 6,
+"AP_default": 28.39472276025813,
+"UDS_default": 41.78447244291781,
+"AOE": 16.476128050435232,
+"ATE": 10.140524359076897,
+"ASE": 17.056811507476393,
+"AP": 28.39472276025813,
+"UDS": 41.78447244291781,
+"mDR": 90.01524390243902
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1b/antifs_s20/preds/e1b_nofuse_test.pkl": {
+"split": "outdoor_test",
+"hit": 2624,
+"N": 2624,
+"ties": 6,
+"AP_default": 27.776829227508237,
+"UDS_default": 41.351218782286104,
+"AOE": 16.476128050435232,
+"ATE": 10.389138147590419,
+"ASE": 17.056811507476393,
+"AP": 27.776829227508237,
+"UDS": 41.351218782286104,
+"mDR": 90.01524390243902
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1b/antifs_s20/ref/fin_s5_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1b/antifs_s20/ref/fin_s6_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1b/antifs_s20/ref/inf_fin_det1_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1b/mav_s0/preds/e1b_fused_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 4,
+"AP_default": 35.677180930260974,
+"UDS_default": 56.25114553547981,
+"AOE": 15.418214471066202,
+"ATE": 0.3554329071512611,
+"ASE": 2.632975094753702,
+"AP": 35.677180930260974,
+"UDS": 56.25114553547981,
+"mDR": 96.08333333333333
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1b/mav_s0/preds/e1b_nofuse_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 4,
+"AP_default": 26.755345783470364,
+"UDS_default": 50.94896279476511,
+"AOE": 15.420779723527039,
+"ATE": 0.42284642830117597,
+"ASE": 2.6334876295876266,
+"AP": 26.755345783470364,
+"UDS": 50.94896279476511,
+"mDR": 96.10416666666667
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1b/mav_s0/ref/fin_s5_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1b/mav_s0/ref/fin_s6_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1b/mav_s0/ref/inf_fin_det1_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1b/mav_s10/preds/e1b_fused_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 10,
+"AP_default": 42.874984145919456,
+"UDS_default": 60.48196621605505,
+"AOE": 16.160731536860226,
+"ATE": 0.2908524516056776,
+"ASE": 2.6040674295139103,
+"AP": 42.874984145919456,
+"UDS": 60.48196621605505,
+"mDR": 95.6875
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1b/mav_s10/preds/e1b_nofuse_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 10,
+"AP_default": 31.54283887177601,
+"UDS_default": 53.89840786302431,
+"AOE": 16.161344874656297,
+"ATE": 0.3644121785772256,
+"ASE": 2.604435018297564,
+"AP": 31.54283887177601,
+"UDS": 53.89840786302431,
+"mDR": 95.70833333333333
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1b/mav_s10/ref/fin_s5_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1b/mav_s10/ref/fin_s6_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1b/mav_s10/ref/inf_fin_det1_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1b/mav_s20/preds/e1b_fused_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 2,
+"AP_default": 35.831020814871536,
+"UDS_default": 56.344662894575194,
+"AOE": 15.85592560918345,
+"ATE": 0.3412804488792131,
+"ASE": 2.570243432696891,
+"AP": 35.831020814871536,
+"UDS": 56.344662894575194,
+"mDR": 94.9375
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1b/mav_s20/preds/e1b_nofuse_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 2,
+"AP_default": 27.17805310288411,
+"UDS_default": 51.19863091857475,
+"AOE": 15.855527452631852,
+"ATE": 0.40717872475991873,
+"ASE": 2.5711353279646763,
+"AP": 27.17805310288411,
+"UDS": 51.19863091857475,
+"mDR": 94.97916666666667
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1b/mav_s20/ref/fin_s5_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1b/mav_s20/ref/fin_s6_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1b/mav_s20/ref/inf_fin_det1_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1geo/mav_s0/preds/e1geo_clsonly_fused_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 2,
+"AP_default": 29.52048710176266,
+"UDS_default": 52.378048678287705,
+"AOE": 15.829154431021937,
+"ATE": 0.41518774255052776,
+"ASE": 2.6474208341350542,
+"AP": 29.52048710176266,
+"UDS": 52.378048678287705,
+"mDR": 96.5625
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1geo/mav_s0/preds/e1geo_clsonly_nofuse_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 2,
+"AP_default": 23.69798405413252,
+"UDS_default": 48.83297524490892,
+"AOE": 15.836000946421715,
+"ATE": 0.4661023314791252,
+"ASE": 2.648304197233835,
+"AP": 23.69798405413252,
+"UDS": 48.83297524490892,
+"mDR": 96.60416666666667
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1geo/mav_s0/preds/e1geo_fused_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 2,
+"AP_default": 29.52048710176266,
+"UDS_default": 52.53569031907104,
+"AOE": 15.822596307650254,
+"ATE": 0.41339370743089565,
+"ASE": 2.536225814084645,
+"AP": 29.52048710176266,
+"UDS": 52.53569031907104,
+"mDR": 96.52083333333333
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1geo/mav_s0/preds/e1geo_nofuse_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 2,
+"AP_default": 23.69798405413252,
+"UDS_default": 48.98528735533155,
+"AOE": 15.829154431021937,
+"ATE": 0.46481203889040357,
+"ASE": 2.536385710049166,
+"AP": 23.69798405413252,
+"UDS": 48.98528735533155,
+"mDR": 96.5625
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1geo/mav_s0/preds/e1geo_stuR_fused_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 2,
+"AP_default": 29.52048710176266,
+"UDS_default": 52.329121821715276,
+"AOE": 15.829154431021937,
+"ATE": 0.41518774255052776,
+"ASE": 2.686562319392991,
+"AP": 29.52048710176266,
+"UDS": 52.329121821715276,
+"mDR": 96.5625
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1geo/mav_s0/preds/e1geo_stuR_nofuse_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 2,
+"AP_default": 23.69798405413252,
+"UDS_default": 48.7843009824215,
+"AOE": 15.836000946421715,
+"ATE": 0.4661023314791252,
+"ASE": 2.6872436072237798,
+"AP": 23.69798405413252,
+"UDS": 48.7843009824215,
+"mDR": 96.60416666666667
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1geo/mav_s0/preds/e1rep_fused_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 2,
+"AP_default": 31.382228509372695,
+"UDS_default": 53.48043609257558,
+"AOE": 15.829154431021937,
+"ATE": 0.400962952695257,
+"ASE": 2.6524553643014794,
+"AP": 31.382228509372695,
+"UDS": 53.48043609257558,
+"mDR": 96.5625
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1geo/mav_s0/preds/e1rep_nofuse_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 2,
+"AP_default": 23.529734553973597,
+"UDS_default": 48.7026882238908,
+"AOE": 15.836000946421715,
+"ATE": 0.46929198332421024,
+"ASE": 2.65333749553392,
+"AP": 23.529734553973597,
+"UDS": 48.7026882238908,
+"mDR": 96.60416666666667
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1geo/mav_s10/preds/e1geo_clsonly_fused_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 4,
+"AP_default": 44.25892499661965,
+"UDS_default": 61.208940890274675,
+"AOE": 16.44792780817367,
+"ATE": 0.283548413171026,
+"ASE": 2.615645894015731,
+"AP": 44.25892499661965,
+"UDS": 61.208940890274675,
+"mDR": 95.85416666666666
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1geo/mav_s10/preds/e1geo_clsonly_nofuse_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 4,
+"AP_default": 39.65827949776752,
+"UDS_default": 58.66859472732888,
+"AOE": 16.45268730104234,
+"ATE": 0.3029743930713877,
+"ASE": 2.6167408045787623,
+"AP": 39.65827949776752,
+"UDS": 58.66859472732888,
+"mDR": 95.89583333333334
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1geo/mav_s10/preds/e1geo_fused_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 4,
+"AP_default": 44.25892499661965,
+"UDS_default": 61.36189766806945,
+"AOE": 16.44576281103453,
+"ATE": 0.2820257032743796,
+"ASE": 2.5047187672283435,
+"AP": 44.25892499661965,
+"UDS": 61.36189766806945,
+"mDR": 95.8125
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1geo/mav_s10/preds/e1geo_nofuse_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 4,
+"AP_default": 39.65827949776752,
+"UDS_default": 58.81319260676967,
+"AOE": 16.453880239733962,
+"ATE": 0.3021137588105793,
+"ASE": 2.505293969962557,
+"AP": 39.65827949776752,
+"UDS": 58.81319260676967,
+"mDR": 95.85416666666666
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1geo/mav_s10/preds/e1geo_stuR_fused_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 4,
+"AP_default": 44.25892499661965,
+"UDS_default": 61.21334982971801,
+"AOE": 16.44792780817367,
+"ATE": 0.283548413171026,
+"ASE": 2.6121187424610683,
+"AP": 44.25892499661965,
+"UDS": 61.21334982971801,
+"mDR": 95.85416666666666
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1geo/mav_s10/preds/e1geo_stuR_nofuse_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 4,
+"AP_default": 39.65827949776752,
+"UDS_default": 58.673168798414544,
+"AOE": 16.45268730104234,
+"ATE": 0.3029743930713877,
+"ASE": 2.6130815477102294,
+"AP": 39.65827949776752,
+"UDS": 58.673168798414544,
+"mDR": 95.89583333333334
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1geo/mav_s10/preds/e1rep_fused_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 4,
+"AP_default": 45.08782934062713,
+"UDS_default": 61.70379968507407,
+"AOE": 16.44792780817367,
+"ATE": 0.27797734892839576,
+"ASE": 2.607031238205516,
+"AP": 45.08782934062713,
+"UDS": 61.70379968507407,
+"mDR": 95.85416666666666
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1geo/mav_s10/preds/e1rep_nofuse_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 4,
+"AP_default": 39.47895898435284,
+"UDS_default": 58.59010823826429,
+"AOE": 16.45268730104234,
+"ATE": 0.30294418474426815,
+"ASE": 2.6081038737357503,
+"AP": 39.47895898435284,
+"UDS": 58.59010823826429,
+"mDR": 95.89583333333334
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1geo/mav_s20/preds/e1geo_clsonly_fused_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 4,
+"AP_default": 31.943685943701922,
+"UDS_default": 53.90862811634071,
+"AOE": 15.597772842825833,
+"ATE": 0.38247377006398997,
+"ASE": 2.5847602363191275,
+"AP": 31.943685943701922,
+"UDS": 53.90862811634071,
+"mDR": 94.8125
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1geo/mav_s20/preds/e1geo_clsonly_nofuse_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 4,
+"AP_default": 22.539592194018834,
+"UDS_default": 48.29189662401298,
+"AOE": 15.597772842825833,
+"ATE": 0.45564853946288525,
+"ASE": 2.5847602363191275,
+"AP": 22.539592194018834,
+"UDS": 48.29189662401298,
+"mDR": 94.8125
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1geo/mav_s20/preds/e1geo_fused_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 4,
+"AP_default": 31.943685943701922,
+"UDS_default": 53.93882704516927,
+"AOE": 15.597120909614128,
+"ATE": 0.3808289916824434,
+"ASE": 2.5729959941748732,
+"AP": 31.943685943701922,
+"UDS": 53.93882704516927,
+"mDR": 94.77083333333334
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1geo/mav_s20/preds/e1geo_nofuse_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 4,
+"AP_default": 22.539592194018834,
+"UDS_default": 48.30868708943667,
+"AOE": 15.599094966360903,
+"ATE": 0.4552250654181372,
+"ASE": 2.573248517088783,
+"AP": 22.539592194018834,
+"UDS": 48.30868708943667,
+"mDR": 94.79166666666666
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1geo/mav_s20/preds/e1geo_stuR_fused_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 4,
+"AP_default": 31.943685943701922,
+"UDS_default": 53.84534992288496,
+"AOE": 15.599094966360903,
+"ATE": 0.38190638483694284,
+"ASE": 2.63874255601533,
+"AP": 31.943685943701922,
+"UDS": 53.84534992288496,
+"mDR": 94.79166666666666
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1geo/mav_s20/preds/e1geo_stuR_nofuse_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 4,
+"AP_default": 22.539592194018834,
+"UDS_default": 48.22382060026189,
+"AOE": 15.597772842825833,
+"ATE": 0.45564853946288525,
+"ASE": 2.6392210553199975,
+"AP": 22.539592194018834,
+"UDS": 48.22382060026189,
+"mDR": 94.8125
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1geo/mav_s20/preds/e1rep_fused_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 4,
+"AP_default": 33.70012688801025,
+"UDS_default": 54.934179693906394,
+"AOE": 15.597772842825833,
+"ATE": 0.37062104283191544,
+"ASE": 2.5854226243106586,
+"AP": 33.70013418253909,
+"UDS": 54.934183341170815,
+"mDR": 94.8125
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1geo/mav_s20/preds/e1rep_nofuse_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 4,
+"AP_default": 22.611666203663603,
+"UDS_default": 48.34001614337357,
+"AOE": 15.597772842825833,
+"ATE": 0.4546156995006753,
+"ASE": 2.5854226243106586,
+"AP": 22.611666203663603,
+"UDS": 48.34001614337357,
+"mDR": 94.8125
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E2/antifs_s10/preds/e2_fused_test.pkl": {
+"split": "outdoor_test",
+"hit": 2624,
+"N": 2624,
+"ties": 4,
+"AP_default": 25.888739616160027,
+"UDS_default": 40.55095986236216,
+"AOE": 16.577557965164136,
+"ATE": 10.352659852370037,
+"ASE": 16.45396329235174,
+"AP": 25.888739616160027,
+"UDS": 40.55095986236216,
+"mDR": 91.19664634146342
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E2/antifs_s10/preds/e2_nofuse_test.pkl": {
+"split": "outdoor_test",
+"hit": 2624,
+"N": 2624,
+"ties": 4,
+"AP_default": 26.423094757681397,
+"UDS_default": 40.84946104825783,
+"AOE": 16.577557965164136,
+"ATE": 10.290012622100072,
+"ASE": 16.45396329235174,
+"AP": 26.423094757681397,
+"UDS": 40.84946104825783,
+"mDR": 91.19664634146342
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E2/antifs_s10/ref/fin_s5_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E2/antifs_s10/ref/fin_s6_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E2/antifs_s10/ref/inf_fin_det1_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E2/antifs_s20/preds/e2_fused_test.pkl": {
+"split": "outdoor_test",
+"hit": 2624,
+"N": 2624,
+"ties": 2,
+"AP_default": 28.235864259441957,
+"UDS_default": 41.97022032460477,
+"AOE": 16.84700339860275,
+"ATE": 9.838970254249475,
+"ASE": 16.77450107503218,
+"AP": 28.235864259441957,
+"UDS": 41.97022032460477,
+"mDR": 91.57774390243902
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E2/antifs_s20/preds/e2_nofuse_test.pkl": {
+"split": "outdoor_test",
+"hit": 2624,
+"N": 2624,
+"ties": 2,
+"AP_default": 28.542622852652283,
+"UDS_default": 42.13986800061594,
+"AOE": 16.84700339860275,
+"ATE": 9.806433495437462,
+"ASE": 16.77450107503218,
+"AP": 28.542622852652283,
+"UDS": 42.13986800061594,
+"mDR": 91.57774390243902
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E2/antifs_s20/ref/fin_s5_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E2/antifs_s20/ref/fin_s6_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E2/antifs_s20/ref/inf_fin_det1_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E2a/mav_s0/preds/e2a_fused_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 0,
+"AP_default": 43.5131252026785,
+"UDS_default": 62.03097632008172,
+"AOE": 14.478897589554446,
+"ATE": 0.2881136053456703,
+"ASE": 1.9889561918282235,
+"AP": 43.5131252026785,
+"UDS": 62.03097632008172,
+"mDR": 96.16666666666667
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E2a/mav_s0/preds/e2a_nofuse_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 0,
+"AP_default": 33.63427500665204,
+"UDS_default": 56.34926871046439,
+"AOE": 14.484104245708311,
+"ATE": 0.34760524082494393,
+"ASE": 1.989040447047978,
+"AP": 33.63427500665204,
+"UDS": 56.34926871046439,
+"mDR": 96.1875
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E2a/mav_s0/ref/fin_s5_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E2a/mav_s0/ref/fin_s6_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E2a/mav_s0/ref/inf_fin_det1_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E2b/mav_s0/preds/e2b_fused_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 0,
+"AP_default": 42.587632761860974,
+"UDS_default": 61.852928936844286,
+"AOE": 14.484104245708311,
+"ATE": 0.3003726738577933,
+"ASE": 1.6397810376991466,
+"AP": 42.587632761860974,
+"UDS": 61.852928936844286,
+"mDR": 96.1875
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E2b/mav_s0/preds/e2b_nofuse_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 0,
+"AP_default": 35.627998412203866,
+"UDS_default": 57.92694205083908,
+"AOE": 14.484104245708311,
+"ATE": 0.3360662507519257,
+"ASE": 1.6397810376991466,
+"AP": 35.627998412203866,
+"UDS": 57.92694205083908,
+"mDR": 96.1875
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E2b/mav_s0/ref/fin_s5_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E2b/mav_s0/ref/fin_s6_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E2b/mav_s0/ref/inf_fin_det1_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E4/antifs_s0/preds/e4_fused_test.pkl": {
+"split": "outdoor_test",
+"hit": 2624,
+"N": 2624,
+"ties": 2,
+"AP_default": 23.39851558208139,
+"UDS_default": 38.84563941143056,
+"AOE": 17.006086628663333,
+"ATE": 11.019403810910722,
+"ASE": 15.990096440794035,
+"AP": 23.39851558208139,
+"UDS": 38.84563941143056,
+"mDR": 90.9298780487805
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E4/antifs_s0/preds/e4_nofuse_test.pkl": {
+"split": "outdoor_test",
+"hit": 2624,
+"N": 2624,
+"ties": 2,
+"AP_default": 24.31021223087831,
+"UDS_default": 39.40004006330836,
+"AOE": 17.006086628663333,
+"ATE": 10.822299155952049,
+"ASE": 15.990096440794035,
+"AP": 24.31021223087831,
+"UDS": 39.40004006330836,
+"mDR": 90.9298780487805
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E4/antifs_s0/ref/fin_s5_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E4/antifs_s0/ref/fin_s6_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E4/antifs_s0/ref/inf_fin_det1_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E4/mav_s0/preds/e4_fused_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 4,
+"AP_default": 36.314004694759404,
+"UDS_default": 56.36544993637178,
+"AOE": 16.409642054938885,
+"ATE": 0.35762293152350494,
+"ASE": 2.592990808318743,
+"AP": 36.314004694759404,
+"UDS": 56.36544993637178,
+"mDR": 96.0
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E4/mav_s0/preds/e4_nofuse_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 4,
+"AP_default": 21.95278527688947,
+"UDS_default": 47.74568861973917,
+"AOE": 16.409642054938885,
+"ATE": 0.4727550601393163,
+"ASE": 2.592990808318743,
+"AP": 21.95278527688947,
+"UDS": 47.74568861973917,
+"mDR": 96.0
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E4/mav_s0/ref/fin_s5_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E4/mav_s0/ref/fin_s6_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E4/mav_s0/ref/inf_fin_det1_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/runs/mav_E1_s1sd30/preds/srconly_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 8,
+"AP_default": 26.006606234006433,
+"UDS_default": 47.9513412590639,
+"AOE": 26.363512074345273,
+"ATE": 0.3248835046370775,
+"ASE": 1.5976852043743601,
+"AP": 26.006606234006433,
+"UDS": 47.9513412590639,
+"mDR": 74.0625
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/shared/mav_sd30/preds/srconly_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 8,
+"AP_default": 26.006606234006433,
+"UDS_default": 47.9513412590639,
+"AOE": 26.363512074345273,
+"ATE": 0.3248835046370775,
+"ASE": 1.5976852043743601,
+"AP": 26.006606234006433,
+"UDS": 47.9513412590639,
+"mDR": 74.0625
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sup1/adabn/preds/adabn_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 22,
+"AP_default": 0.7909069044164857,
+"UDS_default": 28.573857292899213,
+"AOE": 22.575362468781545,
+"ATE": 0.3299001612979215,
+"ASE": 1.886882674207898,
+"AP": 0.7909069044164857,
+"UDS": 28.573857292899213,
+"mDR": 16.6875
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sup2/nogate/preds/nogate_fused_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 0,
+"AP_default": 43.17177201152608,
+"UDS_default": 62.06660784105856,
+"AOE": 14.812588119729362,
+"ATE": 0.28905689190255374,
+"ASE": 1.7541535361653495,
+"AP": 43.17177201152608,
+"UDS": 62.06660784105856,
+"mDR": 96.14583333333333
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sup2/nogate/preds/nogate_nofuse_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 0,
+"AP_default": 33.73988859901152,
+"UDS_default": 56.59319488291232,
+"AOE": 14.82121058624808,
+"ATE": 0.34985862237325505,
+"ASE": 1.7547749958703303,
+"AP": 33.73988859901152,
+"UDS": 56.59319488291232,
+"mDR": 96.1875
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sup2/nogate/ref/inf_fin_det1_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sup3/run/preds/pcmd_fused_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 12,
+"AP_default": 38.40488270379815,
+"UDS_default": 59.27765287643874,
+"AOE": 14.869195379510176,
+"ATE": 0.3132612508165966,
+"ASE": 1.7766383685252112,
+"AP": 38.40488270379815,
+"UDS": 59.27765287643874,
+"mDR": 95.64583333333333
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sup3/run/preds/pcmd_nofuse_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 12,
+"AP_default": 34.201082961997706,
+"UDS_default": 56.8114608030468,
+"AOE": 14.872676014822941,
+"ATE": 0.3425192549989441,
+"ASE": 1.7769679367829792,
+"AP": 34.201082961997706,
+"UDS": 56.8114608030468,
+"mDR": 95.66666666666667
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sup3/run/preds/srconly_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 6,
+"AP_default": 26.873249675726303,
+"UDS_default": 49.512697885937975,
+"AOE": 20.317841466530457,
+"ATE": 0.28328180745330805,
+"ASE": 1.7372757834178885,
+"AP": 26.873249675726303,
+"UDS": 49.512697885937975,
+"mDR": 69.77083333333334
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sup3/run/ref/fin_s5_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sup3/run/ref/fin_s6_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sup3/run/ref/inf_fin_det1_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/in2anti/preds/pcmd_fused_test.pkl": {
+"err": "nokeys"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/in2anti/preds/pcmd_nofuse_test.pkl": {
+"err": "nokeys"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/in2anti/preds/srconly_test.pkl": {
+"err": "nokeys"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/in2anti/ref/fin_s5_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/in2anti/ref/fin_s6_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/in2anti/ref/inf_fin_det1_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/in2antifs/preds/pcmd_fused_test.pkl": {
+"split": "outdoor_test",
+"hit": 2624,
+"N": 2624,
+"ties": 0,
+"AP_default": 0.0,
+"UDS_default": 15.816759898863515,
+"AOE": 13.402094008795121,
+"ATE": 59.601004010925884,
+"ASE": 6.764346002234372,
+"AP": 0.0,
+"UDS": 15.816759898863515,
+"mDR": 17.56859756097561
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/in2antifs/preds/pcmd_nofuse_test.pkl": {
+"split": "outdoor_test",
+"hit": 2624,
+"N": 2624,
+"ties": 0,
+"AP_default": 0.0,
+"UDS_default": 15.816759898863515,
+"AOE": 13.402094008795121,
+"ATE": 56.17040545826073,
+"ASE": 6.764346002234372,
+"AP": 0.0,
+"UDS": 15.816759898863515,
+"mDR": 17.56859756097561
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/in2antifs/preds/srconly_test.pkl": {
+"split": "outdoor_test",
+"hit": 2624,
+"N": 2624,
+"ties": 0,
+"AP_default": 0.0,
+"UDS_default": 10.4595362443873,
+"AOE": 25.191593187543205,
+"ATE": 54.557989922649064,
+"ASE": 7.72341500520706,
+"AP": 0.0,
+"UDS": 10.4595362443873,
+"mDR": 4.878048780487805
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/in2antifs/ref/fin_s5_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/in2antifs/ref/fin_s6_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/in2antifs/ref/inf_fin_det1_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/in2mav/preds/pcmd_fused_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 0,
+"AP_default": 40.93098337624802,
+"UDS_default": 60.81133166800865,
+"AOE": 14.478897589554446,
+"ATE": 0.3058547975661101,
+"ASE": 1.754403260710084,
+"AP": 40.93098337624802,
+"UDS": 60.81133166800865,
+"mDR": 96.16666666666667
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/in2mav/preds/pcmd_nofuse_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 0,
+"AP_default": 33.73988859901152,
+"UDS_default": 56.66674005126231,
+"AOE": 14.484104245708311,
+"ATE": 0.34985862237325505,
+"ASE": 1.7547749958703303,
+"AP": 33.73988859901152,
+"UDS": 56.66674005126231,
+"mDR": 96.1875
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/in2mav/preds/srconly_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 6,
+"AP_default": 26.873249675726303,
+"UDS_default": 49.512697885937975,
+"AOE": 20.317841466530457,
+"ATE": 0.28328180745330805,
+"ASE": 1.7372757834178885,
+"AP": 26.873249675726303,
+"UDS": 49.512697885937975,
+"mDR": 69.77083333333334
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/in2mav/ref/fin_s5_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/in2mav/ref/fin_s6_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/in2mav/ref/inf_fin_det1_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/in2mav_none/preds/pcmd_fused_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 4,
+"AP_default": 38.03562395497238,
+"UDS_default": 57.378883110007905,
+"AOE": 16.32348359888706,
+"ATE": 0.3475790638698208,
+"ASE": 2.5842847986870714,
+"AP": 38.03562395497238,
+"UDS": 57.378883110007905,
+"mDR": 95.97916666666667
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/in2mav_none/preds/pcmd_nofuse_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 4,
+"AP_default": 22.292005758246695,
+"UDS_default": 47.991451292847195,
+"AOE": 16.330007352954848,
+"ATE": 0.4688619467023536,
+"ASE": 2.584898869259757,
+"AP": 22.292005758246695,
+"UDS": 47.991451292847195,
+"mDR": 96.0
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/in2mav_none/preds/srconly_test.pkl": {
+"split": "real_test",
+"hit": 4800,
+"N": 4800,
+"ties": 6,
+"AP_default": 26.873249675726303,
+"UDS_default": 49.512697885937975,
+"AOE": 20.317841466530457,
+"ATE": 0.28328180745330805,
+"ASE": 1.7372757834178885,
+"AP": 26.873249675726303,
+"UDS": 49.512697885937975,
+"mDR": 69.77083333333334
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/in2mav_none/ref/fin_s5_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/in2mav_none/ref/fin_s6_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/in2mav_none/ref/inf_fin_det1_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/mix2antifs/preds/pcmd_fused_test.pkl": {
+"split": "outdoor_test",
+"hit": 2624,
+"N": 2624,
+"ties": 0,
+"AP_default": 15.56828262480746,
+"UDS_default": 33.25378152584999,
+"AOE": 17.590292744698484,
+"ATE": 11.497932978359025,
+"ASE": 20.273750841264583,
+"AP": 15.56828262480746,
+"UDS": 33.25378152584999,
+"mDR": 80.44969512195121
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/mix2antifs/preds/pcmd_nofuse_test.pkl": {
+"split": "outdoor_test",
+"hit": 2624,
+"N": 2624,
+"ties": 0,
+"AP_default": 15.198258040494586,
+"UDS_default": 32.96221636898356,
+"AOE": 17.590292744698484,
+"ATE": 11.711038707779002,
+"ASE": 20.273750841264583,
+"AP": 15.198258040494586,
+"UDS": 32.96221636898356,
+"mDR": 80.44969512195121
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/mix2antifs/preds/srconly_test.pkl": {
+"split": "outdoor_test",
+"hit": 2624,
+"N": 2624,
+"ties": 0,
+"AP_default": 5.166497059319711,
+"UDS_default": 23.236129109845503,
+"AOE": 21.96095520745175,
+"ATE": 11.183233128482192,
+"ASE": 18.67403031649385,
+"AP": 5.166497059319711,
+"UDS": 23.236129109845503,
+"mDR": 48.28506097560975
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/mix2antifs/ref/fin_s5_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/mix2antifs/ref/fin_s6_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/mix2antifs/ref/inf_fin_det1_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/out2anti/preds/pcmd_fused_test.pkl": {
+"err": "nokeys"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/out2anti/preds/pcmd_nofuse_test.pkl": {
+"err": "nokeys"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/out2anti/preds/srconly_test.pkl": {
+"err": "nokeys"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/out2anti/ref/fin_s5_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/out2anti/ref/fin_s6_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/out2anti/ref/inf_fin_det1_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/out2antifs/preds/pcmd_fused_test.pkl": {
+"split": "outdoor_test",
+"hit": 2624,
+"N": 2624,
+"ties": 0,
+"AP_default": 27.88630879771422,
+"UDS_default": 41.73476245402853,
+"AOE": 17.108060305090312,
+"ATE": 9.932169961791008,
+"ASE": 16.296993472454844,
+"AP": 27.88630879771422,
+"UDS": 41.73476245402853,
+"mDR": 91.92073170731707
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/out2antifs/preds/pcmd_nofuse_test.pkl": {
+"split": "outdoor_test",
+"hit": 2624,
+"N": 2624,
+"ties": 0,
+"AP_default": 27.82978386378169,
+"UDS_default": 41.693778965401215,
+"AOE": 17.108060305090312,
+"ATE": 9.957612005113111,
+"ASE": 16.296993472454844,
+"AP": 27.82978386378169,
+"UDS": 41.693778965401215,
+"mDR": 91.92073170731707
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/out2antifs/preds/srconly_test.pkl": {
+"split": "outdoor_test",
+"hit": 2624,
+"N": 2624,
+"ties": 6,
+"AP_default": 16.03689619446874,
+"UDS_default": 30.55241696677245,
+"AOE": 26.057677104012754,
+"ATE": 13.198311633461987,
+"ASE": 15.362981341073343,
+"AP": 16.03689619446874,
+"UDS": 30.55241696677245,
+"mDR": 78.54420731707317
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/out2antifs/ref/fin_s5_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/out2antifs/ref/fin_s6_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/out2antifs/ref/inf_fin_det1_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/out2antifs_ir/preds/pcmd_fused_test.pkl": {
+"split": "outdoor_test",
+"hit": 2624,
+"N": 2624,
+"ties": 0,
+"AP_default": 28.084482818905244,
+"UDS_default": 41.839306598081784,
+"AOE": 17.19199534688847,
+"ATE": 9.884632137041379,
+"ASE": 16.025032814133073,
+"AP": 28.084482818905244,
+"UDS": 41.839306598081784,
+"mDR": 91.92073170731707
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/out2antifs_ir/preds/pcmd_nofuse_test.pkl": {
+"split": "outdoor_test",
+"hit": 2624,
+"N": 2624,
+"ties": 0,
+"AP_default": 27.766959096220827,
+"UDS_default": 41.61556051048678,
+"AOE": 17.19199534688847,
+"ATE": 10.01460058954695,
+"ASE": 16.025032814133073,
+"AP": 27.766959096220827,
+"UDS": 41.61556051048678,
+"mDR": 91.92073170731707
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/out2antifs_ir/preds/srconly_test.pkl": {
+"split": "outdoor_test",
+"hit": 2624,
+"N": 2624,
+"ties": 6,
+"AP_default": 16.03689619446874,
+"UDS_default": 30.55241696677245,
+"AOE": 26.057677104012754,
+"ATE": 13.198311633461987,
+"ASE": 15.362981341073343,
+"AP": 16.03689619446874,
+"UDS": 30.55241696677245,
+"mDR": 78.54420731707317
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/out2antifs_ir/ref/fin_s5_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/out2antifs_ir/ref/fin_s6_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/out2antifs_ir/ref/inf_fin_det1_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/out2antifs_lid/preds/pcmd_fused_test.pkl": {
+"split": "outdoor_test",
+"hit": 2624,
+"N": 2624,
+"ties": 0,
+"AP_default": 21.31234296125122,
+"UDS_default": 37.514526856667004,
+"AOE": 16.726890231414195,
+"ATE": 12.031684153645813,
+"ASE": 16.147695623372833,
+"AP": 21.31234296125122,
+"UDS": 37.514526856667004,
+"mDR": 92.1875
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/out2antifs_lid/preds/pcmd_nofuse_test.pkl": {
+"split": "outdoor_test",
+"hit": 2624,
+"N": 2624,
+"ties": 0,
+"AP_default": 21.074920314418293,
+"UDS_default": 37.380546452603426,
+"AOE": 16.726890231414195,
+"ATE": 12.062222314940051,
+"ASE": 16.147695623372833,
+"AP": 21.074920314418293,
+"UDS": 37.380546452603426,
+"mDR": 92.1875
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/out2antifs_lid/preds/srconly_test.pkl": {
+"split": "outdoor_test",
+"hit": 2624,
+"N": 2624,
+"ties": 6,
+"AP_default": 16.03689619446874,
+"UDS_default": 30.55241696677245,
+"AOE": 26.057677104012754,
+"ATE": 13.198311633461987,
+"ASE": 15.362981341073343,
+"AP": 16.03689619446874,
+"UDS": 30.55241696677245,
+"mDR": 78.54420731707317
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/out2antifs_lid/ref/fin_s5_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/out2antifs_lid/ref/fin_s6_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/out2antifs_lid/ref/inf_fin_det1_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/out2antifs_none/preds/pcmd_fused_test.pkl": {
+"split": "outdoor_test",
+"hit": 2624,
+"N": 2624,
+"ties": 2,
+"AP_default": 23.386218759009676,
+"UDS_default": 38.922214699184885,
+"AOE": 16.45007109353907,
+"ATE": 11.096563870086538,
+"ASE": 15.970458877129214,
+"AP": 23.386218759009676,
+"UDS": 38.922214699184885,
+"mDR": 90.9298780487805
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/out2antifs_none/preds/pcmd_nofuse_test.pkl": {
+"split": "outdoor_test",
+"hit": 2624,
+"N": 2624,
+"ties": 2,
+"AP_default": 23.922943565080413,
+"UDS_default": 39.271734310160625,
+"AOE": 16.45007109353907,
+"ATE": 10.934249454205801,
+"ASE": 15.970458877129214,
+"AP": 23.922943565080413,
+"UDS": 39.271734310160625,
+"mDR": 90.9298780487805
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/out2antifs_none/preds/srconly_test.pkl": {
+"split": "outdoor_test",
+"hit": 2624,
+"N": 2624,
+"ties": 6,
+"AP_default": 16.03689619446874,
+"UDS_default": 30.55241696677245,
+"AOE": 26.057677104012754,
+"ATE": 13.198311633461987,
+"ASE": 15.362981341073343,
+"AP": 16.03689619446874,
+"UDS": 30.55241696677245,
+"mDR": 78.54420731707317
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/out2antifs_none/ref/fin_s5_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/out2antifs_none/ref/fin_s6_test.pkl": {
+"err": "format"
+},
+"E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/out2antifs_none/ref/inf_fin_det1_test.pkl": {
+"err": "format"
+}
+}

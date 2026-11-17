@@ -1,0 +1,34 @@
+# srcx — source-domain ablation of PCMD (status)
+
+Pipeline: `run_x.sh <in|out|mix> <anti|mav>` → `srcx/<src>2<tgt>/` (big crops: `D:/S2MUAV3D/srcx_work/<combo>/`). Libs in `srcx/lib/` are copies of
+`gproto/outdoor/*_out.py` with all source/target constants moved to `lib/sx.py` (no method change). Per-combo detector configs written by
+`lib/mkcfg.py` into `tools/cfgs/models/uavdet_3d/camnorm/srcx/`. Log per combo: `srcx/<combo>/logs/run_x.log` (ends with ALL DONE or `!!`).
+
+Order (user, 11-11): in→anti, out→anti, mix→anti; MAV6D combos only after all three anti results.
+
+## Running
+- 06:5x launched in→anti and out→anti (detached).
+- out source detector seeds 1,2: `stage1_det.sh` via `launch_det_out12.sh` (heavy slot, sequential).
+- out source irlid/kdir/lid seed 1: trained by the earlier run_orig chain (detached shells); run_x waits for the files.
+
+## Deviations from the original indoor method (with reason)
+1. Refiner stage 1 is retrained for every combo (incl. in→anti) instead of reusing indoor V2P_s{5,6}_st: stage 1 composites sim crops onto a
+   REAL background bank, which is target-specific (the indoor V2P used MAV6D backgrounds). Same network/loss/recipe (refiner_out = DCNetU).
+2. Refiner sim samples and w_sim use the sim-only ramp detector s0 of the source (indoor original used the irloc detector P0_s0 for these);
+   the outdoor/mix sources have no irloc detector, so ramp s0 is used for all sources uniformly.
+3. Metre thresholds converted by distance ratio (as in the compact outdoor chain): sim matching 25% of distance (indoor 1 m), pseudo-label
+   agreement 14.3% of distance (indoor 0.5 m at 3.5 m). Orientation-crop zoom cap on AntiUAV = 18.75 (target camera/distance range);
+   on sim validation crops = source's own cap (indoor 4, outdoor 12.5).
+4. Real detector config per combo = target data + SOURCE decoder statistics (DEPTH/SIZE mean/std), required for correct decoding.
+6. s̄ self-calibration fallback: if the self-trained detector ensemble has NO conf ≥ 0.7 box on unlabeled val images (happened for in→anti:
+   150 pseudo-labels only), s̄ is taken from the stage-1 detector ensemble's self-calibration (det0, also unlabeled val images). The indoor
+   final also keeps s̄ unchanged across the chain (wf24 §7 "s̄ 不变"). Applied by `det_infer_x.py --size-fallback`, only when the set is empty.
+5. gpu_slot.sh fix (shared): count() used `(...).Count`, which is empty for exactly one matching process (treated as 9 = busy);
+   now `@(...).Count`; regex also counts *_x.py jobs.
+
+## 11-12 additions (AntiUAV3D v2 = target `antifs`)
+- Target `antifs` (sx.py): D:/mmcache/outdoor_real_fs, split by D:/S2MUAV3D/real_outdoor_antiuav3d_fs (intrinsics verified against images, sequence-disjoint focal/distance-balanced). Frames train/val/test = 3,293 / 1,148 / 2,624. Scoring: score_x.py score_meta() on labels/sealed/antifs_test_meta.npz (= pack score.score code).
+6b. s̄ self-calibration has TWO fallbacks in lib/det_infer_x.py:
+   - stage-1 detector ensemble (det0, no --size-fallback): if no conf>=0.7 box on unlabeled val images -> median over the top-10% most confident val boxes (>= 20). Used by in→antifs (top-57, min conf 0.440).
+   - self-trained ensemble (det1, --size-fallback recs/det0.pkl): if no conf>=0.7 box -> reuse det0's s̄ (item 6). Used by in→anti (v1).
+7. run_x.sh: self-trained detectors run with --workers 0 through the light GPU slot (data loading only; recipe unchanged).

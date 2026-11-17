@@ -1,0 +1,7 @@
+# [srcx] in2antifs: target antifs real detector config + decoder stats of source in (written by srcx/lib/mkcfg.py)
+_BASE_CONFIG_: cfgs/models/uavdet_3d/camnorm/outreal_fs_r34_geo_full_tr.yaml
+DATA_CONFIG:
+    DEPTH_MEAN: 5.9527
+    DEPTH_STD: 3.7845
+    SIZE_MEAN: [0.6609, 0.633, 0.2555]
+    SIZE_STD: [0.5517, 0.5008, 0.1951]

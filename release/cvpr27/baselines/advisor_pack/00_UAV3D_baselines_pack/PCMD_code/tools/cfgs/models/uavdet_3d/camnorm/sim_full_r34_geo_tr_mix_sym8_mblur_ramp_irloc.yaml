@@ -1,0 +1,15 @@
+# IR → RGB 定位（2026-10-05，用户策略「IR 模型先验提升 RGB 检测 / 定位」，output/camnorm/geo1004/PREREG_irloc.md）。
+# RAMP 配方原样（5 轮，从 ImageNet 起），数据吐 rgb+ir（学生只看前 3 通道），类 CenterDetGeoIR（由 geo1004/train_reg.py 运行时注册）。各臂只用 --set：
+#   P0 对照：全 0     PIM IR 剪影答案：MODEL.AUX.W_IRMASK 2     PIO IR 教师只蒸输出：MODEL.DISTILL.W_HM 1 + W_REG 1（教师 TIRs0，FG_MODE fg_mask）
+_BASE_CONFIG_: cfgs/models/uavdet_3d/camnorm/sim_full_r34_geo_tr_mix_sym8_mblur_ramp_kdir.yaml
+MODEL:
+    NAME: CenterDetGeoIR
+    DISTILL:
+        W_FEAT: 0.0
+        W_CENTER_COS: 0.0
+        W_HM: 0.0
+        W_REG: 0.0
+        W_CROSS: 0.0
+        FG_MODE: 'fg_mask'
+        CCOS_INDEX: 'per_target'
+    AUX: {W_IR: 0.0, W_DEPTH: 0.0, W_TAG: 0.0, W_RDEPTH: 0.0, W_IRMASK: 0.0, IRMASK_POS_WEIGHT: 10.0, IR_MIN_CONTRAST: 0.03, CONV_DIM: 128, TAG_POS_WEIGHT: 10.0}

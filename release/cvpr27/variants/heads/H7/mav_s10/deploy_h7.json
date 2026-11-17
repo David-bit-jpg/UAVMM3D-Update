@@ -1,0 +1,50 @@
+{
+ "w": 0.17313322450305155,
+ "s_bar": [
+  0.3473264127969742,
+  0.3485652804374695,
+  0.19537626206874847
+ ],
+ "col_centres": [
+  83.72299671814395,
+  138.3060564961662
+ ],
+ "c_k": {
+  "0": 0.08517802506685257,
+  "1": 0.09615355357527733,
+  "-1": 0.09151620417833328
+ },
+ "r_k": {
+  "0": 0.3886231333017349,
+  "1": 0.6951382160186768
+ },
+ "b_k_val_images": {
+  "1": 0.31109132980897863,
+  "0": 0.4962449188889997
+ },
+ "alpha": 0.5,
+ "fused_val": {
+  "n": 2336,
+  "n_fused": 2225,
+  "n_rot_student": 2336,
+  "file": "E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H7/mav_s10/preds/h7_fused_val.pkl"
+ },
+ "nofuse_val": {
+  "n": 2336,
+  "n_fused": 0,
+  "n_rot_student": 2336,
+  "file": "E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H7/mav_s10/preds/h7_nofuse_val.pkl"
+ },
+ "fused_test": {
+  "n": 4800,
+  "n_fused": 4625,
+  "n_rot_student": 4800,
+  "file": "E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H7/mav_s10/preds/h7_fused_test.pkl"
+ },
+ "nofuse_test": {
+  "n": 4800,
+  "n_fused": 0,
+  "n_rot_student": 4800,
+  "file": "E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H7/mav_s10/preds/h7_nofuse_test.pkl"
+ }
+}

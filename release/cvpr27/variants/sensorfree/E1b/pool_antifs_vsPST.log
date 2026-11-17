@@ -1,0 +1,1 @@
+E1b antifs pooled vs PST (3 seed pairs) [antifs, 3 pair(s)] arm UDS 41.27 AP 27.33 ATE 0.105 ASE 16.61 AOE 16.59 mDR 91.83 | ref UDS 41.71 AP 27.80 ATE 0.099 ASE 16.55 AOE 16.84 mDR 91.57 | diff UDS -0.44 [-1.39, +0.47] AP -0.48 [-1.87, +0.84] ATE +0.006 [+0.001, +0.012] ASE +0.06 AOE -0.26 [-0.74, +0.24] mDR +0.27

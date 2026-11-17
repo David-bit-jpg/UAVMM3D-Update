@@ -1,0 +1,11 @@
+{
+ "combo": "out2antifs",
+ "mode": "pstu",
+ "n": 909,
+ "n_train": 3293,
+ "index": "D:/S2MUAV3D/ourdet_baseproto_cache/outdoor_real_fs/train/index_pstu.pkl",
+ "roundtrip_max_px": 0.0,
+ "roundtrip_float32_max_px": 1.5119053443868324e-05,
+ "K_in_vs_labels_K_max": 0.0,
+ "source": "D:/UAV3D_pack_fix_1117/data/pcmd_teacher_pseudo_outdoor_train_ungated.pkl"
+}

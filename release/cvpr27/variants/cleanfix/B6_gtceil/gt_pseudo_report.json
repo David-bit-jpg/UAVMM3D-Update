@@ -1,0 +1,8 @@
+{
+ "n": 12866,
+ "n_gate": 4301,
+ "gate_det_within_1m_of_gt": 4138,
+ "pseudo_label_sym_geodesic_err_deg_gate_mean": 18.252979296450214,
+ "median": 14.855772133691614,
+ "note": "replaced R for all rows; students train on gate rows (bag 0.8) exactly as the deployed students; t_pnp/lwh are the pseudo ones"
+}

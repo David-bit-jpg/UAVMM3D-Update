@@ -1,0 +1,46 @@
+{
+ "tie best/worst monocd_out_sim_s0": {
+  "best_UDS": 13.264,
+  "best_AP": 3.519,
+  "worst_UDS": 12.174,
+  "worst_AP": 1.34
+ },
+ "tie best/worst monocd_out_st_anti_s0": {
+  "best_UDS": 10.38,
+  "best_AP": 0.98,
+  "worst_UDS": 9.92,
+  "worst_AP": 0.058
+ },
+ "tie best/worst monocd_out_kd_anti_s0": {
+  "best_UDS": 39.067,
+  "best_AP": 28.183,
+  "worst_UDS": 32.589,
+  "worst_AP": 15.227
+ },
+ "RD bins exact PST": [
+  41.71902037754786,
+  41.34768646625954,
+  43.753537706303135
+ ],
+ "RD bins exact src": [
+  23.97091493974014,
+  32.09842618237248,
+  40.47818960807113
+ ],
+ "MAV mavic2 exact PST": {
+  "AOE": 21.49557431239802,
+  "ATE": 0.40765309250078624,
+  "ASE": 3.176799817538848,
+  "AP": 30.968005021693447,
+  "UDS": 50.041687418389415,
+  "mDR": 86.51162790697674
+ },
+ "MAV mavic2 exact RGBonly": {
+  "AOE": 22.322893404724518,
+  "ATE": 0.49381345297889634,
+  "ASE": 5.0838014160855485,
+  "AP": 25.161583766488228,
+  "UDS": 43.410018022267934,
+  "mDR": 85.81395348837209
+ }
+}

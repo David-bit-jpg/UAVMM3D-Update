@@ -1,0 +1,4 @@
+# 评测 K 臂：MAV6D + 训练域标准化常数 + 产出 kp2d（评测不用真值，只是键要在）。
+_BASE_CONFIG_: cfgs/dataset_configs/uavdet_3d/camnorm_mav6d.yaml
+TARGET_NORM: 'standard'
+MAKE_KP2D: true

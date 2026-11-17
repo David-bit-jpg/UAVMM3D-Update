@@ -1,0 +1,426 @@
+{
+ "rows": [
+  {
+   "split": "MAV6D test",
+   "predictor": "Random rotation (Haar)",
+   "aoe_mean": 93.65175247616783,
+   "aoe_med": 92.86493920832741,
+   "yaw_mean": 26.87117305966216,
+   "yaw_med": 24.221983222167662,
+   "n": 240000,
+   "note": "50 draws/frame"
+  },
+  {
+   "split": "MAV6D test",
+   "predictor": "Random yaw about body z (GT tilt kept)",
+   "aoe_mean": 22.477177200206068,
+   "aoe_med": 22.495350085091964,
+   "yaw_mean": 22.477177200206366,
+   "yaw_med": 22.495350085091953,
+   "n": 240000,
+   "note": "analytic U[0,45]: 22.5 / 22.5"
+  },
+  {
+   "split": "MAV6D test",
+   "predictor": "Best constant (oracle, fit on this split)",
+   "aoe_mean": 19.779634166470043,
+   "aoe_med": 17.22942075025522,
+   "yaw_mean": 14.508365922068933,
+   "yaw_med": 9.173071897616248,
+   "n": 4800,
+   "note": ""
+  },
+  {
+   "split": "MAV6D test",
+   "predictor": "Constant fit on sim train labels",
+   "aoe_mean": 19.99266200171834,
+   "aoe_med": 16.596192548119333,
+   "yaw_mean": 14.48309090091599,
+   "yaw_med": 9.744051748131131,
+   "n": 4800,
+   "note": ""
+  },
+  {
+   "split": "MAV6D test",
+   "predictor": "Constant fit on MAV6D real train GT",
+   "aoe_mean": 26.093155359627186,
+   "aoe_med": 26.858350624229395,
+   "yaw_mean": 22.838763412920944,
+   "yaw_med": 24.183587861501902,
+   "n": 4800,
+   "note": ""
+  },
+  {
+   "split": "MAV6D test",
+   "predictor": "Identity in camera frame",
+   "aoe_mean": 91.16087594983195,
+   "aoe_med": 90.87162798989175,
+   "yaw_mean": 31.52126333608662,
+   "yaw_med": 16.518789190192514,
+   "n": 4800,
+   "note": ""
+  },
+  {
+   "split": "MAV6D test",
+   "predictor": "Level, body x toward camera (-z_cam)",
+   "aoe_mean": 19.84795528588563,
+   "aoe_med": 17.829321764731567,
+   "yaw_mean": 14.701600349404107,
+   "yaw_med": 8.650332548270256,
+   "n": 4800,
+   "note": ""
+  },
+  {
+   "split": "MAV6D test",
+   "predictor": "Level, facing camera along GT line of sight",
+   "aoe_mean": 20.449280737525285,
+   "aoe_med": 18.587468380142674,
+   "yaw_mean": 15.348660098595731,
+   "yaw_med": 11.638339713737077,
+   "n": 4800,
+   "note": "uses GT position"
+  },
+  {
+   "split": "AntiUAV3D test",
+   "predictor": "Random rotation (Haar)",
+   "aoe_mean": 93.70368139813336,
+   "aoe_med": 93.05483486115227,
+   "yaw_mean": 26.97816039291678,
+   "yaw_med": 24.39507259329706,
+   "n": 131200,
+   "note": "50 draws/frame"
+  },
+  {
+   "split": "AntiUAV3D test",
+   "predictor": "Random yaw about body z (GT tilt kept)",
+   "aoe_mean": 22.456947049279417,
+   "aoe_med": 22.46542508057659,
+   "yaw_mean": 22.45694704927942,
+   "yaw_med": 22.46542508057656,
+   "n": 131200,
+   "note": "analytic U[0,45]: 22.5 / 22.5"
+  },
+  {
+   "split": "AntiUAV3D test",
+   "predictor": "Best constant (oracle, fit on this split)",
+   "aoe_mean": 18.377135853361395,
+   "aoe_med": 17.034478900295824,
+   "yaw_mean": 14.622154897556777,
+   "yaw_med": 13.079461945884498,
+   "n": 2624,
+   "note": ""
+  },
+  {
+   "split": "AntiUAV3D test",
+   "predictor": "Constant fit on sim train labels",
+   "aoe_mean": 20.429376600496457,
+   "aoe_med": 18.933821523996308,
+   "yaw_mean": 15.582854193364755,
+   "yaw_med": 13.707610816775748,
+   "n": 2624,
+   "note": ""
+  },
+  {
+   "split": "AntiUAV3D test",
+   "predictor": "Constant fit on MAV6D real train GT",
+   "aoe_mean": 30.209764013815953,
+   "aoe_med": 30.805144094967027,
+   "yaw_mean": 27.032109822091172,
+   "yaw_med": 28.566222393549644,
+   "n": 2624,
+   "note": ""
+  },
+  {
+   "split": "AntiUAV3D test",
+   "predictor": "Identity in camera frame",
+   "aoe_mean": 83.69980339873469,
+   "aoe_med": 84.56574537799585,
+   "yaw_mean": 27.592297688485203,
+   "yaw_med": 19.90889693736365,
+   "n": 2624,
+   "note": ""
+  },
+  {
+   "split": "AntiUAV3D test",
+   "predictor": "Level, body x toward camera (-z_cam)",
+   "aoe_mean": 20.14788922886597,
+   "aoe_med": 19.102864020141553,
+   "yaw_mean": 14.644642196691274,
+   "yaw_med": 14.393745721117355,
+   "n": 2624,
+   "note": ""
+  },
+  {
+   "split": "AntiUAV3D test",
+   "predictor": "Level, facing camera along GT line of sight",
+   "aoe_mean": 19.59914921975653,
+   "aoe_med": 19.418005455560092,
+   "yaw_mean": 14.253638103043713,
+   "yaw_med": 11.11997076488618,
+   "n": 2624,
+   "note": "uses GT position"
+  },
+  {
+   "split": "MAV6D train (all GT frames)",
+   "predictor": "Random rotation (Haar)",
+   "aoe_mean": 93.68345762530417,
+   "aoe_med": 92.9954443985788,
+   "yaw_mean": 26.86923205021844,
+   "yaw_med": 24.223873872186466,
+   "n": 643300,
+   "note": "50 draws/frame"
+  },
+  {
+   "split": "MAV6D train (all GT frames)",
+   "predictor": "Random yaw about body z (GT tilt kept)",
+   "aoe_mean": 22.48181469652219,
+   "aoe_med": 22.476461461343817,
+   "yaw_mean": 22.481814696522193,
+   "yaw_med": 22.476461461343824,
+   "n": 643300,
+   "note": "analytic U[0,45]: 22.5 / 22.5"
+  },
+  {
+   "split": "MAV6D train (all GT frames)",
+   "predictor": "Best constant (oracle, fit on this split)",
+   "aoe_mean": 24.9478415092053,
+   "aoe_med": 25.324670268782402,
+   "yaw_mean": 19.50432182959271,
+   "yaw_med": 21.079911537796253,
+   "n": 12866,
+   "note": ""
+  },
+  {
+   "split": "MAV6D train (all GT frames)",
+   "predictor": "Constant fit on sim train labels",
+   "aoe_mean": 27.60287643090438,
+   "aoe_med": 27.328509787661833,
+   "yaw_mean": 22.884476414726368,
+   "yaw_med": 21.980270066941387,
+   "n": 12866,
+   "note": ""
+  },
+  {
+   "split": "MAV6D train (all GT frames)",
+   "predictor": "Constant fit on MAV6D real train GT (in-sample)",
+   "aoe_mean": 24.94784144902023,
+   "aoe_med": 25.324705970581565,
+   "yaw_mean": 19.504327799841455,
+   "yaw_med": 21.07991542000983,
+   "n": 12866,
+   "note": ""
+  },
+  {
+   "split": "MAV6D train (all GT frames)",
+   "predictor": "Identity in camera frame",
+   "aoe_mean": 93.20954640134136,
+   "aoe_med": 92.54935115321258,
+   "yaw_mean": 32.256775686914594,
+   "yaw_med": 28.89868952411981,
+   "n": 12866,
+   "note": ""
+  },
+  {
+   "split": "MAV6D train (all GT frames)",
+   "predictor": "Level, body x toward camera (-z_cam)",
+   "aoe_mean": 27.68220869037087,
+   "aoe_med": 29.692060459697046,
+   "yaw_mean": 23.20130381122803,
+   "yaw_med": 26.170558635952098,
+   "n": 12866,
+   "note": ""
+  },
+  {
+   "split": "MAV6D train (all GT frames)",
+   "predictor": "Level, facing camera along GT line of sight",
+   "aoe_mean": 27.503843909638423,
+   "aoe_med": 27.69390302111508,
+   "yaw_mean": 22.774606806413075,
+   "yaw_med": 22.917382595818935,
+   "n": 12866,
+   "note": "uses GT position"
+  },
+  {
+   "split": "MAV6D train, teacher-label frames (all)",
+   "predictor": "Random rotation (Haar)",
+   "aoe_mean": 93.68940194959403,
+   "aoe_med": 92.9618567372689,
+   "yaw_mean": 26.84941318980825,
+   "yaw_med": 24.179669415320035,
+   "n": 206550,
+   "note": "50 draws/frame"
+  },
+  {
+   "split": "MAV6D train, teacher-label frames (all)",
+   "predictor": "Random yaw about body z (GT tilt kept)",
+   "aoe_mean": 22.47842731788364,
+   "aoe_med": 22.476067426045375,
+   "yaw_mean": 22.478427317883916,
+   "yaw_med": 22.47606742604537,
+   "n": 206550,
+   "note": "analytic U[0,45]: 22.5 / 22.5"
+  },
+  {
+   "split": "MAV6D train, teacher-label frames (all)",
+   "predictor": "Best constant (oracle, fit on this split)",
+   "aoe_mean": 24.822297860986065,
+   "aoe_med": 25.2276985829444,
+   "yaw_mean": 19.493713357702237,
+   "yaw_med": 20.925986580029104,
+   "n": 4131,
+   "note": ""
+  },
+  {
+   "split": "MAV6D train, teacher-label frames (all)",
+   "predictor": "Constant fit on sim train labels",
+   "aoe_mean": 27.60718078864396,
+   "aoe_med": 27.24097481817185,
+   "yaw_mean": 23.000134345035086,
+   "yaw_med": 22.022141671396962,
+   "n": 4131,
+   "note": ""
+  },
+  {
+   "split": "MAV6D train, teacher-label frames (all)",
+   "predictor": "Constant fit on MAV6D real train GT (in-sample)",
+   "aoe_mean": 24.82283518366579,
+   "aoe_med": 25.263387801533977,
+   "yaw_mean": 19.491386805412795,
+   "yaw_med": 20.877217710507843,
+   "n": 4131,
+   "note": ""
+  },
+  {
+   "split": "MAV6D train, teacher-label frames (all)",
+   "predictor": "Identity in camera frame",
+   "aoe_mean": 93.1523291925668,
+   "aoe_med": 92.57415238849968,
+   "yaw_mean": 32.183921640021694,
+   "yaw_med": 28.79520097784088,
+   "n": 4131,
+   "note": ""
+  },
+  {
+   "split": "MAV6D train, teacher-label frames (all)",
+   "predictor": "Level, body x toward camera (-z_cam)",
+   "aoe_mean": 27.689504358315926,
+   "aoe_med": 29.680830632020665,
+   "yaw_mean": 23.31781166681667,
+   "yaw_med": 26.18471156515964,
+   "n": 4131,
+   "note": ""
+  },
+  {
+   "split": "MAV6D train, teacher-label frames (all)",
+   "predictor": "Level, facing camera along GT line of sight",
+   "aoe_mean": 27.45168134844973,
+   "aoe_med": 27.906742009133445,
+   "yaw_mean": 22.83133770253085,
+   "yaw_med": 22.97913052513448,
+   "n": 4131,
+   "note": "uses GT position"
+  },
+  {
+   "split": "MAV6D train, teacher-label frames (passing)",
+   "predictor": "Random rotation (Haar)",
+   "aoe_mean": 93.4473555175304,
+   "aoe_med": 92.75446615011131,
+   "yaw_mean": 26.856741582490162,
+   "yaw_med": 24.11389719230212,
+   "n": 74550,
+   "note": "50 draws/frame"
+  },
+  {
+   "split": "MAV6D train, teacher-label frames (passing)",
+   "predictor": "Random yaw about body z (GT tilt kept)",
+   "aoe_mean": 22.5265265755508,
+   "aoe_med": 22.564678024345994,
+   "yaw_mean": 22.526526575550772,
+   "yaw_med": 22.56467802434606,
+   "n": 74550,
+   "note": "analytic U[0,45]: 22.5 / 22.5"
+  },
+  {
+   "split": "MAV6D train, teacher-label frames (passing)",
+   "predictor": "Best constant (oracle, fit on this split)",
+   "aoe_mean": 24.7631749031164,
+   "aoe_med": 26.089777081988604,
+   "yaw_mean": 20.209036191952496,
+   "yaw_med": 21.648348423367004,
+   "n": 1491,
+   "note": ""
+  },
+  {
+   "split": "MAV6D train, teacher-label frames (passing)",
+   "predictor": "Constant fit on sim train labels",
+   "aoe_mean": 26.85471190201443,
+   "aoe_med": 26.380662625320795,
+   "yaw_mean": 22.70415882726072,
+   "yaw_med": 21.355519361269693,
+   "n": 1491,
+   "note": ""
+  },
+  {
+   "split": "MAV6D train, teacher-label frames (passing)",
+   "predictor": "Constant fit on MAV6D real train GT (in-sample)",
+   "aoe_mean": 24.812027571722894,
+   "aoe_med": 25.486209971049007,
+   "yaw_mean": 20.254521365821486,
+   "yaw_med": 21.848126909796065,
+   "n": 1491,
+   "note": ""
+  },
+  {
+   "split": "MAV6D train, teacher-label frames (passing)",
+   "predictor": "Identity in camera frame",
+   "aoe_mean": 91.62618466820999,
+   "aoe_med": 91.81505723195035,
+   "yaw_mean": 28.805808231023953,
+   "yaw_med": 21.151878494314637,
+   "n": 1491,
+   "note": ""
+  },
+  {
+   "split": "MAV6D train, teacher-label frames (passing)",
+   "predictor": "Level, body x toward camera (-z_cam)",
+   "aoe_mean": 26.76566565683843,
+   "aoe_med": 28.985310698481463,
+   "yaw_mean": 22.823857836328965,
+   "yaw_med": 25.70866171654368,
+   "n": 1491,
+   "note": ""
+  },
+  {
+   "split": "MAV6D train, teacher-label frames (passing)",
+   "predictor": "Level, facing camera along GT line of sight",
+   "aoe_mean": 26.732144429688855,
+   "aoe_med": 27.34123293407157,
+   "yaw_mean": 22.620352272514854,
+   "yaw_med": 22.361066434397884,
+   "n": 1491,
+   "note": "uses GT position"
+  }
+ ],
+ "teacher_check": {
+  "all": 20.64431685166432,
+  "passing": 16.517169367453445,
+  "all_med": 17.7619583330184,
+  "passing_med": 12.90509504388954,
+  "yaw_all_mean": 15.702499981371814,
+  "yaw_all_med": 12.415755600124495,
+  "yaw_pass_mean": 11.890691306647486,
+  "yaw_pass_med": 8.14004942210914,
+  "n_all": 4131,
+  "n_pass": 1491
+ },
+ "C_sim_euler_xyz_deg": [
+  75.089656381467,
+  85.50597739987597,
+  -14.874307894994983
+ ],
+ "C_train_euler_xyz_deg": [
+  -90.43515499231243,
+  -62.73386762987089,
+  -179.92959937600926
+ ]
+}

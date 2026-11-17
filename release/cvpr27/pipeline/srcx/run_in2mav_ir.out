@@ -1,0 +1,5 @@
+11-17 21:13:37 start in2mav_ir
+grep: logs/det0_infer.log: No such file or directory
+tail: cannot open 'logs/ref_sim.log' for reading: No such file or directory
+grep: logs/det1_infer.log: No such file or directory
+11-17 21:51:57 detectors done

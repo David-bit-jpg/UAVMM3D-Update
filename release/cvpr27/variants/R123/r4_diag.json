@@ -1,0 +1,310 @@
+{
+ "ours_simonly_in2antifs_val": {
+  "name": "ours sim-only (indoor) val",
+  "n_gt": 1148,
+  "frac_with_pred": 1.0,
+  "mean_boxes_per_frame": 1.0,
+  "mDR_iou01": 0.013937282229965157,
+  "conf_median": 0.2664679288864136,
+  "centre_within_half_width": 0.013937282229965157,
+  "centre_within_2_widths": 0.013937282229965157,
+  "centre_err_px_1920_median": 647.2697634283483,
+  "gt_w2d_px_1920_median": 47.28789204635592,
+  "among_localized": {
+   "n": 16,
+   "iou01": 1.0,
+   "w_ratio_median": 1.3296612500898433,
+   "h_ratio_median": 1.2670655380352467,
+   "z_ratio_median": 0.4279151859116816
+  },
+  "all_w_ratio_median": 6.674661050175139,
+  "all_h_ratio_median": 6.383526888548415,
+  "all_z_ratio_median": 0.0983076740100112,
+  "by_gt_width": {
+   "0-20": {
+    "n": 10,
+    "centre_within_half_width": 0.0,
+    "iou01": 0.0
+   },
+   "20-40": {
+    "n": 492,
+    "centre_within_half_width": 0.012195121951219513,
+    "iou01": 0.012195121951219513
+   },
+   "40-80": {
+    "n": 616,
+    "centre_within_half_width": 0.016233766233766232,
+    "iou01": 0.016233766233766232
+   },
+   "80-9999": {
+    "n": 30,
+    "centre_within_half_width": 0.0,
+    "iou01": 0.0
+   }
+  }
+ },
+ "ours_simonly_out2antifs_val": {
+  "name": "ours sim-only (outdoor) val",
+  "n_gt": 1148,
+  "frac_with_pred": 1.0,
+  "mean_boxes_per_frame": 1.0,
+  "mDR_iou01": 0.6759581881533101,
+  "conf_median": 0.5872749388217926,
+  "centre_within_half_width": 0.6759581881533101,
+  "centre_within_2_widths": 0.6759581881533101,
+  "centre_err_px_1920_median": 6.22588714684817,
+  "gt_w2d_px_1920_median": 47.28789204635592,
+  "among_localized": {
+   "n": 776,
+   "iou01": 1.0,
+   "w_ratio_median": 1.2942021786269284,
+   "h_ratio_median": 2.2236063684295395,
+   "z_ratio_median": 0.949143119250976
+  },
+  "all_w_ratio_median": 1.2883853810140034,
+  "all_h_ratio_median": 1.9726518267019502,
+  "all_z_ratio_median": 0.9600600990797354,
+  "by_gt_width": {
+   "0-20": {
+    "n": 10,
+    "centre_within_half_width": 1.0,
+    "iou01": 1.0
+   },
+   "20-40": {
+    "n": 492,
+    "centre_within_half_width": 0.9024390243902439,
+    "iou01": 0.9024390243902439
+   },
+   "40-80": {
+    "n": 616,
+    "centre_within_half_width": 0.5211038961038961,
+    "iou01": 0.5211038961038961
+   },
+   "80-9999": {
+    "n": 30,
+    "centre_within_half_width": 0.03333333333333333,
+    "iou01": 0.03333333333333333
+   }
+  }
+ },
+ "ours_simonly_in2antifs_test": {
+  "name": "ours sim-only (indoor) test",
+  "n_gt": 2624,
+  "frac_with_pred": 1.0,
+  "mean_boxes_per_frame": 1.0,
+  "mDR_iou01": 0.04878048780487805,
+  "conf_median": 0.22746619582176208,
+  "centre_within_half_width": 0.04878048780487805,
+  "centre_within_2_widths": 0.0506859756097561,
+  "centre_err_px_1920_median": 605.8295100816445,
+  "gt_w2d_px_1920_median": 40.52956978506111,
+  "among_localized": {
+   "n": 128,
+   "iou01": 1.0,
+   "w_ratio_median": 1.362855422968011,
+   "h_ratio_median": 1.1541163204430291,
+   "z_ratio_median": 0.4413825538768625
+  },
+  "all_w_ratio_median": 8.129206794470925,
+  "all_h_ratio_median": 7.921163553088185,
+  "all_z_ratio_median": 0.07652830879277073,
+  "by_gt_width": {
+   "0-20": {
+    "n": 0,
+    "centre_within_half_width": null,
+    "iou01": null
+   },
+   "20-40": {
+    "n": 1268,
+    "centre_within_half_width": 0.0,
+    "iou01": 0.0
+   },
+   "40-80": {
+    "n": 461,
+    "centre_within_half_width": 0.015184381778741865,
+    "iou01": 0.015184381778741865
+   },
+   "80-9999": {
+    "n": 895,
+    "centre_within_half_width": 0.13519553072625698,
+    "iou01": 0.13519553072625698
+   }
+  }
+ },
+ "ours_simonly_out2antifs_test": {
+  "name": "ours sim-only (outdoor) test",
+  "n_gt": 2624,
+  "frac_with_pred": 1.0,
+  "mean_boxes_per_frame": 1.0,
+  "mDR_iou01": 0.7854420731707317,
+  "conf_median": 0.4663785398006439,
+  "centre_within_half_width": 0.7846798780487805,
+  "centre_within_2_widths": 0.7896341463414634,
+  "centre_err_px_1920_median": 5.633521804374927,
+  "gt_w2d_px_1920_median": 40.52956978506111,
+  "among_localized": {
+   "n": 2059,
+   "iou01": 1.0,
+   "w_ratio_median": 1.325460855972747,
+   "h_ratio_median": 2.23431608797738,
+   "z_ratio_median": 0.9397901122611291
+  },
+  "all_w_ratio_median": 1.3082045515974652,
+  "all_h_ratio_median": 2.166350467202057,
+  "all_z_ratio_median": 0.9519637340384502,
+  "by_gt_width": {
+   "0-20": {
+    "n": 0,
+    "centre_within_half_width": null,
+    "iou01": null
+   },
+   "20-40": {
+    "n": 1268,
+    "centre_within_half_width": 0.9526813880126183,
+    "iou01": 0.9542586750788643
+   },
+   "40-80": {
+    "n": 461,
+    "centre_within_half_width": 0.8199566160520607,
+    "iou01": 0.8199566160520607
+   },
+   "80-9999": {
+    "n": 895,
+    "centre_within_half_width": 0.5284916201117319,
+    "iou01": 0.5284916201117319
+   }
+  }
+ },
+ "gupnet_test": {
+  "name": "gupnet (Sim-Indoor) test",
+  "n_gt": 2624,
+  "frac_with_pred": 1.0,
+  "mean_boxes_per_frame": 10.0,
+  "mDR_iou01": 0.7835365853658537,
+  "conf_median": 0.1245463415980339,
+  "centre_within_half_width": 0.78125,
+  "centre_within_2_widths": 0.7923018292682927,
+  "centre_err_px_1920_median": 3.9584808411787304,
+  "gt_w2d_px_1920_median": 40.52956978506111,
+  "among_localized": {
+   "n": 2050,
+   "iou01": 0.9995121951219512,
+   "w_ratio_median": 2.1056224309524705,
+   "h_ratio_median": 1.6706251131351442,
+   "z_ratio_median": 0.3439177755346119
+  },
+  "all_w_ratio_median": 2.2130212440788757,
+  "all_h_ratio_median": 1.9217445500048014,
+  "all_z_ratio_median": 0.35303194662793747,
+  "by_gt_width": {
+   "0-20": {
+    "n": 0,
+    "centre_within_half_width": null,
+    "iou01": null
+   },
+   "20-40": {
+    "n": 1268,
+    "centre_within_half_width": 0.8556782334384858,
+    "iou01": 0.8588328075709779
+   },
+   "40-80": {
+    "n": 461,
+    "centre_within_half_width": 0.8286334056399133,
+    "iou01": 0.8264642082429501
+   },
+   "80-9999": {
+    "n": 895,
+    "centre_within_half_width": 0.6513966480446928,
+    "iou01": 0.6547486033519553
+   }
+  }
+ },
+ "monocd_test": {
+  "name": "monocd (Sim-Indoor) test",
+  "n_gt": 2624,
+  "frac_with_pred": 1.0,
+  "mean_boxes_per_frame": 10.0,
+  "mDR_iou01": 0.758765243902439,
+  "conf_median": 0.3067162483930588,
+  "centre_within_half_width": 0.7595274390243902,
+  "centre_within_2_widths": 0.7728658536585366,
+  "centre_err_px_1920_median": 3.661022200701629,
+  "gt_w2d_px_1920_median": 40.52956978506111,
+  "among_localized": {
+   "n": 1993,
+   "iou01": 0.9964877069744105,
+   "w_ratio_median": 1.2784108563057563,
+   "h_ratio_median": 0.7683700447754663,
+   "z_ratio_median": 0.5572805376205486
+  },
+  "all_w_ratio_median": 1.3735399649952944,
+  "all_h_ratio_median": 0.8423547463984536,
+  "all_z_ratio_median": 0.5589077843241872,
+  "by_gt_width": {
+   "0-20": {
+    "n": 0,
+    "centre_within_half_width": null,
+    "iou01": null
+   },
+   "20-40": {
+    "n": 1268,
+    "centre_within_half_width": 0.9053627760252366,
+    "iou01": 0.9093059936908517
+   },
+   "40-80": {
+    "n": 461,
+    "centre_within_half_width": 0.8720173535791758,
+    "iou01": 0.8720173535791758
+   },
+   "80-9999": {
+    "n": 895,
+    "centre_within_half_width": 0.4949720670391061,
+    "iou01": 0.4871508379888268
+   }
+  }
+ },
+ "monodgp_test": {
+  "name": "monodgp (Sim-Indoor) test",
+  "n_gt": 2624,
+  "frac_with_pred": 1.0,
+  "mean_boxes_per_frame": 10.0,
+  "mDR_iou01": 0.916920731707317,
+  "conf_median": 2.49923837184906,
+  "centre_within_half_width": 0.9100609756097561,
+  "centre_within_2_widths": 0.921875,
+  "centre_err_px_1920_median": 2.3683588639534303,
+  "gt_w2d_px_1920_median": 40.52956978506111,
+  "among_localized": {
+   "n": 2388,
+   "iou01": 0.9991624790619765,
+   "w_ratio_median": 2.172063853856703,
+   "h_ratio_median": 1.29522845349714,
+   "z_ratio_median": 0.36488212836689005
+  },
+  "all_w_ratio_median": 2.128797557860976,
+  "all_h_ratio_median": 1.3225841431610592,
+  "all_z_ratio_median": 0.3703678709298546,
+  "by_gt_width": {
+   "0-20": {
+    "n": 0,
+    "centre_within_half_width": null,
+    "iou01": null
+   },
+   "20-40": {
+    "n": 1268,
+    "centre_within_half_width": 0.9652996845425867,
+    "iou01": 0.9684542586750788
+   },
+   "40-80": {
+    "n": 461,
+    "centre_within_half_width": 0.9761388286334056,
+    "iou01": 0.9761388286334056
+   },
+   "80-9999": {
+    "n": 895,
+    "centre_within_half_width": 0.7977653631284917,
+    "iou01": 0.8134078212290503
+   }
+  }
+ }
+}

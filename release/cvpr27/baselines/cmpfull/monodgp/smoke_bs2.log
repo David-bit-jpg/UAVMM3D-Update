@@ -1,0 +1,258 @@
+2026-10-29 22:45:16,330   INFO  {"config": "E:\\Open3DUAVDet\\output\\camnorm\\geo1004\\cmpfull\\monodgp\\configs\\monodgp_uav.yaml", "labels": ["D:/cmpfull/sim_train/labels.pkl"], "out": "E:/Open3DUAVDet/output/camnorm/geo1004/cmpfull/monodgp/smoke/bs2", "seed": 444, "epochs": 48, "batch_size": 2, "workers": 2, "max_iters": 200, "keep_every": 4}
+2026-10-29 22:45:17,022   INFO  ###################  Training  ##################
+2026-10-29 22:45:17,022   INFO  Train frames: 19490, Batch Size: 2, Learning Rate: 0.000050, epochs 48, decay [16, 24, 32, 39]
+epochs:   0%|          | 0/48 [00:00<?, ?it/s]>>>>>>> Epoch: 0:
+
+iters:   0%|          | 0/9745 [00:00<?, ?it/s][A
+iters:   0%|          | 1/9745 [00:24<66:22:07, 24.52s/it][A
+iters:   0%|          | 2/9745 [00:24<27:46:33, 10.26s/it][A
+iters:   0%|          | 3/9745 [00:25<15:28:23,  5.72s/it][A
+iters:   0%|          | 4/9745 [00:25<9:40:07,  3.57s/it] [A
+iters:   0%|          | 5/9745 [00:25<6:27:28,  2.39s/it][A
+iters:   0%|          | 6/9745 [00:25<4:31:12,  1.67s/it][A
+iters:   0%|          | 7/9745 [00:26<3:18:00,  1.22s/it][A
+iters:   0%|          | 8/9745 [00:26<2:29:27,  1.09it/s][A
+iters:   0%|          | 9/9745 [00:26<1:57:08,  1.39it/s][A
+iters:   0%|          | 10/9745 [00:27<1:34:50,  1.71it/s][A
+iters:   0%|          | 11/9745 [00:27<1:20:02,  2.03it/s][A
+iters:   0%|          | 12/9745 [00:27<1:09:19,  2.34it/s][A
+iters:   0%|          | 13/9745 [00:27<1:02:01,  2.61it/s][A
+iters:   0%|          | 14/9745 [00:28<56:55,  2.85it/s]  [A
+iters:   0%|          | 15/9745 [00:28<53:16,  3.04it/s][A
+iters:   0%|          | 16/9745 [00:28<51:02,  3.18it/s][A
+iters:   0%|          | 17/9745 [00:29<49:07,  3.30it/s][A
+iters:   0%|          | 18/9745 [00:29<48:30,  3.34it/s][A
+iters:   0%|          | 19/9745 [00:29<48:12,  3.36it/s][A
+iters:   0%|          | 20/9745 [00:29<48:05,  3.37it/s][A
+iters:   0%|          | 21/9745 [00:30<48:27,  3.34it/s][A
+iters:   0%|          | 22/9745 [00:30<55:04,  2.94it/s][A
+iters:   0%|          | 23/9745 [00:30<51:34,  3.14it/s][A
+iters:   0%|          | 24/9745 [00:31<49:25,  3.28it/s][A
+iters:   0%|          | 25/9745 [00:31<51:31,  3.14it/s][A
+iters:   0%|          | 26/9745 [00:31<49:03,  3.30it/s][A
+iters:   0%|          | 27/9745 [00:32<49:38,  3.26it/s][A
+iters:   0%|          | 28/9745 [00:32<48:20,  3.35it/s][A
+iters:   0%|          | 29/9745 [00:32<48:14,  3.36it/s][A
+iters:   0%|          | 30/9745 [00:33<48:19,  3.35it/s][A
+iters:   0%|          | 31/9745 [00:33<48:11,  3.36it/s][A
+iters:   0%|          | 32/9745 [00:33<47:08,  3.43it/s][A
+iters:   0%|          | 33/9745 [00:33<47:16,  3.42it/s][A
+iters:   0%|          | 34/9745 [00:34<47:04,  3.44it/s][A
+iters:   0%|          | 35/9745 [00:34<47:17,  3.42it/s][A
+iters:   0%|          | 36/9745 [00:34<47:16,  3.42it/s][A
+iters:   0%|          | 37/9745 [00:35<48:39,  3.33it/s][A
+iters:   0%|          | 38/9745 [00:35<48:25,  3.34it/s][A
+iters:   0%|          | 39/9745 [00:35<47:08,  3.43it/s][A
+iters:   0%|          | 40/9745 [00:35<46:58,  3.44it/s][A
+iters:   0%|          | 41/9745 [00:36<47:14,  3.42it/s][A
+iters:   0%|          | 42/9745 [00:36<47:22,  3.41it/s][A
+iters:   0%|          | 43/9745 [00:36<47:56,  3.37it/s][A
+iters:   0%|          | 44/9745 [00:37<47:57,  3.37it/s][A
+iters:   0%|          | 45/9745 [00:37<48:06,  3.36it/s][A
+iters:   0%|          | 46/9745 [00:37<46:48,  3.45it/s][A
+iters:   0%|          | 47/9745 [00:38<47:29,  3.40it/s][A
+iters:   0%|          | 48/9745 [00:38<48:23,  3.34it/s][A
+iters:   1%|          | 49/9745 [00:38<49:23,  3.27it/s][A
+iters:   1%|          | 50/9745 [00:38<48:34,  3.33it/s][A
+iters:   1%|          | 51/9745 [00:39<47:37,  3.39it/s][A
+iters:   1%|          | 52/9745 [00:39<46:41,  3.46it/s][A
+iters:   1%|          | 53/9745 [00:39<46:37,  3.46it/s][A
+iters:   1%|          | 54/9745 [00:40<47:19,  3.41it/s][A
+iters:   1%|          | 55/9745 [00:40<48:38,  3.32it/s][A
+iters:   1%|          | 56/9745 [00:40<48:07,  3.36it/s][A
+iters:   1%|          | 57/9745 [00:40<48:12,  3.35it/s][A
+iters:   1%|          | 58/9745 [00:41<48:06,  3.36it/s][A
+iters:   1%|          | 59/9745 [00:41<47:40,  3.39it/s][A
+iters:   1%|          | 60/9745 [00:41<46:09,  3.50it/s][A
+iters:   1%|          | 61/9745 [00:42<46:29,  3.47it/s][A
+iters:   1%|          | 62/9745 [00:42<46:59,  3.43it/s][A
+iters:   1%|          | 63/9745 [00:42<46:33,  3.47it/s][A
+iters:   1%|          | 64/9745 [00:42<46:40,  3.46it/s][A
+iters:   1%|          | 65/9745 [00:43<47:24,  3.40it/s][A
+iters:   1%|          | 66/9745 [00:43<47:46,  3.38it/s][A
+iters:   1%|          | 67/9745 [00:43<47:40,  3.38it/s][A
+iters:   1%|          | 68/9745 [00:44<47:33,  3.39it/s][A
+iters:   1%|          | 69/9745 [00:44<46:51,  3.44it/s][A
+iters:   1%|          | 70/9745 [00:44<46:44,  3.45it/s][A
+iters:   1%|          | 71/9745 [00:45<46:43,  3.45it/s][A
+iters:   1%|          | 72/9745 [00:45<46:16,  3.48it/s][A
+iters:   1%|          | 73/9745 [00:45<45:45,  3.52it/s][A
+iters:   1%|          | 74/9745 [00:45<45:26,  3.55it/s][A
+iters:   1%|          | 75/9745 [00:46<44:38,  3.61it/s][A
+iters:   1%|          | 76/9745 [00:46<45:36,  3.53it/s][A
+iters:   1%|          | 77/9745 [00:46<45:57,  3.51it/s][A
+iters:   1%|          | 78/9745 [00:47<45:44,  3.52it/s][A
+iters:   1%|          | 79/9745 [00:47<45:34,  3.54it/s][A
+iters:   1%|          | 80/9745 [00:47<46:20,  3.48it/s][A
+iters:   1%|          | 81/9745 [00:47<45:59,  3.50it/s][A
+iters:   1%|          | 82/9745 [00:48<46:02,  3.50it/s][A
+iters:   1%|          | 83/9745 [00:48<46:27,  3.47it/s][A
+iters:   1%|          | 84/9745 [00:48<47:01,  3.42it/s][A
+iters:   1%|          | 85/9745 [00:49<47:24,  3.40it/s][A
+iters:   1%|          | 86/9745 [00:49<48:46,  3.30it/s][A
+iters:   1%|          | 87/9745 [00:49<47:45,  3.37it/s][A
+iters:   1%|          | 88/9745 [00:50<50:22,  3.20it/s][A
+iters:   1%|          | 89/9745 [00:50<48:57,  3.29it/s][A
+iters:   1%|          | 90/9745 [00:50<48:31,  3.32it/s][A
+iters:   1%|          | 91/9745 [00:50<47:40,  3.38it/s][A
+iters:   1%|          | 92/9745 [00:51<46:34,  3.45it/s][A
+iters:   1%|          | 93/9745 [00:51<46:27,  3.46it/s][A
+iters:   1%|          | 94/9745 [00:51<46:12,  3.48it/s][A
+iters:   1%|          | 95/9745 [00:51<45:17,  3.55it/s][A
+iters:   1%|          | 96/9745 [00:52<46:30,  3.46it/s][A
+iters:   1%|          | 97/9745 [00:52<46:49,  3.43it/s][A
+iters:   1%|          | 98/9745 [00:52<46:16,  3.47it/s][A
+iters:   1%|          | 99/9745 [00:53<45:58,  3.50it/s][A
+iters:   1%|          | 100/9745 [00:53<47:14,  3.40it/s][A
+iters:   1%|          | 101/9745 [00:53<48:02,  3.35it/s][A
+iters:   1%|          | 102/9745 [00:54<47:58,  3.35it/s][A
+iters:   1%|          | 103/9745 [00:54<47:19,  3.40it/s][A
+iters:   1%|          | 104/9745 [00:54<46:40,  3.44it/s][A
+iters:   1%|          | 105/9745 [00:54<46:31,  3.45it/s][A
+iters:   1%|          | 106/9745 [00:55<46:31,  3.45it/s][A
+iters:   1%|          | 107/9745 [00:55<46:03,  3.49it/s][A
+iters:   1%|          | 108/9745 [00:55<45:48,  3.51it/s][A
+iters:   1%|          | 109/9745 [00:56<45:25,  3.54it/s][A
+iters:   1%|          | 110/9745 [00:56<45:28,  3.53it/s][A
+iters:   1%|          | 111/9745 [00:56<46:22,  3.46it/s][A
+iters:   1%|          | 112/9745 [00:56<46:50,  3.43it/s][A
+iters:   1%|          | 113/9745 [00:57<47:02,  3.41it/s][A
+iters:   1%|          | 114/9745 [00:57<46:37,  3.44it/s][A
+iters:   1%|          | 115/9745 [00:57<46:06,  3.48it/s][A
+iters:   1%|          | 116/9745 [00:58<45:11,  3.55it/s][A
+iters:   1%|          | 117/9745 [00:58<46:24,  3.46it/s][A
+iters:   1%|          | 118/9745 [00:58<46:18,  3.46it/s][A
+iters:   1%|          | 119/9745 [00:58<46:07,  3.48it/s][A
+iters:   1%|          | 120/9745 [00:59<46:08,  3.48it/s][A
+iters:   1%|          | 121/9745 [00:59<47:03,  3.41it/s][A
+iters:   1%|▏         | 122/9745 [00:59<47:06,  3.40it/s][A
+iters:   1%|▏         | 123/9745 [01:00<47:09,  3.40it/s][A
+iters:   1%|▏         | 124/9745 [01:00<46:37,  3.44it/s][A
+iters:   1%|▏         | 125/9745 [01:00<45:54,  3.49it/s][A
+iters:   1%|▏         | 126/9745 [01:00<45:43,  3.51it/s][A
+iters:   1%|▏         | 127/9745 [01:01<45:47,  3.50it/s][A
+iters:   1%|▏         | 128/9745 [01:01<45:50,  3.50it/s][A
+iters:   1%|▏         | 129/9745 [01:01<45:54,  3.49it/s][A
+iters:   1%|▏         | 130/9745 [01:02<45:16,  3.54it/s][A
+iters:   1%|▏         | 131/9745 [01:02<45:12,  3.54it/s][A
+iters:   1%|▏         | 132/9745 [01:02<45:38,  3.51it/s][A
+iters:   1%|▏         | 133/9745 [01:02<45:58,  3.48it/s][A
+iters:   1%|▏         | 134/9745 [01:03<47:00,  3.41it/s][A
+iters:   1%|▏         | 135/9745 [01:03<46:32,  3.44it/s][A
+iters:   1%|▏         | 136/9745 [01:03<46:37,  3.44it/s][A
+iters:   1%|▏         | 137/9745 [01:04<46:13,  3.46it/s][A
+iters:   1%|▏         | 138/9745 [01:04<46:09,  3.47it/s][A
+iters:   1%|▏         | 139/9745 [01:04<45:43,  3.50it/s][A
+iters:   1%|▏         | 140/9745 [01:05<45:53,  3.49it/s][A
+iters:   1%|▏         | 141/9745 [01:05<45:31,  3.52it/s][A
+iters:   1%|▏         | 142/9745 [01:05<45:47,  3.49it/s][A
+iters:   1%|▏         | 143/9745 [01:05<45:15,  3.54it/s][A
+iters:   1%|▏         | 144/9745 [01:06<45:30,  3.52it/s][A
+iters:   1%|▏         | 145/9745 [01:06<45:41,  3.50it/s][A
+iters:   1%|▏         | 146/9745 [01:06<45:46,  3.49it/s][A
+iters:   2%|▏         | 147/9745 [01:06<45:53,  3.49it/s][A
+iters:   2%|▏         | 148/9745 [01:07<45:50,  3.49it/s][A
+iters:   2%|▏         | 149/9745 [01:07<46:10,  3.46it/s][A
+iters:   2%|▏         | 150/9745 [01:07<46:09,  3.46it/s][A
+iters:   2%|▏         | 151/9745 [01:08<46:08,  3.46it/s][A
+iters:   2%|▏         | 152/9745 [01:08<45:58,  3.48it/s][A
+iters:   2%|▏         | 153/9745 [01:08<45:58,  3.48it/s][A
+iters:   2%|▏         | 154/9745 [01:09<46:23,  3.45it/s][A
+iters:   2%|▏         | 155/9745 [01:09<46:08,  3.46it/s][A
+iters:   2%|▏         | 156/9745 [01:09<46:13,  3.46it/s][A
+iters:   2%|▏         | 157/9745 [01:09<46:16,  3.45it/s][A
+iters:   2%|▏         | 158/9745 [01:10<45:16,  3.53it/s][A
+iters:   2%|▏         | 159/9745 [01:10<45:31,  3.51it/s][A
+iters:   2%|▏         | 160/9745 [01:10<46:05,  3.47it/s][A
+iters:   2%|▏         | 161/9745 [01:11<45:51,  3.48it/s][A
+iters:   2%|▏         | 162/9745 [01:11<46:01,  3.47it/s][A
+iters:   2%|▏         | 163/9745 [01:11<46:39,  3.42it/s][A
+iters:   2%|▏         | 164/9745 [01:11<48:05,  3.32it/s][A
+iters:   2%|▏         | 165/9745 [01:12<47:17,  3.38it/s][A
+iters:   2%|▏         | 166/9745 [01:12<46:35,  3.43it/s][A
+iters:   2%|▏         | 167/9745 [01:12<46:43,  3.42it/s][A
+iters:   2%|▏         | 168/9745 [01:13<47:13,  3.38it/s][A
+iters:   2%|▏         | 169/9745 [01:13<47:32,  3.36it/s][A
+iters:   2%|▏         | 170/9745 [01:13<46:51,  3.41it/s][A
+iters:   2%|▏         | 171/9745 [01:13<46:46,  3.41it/s][A
+iters:   2%|▏         | 172/9745 [01:14<46:42,  3.42it/s][A
+iters:   2%|▏         | 173/9745 [01:14<46:19,  3.44it/s][A
+iters:   2%|▏         | 174/9745 [01:14<46:34,  3.42it/s][A
+iters:   2%|▏         | 175/9745 [01:15<46:58,  3.39it/s][A
+iters:   2%|▏         | 176/9745 [01:15<46:12,  3.45it/s][A
+iters:   2%|▏         | 177/9745 [01:15<46:11,  3.45it/s][A
+iters:   2%|▏         | 178/9745 [01:16<46:03,  3.46it/s][A
+iters:   2%|▏         | 179/9745 [01:16<45:59,  3.47it/s][A
+iters:   2%|▏         | 180/9745 [01:16<46:09,  3.45it/s][A
+iters:   2%|▏         | 181/9745 [01:16<45:48,  3.48it/s][A
+iters:   2%|▏         | 182/9745 [01:17<45:49,  3.48it/s][A
+iters:   2%|▏         | 183/9745 [01:17<45:20,  3.51it/s][A
+iters:   2%|▏         | 184/9745 [01:17<45:29,  3.50it/s][A
+iters:   2%|▏         | 185/9745 [01:18<45:21,  3.51it/s][A
+iters:   2%|▏         | 186/9745 [01:18<45:28,  3.50it/s][A
+iters:   2%|▏         | 187/9745 [01:18<46:01,  3.46it/s][A
+iters:   2%|▏         | 188/9745 [01:18<45:51,  3.47it/s][A
+iters:   2%|▏         | 189/9745 [01:19<45:19,  3.51it/s][A
+iters:   2%|▏         | 190/9745 [01:19<45:02,  3.54it/s][A
+iters:   2%|▏         | 191/9745 [01:19<45:23,  3.51it/s][A
+iters:   2%|▏         | 192/9745 [01:20<45:21,  3.51it/s][A
+iters:   2%|▏         | 193/9745 [01:20<45:37,  3.49it/s][A
+iters:   2%|▏         | 194/9745 [01:20<46:00,  3.46it/s][A
+iters:   2%|▏         | 195/9745 [01:20<46:45,  3.40it/s][A
+iters:   2%|▏         | 196/9745 [01:21<47:52,  3.32it/s][A
+iters:   2%|▏         | 197/9745 [01:21<47:07,  3.38it/s][A
+iters:   2%|▏         | 198/9745 [01:21<46:40,  3.41it/s][A
+iters:   2%|▏         | 199/9745 [01:22<46:25,  3.43it/s][A
+                                                         [A2026-10-29 22:46:51,233   INFO  max_iters 200 reached, stop
+2026-10-29 22:46:51,233   INFO  Best Result:0, epoch:0
+epochs:   0%|          | 0/48 [01:34<?, ?it/s]
+2026-10-29 22:46:51,287   INFO  max_memory_allocated 4.94 GB, max_reserved 5.29 GB
+---- 0 ----
+loss_detr: 106.46, 
+
+loss_ce_inter_0: 2.25, loss_bbox_inter_0: 1.56, loss_giou_inter_0: 1.74, loss_center_inter_0: 0.84, 
+loss_ce_inter_1: 2.24, loss_bbox_inter_1: 1.64, loss_giou_inter_1: 1.78, loss_center_inter_1: 0.88, 
+loss_ce_inter_2: 2.24, loss_bbox_inter_2: 1.69, loss_giou_inter_2: 1.79, loss_center_inter_2: 0.89, loss_ce: 2.21, loss_bbox: 0.60, loss_giou: 2.58, loss_depth: 9.18, loss_dim: 1.34, loss_angle: 7.99, loss_center: 1.07, loss_depth_map: 1.76, loss_region: 3.75, loss_ce_0: 2.13, loss_bbox_0: 0.60, loss_giou_0: 2.56, loss_depth_0: 13.68, loss_dim_0: 1.92, loss_angle_0: 7.96, loss_center_0: 0.95, loss_ce_1: 2.14, loss_bbox_1: 0.60, loss_giou_1: 2.50, loss_depth_1: 10.96, loss_dim_1: 1.40, loss_angle_1: 8.09, loss_center_1: 0.93, 
+
+---- 30 ----
+loss_detr: 64.82, 
+
+loss_ce_inter_0: 0.83, loss_bbox_inter_0: 1.51, loss_giou_inter_0: 1.88, loss_center_inter_0: 0.75, 
+loss_ce_inter_1: 0.76, loss_bbox_inter_1: 1.21, loss_giou_inter_1: 1.90, loss_center_inter_1: 0.80, 
+loss_ce_inter_2: 0.81, loss_bbox_inter_2: 1.00, loss_giou_inter_2: 1.93, loss_center_inter_2: 0.83, loss_ce: 0.64, loss_bbox: 0.38, loss_giou: 2.77, loss_depth: 2.04, loss_dim: 0.63, loss_angle: 7.55, loss_center: 0.83, loss_depth_map: 1.04, loss_region: 3.85, loss_ce_0: 0.72, loss_bbox_0: 0.38, loss_giou_0: 2.79, loss_depth_0: 2.69, loss_dim_0: 0.64, loss_angle_0: 7.75, loss_center_0: 0.83, loss_ce_1: 0.65, loss_bbox_1: 0.38, loss_giou_1: 2.79, loss_depth_1: 2.12, loss_dim_1: 0.62, loss_angle_1: 7.68, loss_center_1: 0.84, 
+
+---- 60 ----
+loss_detr: 61.38, 
+
+loss_ce_inter_0: 0.60, loss_bbox_inter_0: 1.09, loss_giou_inter_0: 1.81, loss_center_inter_0: 0.77, 
+loss_ce_inter_1: 0.63, loss_bbox_inter_1: 0.76, loss_giou_inter_1: 1.91, loss_center_inter_1: 0.74, 
+loss_ce_inter_2: 0.63, loss_bbox_inter_2: 0.68, loss_giou_inter_2: 2.04, loss_center_inter_2: 0.76, loss_ce: 0.63, loss_bbox: 0.54, loss_giou: 2.77, loss_depth: 2.60, loss_dim: 0.90, loss_angle: 6.40, loss_center: 0.76, loss_depth_map: 1.04, loss_region: 3.73, loss_ce_0: 0.64, loss_bbox_0: 0.56, loss_giou_0: 2.84, loss_depth_0: 2.52, loss_dim_0: 0.90, loss_angle_0: 6.60, loss_center_0: 0.77, loss_ce_1: 0.64, loss_bbox_1: 0.55, loss_giou_1: 2.84, loss_depth_1: 2.48, loss_dim_1: 0.91, loss_angle_1: 6.59, loss_center_1: 0.76, 
+
+---- 90 ----
+loss_detr: 59.85, 
+
+loss_ce_inter_0: 0.68, loss_bbox_inter_0: 0.75, loss_giou_inter_0: 1.71, loss_center_inter_0: 0.70, 
+loss_ce_inter_1: 0.67, loss_bbox_inter_1: 0.68, loss_giou_inter_1: 1.96, loss_center_inter_1: 0.76, 
+loss_ce_inter_2: 0.66, loss_bbox_inter_2: 0.68, loss_giou_inter_2: 2.07, loss_center_inter_2: 0.75, loss_ce: 0.66, loss_bbox: 0.79, loss_giou: 2.58, loss_depth: 1.59, loss_dim: 1.38, loss_angle: 6.26, loss_center: 0.82, loss_depth_map: 1.13, loss_region: 3.62, loss_ce_0: 0.69, loss_bbox_0: 0.85, loss_giou_0: 2.62, loss_depth_0: 2.18, loss_dim_0: 1.41, loss_angle_0: 6.28, loss_center_0: 0.69, loss_ce_1: 0.65, loss_bbox_1: 0.81, loss_giou_1: 2.60, loss_depth_1: 1.77, loss_dim_1: 1.37, loss_angle_1: 6.29, loss_center_1: 0.76, 
+
+---- 120 ----
+loss_detr: 63.13, 
+
+loss_ce_inter_0: 0.66, loss_bbox_inter_0: 0.75, loss_giou_inter_0: 1.75, loss_center_inter_0: 0.67, 
+loss_ce_inter_1: 0.66, loss_bbox_inter_1: 0.71, loss_giou_inter_1: 1.89, loss_center_inter_1: 0.68, 
+loss_ce_inter_2: 0.66, loss_bbox_inter_2: 0.72, loss_giou_inter_2: 1.93, loss_center_inter_2: 0.68, loss_ce: 0.67, loss_bbox: 0.73, loss_giou: 2.19, loss_depth: 2.06, loss_dim: 0.89, loss_angle: 8.13, loss_center: 0.69, loss_depth_map: 0.87, loss_region: 3.68, loss_ce_0: 0.70, loss_bbox_0: 0.83, loss_giou_0: 2.58, loss_depth_0: 2.31, loss_dim_0: 0.92, loss_angle_0: 7.98, loss_center_0: 0.73, loss_ce_1: 0.70, loss_bbox_1: 0.76, loss_giou_1: 2.44, loss_depth_1: 1.94, loss_dim_1: 0.89, loss_angle_1: 7.98, loss_center_1: 0.70, 
+
+---- 150 ----
+loss_detr: 57.63, 
+
+loss_ce_inter_0: 0.62, loss_bbox_inter_0: 0.79, loss_giou_inter_0: 1.82, loss_center_inter_0: 0.68, 
+loss_ce_inter_1: 0.62, loss_bbox_inter_1: 0.73, loss_giou_inter_1: 1.85, loss_center_inter_1: 0.65, 
+loss_ce_inter_2: 0.64, loss_bbox_inter_2: 0.75, loss_giou_inter_2: 1.84, loss_center_inter_2: 0.65, loss_ce: 0.65, loss_bbox: 0.68, loss_giou: 2.06, loss_depth: 1.61, loss_dim: 1.14, loss_angle: 6.80, loss_center: 0.70, loss_depth_map: 0.84, loss_region: 3.70, loss_ce_0: 0.65, loss_bbox_0: 0.58, loss_giou_0: 2.50, loss_depth_0: 1.72, loss_dim_0: 1.08, loss_angle_0: 6.79, loss_center_0: 0.67, loss_ce_1: 0.65, loss_bbox_1: 0.57, loss_giou_1: 2.28, loss_depth_1: 1.75, loss_dim_1: 1.10, loss_angle_1: 6.76, loss_center_1: 0.70, 
+
+---- 180 ----
+loss_detr: 54.46, 
+
+loss_ce_inter_0: 0.64, loss_bbox_inter_0: 0.57, loss_giou_inter_0: 1.86, loss_center_inter_0: 0.70, 
+loss_ce_inter_1: 0.63, loss_bbox_inter_1: 0.50, loss_giou_inter_1: 1.94, loss_center_inter_1: 0.71, 
+loss_ce_inter_2: 0.66, loss_bbox_inter_2: 0.51, loss_giou_inter_2: 1.93, loss_center_inter_2: 0.72, loss_ce: 0.69, loss_bbox: 0.57, loss_giou: 1.90, loss_depth: 1.60, loss_dim: 0.65, loss_angle: 6.74, loss_center: 0.57, loss_depth_map: 0.31, loss_region: 3.91, loss_ce_0: 0.67, loss_bbox_0: 0.31, loss_giou_0: 2.52, loss_depth_0: 1.67, loss_dim_0: 0.65, loss_angle_0: 6.72, loss_center_0: 0.71, loss_ce_1: 0.69, loss_bbox_1: 0.34, loss_giou_1: 2.10, loss_depth_1: 1.72, loss_dim_1: 0.66, loss_angle_1: 6.75, loss_center_1: 0.64, 
+

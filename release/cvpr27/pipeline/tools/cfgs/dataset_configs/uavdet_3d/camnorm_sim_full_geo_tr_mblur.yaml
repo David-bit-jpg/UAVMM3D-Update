@@ -1,0 +1,8 @@
+# MBLUR 臂数据（2026-09-19）：与 D 臂完全一致，只多 motion_blur: 0.5, motion_blur_frac: [0.1, 0.6]。
+# 长核运动模糊（拖影可伸出框外），核长 = 目标框长边 x U(0.1, 0.6)。因果实验：真实 phantom4 加 25 px 运动模糊检出 94% -> 9%。
+# 两个开关只改像素，不动几何与标签；缺省关时随机流与之前逐位一致。
+_BASE_CONFIG_: cfgs/dataset_configs/uavdet_3d/camnorm_sim_full_geo_tr.yaml
+AUG: {hflip: 0.5, scale: [1.0, 1.0], photometric: true, noise: 0.01, blur: 2.5, blur_prob: 0.5,
+      target_ring: 0.5, target_ring_core: [0.55, 1.0], target_ring_alpha: [0.4, 1.0],
+      target_blur: 0.3, target_blur_len: 7,
+      motion_blur: 0.5, motion_blur_frac: [0.1, 0.6]}

@@ -1,0 +1,14 @@
+{
+ "combo": "in2mav",
+ "mode": "st",
+ "n": 10293,
+ "n_train": 12866,
+ "index": "F:/ourdet_baseproto_cache/mav6d_cn_obj/train/index_st.pkl",
+ "roundtrip_max_px": 0.0,
+ "roundtrip_float32_max_px": 2.3732913662755095e-05,
+ "K_in_vs_labels_K_max": 0.0,
+ "source": "E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/ourdet_baseproto/preds/in2mav_sim_s0_train_recs.pkl",
+ "score_threshold": 0.41541460156440735,
+ "keep": 0.8,
+ "n_no_box": 0
+}

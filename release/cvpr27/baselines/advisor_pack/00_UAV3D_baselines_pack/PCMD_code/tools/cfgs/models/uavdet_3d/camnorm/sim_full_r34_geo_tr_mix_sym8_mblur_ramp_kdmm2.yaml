@@ -1,0 +1,10 @@
+# 蒸馏学生 KDmm2（2026-09-23 深夜）：同 kdmm，只去掉 CrossKD（W_CROSS 0）。
+# 为什么：KDmm v1 两个种子域内 3D 检出塌到 0.25/0.18（基线 0.49），但热图峰值分布、2D 中心命中都正常甚至更好
+# （仿真 0.82/0.84 vs 0.80；真实 0.83/0.69 vs 0.69）—— 坏的只是深度那条路（center_dis / dim / size2d）。
+# 五项蒸馏里只有 CrossKD 会让【共享的头】在教师特征上训练：教师特征里有 depth/tag 通道直接给出的深度信息
+# （kd_cross 4.0 vs RGB 教师 7.4，任务太容易），头学会从学生特征里根本没有的方向读深度，回到 RGB 特征上就系统性偏。
+# 热图软标签（W_HM）保留：2D 命中没有受害，真实域 s0 反而从 0.69 涨到 0.83。
+_BASE_CONFIG_: cfgs/models/uavdet_3d/camnorm/sim_full_r34_geo_tr_mix_sym8_mblur_ramp_kdmm.yaml
+MODEL:
+    DISTILL:
+        W_CROSS: 0.0

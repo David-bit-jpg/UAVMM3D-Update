@@ -1,0 +1,81 @@
+{
+ "n_train_tp": 11725,
+ "n_test_tp": 4396,
+ "median_s_train": 1.281896088816952,
+ "median_s_test": 1.1549884956479315,
+ "w": 0.190282282581008,
+ "s_bar": [
+  0.34782981872558594,
+  0.3484771102666855,
+  0.19545264542102814
+ ],
+ "width_bias_test_median_pct": -16.327932519599074,
+ "width_bias_train_median_pct": -16.79978872223675,
+ "width_bias_test_mad_pct": 7.573836957035446,
+ "share_gt_span_wider_than_det_span_test": 0.6842584167424932,
+ "share_gt_span_wider_than_det_span_train": 0.8719829424307036,
+ "det_rot_head_sym_AOE_test_mean": 25.454600830383175,
+ "det_rot_head_sym_AOE_test_median": 23.975813438554667,
+ "arms": {
+  "pcmd_nofuse_test|base": {
+   "UDS": 56.66674005126231,
+   "AP": 33.73988859901152,
+   "ATE": 0.34985862237325505,
+   "AOE": 14.484104245708311,
+   "n_tp": 4430,
+   "depth_abs_med_pct": 7.331306911105651,
+   "depth_bias_med_pct": 6.297231342721364,
+   "spearman_deptherr_vs_logs_gt": -0.3765262800172737,
+   "spearman_absdeptherr_vs_AOE": 0.16873056575022108,
+   "spearman_deptherr_vs_AOE": 0.05413933728704037
+  },
+  "pcmd_nofuse_test|gt": {
+   "UDS": 35.36636860167978,
+   "AP": 4.509019768859899,
+   "ATE": 0.8846535851337922,
+   "AOE": 14.484104245708311,
+   "n_tp": 2883,
+   "depth_abs_med_pct": 17.161506474787977,
+   "depth_bias_med_pct": 17.091263158102134
+  },
+  "pcmd_nofuse_test|gtn": {
+   "UDS": 57.52026615466256,
+   "AP": 35.236209216612615,
+   "ATE": 0.34142935880527864,
+   "AOE": 14.484104245708311,
+   "n_tp": 4421,
+   "depth_abs_med_pct": 7.41288129511027,
+   "depth_bias_med_pct": -2.918616576281575
+  },
+  "pcmd_fused_test|base": {
+   "UDS": 60.81133166800865,
+   "AP": 40.93098337624802,
+   "ATE": 0.3058547975661101,
+   "AOE": 14.478897589554446,
+   "n_tp": 4463,
+   "depth_abs_med_pct": 5.875851537368179,
+   "depth_bias_med_pct": 4.287009769605261,
+   "spearman_deptherr_vs_logs_gt": -0.2677415880718684,
+   "spearman_absdeptherr_vs_AOE": 0.31898298452121043,
+   "spearman_deptherr_vs_AOE": 0.24504756134484804
+  },
+  "pcmd_fused_test|gt": {
+   "UDS": 40.547914757979086,
+   "AP": 10.412376427835838,
+   "ATE": 0.7061838724319877,
+   "AOE": 14.478897589554446,
+   "n_tp": 3625,
+   "depth_abs_med_pct": 14.569475213458198,
+   "depth_bias_med_pct": 14.42148592894195
+  },
+  "pcmd_fused_test|gtn": {
+   "UDS": 58.777495861319636,
+   "AP": 37.36896469228219,
+   "ATE": 0.32608091474259737,
+   "AOE": 14.478897589554446,
+   "n_tp": 4465,
+   "depth_abs_med_pct": 7.188192676505725,
+   "depth_bias_med_pct": -3.2061542882126743
+  }
+ }
+}

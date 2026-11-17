@@ -1,0 +1,7 @@
+# [review1113 ourdet_baseproto] OutdoorUAV3D (AntiUAV3D subset v2) +pst under the baselines' protocol: our outdoor sim-only recipe
+# (sim_out_r34_geo_ramp_out, 5 epochs, from ImageNet) on CARLA sim + real pseudo labels index_pst.pkl (concatenation, uniform sampling).
+_BASE_CONFIG_: cfgs/models/uavdet_3d/camnorm/sim_out_r34_geo_ramp_out.yaml
+DATA_CONFIG:
+    DATASET: 'OurdetConcat'
+    MIX_REAL: {DATA_PATH: 'D:/S2MUAV3D/ourdet_baseproto_cache/outdoor_real_fs', INDEX_FILE: 'index_pst.pkl',
+               NORM_MEAN: [0.4968, 0.5059, 0.5084], NORM_STD: [0.1854, 0.1816, 0.1970]}

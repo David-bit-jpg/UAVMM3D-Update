@@ -1,0 +1,16 @@
+# [srcx/mix 11-11] mixed curated sim source (indoor UE5 train + CARLA outdoor train + quality-filtered CARLA outdoor test/Town10),
+# clone of camnorm_sim_full_geo_tr_mblur_sym2. Built by output/camnorm/geo1004/gproto/srcx/mix/build_mix_cache.py.
+# Changes: DATA_PATH; NORM (tools/calc_cache_norm.py on the mixed train split, 600 frames); VIEW_AUG.t_range = union of the indoor
+# [1.0,3.0] and outdoor [1.0,4.6] ranges; DEPTH/SIZE target stats (tools/calc_target_stats.py on the mixed cache).
+# MIN_RGB_VIS 5.0 inherited: the mixed vis_score.npy keeps indoor scores and gives outdoor frames 255 (= no filter, as in the outdoor config).
+# test split = junction to the indoor sim val split (E:/mmcache/full_v2/test).
+_BASE_CONFIG_: cfgs/dataset_configs/uavdet_3d/camnorm_sim_full_geo_tr_mblur_sym2.yaml
+DATA_PATH: 'D:/S2MUAV3D/sim_mix_cache'
+NORM_MEAN: [0.3912, 0.4095, 0.4113]
+NORM_STD: [0.2708, 0.2067, 0.2361]
+VIEW_AUG: {zoom: [1.0, 4.0], no_upscale: false, t_range: [1.0, 4.6], max_upscale: 2.0}
+# 自洽标准化（tools/calc_target_stats.py 实测，只来自训练集本身）
+DEPTH_MEAN: 14.2488
+DEPTH_STD: 15.2051
+SIZE_MEAN: [0.6957, 0.6691, 0.2874]
+SIZE_STD: [0.5128, 0.4726, 0.2116]

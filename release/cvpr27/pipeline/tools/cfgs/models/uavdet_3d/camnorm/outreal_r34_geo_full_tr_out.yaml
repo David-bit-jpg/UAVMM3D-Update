@@ -1,0 +1,4 @@
+# [outdoor 11-11] detector on real outdoor frames: same as mav6d_r34_geo_full_tr (one box per frame, width-only geometric depth), data = outdoor real cache
+_BASE_CONFIG_: cfgs/models/uavdet_3d/camnorm/mav6d_r34_geo_full_tr.yaml
+DATA_CONFIG:
+    _BASE_CONFIG_: cfgs/dataset_configs/uavdet_3d/camnorm_outreal_geo_full_t_out.yaml

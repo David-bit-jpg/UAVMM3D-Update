@@ -1,0 +1,4 @@
+# [srcx/mix 11-11] stage-1 sim-only detector on the mixed curated sim source: recipe of sim_full_r34_geo_tr_mix_sym8_mblur_ramp unchanged
+_BASE_CONFIG_: cfgs/models/uavdet_3d/camnorm/sim_full_r34_geo_tr_mix_sym8_mblur_ramp.yaml
+DATA_CONFIG:
+    _BASE_CONFIG_: cfgs/dataset_configs/uavdet_3d/camnorm_sim_mix_geo_tr_mblur_sym2_mix.yaml

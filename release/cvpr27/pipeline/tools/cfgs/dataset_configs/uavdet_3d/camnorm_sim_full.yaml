@@ -1,0 +1,9 @@
+# 2026-09-18 全量新仿真数据：D:/data_collect 四场景主批次 + 仰拍 + 近距离 _near + 小机近距离 _near2
+# （真机尺寸、机头 +x、录制器原生标注），<=8 m 整帧、按序列 8:2 划分（cfgs/subsets/full_v2），原分辨率 JPEG + 多焦距裁窗。
+# NORM_MEAN/NORM_STD 由 tools/calc_cache_norm.py 实测写入。
+_BASE_CONFIG_: cfgs/dataset_configs/uavdet_3d/camnorm_sim_pp_realsize.yaml
+DATA_PATH: 'E:/mmcache/full_v2'
+
+# 本域归一化统计量（tools/calc_cache_norm.py 实测，E:/mmcache/full_v2/train）
+NORM_MEAN: [0.3628, 0.4037, 0.4394]
+NORM_STD: [0.2662, 0.2109, 0.2286]

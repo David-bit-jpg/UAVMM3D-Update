@@ -1,0 +1,13 @@
+11-17 12:12:24 start out2antifs_k249
+grep: logs/det0_infer.log: No such file or directory
+tail: cannot open 'logs/ref_sim.log' for reading: No such file or directory
+s_bar (val unlabeled, 166 boxes conf>=0.7 of 574) = [0.5337 0.5309 0.2291]
+train: 3293 frames, conf median 0.277, >=0.5 22.0%, >=0.3 45.7%
+val: 1148 frames, conf median 0.589, >=0.5 60.5%, >=0.3 71.7%
+test: 2624 frames, conf median 0.611, >=0.5 71.3%, >=0.3 88.3%
+11-17 12:52:54 detectors done
+pseudo pseudo_tr1: 3293 / 3293 crops have a pseudo-orientation; gate (IR vs LiDAR <= 10 deg) passes 928 (28.2%); d_il median 16.9
+11-17 13:56:52 orientation branch done
+11-17 14:07:56 w (sim val inverse variance) = 0.09788050388120345
+11-17 14:36:25 val sanity: "UDS": 32.0698046074559
+11-17 14:36:28 ALL DONE

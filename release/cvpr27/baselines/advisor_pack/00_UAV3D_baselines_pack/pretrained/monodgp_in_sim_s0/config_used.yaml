@@ -1,0 +1,111 @@
+dataset:
+  aug_crop: true
+  aug_pd: true
+  batch_size: 2
+  bbox2d_type: anno
+  class_merging: false
+  clip_2d: false
+  depth_scale: normal
+  label_files:
+  - @@ROOT@@/data/cmpfull/sim_train/labels.pkl
+  mean_size_hwl:
+  - 0.2507
+  - 0.6198
+  - 0.6464
+  meanshape: false
+  min_box_height: 0
+  min_depth: 0
+  random_crop: 0.5
+  random_flip: 0.5
+  random_mixup3d: 0.5
+  scale: 0.05
+  shift: 0.05
+  test_split: test
+  train_split: train
+  type: UAV
+  use_3d_center: true
+  use_dontcare: false
+  writelist:
+  - drone
+lr_scheduler:
+  decay_list:
+  - 8
+  - 12
+  - 16
+  - 20
+  decay_rate: 0.5
+  type: step
+  warmup: false
+model:
+  3dcenter_loss_coef: 10
+  angle_loss_coef: 1
+  aux_loss: true
+  backbone: resnet50
+  bbox_loss_coef: 5
+  box_noise_scale: 0.4
+  cls_loss_coef: 2
+  dec_layers: 3
+  dec_n_points: 4
+  depth_loss_coef: 1
+  depth_map_loss_coef: 1
+  depth_max: 60.0
+  depth_min: 1e-3
+  device: cuda
+  dilation: false
+  dim_feedforward: 256
+  dim_loss_coef: 1
+  dropout: 0.1
+  enc_layers: 3
+  enc_n_points: 4
+  focal_alpha: 0.25
+  giou_loss_coef: 2
+  group_num: 11
+  hidden_dim: 256
+  init_box: false
+  label_noise_scale: 0.2
+  masks: false
+  mode: LID
+  nheads: 8
+  num_classes: 1
+  num_depth_bins: 80
+  num_feature_levels: 4
+  num_patterns: 0
+  num_queries: 50
+  position_embedding: sine
+  region_loss_coef: 1
+  return_intermediate_dec: true
+  scalar: 5
+  set_cost_3dcenter: 10
+  set_cost_bbox: 5
+  set_cost_class: 2
+  set_cost_giou: 2
+  train_backbone: true
+  use_dn: false
+  with_box_refine: true
+model_name: monodgp
+optimizer:
+  lr: 5.0e-05
+  type: adamw
+  weight_decay: 0.0001
+random_seed: 0
+tester:
+  checkpoint: 195
+  mode: single
+  threshold: 0.2
+  topk: 50
+  type: UAV
+trainer:
+  box_noise_scale: 0.4
+  gpu_ids: '1'
+  keep_every: 4
+  label_noise_scale: 0.2
+  loss_log: @@ROOT@@/pretrained/monodgp_in_sim_s0\loss_log.jsonl
+  max_epoch: 24
+  max_iters: 0
+  num_patterns: 0
+  resume_model: true
+  save_all: false
+  save_frequency: 1
+  save_path: @@ROOT@@/pretrained/monodgp_in_sim_s0
+  scalar: 5
+  use_dn: false

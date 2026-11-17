@@ -1,0 +1,506 @@
+{
+ "MonoDETR|mav": {
+  "files": [
+   "D:/advisor_results_1117b/runs/monodetr_in_sim_s0/pred_real_test.pkl"
+  ],
+  "identical_copies": {
+   "D:/advisor_results_1117b/runs/monodetr_in_sim_s0/pred_real_test.pkl": [
+    "D:/advisor_results_1117b/runs/monodetr_in_sim_s0/pred_real_test.pkl",
+    "C:/Users/jiang/OneDrive/文档/xwechat_files/wxid_pu1uzzbuzwsx22_b4ed/msg/file/2026-11/results_to_send_20261116_1459/runs/monodetr_in_sim_s0/pred_real_test.pkl"
+   ]
+  }
+ },
+ "MonoDETR|anti": {
+  "files": [
+   "D:/advisor_results_1117b/runs/monodetr_out_sim_s0/pred_outdoor_test.pkl"
+  ],
+  "identical_copies": {
+   "D:/advisor_results_1117b/runs/monodetr_out_sim_s0/pred_outdoor_test.pkl": [
+    "D:/advisor_results_1117b/runs/monodetr_out_sim_s0/pred_outdoor_test.pkl",
+    "C:/Users/jiang/OneDrive/文档/xwechat_files/wxid_pu1uzzbuzwsx22_b4ed/msg/file/2026-11/results_to_send_20261116_1459/runs/monodetr_out_sim_s0/pred_outdoor_test.pkl"
+   ]
+  }
+ },
+ "MonoDETR +ST|mav": {
+  "files": [
+   "D:/advisor_results_1117b/runs/monodetr_in_st_mav_s0/pred_real_test.pkl"
+  ],
+  "identical_copies": {
+   "D:/advisor_results_1117b/runs/monodetr_in_st_mav_s0/pred_real_test.pkl": [
+    "D:/advisor_results_1117b/runs/monodetr_in_st_mav_s0/pred_real_test.pkl",
+    "C:/Users/jiang/OneDrive/文档/xwechat_files/wxid_pu1uzzbuzwsx22_b4ed/msg/file/2026-11/results_to_send_20261116_1459/runs/monodetr_in_st_mav_s0/pred_real_test.pkl"
+   ]
+  }
+ },
+ "MonoDETR +ST|anti": {
+  "files": [
+   "D:/advisor_results_1117b/runs/monodetr_out_st_anti_s0/pred_outdoor_test.pkl"
+  ],
+  "identical_copies": {
+   "D:/advisor_results_1117b/runs/monodetr_out_st_anti_s0/pred_outdoor_test.pkl": [
+    "D:/advisor_results_1117b/runs/monodetr_out_st_anti_s0/pred_outdoor_test.pkl",
+    "C:/Users/jiang/OneDrive/文档/xwechat_files/wxid_pu1uzzbuzwsx22_b4ed/msg/file/2026-11/results_to_send_20261116_1459/runs/monodetr_out_st_anti_s0/pred_outdoor_test.pkl"
+   ]
+  }
+ },
+ "MonoDETR +PST|mav": {
+  "files": [
+   "D:/advisor_results_1117b/runs/monodetr_in_kdc_mav_s0/pred_real_test.pkl",
+   "D:/advisor_results_1117b/runs/monodetr_in_kdc_mav_s1/pred_real_test.pkl",
+   "D:/advisor_results_1117b/runs/monodetr_in_kdc_mav_s2/pred_real_test.pkl"
+  ],
+  "identical_copies": {
+   "D:/advisor_results_1117b/runs/monodetr_in_kdc_mav_s0/pred_real_test.pkl": [
+    "D:/advisor_results_1117b/runs/monodetr_in_kdc_mav_s0/pred_real_test.pkl",
+    "C:/Users/jiang/OneDrive/文档/xwechat_files/wxid_pu1uzzbuzwsx22_b4ed/msg/file/2026-11/results_to_send_20261116_1459/runs/monodetr_in_kdc_mav_s0/pred_real_test.pkl"
+   ],
+   "D:/advisor_results_1117b/runs/monodetr_in_kdc_mav_s1/pred_real_test.pkl": [
+    "D:/advisor_results_1117b/runs/monodetr_in_kdc_mav_s1/pred_real_test.pkl"
+   ],
+   "D:/advisor_results_1117b/runs/monodetr_in_kdc_mav_s2/pred_real_test.pkl": [
+    "D:/advisor_results_1117b/runs/monodetr_in_kdc_mav_s2/pred_real_test.pkl"
+   ]
+  }
+ },
+ "MonoDETR +PST|anti": {
+  "files": [
+   "D:/advisor_results_1117b/runs/monodetr_out_kd_anti_s0/pred_outdoor_test.pkl",
+   "D:/advisor_results_1117b/runs/monodetr_out_kd_anti_s1/pred_outdoor_test.pkl",
+   "D:/advisor_results_1117b/runs/monodetr_out_kd_anti_s2/pred_outdoor_test.pkl"
+  ],
+  "identical_copies": {
+   "D:/advisor_results_1117b/runs/monodetr_out_kd_anti_s0/pred_outdoor_test.pkl": [
+    "D:/advisor_results_1117b/runs/monodetr_out_kd_anti_s0/pred_outdoor_test.pkl",
+    "C:/Users/jiang/OneDrive/文档/xwechat_files/wxid_pu1uzzbuzwsx22_b4ed/msg/file/2026-11/results_to_send_20261116_1459/runs/monodetr_out_kd_anti_s0/pred_outdoor_test.pkl"
+   ],
+   "D:/advisor_results_1117b/runs/monodetr_out_kd_anti_s1/pred_outdoor_test.pkl": [
+    "D:/advisor_results_1117b/runs/monodetr_out_kd_anti_s1/pred_outdoor_test.pkl",
+    "C:/Users/jiang/OneDrive/文档/xwechat_files/wxid_pu1uzzbuzwsx22_b4ed/msg/file/2026-11/results_to_send_20261116_1459/runs/monodetr_out_kd_anti_s1/pred_outdoor_test.pkl"
+   ],
+   "D:/advisor_results_1117b/runs/monodetr_out_kd_anti_s2/pred_outdoor_test.pkl": [
+    "D:/advisor_results_1117b/runs/monodetr_out_kd_anti_s2/pred_outdoor_test.pkl",
+    "C:/Users/jiang/OneDrive/文档/xwechat_files/wxid_pu1uzzbuzwsx22_b4ed/msg/file/2026-11/results_to_send_20261116_1459/runs/monodetr_out_kd_anti_s2/pred_outdoor_test.pkl"
+   ]
+  }
+ },
+ "MonoCD|mav": {
+  "files": [
+   "D:/advisor_results_1117b/runs/monocd_in_sim_s1/pred_real_test.pkl",
+   "D:/advisor_results_1117b/runs/monocd_in_sim_s2/pred_real_test.pkl",
+   "D:/cmpfull_runs/monocd_s0/pred_real_test.pkl"
+  ],
+  "identical_copies": {
+   "D:/advisor_results_1117b/runs/monocd_in_sim_s1/pred_real_test.pkl": [
+    "D:/advisor_results_1117b/runs/monocd_in_sim_s1/pred_real_test.pkl",
+    "C:/Users/jiang/OneDrive/文档/xwechat_files/wxid_pu1uzzbuzwsx22_b4ed/msg/file/2026-11/results_to_send_20261116_1459/runs/monocd_in_sim_s1/pred_real_test.pkl"
+   ],
+   "D:/advisor_results_1117b/runs/monocd_in_sim_s2/pred_real_test.pkl": [
+    "D:/advisor_results_1117b/runs/monocd_in_sim_s2/pred_real_test.pkl",
+    "C:/Users/jiang/OneDrive/文档/xwechat_files/wxid_pu1uzzbuzwsx22_b4ed/msg/file/2026-11/results_to_send_20261116_1459/runs/monocd_in_sim_s2/pred_real_test.pkl"
+   ],
+   "D:/cmpfull_runs/monocd_s0/pred_real_test.pkl": [
+    "D:/cmpfull_runs/monocd_s0/pred_real_test.pkl"
+   ]
+  }
+ },
+ "MonoCD|anti": {
+  "files": [
+   "D:/advisor_results_1117b/runs/monocd_out_sim_s0/pred_outdoor_test.pkl",
+   "D:/advisor_results_1117b/runs/monocd_out_sim_s1/pred_outdoor_test.pkl",
+   "D:/advisor_results_1117b/runs/monocd_out_sim_s2/pred_outdoor_test.pkl"
+  ],
+  "identical_copies": {
+   "D:/advisor_results_1117b/runs/monocd_out_sim_s0/pred_outdoor_test.pkl": [
+    "D:/advisor_results_1117b/runs/monocd_out_sim_s0/pred_outdoor_test.pkl",
+    "C:/Users/jiang/OneDrive/文档/xwechat_files/wxid_pu1uzzbuzwsx22_b4ed/msg/file/2026-11/results_to_send_20261116_1459/runs/monocd_out_sim_s0/pred_outdoor_test.pkl"
+   ],
+   "D:/advisor_results_1117b/runs/monocd_out_sim_s1/pred_outdoor_test.pkl": [
+    "D:/advisor_results_1117b/runs/monocd_out_sim_s1/pred_outdoor_test.pkl",
+    "C:/Users/jiang/OneDrive/文档/xwechat_files/wxid_pu1uzzbuzwsx22_b4ed/msg/file/2026-11/results_to_send_20261116_1459/runs/monocd_out_sim_s1/pred_outdoor_test.pkl"
+   ],
+   "D:/advisor_results_1117b/runs/monocd_out_sim_s2/pred_outdoor_test.pkl": [
+    "D:/advisor_results_1117b/runs/monocd_out_sim_s2/pred_outdoor_test.pkl"
+   ]
+  }
+ },
+ "MonoCD +ST|mav": {
+  "files": [
+   "D:/advisor_results_1117b/runs/monocd_in_st_mav_s1/pred_real_test.pkl"
+  ],
+  "identical_copies": {
+   "D:/advisor_results_1117b/runs/monocd_in_st_mav_s1/pred_real_test.pkl": [
+    "D:/advisor_results_1117b/runs/monocd_in_st_mav_s1/pred_real_test.pkl",
+    "C:/Users/jiang/OneDrive/文档/xwechat_files/wxid_pu1uzzbuzwsx22_b4ed/msg/file/2026-11/results_to_send_20261116_1459/runs/monocd_in_st_mav_s1/pred_real_test.pkl"
+   ]
+  }
+ },
+ "MonoCD +ST|anti": {
+  "files": [
+   "D:/advisor_results_1117b/runs/monocd_out_st_anti_s0/pred_outdoor_test.pkl",
+   "D:/advisor_results_1117b/runs/monocd_out_st_anti_s1/pred_outdoor_test.pkl",
+   "D:/advisor_results_1117b/runs/monocd_out_st_anti_s2/pred_outdoor_test.pkl"
+  ],
+  "identical_copies": {
+   "D:/advisor_results_1117b/runs/monocd_out_st_anti_s0/pred_outdoor_test.pkl": [
+    "D:/advisor_results_1117b/runs/monocd_out_st_anti_s0/pred_outdoor_test.pkl",
+    "C:/Users/jiang/OneDrive/文档/xwechat_files/wxid_pu1uzzbuzwsx22_b4ed/msg/file/2026-11/results_to_send_20261116_1459/runs/monocd_out_st_anti_s0/pred_outdoor_test.pkl"
+   ],
+   "D:/advisor_results_1117b/runs/monocd_out_st_anti_s1/pred_outdoor_test.pkl": [
+    "D:/advisor_results_1117b/runs/monocd_out_st_anti_s1/pred_outdoor_test.pkl"
+   ],
+   "D:/advisor_results_1117b/runs/monocd_out_st_anti_s2/pred_outdoor_test.pkl": [
+    "D:/advisor_results_1117b/runs/monocd_out_st_anti_s2/pred_outdoor_test.pkl"
+   ]
+  }
+ },
+ "MonoCD +PST|mav": {
+  "files": [
+   "D:/advisor_results_1117b/runs/monocd_in_kdc_mav_s0/pred_real_test.pkl",
+   "D:/advisor_results_1117b/runs/monocd_in_kdc_mav_s1/pred_real_test.pkl",
+   "D:/advisor_results_1117b/runs/monocd_in_kdc_mav_s2/pred_real_test.pkl"
+  ],
+  "identical_copies": {
+   "D:/advisor_results_1117b/runs/monocd_in_kdc_mav_s0/pred_real_test.pkl": [
+    "D:/advisor_results_1117b/runs/monocd_in_kdc_mav_s0/pred_real_test.pkl",
+    "C:/Users/jiang/OneDrive/文档/xwechat_files/wxid_pu1uzzbuzwsx22_b4ed/msg/file/2026-11/results_to_send_20261116_1459/runs/monocd_in_kdc_mav_s0/pred_real_test.pkl"
+   ],
+   "D:/advisor_results_1117b/runs/monocd_in_kdc_mav_s1/pred_real_test.pkl": [
+    "D:/advisor_results_1117b/runs/monocd_in_kdc_mav_s1/pred_real_test.pkl",
+    "C:/Users/jiang/OneDrive/文档/xwechat_files/wxid_pu1uzzbuzwsx22_b4ed/msg/file/2026-11/results_to_send_20261116_1459/runs/monocd_in_kdc_mav_s1/pred_real_test.pkl"
+   ],
+   "D:/advisor_results_1117b/runs/monocd_in_kdc_mav_s2/pred_real_test.pkl": [
+    "D:/advisor_results_1117b/runs/monocd_in_kdc_mav_s2/pred_real_test.pkl",
+    "C:/Users/jiang/OneDrive/文档/xwechat_files/wxid_pu1uzzbuzwsx22_b4ed/msg/file/2026-11/results_to_send_20261116_1459/runs/monocd_in_kdc_mav_s2/pred_real_test.pkl"
+   ]
+  }
+ },
+ "MonoCD +PST|anti": {
+  "files": [
+   "D:/advisor_results_1117b/runs/monocd_out_kd_anti_s0/pred_outdoor_test.pkl",
+   "D:/advisor_results_1117b/runs/monocd_out_kd_anti_s1/pred_outdoor_test.pkl",
+   "D:/advisor_results_1117b/runs/monocd_out_kd_anti_s2/pred_outdoor_test.pkl"
+  ],
+  "identical_copies": {
+   "D:/advisor_results_1117b/runs/monocd_out_kd_anti_s0/pred_outdoor_test.pkl": [
+    "D:/advisor_results_1117b/runs/monocd_out_kd_anti_s0/pred_outdoor_test.pkl",
+    "C:/Users/jiang/OneDrive/文档/xwechat_files/wxid_pu1uzzbuzwsx22_b4ed/msg/file/2026-11/results_to_send_20261116_1459/runs/monocd_out_kd_anti_s0/pred_outdoor_test.pkl"
+   ],
+   "D:/advisor_results_1117b/runs/monocd_out_kd_anti_s1/pred_outdoor_test.pkl": [
+    "D:/advisor_results_1117b/runs/monocd_out_kd_anti_s1/pred_outdoor_test.pkl",
+    "C:/Users/jiang/OneDrive/文档/xwechat_files/wxid_pu1uzzbuzwsx22_b4ed/msg/file/2026-11/results_to_send_20261116_1459/runs/monocd_out_kd_anti_s1/pred_outdoor_test.pkl"
+   ],
+   "D:/advisor_results_1117b/runs/monocd_out_kd_anti_s2/pred_outdoor_test.pkl": [
+    "D:/advisor_results_1117b/runs/monocd_out_kd_anti_s2/pred_outdoor_test.pkl",
+    "C:/Users/jiang/OneDrive/文档/xwechat_files/wxid_pu1uzzbuzwsx22_b4ed/msg/file/2026-11/results_to_send_20261116_1459/runs/monocd_out_kd_anti_s2/pred_outdoor_test.pkl"
+   ]
+  }
+ },
+ "MonoDGP|mav": {
+  "files": [
+   "D:/cmpfull_runs/monodgp_s0/pred_real_test.pkl"
+  ],
+  "identical_copies": {
+   "D:/cmpfull_runs/monodgp_s0/pred_real_test.pkl": [
+    "D:/cmpfull_runs/monodgp_s0/pred_real_test.pkl"
+   ]
+  }
+ },
+ "MonoDGP|anti": {
+  "files": [
+   "D:/advisor_results_1117b/runs/monodgp_out_sim_s0/pred_outdoor_test.pkl",
+   "D:/advisor_results_1117b/runs/monodgp_out_sim_s1/pred_outdoor_test.pkl",
+   "D:/advisor_results_1117b/runs/monodgp_out_sim_s2/pred_outdoor_test.pkl"
+  ],
+  "identical_copies": {
+   "D:/advisor_results_1117b/runs/monodgp_out_sim_s0/pred_outdoor_test.pkl": [
+    "D:/advisor_results_1117b/runs/monodgp_out_sim_s0/pred_outdoor_test.pkl",
+    "C:/Users/jiang/OneDrive/文档/xwechat_files/wxid_pu1uzzbuzwsx22_b4ed/msg/file/2026-11/results_to_send_20261116_1459/runs/monodgp_out_sim_s0/pred_outdoor_test.pkl"
+   ],
+   "D:/advisor_results_1117b/runs/monodgp_out_sim_s1/pred_outdoor_test.pkl": [
+    "D:/advisor_results_1117b/runs/monodgp_out_sim_s1/pred_outdoor_test.pkl"
+   ],
+   "D:/advisor_results_1117b/runs/monodgp_out_sim_s2/pred_outdoor_test.pkl": [
+    "D:/advisor_results_1117b/runs/monodgp_out_sim_s2/pred_outdoor_test.pkl"
+   ]
+  }
+ },
+ "MonoDGP +ST|mav": {
+  "files": [
+   "D:/advisor_results_1117b/runs/monodgp_in_st_mav_s0/pred_real_test.pkl"
+  ],
+  "identical_copies": {
+   "D:/advisor_results_1117b/runs/monodgp_in_st_mav_s0/pred_real_test.pkl": [
+    "D:/advisor_results_1117b/runs/monodgp_in_st_mav_s0/pred_real_test.pkl",
+    "C:/Users/jiang/OneDrive/文档/xwechat_files/wxid_pu1uzzbuzwsx22_b4ed/msg/file/2026-11/results_to_send_20261116_1459/runs/monodgp_in_st_mav_s0/pred_real_test.pkl"
+   ]
+  }
+ },
+ "MonoDGP +ST|anti": {
+  "files": [
+   "D:/advisor_results_1117b/runs/monodgp_out_st_anti_s0/pred_outdoor_test.pkl",
+   "D:/advisor_results_1117b/runs/monodgp_out_st_anti_s1/pred_outdoor_test.pkl",
+   "D:/advisor_results_1117b/runs/monodgp_out_st_anti_s2/pred_outdoor_test.pkl"
+  ],
+  "identical_copies": {
+   "D:/advisor_results_1117b/runs/monodgp_out_st_anti_s0/pred_outdoor_test.pkl": [
+    "D:/advisor_results_1117b/runs/monodgp_out_st_anti_s0/pred_outdoor_test.pkl",
+    "C:/Users/jiang/OneDrive/文档/xwechat_files/wxid_pu1uzzbuzwsx22_b4ed/msg/file/2026-11/results_to_send_20261116_1459/runs/monodgp_out_st_anti_s0/pred_outdoor_test.pkl"
+   ],
+   "D:/advisor_results_1117b/runs/monodgp_out_st_anti_s1/pred_outdoor_test.pkl": [
+    "D:/advisor_results_1117b/runs/monodgp_out_st_anti_s1/pred_outdoor_test.pkl"
+   ],
+   "D:/advisor_results_1117b/runs/monodgp_out_st_anti_s2/pred_outdoor_test.pkl": [
+    "D:/advisor_results_1117b/runs/monodgp_out_st_anti_s2/pred_outdoor_test.pkl"
+   ]
+  }
+ },
+ "MonoDGP +PST|mav": {
+  "files": [
+   "D:/advisor_results_1117b/runs/monodgp_in_kdc_mav_s0/pred_real_test.pkl",
+   "D:/advisor_results_1117b/runs/monodgp_in_kdc_mav_s1/pred_real_test.pkl",
+   "D:/advisor_results_1117b/runs/monodgp_in_kdc_mav_s2/pred_real_test.pkl"
+  ],
+  "identical_copies": {
+   "D:/advisor_results_1117b/runs/monodgp_in_kdc_mav_s0/pred_real_test.pkl": [
+    "D:/advisor_results_1117b/runs/monodgp_in_kdc_mav_s0/pred_real_test.pkl",
+    "C:/Users/jiang/OneDrive/文档/xwechat_files/wxid_pu1uzzbuzwsx22_b4ed/msg/file/2026-11/results_to_send_20261116_1459/runs/monodgp_in_kdc_mav_s0/pred_real_test.pkl"
+   ],
+   "D:/advisor_results_1117b/runs/monodgp_in_kdc_mav_s1/pred_real_test.pkl": [
+    "D:/advisor_results_1117b/runs/monodgp_in_kdc_mav_s1/pred_real_test.pkl",
+    "C:/Users/jiang/OneDrive/文档/xwechat_files/wxid_pu1uzzbuzwsx22_b4ed/msg/file/2026-11/results_to_send_20261116_1459/runs/monodgp_in_kdc_mav_s1/pred_real_test.pkl"
+   ],
+   "D:/advisor_results_1117b/runs/monodgp_in_kdc_mav_s2/pred_real_test.pkl": [
+    "D:/advisor_results_1117b/runs/monodgp_in_kdc_mav_s2/pred_real_test.pkl",
+    "C:/Users/jiang/OneDrive/文档/xwechat_files/wxid_pu1uzzbuzwsx22_b4ed/msg/file/2026-11/results_to_send_20261116_1459/runs/monodgp_in_kdc_mav_s2/pred_real_test.pkl"
+   ]
+  }
+ },
+ "MonoDGP +PST|anti": {
+  "files": [
+   "D:/advisor_results_1117b/runs/monodgp_out_kd_anti_s0/pred_outdoor_test.pkl",
+   "D:/advisor_results_1117b/runs/monodgp_out_kd_anti_s1/pred_outdoor_test.pkl",
+   "D:/advisor_results_1117b/runs/monodgp_out_kd_anti_s2/pred_outdoor_test.pkl"
+  ],
+  "identical_copies": {
+   "D:/advisor_results_1117b/runs/monodgp_out_kd_anti_s0/pred_outdoor_test.pkl": [
+    "D:/advisor_results_1117b/runs/monodgp_out_kd_anti_s0/pred_outdoor_test.pkl",
+    "C:/Users/jiang/OneDrive/文档/xwechat_files/wxid_pu1uzzbuzwsx22_b4ed/msg/file/2026-11/results_to_send_20261116_1459/runs/monodgp_out_kd_anti_s0/pred_outdoor_test.pkl"
+   ],
+   "D:/advisor_results_1117b/runs/monodgp_out_kd_anti_s1/pred_outdoor_test.pkl": [
+    "D:/advisor_results_1117b/runs/monodgp_out_kd_anti_s1/pred_outdoor_test.pkl",
+    "C:/Users/jiang/OneDrive/文档/xwechat_files/wxid_pu1uzzbuzwsx22_b4ed/msg/file/2026-11/results_to_send_20261116_1459/runs/monodgp_out_kd_anti_s1/pred_outdoor_test.pkl"
+   ],
+   "D:/advisor_results_1117b/runs/monodgp_out_kd_anti_s2/pred_outdoor_test.pkl": [
+    "D:/advisor_results_1117b/runs/monodgp_out_kd_anti_s2/pred_outdoor_test.pkl",
+    "C:/Users/jiang/OneDrive/文档/xwechat_files/wxid_pu1uzzbuzwsx22_b4ed/msg/file/2026-11/results_to_send_20261116_1459/runs/monodgp_out_kd_anti_s2/pred_outdoor_test.pkl"
+   ]
+  }
+ },
+ "MonoCoP|mav": {
+  "files": [
+   "D:/advisor_results_1117b/runs/monocop_in_sim_s0/pred_real_test.pkl"
+  ],
+  "identical_copies": {
+   "D:/advisor_results_1117b/runs/monocop_in_sim_s0/pred_real_test.pkl": [
+    "D:/advisor_results_1117b/runs/monocop_in_sim_s0/pred_real_test.pkl",
+    "C:/Users/jiang/OneDrive/文档/xwechat_files/wxid_pu1uzzbuzwsx22_b4ed/msg/file/2026-11/results_to_send_20261116_1459/runs/monocop_in_sim_s0/pred_real_test.pkl"
+   ]
+  }
+ },
+ "MonoCoP|anti": {
+  "files": [
+   "D:/advisor_results_1117b/runs/monocop_out_sim_s0/pred_outdoor_test.pkl"
+  ],
+  "identical_copies": {
+   "D:/advisor_results_1117b/runs/monocop_out_sim_s0/pred_outdoor_test.pkl": [
+    "D:/advisor_results_1117b/runs/monocop_out_sim_s0/pred_outdoor_test.pkl",
+    "C:/Users/jiang/OneDrive/文档/xwechat_files/wxid_pu1uzzbuzwsx22_b4ed/msg/file/2026-11/results_to_send_20261116_1459/runs/monocop_out_sim_s0/pred_outdoor_test.pkl"
+   ]
+  }
+ },
+ "MonoCoP +ST|mav": {
+  "files": [
+   "D:/advisor_results_1117b/runs/monocop_in_st_mav_s0/pred_real_test.pkl"
+  ],
+  "identical_copies": {
+   "D:/advisor_results_1117b/runs/monocop_in_st_mav_s0/pred_real_test.pkl": [
+    "D:/advisor_results_1117b/runs/monocop_in_st_mav_s0/pred_real_test.pkl",
+    "C:/Users/jiang/OneDrive/文档/xwechat_files/wxid_pu1uzzbuzwsx22_b4ed/msg/file/2026-11/results_to_send_20261116_1459/runs/monocop_in_st_mav_s0/pred_real_test.pkl"
+   ]
+  }
+ },
+ "MonoCoP +ST|anti": {
+  "files": [
+   "D:/advisor_results_1117b/runs/monocop_out_st_anti_s0/pred_outdoor_test.pkl"
+  ],
+  "identical_copies": {
+   "D:/advisor_results_1117b/runs/monocop_out_st_anti_s0/pred_outdoor_test.pkl": [
+    "D:/advisor_results_1117b/runs/monocop_out_st_anti_s0/pred_outdoor_test.pkl",
+    "C:/Users/jiang/OneDrive/文档/xwechat_files/wxid_pu1uzzbuzwsx22_b4ed/msg/file/2026-11/results_to_send_20261116_1459/runs/monocop_out_st_anti_s0/pred_outdoor_test.pkl"
+   ]
+  }
+ },
+ "MonoCoP +PST|mav": {
+  "files": [
+   "D:/advisor_results_1117b/runs/monocop_in_kdc_mav_s0/pred_real_test.pkl"
+  ],
+  "identical_copies": {
+   "D:/advisor_results_1117b/runs/monocop_in_kdc_mav_s0/pred_real_test.pkl": [
+    "D:/advisor_results_1117b/runs/monocop_in_kdc_mav_s0/pred_real_test.pkl",
+    "C:/Users/jiang/OneDrive/文档/xwechat_files/wxid_pu1uzzbuzwsx22_b4ed/msg/file/2026-11/results_to_send_20261116_1459/runs/monocop_in_kdc_mav_s0/pred_real_test.pkl"
+   ]
+  }
+ },
+ "MonoCoP +PST|anti": {
+  "files": [
+   "D:/advisor_results_1117b/runs/monocop_out_kd_anti_s0/pred_outdoor_test.pkl",
+   "D:/advisor_results_1117b/runs/monocop_out_kd_anti_s1/pred_outdoor_test.pkl",
+   "D:/advisor_results_1117b/runs/monocop_out_kd_anti_s2/pred_outdoor_test.pkl"
+  ],
+  "identical_copies": {
+   "D:/advisor_results_1117b/runs/monocop_out_kd_anti_s0/pred_outdoor_test.pkl": [
+    "D:/advisor_results_1117b/runs/monocop_out_kd_anti_s0/pred_outdoor_test.pkl",
+    "C:/Users/jiang/OneDrive/文档/xwechat_files/wxid_pu1uzzbuzwsx22_b4ed/msg/file/2026-11/results_to_send_20261116_1459/runs/monocop_out_kd_anti_s0/pred_outdoor_test.pkl"
+   ],
+   "D:/advisor_results_1117b/runs/monocop_out_kd_anti_s1/pred_outdoor_test.pkl": [
+    "D:/advisor_results_1117b/runs/monocop_out_kd_anti_s1/pred_outdoor_test.pkl",
+    "C:/Users/jiang/OneDrive/文档/xwechat_files/wxid_pu1uzzbuzwsx22_b4ed/msg/file/2026-11/results_to_send_20261116_1459/runs/monocop_out_kd_anti_s1/pred_outdoor_test.pkl"
+   ],
+   "D:/advisor_results_1117b/runs/monocop_out_kd_anti_s2/pred_outdoor_test.pkl": [
+    "D:/advisor_results_1117b/runs/monocop_out_kd_anti_s2/pred_outdoor_test.pkl",
+    "C:/Users/jiang/OneDrive/文档/xwechat_files/wxid_pu1uzzbuzwsx22_b4ed/msg/file/2026-11/results_to_send_20261116_1459/runs/monocop_out_kd_anti_s2/pred_outdoor_test.pkl"
+   ]
+  }
+ },
+ "GUPNet|mav": {
+  "files": [
+   "D:/advisor_results_1117b/runs/gupnet_in_sim_s1/pred_real_test.pkl",
+   "D:/advisor_results_1117b/runs/gupnet_in_sim_s2/pred_real_test.pkl",
+   "D:/cmpfull_runs/gupnet_s0/pred_real_test.pkl"
+  ],
+  "identical_copies": {
+   "D:/advisor_results_1117b/runs/gupnet_in_sim_s1/pred_real_test.pkl": [
+    "D:/advisor_results_1117b/runs/gupnet_in_sim_s1/pred_real_test.pkl",
+    "C:/Users/jiang/OneDrive/文档/xwechat_files/wxid_pu1uzzbuzwsx22_b4ed/msg/file/2026-11/results_to_send_20261116_1459/runs/gupnet_in_sim_s1/pred_real_test.pkl"
+   ],
+   "D:/advisor_results_1117b/runs/gupnet_in_sim_s2/pred_real_test.pkl": [
+    "D:/advisor_results_1117b/runs/gupnet_in_sim_s2/pred_real_test.pkl",
+    "C:/Users/jiang/OneDrive/文档/xwechat_files/wxid_pu1uzzbuzwsx22_b4ed/msg/file/2026-11/results_to_send_20261116_1459/runs/gupnet_in_sim_s2/pred_real_test.pkl"
+   ],
+   "D:/cmpfull_runs/gupnet_s0/pred_real_test.pkl": [
+    "D:/cmpfull_runs/gupnet_s0/pred_real_test.pkl"
+   ]
+  }
+ },
+ "GUPNet|anti": {
+  "files": [
+   "D:/advisor_results_1117b/runs/gupnet_out_sim_s0/pred_outdoor_test.pkl",
+   "D:/advisor_results_1117b/runs/gupnet_out_sim_s1/pred_outdoor_test.pkl",
+   "D:/advisor_results_1117b/runs/gupnet_out_sim_s2/pred_outdoor_test.pkl"
+  ],
+  "identical_copies": {
+   "D:/advisor_results_1117b/runs/gupnet_out_sim_s0/pred_outdoor_test.pkl": [
+    "D:/advisor_results_1117b/runs/gupnet_out_sim_s0/pred_outdoor_test.pkl",
+    "C:/Users/jiang/OneDrive/文档/xwechat_files/wxid_pu1uzzbuzwsx22_b4ed/msg/file/2026-11/results_to_send_20261116_1459/runs/gupnet_out_sim_s0/pred_outdoor_test.pkl"
+   ],
+   "D:/advisor_results_1117b/runs/gupnet_out_sim_s1/pred_outdoor_test.pkl": [
+    "D:/advisor_results_1117b/runs/gupnet_out_sim_s1/pred_outdoor_test.pkl"
+   ],
+   "D:/advisor_results_1117b/runs/gupnet_out_sim_s2/pred_outdoor_test.pkl": [
+    "D:/advisor_results_1117b/runs/gupnet_out_sim_s2/pred_outdoor_test.pkl"
+   ]
+  }
+ },
+ "GUPNet +DANN|mav": {
+  "files": [
+   "D:/cmpfull_runs/gupnet_uda_dann_s0/pred_real_test.pkl"
+  ],
+  "identical_copies": {
+   "D:/cmpfull_runs/gupnet_uda_dann_s0/pred_real_test.pkl": [
+    "D:/cmpfull_runs/gupnet_uda_dann_s0/pred_real_test.pkl"
+   ]
+  }
+ },
+ "GUPNet +DANN|anti": {
+  "files": [
+   "D:/advisor_results_1117b/runs/gupnet_out_dann_anti_s0/pred_outdoor_test.pkl"
+  ],
+  "identical_copies": {
+   "D:/advisor_results_1117b/runs/gupnet_out_dann_anti_s0/pred_outdoor_test.pkl": [
+    "D:/advisor_results_1117b/runs/gupnet_out_dann_anti_s0/pred_outdoor_test.pkl"
+   ]
+  }
+ },
+ "GUPNet +ST|mav": {
+  "files": [
+   "D:/advisor_results_1117b/runs/gupnet_in_st_mav_s0/pred_real_test.pkl"
+  ],
+  "identical_copies": {
+   "D:/advisor_results_1117b/runs/gupnet_in_st_mav_s0/pred_real_test.pkl": [
+    "D:/advisor_results_1117b/runs/gupnet_in_st_mav_s0/pred_real_test.pkl",
+    "C:/Users/jiang/OneDrive/文档/xwechat_files/wxid_pu1uzzbuzwsx22_b4ed/msg/file/2026-11/results_to_send_20261116_1459/runs/gupnet_in_st_mav_s0/pred_real_test.pkl"
+   ]
+  }
+ },
+ "GUPNet +ST|anti": {
+  "files": [
+   "D:/advisor_results_1117b/runs/gupnet_out_st_anti_s0/pred_outdoor_test.pkl",
+   "D:/advisor_results_1117b/runs/gupnet_out_st_anti_s1/pred_outdoor_test.pkl",
+   "D:/advisor_results_1117b/runs/gupnet_out_st_anti_s2/pred_outdoor_test.pkl"
+  ],
+  "identical_copies": {
+   "D:/advisor_results_1117b/runs/gupnet_out_st_anti_s0/pred_outdoor_test.pkl": [
+    "D:/advisor_results_1117b/runs/gupnet_out_st_anti_s0/pred_outdoor_test.pkl",
+    "C:/Users/jiang/OneDrive/文档/xwechat_files/wxid_pu1uzzbuzwsx22_b4ed/msg/file/2026-11/results_to_send_20261116_1459/runs/gupnet_out_st_anti_s0/pred_outdoor_test.pkl"
+   ],
+   "D:/advisor_results_1117b/runs/gupnet_out_st_anti_s1/pred_outdoor_test.pkl": [
+    "D:/advisor_results_1117b/runs/gupnet_out_st_anti_s1/pred_outdoor_test.pkl"
+   ],
+   "D:/advisor_results_1117b/runs/gupnet_out_st_anti_s2/pred_outdoor_test.pkl": [
+    "D:/advisor_results_1117b/runs/gupnet_out_st_anti_s2/pred_outdoor_test.pkl"
+   ]
+  }
+ },
+ "GUPNet +PST|mav": {
+  "files": [
+   "D:/advisor_results_1117b/runs/gupnet_in_kdc_mav_s0/pred_real_test.pkl",
+   "D:/advisor_results_1117b/runs/gupnet_in_kdc_mav_s1/pred_real_test.pkl",
+   "D:/advisor_results_1117b/runs/gupnet_in_kdc_mav_s2/pred_real_test.pkl"
+  ],
+  "identical_copies": {
+   "D:/advisor_results_1117b/runs/gupnet_in_kdc_mav_s0/pred_real_test.pkl": [
+    "D:/advisor_results_1117b/runs/gupnet_in_kdc_mav_s0/pred_real_test.pkl",
+    "C:/Users/jiang/OneDrive/文档/xwechat_files/wxid_pu1uzzbuzwsx22_b4ed/msg/file/2026-11/results_to_send_20261116_1459/runs/gupnet_in_kdc_mav_s0/pred_real_test.pkl"
+   ],
+   "D:/advisor_results_1117b/runs/gupnet_in_kdc_mav_s1/pred_real_test.pkl": [
+    "D:/advisor_results_1117b/runs/gupnet_in_kdc_mav_s1/pred_real_test.pkl",
+    "C:/Users/jiang/OneDrive/文档/xwechat_files/wxid_pu1uzzbuzwsx22_b4ed/msg/file/2026-11/results_to_send_20261116_1459/runs/gupnet_in_kdc_mav_s1/pred_real_test.pkl"
+   ],
+   "D:/advisor_results_1117b/runs/gupnet_in_kdc_mav_s2/pred_real_test.pkl": [
+    "D:/advisor_results_1117b/runs/gupnet_in_kdc_mav_s2/pred_real_test.pkl",
+    "C:/Users/jiang/OneDrive/文档/xwechat_files/wxid_pu1uzzbuzwsx22_b4ed/msg/file/2026-11/results_to_send_20261116_1459/runs/gupnet_in_kdc_mav_s2/pred_real_test.pkl"
+   ]
+  }
+ },
+ "GUPNet +PST|anti": {
+  "files": [
+   "D:/advisor_results_1117b/runs/gupnet_out_kd_anti_s0/pred_outdoor_test.pkl",
+   "D:/advisor_results_1117b/runs/gupnet_out_kd_anti_s1/pred_outdoor_test.pkl",
+   "D:/advisor_results_1117b/runs/gupnet_out_kd_anti_s2/pred_outdoor_test.pkl"
+  ],
+  "identical_copies": {
+   "D:/advisor_results_1117b/runs/gupnet_out_kd_anti_s0/pred_outdoor_test.pkl": [
+    "D:/advisor_results_1117b/runs/gupnet_out_kd_anti_s0/pred_outdoor_test.pkl",
+    "C:/Users/jiang/OneDrive/文档/xwechat_files/wxid_pu1uzzbuzwsx22_b4ed/msg/file/2026-11/results_to_send_20261116_1459/runs/gupnet_out_kd_anti_s0/pred_outdoor_test.pkl"
+   ],
+   "D:/advisor_results_1117b/runs/gupnet_out_kd_anti_s1/pred_outdoor_test.pkl": [
+    "D:/advisor_results_1117b/runs/gupnet_out_kd_anti_s1/pred_outdoor_test.pkl",
+    "C:/Users/jiang/OneDrive/文档/xwechat_files/wxid_pu1uzzbuzwsx22_b4ed/msg/file/2026-11/results_to_send_20261116_1459/runs/gupnet_out_kd_anti_s1/pred_outdoor_test.pkl"
+   ],
+   "D:/advisor_results_1117b/runs/gupnet_out_kd_anti_s2/pred_outdoor_test.pkl": [
+    "D:/advisor_results_1117b/runs/gupnet_out_kd_anti_s2/pred_outdoor_test.pkl",
+    "C:/Users/jiang/OneDrive/文档/xwechat_files/wxid_pu1uzzbuzwsx22_b4ed/msg/file/2026-11/results_to_send_20261116_1459/runs/gupnet_out_kd_anti_s2/pred_outdoor_test.pkl"
+   ]
+  }
+ }
+}

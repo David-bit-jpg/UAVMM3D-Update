@@ -1,0 +1,33 @@
+{
+ "load": {
+  "mean": 6.983100000070408,
+  "median": 6.983100000070408,
+  "p90": 7.103819987969473
+ },
+ "det": {
+  "mean": 91.0120500047924,
+  "median": 91.0120500047924,
+  "p90": 91.07169000490103
+ },
+ "total_gpu_chain": {
+  "mean": 91.0120500047924,
+  "median": 91.0120500047924,
+  "p90": 91.07169000490103
+ },
+ "n_frames": 2,
+ "warmup": 1,
+ "mode": "det",
+ "weights_resident_MB": NaN,
+ "refiner_width_gate_clipped": 0,
+ "peak_mem_MB_inference": null,
+ "gpu": "cpu (SMOKE)",
+ "nets": {
+  "det": [
+   "E:/Open3DUAVDet/output/models/uavdet_3d/camnorm/srcx/st_in2mav/DET1_s0/ckpt/checkpoint_epoch_3.pth"
+  ],
+  "ref": [],
+  "stu": [],
+  "kps": null
+ },
+ "nvidia_smi_used_MB_at_end": "15619 MiB, 83 %"
+}

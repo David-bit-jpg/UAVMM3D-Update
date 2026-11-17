@@ -1,0 +1,4 @@
+11-17 22:43:18 start out2antifs clean cache D:/mmcache/outdoor_real_fs
+11-17 22:51:40 det test: 2624 frames, conf median 0.679, >=0.5 71.2%
+11-17 22:51:43 SANITY det test records identical to chain: True (max |box diff| 0)
+11-17 23:03:45 kps adabn on 389 clean tr1 crops

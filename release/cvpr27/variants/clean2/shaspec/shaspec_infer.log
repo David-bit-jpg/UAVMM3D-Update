@@ -1,0 +1,18 @@
+2026-11-13 10:55:31,115   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-13 10:55:31,116   INFO  MMCache[test]: RGB 可见度 >= 5.0 过滤 4924 -> 4646 帧
+2026-11-13 10:55:31,116   INFO  MMCache[test]: 4646 帧, 模态 ['rgb', 'ir', 'depth', 'tag'] -> 6 通道, 缓存 E:\mmcache\full_v2\test
+sanity (24.760279110715746, 23.58453492955745)
+seed 0 val raw: 2336 crops, 2336 solved, 84s
+seed 0 test raw: 4800 crops, 4800 solved, 130s
+seed 0 val adabn: 2336 crops, 2336 solved, 199s
+seed 0 test adabn: 4800 crops, 4800 solved, 232s
+2026-11-13 10:59:23,235   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-13 10:59:23,235   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-13 10:59:23,235   INFO  MMCache[test]: RGB 可见度 >= 5.0 过滤 4924 -> 4646 帧
+2026-11-13 10:59:23,235   INFO  MMCache[test]: RGB 可见度 >= 5.0 过滤 4924 -> 4646 帧
+2026-11-13 10:59:23,235   INFO  MMCache[test]: 4646 帧, 模态 ['rgb', 'ir', 'depth', 'tag'] -> 6 通道, 缓存 E:\mmcache\full_v2\test
+2026-11-13 10:59:23,235   INFO  MMCache[test]: 4646 帧, 模态 ['rgb', 'ir', 'depth', 'tag'] -> 6 通道, 缓存 E:\mmcache\full_v2\test
+seed 1 val raw: 2336 crops, 2336 solved, 25s
+seed 1 test raw: 4800 crops, 4800 solved, 66s
+seed 1 val adabn: 2336 crops, 2336 solved, 99s
+seed 1 test adabn: 4800 crops, 4800 solved, 138s

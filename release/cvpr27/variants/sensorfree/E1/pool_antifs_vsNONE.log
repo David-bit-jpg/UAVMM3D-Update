@@ -1,0 +1,1 @@
+E1 antifs pooled vs RGB-only none (3 seed pairs) [antifs, 3 pair(s)] arm UDS 39.23 AP 23.96 ATE 0.111 ASE 15.93 AOE 16.64 mDR 91.62 | ref UDS 34.83 AP 17.13 ATE 0.133 ASE 15.36 AOE 16.15 mDR 91.55 | diff UDS +4.40 [+2.98, +5.72] AP +6.83 [+4.72, +8.81] ATE -0.022 [-0.030, -0.013] ASE +0.57 AOE +0.49 [+0.23, +0.72] mDR +0.06

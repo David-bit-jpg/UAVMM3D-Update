@@ -1,0 +1,9 @@
+# [srcx/mix 11-11] height network (KZ-KPS recipe: from IR+LiDAR member 30-epoch weights, LR 2e-4, 8 epochs) on the mixed sim cache;
+# templates rebuilt from the mixed-cache LiDAR (srcx/mix/lidar_templates_mix.py; one template per (sim, airframe): same names have
+# different box sizes in the two sims, and the model matches templates by box size)
+_BASE_CONFIG_: cfgs/models/uavdet_3d/camnorm/sim_mix_r34_kp_w12_zoom_irlid.yaml
+MODEL:
+    NAME: CenterDetMMK
+    KPS_AUX: {TEMPLATES: 'E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/mix/templates_mix.npy', KP_WEIGHT: 12.0, LAYOUT_WEIGHT: 4.0}
+OPTIMIZATION:
+    LR: 0.0002

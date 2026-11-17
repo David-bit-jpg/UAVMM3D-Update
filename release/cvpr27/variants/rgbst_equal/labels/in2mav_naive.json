@@ -1,0 +1,15 @@
+{
+ "combo": "in2mav",
+ "mode": "naive",
+ "n": 5227,
+ "n_train": 12866,
+ "index": "F:/ourdet_baseproto_cache/mav6d_cn_obj/train/index_naive.pkl",
+ "source": "E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/in2mav/recs/det0.pkl",
+ "conf": 0.5,
+ "s_bar": [
+  0.34744247794151306,
+  0.3474541902542114,
+  0.19538597762584686
+ ],
+ "b4_max_abs_diff": 2.383759110102801e-07
+}

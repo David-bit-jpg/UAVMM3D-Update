@@ -1,0 +1,1 @@
+E1geo mav pooled vs E1 (3 seed pairs) [mav, 3 pair(s)] arm UDS 55.95 AP 35.24 ATE 0.359 ASE 2.54 AOE 15.96 mDR 95.70 | ref UDS 56.71 AP 36.72 ATE 0.350 ASE 2.61 AOE 15.96 mDR 95.74 | diff UDS -0.76 [-1.72, +0.68] AP -1.48 [-2.26, -0.29] ATE +0.009 [-0.004, +0.019] ASE -0.08 AOE -0.00 [-0.01, +0.00] mDR -0.04

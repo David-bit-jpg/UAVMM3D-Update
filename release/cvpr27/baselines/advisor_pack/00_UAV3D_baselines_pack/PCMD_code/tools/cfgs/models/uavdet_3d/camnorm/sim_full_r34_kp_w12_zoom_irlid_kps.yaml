@@ -1,0 +1,9 @@
+# KZ-KPS（2026-10-15，老师建议「LiDAR 抽关键点 → size → 朝向」）：KZ-IRLiD 原样（只看 RGB；LiDAR 深度剪影 + 红外剪影辅助答案），
+# 再加 kps_head：8 个 LiDAR 结构关键点（4 臂端、机头、机尾、顶、底）的 2D 投影 + 它们在机体系的 3D 形状。
+# geo1004/lidar/kpsize/center_det_mmk.py，由 train_mmk.py 注册。从 KZ-IRLiD 30 轮权重继续训。
+_BASE_CONFIG_: cfgs/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom_irlid.yaml
+MODEL:
+    NAME: CenterDetMMK
+    KPS_AUX: {TEMPLATES: '@@ROOT@@/output/camnorm/geo1004/lidar/kpsize/templates.npy', KP_WEIGHT: 12.0, LAYOUT_WEIGHT: 4.0}
+OPTIMIZATION:
+    LR: 0.0002

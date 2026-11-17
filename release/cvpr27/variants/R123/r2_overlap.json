@@ -1,0 +1,222 @@
+{
+ "sizes": {
+  "v1:train": 3361,
+  "v1:val": 1104,
+  "v1:test": 2825,
+  "v2:train": 3293,
+  "v2:val": 1148,
+  "v2:test": 2624,
+  "cf:cmpfull/outdoor_train": 3293,
+  "cf:cmpfull/outdoor_val": 1104,
+  "cf:cmpfull/outdoor_test": 2624,
+  "cf:cmpfull/_antiuav3d_v1/outdoor_test": 2825
+ },
+ "seqs": {
+  "v1:train": [
+   "train_seq_0002",
+   "train_seq_0009",
+   "train_seq_0011",
+   "train_seq_0015",
+   "train_seq_0016",
+   "train_seq_0018",
+   "train_seq_0019",
+   "train_seq_0020",
+   "train_seq_0022"
+  ],
+  "v1:val": [
+   "train_seq_0010"
+  ],
+  "v1:test": [
+   "test_seq_0003",
+   "test_seq_0005",
+   "test_seq_0006"
+  ],
+  "v2:train": [
+   "test_seq_0006",
+   "train_seq_0002",
+   "train_seq_0011",
+   "train_seq_0016",
+   "train_seq_0018",
+   "train_seq_0020"
+  ],
+  "v2:val": [
+   "test_seq_0003",
+   "test_seq_0005"
+  ],
+  "v2:test": [
+   "train_seq_0010",
+   "train_seq_0022"
+  ],
+  "cf:cmpfull/outdoor_train": [
+   "test_seq_0006",
+   "train_seq_0002",
+   "train_seq_0011",
+   "train_seq_0016",
+   "train_seq_0018",
+   "train_seq_0020"
+  ],
+  "cf:cmpfull/outdoor_val": [
+   "train_seq_0010"
+  ],
+  "cf:cmpfull/outdoor_test": [
+   "train_seq_0010",
+   "train_seq_0022"
+  ],
+  "cf:cmpfull/_antiuav3d_v1/outdoor_test": [
+   "test_seq_0003",
+   "test_seq_0005",
+   "test_seq_0006"
+  ]
+ },
+ "pairs": [
+  {
+   "cf": "cmpfull/outdoor_train",
+   "identical_to": [
+    "v2:train"
+   ]
+  },
+  {
+   "cf": "cmpfull/outdoor_val",
+   "identical_to": [
+    "v1:val"
+   ]
+  },
+  {
+   "cf": "cmpfull/outdoor_test",
+   "identical_to": [
+    "v2:test"
+   ]
+  },
+  {
+   "cf": "cmpfull/_antiuav3d_v1/outdoor_test",
+   "identical_to": [
+    "v1:test"
+   ]
+  }
+ ],
+ "rows": [
+  {
+   "v1": "train",
+   "v2": "train",
+   "seq_common": [
+    "train_seq_0002",
+    "train_seq_0011",
+    "train_seq_0016",
+    "train_seq_0018",
+    "train_seq_0020"
+   ],
+   "frames_exact": 450,
+   "v1_frames_in_common_seqs": 2574,
+   "v2_frames_in_common_seqs": 3162,
+   "v1_within3": 1807,
+   "v2_within3": 3139,
+   "nA": 3361,
+   "nB": 3293
+  },
+  {
+   "v1": "train",
+   "v2": "val",
+   "seq_common": [],
+   "frames_exact": 0,
+   "v1_frames_in_common_seqs": 0,
+   "v2_frames_in_common_seqs": 0,
+   "v1_within3": 0,
+   "v2_within3": 0,
+   "nA": 3361,
+   "nB": 1148
+  },
+  {
+   "v1": "train",
+   "v2": "test",
+   "seq_common": [
+    "train_seq_0022"
+   ],
+   "frames_exact": 7,
+   "v1_frames_in_common_seqs": 59,
+   "v2_frames_in_common_seqs": 48,
+   "v1_within3": 21,
+   "v2_within3": 48,
+   "nA": 3361,
+   "nB": 2624
+  },
+  {
+   "v1": "val",
+   "v2": "train",
+   "seq_common": [],
+   "frames_exact": 0,
+   "v1_frames_in_common_seqs": 0,
+   "v2_frames_in_common_seqs": 0,
+   "v1_within3": 0,
+   "v2_within3": 0,
+   "nA": 1104,
+   "nB": 3293
+  },
+  {
+   "v1": "val",
+   "v2": "val",
+   "seq_common": [],
+   "frames_exact": 0,
+   "v1_frames_in_common_seqs": 0,
+   "v2_frames_in_common_seqs": 0,
+   "v1_within3": 0,
+   "v2_within3": 0,
+   "nA": 1104,
+   "nB": 1148
+  },
+  {
+   "v1": "val",
+   "v2": "test",
+   "seq_common": [
+    "train_seq_0010"
+   ],
+   "frames_exact": 368,
+   "v1_frames_in_common_seqs": 1104,
+   "v2_frames_in_common_seqs": 2576,
+   "v1_within3": 1104,
+   "v2_within3": 2557,
+   "nA": 1104,
+   "nB": 2624
+  },
+  {
+   "v1": "test",
+   "v2": "train",
+   "seq_common": [
+    "test_seq_0006"
+   ],
+   "frames_exact": 0,
+   "v1_frames_in_common_seqs": 1016,
+   "v2_frames_in_common_seqs": 131,
+   "v1_within3": 262,
+   "v2_within3": 131,
+   "nA": 2825,
+   "nB": 3293
+  },
+  {
+   "v1": "test",
+   "v2": "val",
+   "seq_common": [
+    "test_seq_0003",
+    "test_seq_0005"
+   ],
+   "frames_exact": 575,
+   "v1_frames_in_common_seqs": 1809,
+   "v2_frames_in_common_seqs": 1148,
+   "v1_within3": 1722,
+   "v2_within3": 1148,
+   "nA": 2825,
+   "nB": 1148
+  },
+  {
+   "v1": "test",
+   "v2": "test",
+   "seq_common": [],
+   "frames_exact": 0,
+   "v1_frames_in_common_seqs": 0,
+   "v2_frames_in_common_seqs": 0,
+   "v1_within3": 0,
+   "v2_within3": 0,
+   "nA": 2825,
+   "nB": 2624
+  }
+ ]
+}

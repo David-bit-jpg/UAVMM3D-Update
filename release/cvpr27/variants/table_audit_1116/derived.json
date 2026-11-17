@@ -1,0 +1,785 @@
+{
+ "MAV GUPNet+PST mean": {
+  "AP": 38.9052,
+  "ATE": 0.3212,
+  "ASE": 2.8032,
+  "AOE": 16.9231,
+  "mDR": 94.9583,
+  "UDS": 57.6113
+ },
+ "MAV GUPNet+PST sd": {
+  "AP": 1.4685,
+  "ATE": 0.0117,
+  "ASE": 0.1559,
+  "AOE": 0.3719,
+  "mDR": 0.1458,
+  "UDS": 1.1251
+ },
+ "MAV GUPNet+PST per-run UDS": [
+  57.7186,
+  58.679,
+  56.4364
+ ],
+ "MAV MonoCD+PST mean": {
+  "AP": 39.0374,
+  "ATE": 0.3091,
+  "ASE": 2.4457,
+  "AOE": 18.1204,
+  "mDR": 95.4722,
+  "UDS": 58.0785
+ },
+ "MAV MonoCD+PST sd": {
+  "AP": 1.2658,
+  "ATE": 0.0106,
+  "ASE": 0.0567,
+  "AOE": 0.1591,
+  "mDR": 0.3368,
+  "UDS": 0.7647
+ },
+ "MAV MonoCD+PST per-run UDS": [
+  57.4642,
+  57.8364,
+  58.935
+ ],
+ "MAV MonoDGP+PST mean": {
+  "AP": 42.6825,
+  "ATE": 0.3175,
+  "ASE": 2.498,
+  "AOE": 16.6652,
+  "mDR": 99.4722,
+  "UDS": 60.5478
+ },
+ "MAV MonoDGP+PST sd": {
+  "AP": 0.4046,
+  "ATE": 0.0143,
+  "ASE": 0.0377,
+  "AOE": 0.3133,
+  "mDR": 0.2621,
+  "UDS": 0.4042
+ },
+ "MAV MonoDGP+PST per-run UDS": [
+  60.1879,
+  60.4703,
+  60.9852
+ ],
+ "MAV MonoCD sim (s1,s2) mean": {
+  "AP": 5.4368,
+  "ATE": 0.7773,
+  "ASE": 7.1772,
+  "AOE": 22.7945,
+  "mDR": 47.8542,
+  "UDS": 22.5395
+ },
+ "MAV MonoCD sim (s1,s2) sd": {
+  "AP": 1.9686,
+  "ATE": 0.0303,
+  "ASE": 0.4576,
+  "AOE": 1.7514,
+  "mDR": 9.104,
+  "UDS": 2.691
+ },
+ "MAV MonoCD sim (s1,s2) per-run UDS": [
+  20.6367,
+  24.4423
+ ],
+ "RD MonoDETR+PST mean": {
+  "AP": 0.7829,
+  "ATE": 45.7367,
+  "ASE": 16.819,
+  "AOE": 20.5748,
+  "mDR": 81.0849,
+  "UDS": 18.5384
+ },
+ "RD MonoDETR+PST sd": {
+  "AP": 0.5086,
+  "ATE": 6.7761,
+  "ASE": 0.337,
+  "AOE": 1.1299,
+  "mDR": 2.4991,
+  "UDS": 0.248
+ },
+ "RD MonoDETR+PST per-run UDS": [
+  18.3898,
+  18.4006,
+  18.8247
+ ],
+ "RD MonoCD+PST mean": {
+  "AP": 13.6556,
+  "ATE": 13.4641,
+  "ASE": 14.1018,
+  "AOE": 21.3101,
+  "mDR": 81.3262,
+  "UDS": 30.6124
+ },
+ "RD MonoCD+PST sd": {
+  "AP": 2.8006,
+  "ATE": 1.124,
+  "ASE": 1.3198,
+  "AOE": 1.3813,
+  "mDR": 6.0089,
+  "UDS": 2.3244
+ },
+ "RD MonoCD+PST per-run UDS": [
+  33.2088,
+  28.7252,
+  29.9031
+ ],
+ "RD MonoDGP+PST mean": {
+  "AP": 11.8496,
+  "ATE": 16.7066,
+  "ASE": 15.7946,
+  "AOE": 20.6164,
+  "mDR": 93.407,
+  "UDS": 29.7496
+ },
+ "RD MonoDGP+PST sd": {
+  "AP": 1.3025,
+  "ATE": 0.9855,
+  "ASE": 0.1831,
+  "AOE": 0.6847,
+  "mDR": 0.5041,
+  "UDS": 1.245
+ },
+ "RD MonoDGP+PST per-run UDS": [
+  29.4296,
+  31.1233,
+  28.6958
+ ],
+ "RD MonoCoP+PST mean": {
+  "AP": 10.805,
+  "ATE": 16.1993,
+  "ASE": 16.0144,
+  "AOE": 19.8255,
+  "mDR": 90.1423,
+  "UDS": 29.2454
+ },
+ "RD MonoCoP+PST sd": {
+  "AP": 2.885,
+  "ATE": 1.3359,
+  "ASE": 0.3921,
+  "AOE": 0.7542,
+  "mDR": 2.2382,
+  "UDS": 2.4876
+ },
+ "RD MonoCoP+PST per-run UDS": [
+  27.4571,
+  32.0863,
+  28.1928
+ ],
+ "RD GUPNet+PST mean": {
+  "AP": 15.965,
+  "ATE": 14.2705,
+  "ASE": 15.7196,
+  "AOE": 19.5297,
+  "mDR": 93.0259,
+  "UDS": 33.2148
+ },
+ "RD GUPNet+PST sd": {
+  "AP": 2.9238,
+  "ATE": 0.3033,
+  "ASE": 0.8658,
+  "AOE": 1.2696,
+  "mDR": 2.7647,
+  "UDS": 2.0286
+ },
+ "RD GUPNet+PST per-run UDS": [
+  30.882,
+  34.1975,
+  34.5649
+ ],
+ "MAV PST 3 runs mean": {
+  "AP": 41.2379,
+  "ATE": 0.2996,
+  "ASE": 1.7155,
+  "AOE": 14.8317,
+  "mDR": 95.4931,
+  "UDS": 60.9302
+ },
+ "MAV PST 3 runs sd": {
+  "AP": 2.9984,
+  "ATE": 0.0176,
+  "ASE": 0.0874,
+  "AOE": 0.3356,
+  "mDR": 0.7616,
+  "UDS": 1.715
+ },
+ "MAV PST 3 runs per-run UDS": [
+  60.8113,
+  59.2777,
+  62.7015
+ ],
+ "RD PST 3 runs mean": {
+  "AP": 27.8029,
+  "ATE": 9.9312,
+  "ASE": 16.5537,
+  "AOE": 16.8442,
+  "mDR": 91.565,
+  "UDS": 41.7067
+ },
+ "RD PST 3 runs sd": {
+  "AP": 0.5139,
+  "ATE": 0.1301,
+  "ASE": 0.2251,
+  "AOE": 0.2653,
+  "mDR": 0.3622,
+  "UDS": 0.3148
+ },
+ "RD PST 3 runs per-run UDS": [
+  41.7348,
+  41.3787,
+  42.0065
+ ],
+ "MAV RGBonly 3 runs mean": {
+  "AP": 39.4127,
+  "ATE": 0.333,
+  "ASE": 2.5878,
+  "AOE": 16.6631,
+  "mDR": 95.2639,
+  "UDS": 58.0819
+ },
+ "MAV RGBonly 3 runs sd": {
+  "AP": 1.5828,
+  "ATE": 0.0146,
+  "ASE": 0.0034,
+  "AOE": 0.9316,
+  "mDR": 0.6195,
+  "UDS": 0.7388
+ },
+ "MAV RGBonly 3 runs per-run UDS": [
+  57.3789,
+  58.0149,
+  58.852
+ ],
+ "RD RGBonly 3 runs mean": {
+  "AP": 17.1302,
+  "ATE": 13.3079,
+  "ASE": 15.3591,
+  "AOE": 16.1502,
+  "mDR": 91.5523,
+  "UDS": 34.8318
+ },
+ "RD RGBonly 3 runs sd": {
+  "AP": 5.5267,
+  "ATE": 1.9515,
+  "ASE": 0.5775,
+  "AOE": 0.3389,
+  "mDR": 0.7997,
+  "UDS": 3.6123
+ },
+ "RD RGBonly 3 runs per-run UDS": [
+  38.9222,
+  33.4938,
+  32.0794
+ ],
+ "MAV SF 3 runs mean": {
+  "AP": 36.7234,
+  "ATE": 0.3499,
+  "ASE": 2.615,
+  "AOE": 15.9583,
+  "mDR": 95.7431,
+  "UDS": 56.7061
+ },
+ "MAV SF 3 runs sd": {
+  "AP": 7.3359,
+  "ATE": 0.0641,
+  "ASE": 0.0342,
+  "AOE": 0.4395,
+  "mDR": 0.8803,
+  "UDS": 4.3887
+ },
+ "MAV SF 3 runs per-run UDS": [
+  53.4804,
+  61.7038,
+  54.9342
+ ],
+ "RD SF 3 runs mean": {
+  "AP": 23.9598,
+  "ATE": 11.1341,
+  "ASE": 15.9314,
+  "AOE": 16.6384,
+  "mDR": 91.6159,
+  "UDS": 39.2349
+ },
+ "RD SF 3 runs sd": {
+  "AP": 2.2874,
+  "ATE": 0.7289,
+  "ASE": 0.1022,
+  "AOE": 0.3388,
+  "mDR": 0.4636,
+  "UDS": 1.4891
+ },
+ "RD SF 3 runs per-run UDS": [
+  40.9339,
+  38.6141,
+  38.1567
+ ],
+ "MAV SF+mask (E1b) mean": {
+  "AP": 38.1277,
+  "ATE": 0.3292,
+  "ASE": 2.6024,
+  "AOE": 15.8116,
+  "mDR": 95.5694,
+  "UDS": 57.6926
+ },
+ "MAV SF+mask (E1b) sd": {
+  "AP": 4.112,
+  "ATE": 0.0339,
+  "ASE": 0.0314,
+  "AOE": 0.3732,
+  "mDR": 0.582,
+  "UDS": 2.4161
+ },
+ "MAV SF+mask (E1b) per-run UDS": [
+  56.2511,
+  60.482,
+  56.3447
+ ],
+ "RD SF+mask (E1b) mean": {
+  "AP": 27.327,
+  "ATE": 10.5111,
+  "ASE": 16.6135,
+  "AOE": 16.5883,
+  "mDR": 91.8318,
+  "UDS": 41.2679
+ },
+ "RD SF+mask (E1b) sd": {
+  "AP": 4.5448,
+  "ATE": 1.2036,
+  "ASE": 0.6555,
+  "AOE": 0.3604,
+  "mDR": 1.5871,
+  "UDS": 2.7397
+ },
+ "RD SF+mask (E1b) per-run UDS": [
+  43.7127,
+  38.3067,
+  41.7845
+ ],
+ "MAV SF+classes (E1geo) mean": {
+  "AP": 35.241,
+  "ATE": 0.3587,
+  "ASE": 2.538,
+  "AOE": 15.9552,
+  "mDR": 95.7014,
+  "UDS": 55.9455
+ },
+ "MAV SF+classes (E1geo) sd": {
+  "AP": 7.9031,
+  "ATE": 0.0684,
+  "ASE": 0.0342,
+  "AOE": 0.4396,
+  "mDR": 0.8803,
+  "UDS": 4.7429
+ },
+ "MAV SF+classes (E1geo) per-run UDS": [
+  52.5357,
+  61.3619,
+  53.9388
+ ],
+ "MAV noLiDARstruct H6 mean": {
+  "AP": 41.2379,
+  "ATE": 0.2996,
+  "ASE": 2.0726,
+  "AOE": 14.8317,
+  "mDR": 95.4931,
+  "UDS": 60.4838
+ },
+ "MAV noLiDARstruct H6 sd": {
+  "AP": 2.9984,
+  "ATE": 0.0176,
+  "ASE": 0.0949,
+  "AOE": 0.3356,
+  "mDR": 0.7616,
+  "UDS": 1.7288
+ },
+ "MAV noLiDARstruct H6 per-run UDS": [
+  60.3813,
+  58.8086,
+  62.2615
+ ],
+ "MAV noIRint H5 mean": {
+  "AP": 42.723,
+  "ATE": 0.2899,
+  "ASE": 1.7155,
+  "AOE": 15.0802,
+  "mDR": 95.5,
+  "UDS": 61.7412
+ },
+ "MAV noIRint H5 sd": {
+  "AP": 2.4538,
+  "ATE": 0.0162,
+  "ASE": 0.0873,
+  "AOE": 0.3816,
+  "mDR": 0.7503,
+  "UDS": 1.5202
+ },
+ "MAV noIRint H5 per-run UDS": [
+  61.538,
+  60.3328,
+  63.3527
+ ],
+ "MAV noLiDARbody H4 mean": {
+  "AP": 40.905,
+  "ATE": 0.3018,
+  "ASE": 1.7156,
+  "AOE": 14.4222,
+  "mDR": 95.5069,
+  "UDS": 60.8278
+ },
+ "MAV noLiDARbody H4 sd": {
+  "AP": 3.3364,
+  "ATE": 0.0249,
+  "ASE": 0.087,
+  "AOE": 0.3534,
+  "mDR": 0.739,
+  "UDS": 1.9314
+ },
+ "MAV noLiDARbody H4 per-run UDS": [
+  60.0078,
+  59.4417,
+  63.0338
+ ],
+ "MAV oneclass H1c mean": {
+  "AP": 43.3499,
+  "ATE": 0.2863,
+  "ASE": 3.3155,
+  "AOE": 14.8332,
+  "mDR": 95.5139,
+  "UDS": 60.1554
+ },
+ "MAV oneclass H1c sd": {
+  "AP": 2.3738,
+  "ATE": 0.012,
+  "ASE": 0.0665,
+  "AOE": 0.3363,
+  "mDR": 0.7411,
+  "UDS": 1.3437
+ },
+ "MAV oneclass H1c per-run UDS": [
+  60.703,
+  58.6244,
+  61.1388
+ ],
+ "MAV boxhull 3 runs mean": {
+  "AP": 43.3345,
+  "ATE": 0.2859,
+  "ASE": 1.8459,
+  "AOE": 14.8329,
+  "mDR": 95.5,
+  "UDS": 61.9873
+ },
+ "MAV boxhull 3 runs sd": {
+  "AP": 2.9267,
+  "ATE": 0.0188,
+  "ASE": 0.1343,
+  "AOE": 0.3358,
+  "mDR": 0.7638,
+  "UDS": 1.7371
+ },
+ "MAV boxhull 3 runs per-run UDS": [
+  62.6647,
+  60.0135,
+  63.2836
+ ],
+ "RD boxhull 3 runs mean": {
+  "AP": 26.959,
+  "ATE": 10.1465,
+  "ASE": 16.4626,
+  "AOE": 16.8442,
+  "mDR": 91.565,
+  "UDS": 41.1771
+ },
+ "RD boxhull 3 runs sd": {
+  "AP": 1.1871,
+  "ATE": 0.2714,
+  "ASE": 0.3076,
+  "AOE": 0.2653,
+  "mDR": 0.3622,
+  "UDS": 0.7242
+ },
+ "RD boxhull 3 runs per-run UDS": [
+  41.01,
+  40.551,
+  41.9702
+ ],
+ "MAV initabl mean": {
+  "AP": 41.5074,
+  "ATE": 0.2984,
+  "ASE": 1.7157,
+  "AOE": 14.5872,
+  "mDR": 95.5069,
+  "UDS": 61.1353
+ },
+ "MAV initabl sd": {
+  "AP": 2.887,
+  "ATE": 0.0191,
+  "ASE": 0.0874,
+  "AOE": 0.244,
+  "mDR": 0.7524,
+  "UDS": 1.7288
+ },
+ "MAV initabl per-run UDS": [
+  61.373,
+  59.2999,
+  62.733
+ ],
+ "MAV PST nofuse 3 runs mean": {
+  "AP": 35.0922,
+  "ATE": 0.3366,
+  "ASE": 1.7159,
+  "AOE": 14.8544,
+  "mDR": 95.5208,
+  "UDS": 57.3929
+ },
+ "MAV PST nofuse 3 runs sd": {
+  "AP": 1.9565,
+  "ATE": 0.017,
+  "ASE": 0.0873,
+  "AOE": 0.3614,
+  "mDR": 0.7503,
+  "UDS": 1.1348
+ },
+ "MAV PST nofuse 3 runs per-run UDS": [
+  56.6667,
+  56.8115,
+  58.7006
+ ],
+ "MAV IRonly target w0 3 runs mean": {
+  "AP": 39.0983,
+  "ATE": 0.3105,
+  "ASE": 1.7823,
+  "AOE": 14.8329,
+  "mDR": 95.5,
+  "UDS": 59.6414
+ },
+ "MAV IRonly target w0 3 runs sd": {
+  "AP": 2.7509,
+  "ATE": 0.0191,
+  "ASE": 0.0665,
+  "AOE": 0.3358,
+  "mDR": 0.7638,
+  "UDS": 1.5733
+ },
+ "MAV IRonly target w0 3 runs per-run UDS": [
+  59.3701,
+  58.2214,
+  61.3326
+ ],
+ "MAV H2 2 runs mean": {
+  "AP": 36.3858,
+  "ATE": 0.3355,
+  "ASE": 1.7955,
+  "AOE": 14.8165,
+  "mDR": 96.4688,
+  "UDS": 58.0813
+ },
+ "MAV H2 2 runs sd": {
+  "AP": 0.8044,
+  "ATE": 0.0128,
+  "ASE": 0.0699,
+  "AOE": 0.0024,
+  "mDR": 0.1031,
+  "UDS": 0.6374
+ },
+ "MAV H2 2 runs per-run UDS": [
+  57.6305,
+  58.532
+ ],
+ "MAV PST-RGBselftrain": 4.445881731636867,
+ "RD PST-RGBselftrain": 2.8891230425979657,
+ "MAV RGBonlyT-RGBselftrain": 1.0134331736361233,
+ "RD RGBonlyT-RGBselftrain": 0.07657528775432354,
+ "MAV SF-PST run2": 2.4261468086353304,
+ "RD students depth gain 41.69-38.66": 3.036009946853653,
+ "MAV boxhull s10 diff": 0.7358730651355856,
+ "MAV E2a diff": 1.2196446520730717,
+ "MAV E2b diff": 1.0415972688356376,
+ "MAV nogate diff": 1.2552761730499142,
+ "MAV H1 diff": 2.4735711525315836,
+ "MAV RGBonlyT run1 gain": 3.4324485580007433,
+ "RD RGBonlyT run1 gain": 2.812547754843642,
+ "MAV raised to mDR 69.8": {
+  "keep_pct": 70.0,
+  "AOE": 11.961,
+  "ATE": 0.247,
+  "ASE": 1.36,
+  "AP": 30.63,
+  "UDS": 54.166,
+  "mDR": 70.0
+ },
+ "MAV raised to mDR 85.0": {
+  "keep_pct": 85.0,
+  "AOE": 13.116,
+  "ATE": 0.263,
+  "ASE": 1.561,
+  "AP": 37.69,
+  "UDS": 58.873,
+  "mDR": 85.0
+ },
+ "RD raised to mDR 78.5": {
+  "keep_pct": 79.3,
+  "AOE": 17.024,
+  "ATE": 9.606,
+  "ASE": 16.168,
+  "AP": 23.172,
+  "UDS": 37.882,
+  "mDR": 78.506
+ },
+ "RD raised to mDR 85.0": {
+  "keep_pct": 87.5,
+  "AOE": 17.342,
+  "ATE": 9.453,
+  "ASE": 16.23,
+  "AP": 26.066,
+  "UDS": 40.146,
+  "mDR": 84.985
+ },
+ "MAV common frames": {
+  "n_src_tp": 3349,
+  "n_both": 3349,
+  "ATE_pst": 0.251,
+  "ATE_src": 0.283,
+  "n_only": 1267,
+  "ATE_only": 0.451
+ },
+ "RD common frames": {
+  "n_src_tp": 2061,
+  "n_both": 2060,
+  "ATE_pst": 9.794,
+  "ATE_src": 13.201,
+  "n_only": 352,
+  "ATE_only": 10.741
+ },
+ "RD dist bins UDS PST": [
+  41.72,
+  41.35,
+  43.75
+ ],
+ "RD per-cls UDS PST": {
+  "M400": [
+   48,
+   19.34
+  ],
+  "M4E": [
+   2576,
+   42.89
+  ]
+ },
+ "RD drop fx~1909 PST": {
+  "n_drop": 47,
+  "UDS": 42.88
+ },
+ "RD dist bins UDS src": [
+  23.97,
+  32.1,
+  40.48
+ ],
+ "RD per-cls UDS src": {
+  "M400": [
+   48,
+   19.68
+  ],
+  "M4E": [
+   2576,
+   31.65
+  ]
+ },
+ "RD drop fx~1909 src": {
+  "n_drop": 47,
+  "UDS": 31.64
+ },
+ "RD dist bins UDS RGBonly": [
+  40.58,
+  37.37,
+  41.11
+ ],
+ "RD per-cls UDS RGBonly": {
+  "M400": [
+   48,
+   18.88
+  ],
+  "M4E": [
+   2576,
+   40.04
+  ]
+ },
+ "RD drop fx~1909 RGBonly": {
+  "n_drop": 47,
+  "UDS": 40.04
+ },
+ "MAV per-model PST": {
+  "mavic2": {
+   "n": 1290,
+   "AOE": 21.5,
+   "ATE": 0.41,
+   "ASE": 3.18,
+   "AP": 30.97,
+   "UDS": 50.04,
+   "mDR": 86.51
+  },
+  "phantom4": {
+   "n": 3510,
+   "AOE": 12.24,
+   "ATE": 0.27,
+   "ASE": 1.3,
+   "AP": 44.7,
+   "UDS": 64.6,
+   "mDR": 99.72
+  }
+ },
+ "MAV per-model src": {
+  "mavic2": {
+   "n": 1290,
+   "AOE": 21.94,
+   "ATE": 0.39,
+   "ASE": 5.12,
+   "AP": 0.0,
+   "UDS": 22.31,
+   "mDR": 6.51
+  },
+  "phantom4": {
+   "n": 3510,
+   "AOE": 20.28,
+   "ATE": 0.28,
+   "ASE": 1.65,
+   "AP": 38.35,
+   "UDS": 58.31,
+   "mDR": 93.02
+  }
+ },
+ "MAV per-model RGBonly": {
+  "mavic2": {
+   "n": 1290,
+   "AOE": 22.32,
+   "ATE": 0.49,
+   "ASE": 5.08,
+   "AP": 25.16,
+   "UDS": 43.41,
+   "mDR": 85.81
+  },
+  "phantom4": {
+   "n": 3510,
+   "AOE": 14.43,
+   "ATE": 0.3,
+   "ASE": 1.79,
+   "AP": 42.54,
+   "UDS": 62.08,
+   "mDR": 99.72
+  }
+ },
+ "MonoCD 100 random tie orders monocd_out_sim_s0": {
+  "mean": 12.34,
+  "max": 12.38,
+  "min": 12.29
+ },
+ "MonoCD 100 random tie orders monocd_out_st_anti_s0": {
+  "mean": 9.92,
+  "max": 9.92,
+  "min": 9.92
+ },
+ "MonoCD 100 random tie orders monocd_out_kd_anti_s0": {
+  "mean": 32.75,
+  "max": 32.94,
+  "min": 32.63
+ }
+}

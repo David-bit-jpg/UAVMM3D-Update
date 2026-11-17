@@ -1,0 +1,31 @@
+# -*- coding: utf-8 -*-
+"""[review1113 stage1seeds] training entry = the ORIGINAL trainer script, unchanged, with one redirect: the run directory goes to
+$S1_EXPROOT (default D:/S2MUAV3D/stage1seeds_models) instead of E:/Open3DUAVDet/output (E: has < 60 GB free; ~60 GB of stage-1 checkpoints
++ ~12 GB of self-trained detectors would not fit). Same mechanism as review1113/lidraw/lidraw_train.py ($LIDRAW_EXP): tools/train.py builds
+output_dir = ROOT_DIR / 'output' / EXP_GROUP_PATH / TAG / extra_tag; EXP_GROUP_PATH is prefixed with the absolute $S1_EXPROOT, so the run dir is
+<S1_EXPROOT>/models/uavdet_3d/camnorm/<cfg stem>/<extra_tag> (pathlib: an absolute component replaces the left part). Nothing else changes:
+tools/train.py main(), auto-resume from the newest checkpoint_epoch_*.pth in that dir, all arguments as given.
+usage (from E:/Open3DUAVDet/tools):  python s1_train.py <trainer: tools/train.py | lidar/kzlid/train_mm.py | train_kz_lid.py | lidar/kpsize/train_mmk.py> <train.py args...>"""
+import os, sys, runpy
+sys.path.insert(0, 'E:/Open3DUAVDet'); sys.path.insert(0, 'E:/Open3DUAVDet/tools')
+trainer = os.path.abspath(sys.argv[1]); args = sys.argv[2:]
+ROOT = os.environ.get('S1_EXPROOT', 'D:/S2MUAV3D/stage1seeds_models').replace('\\', '/').rstrip('/')
+assert os.path.isabs(ROOT) and os.path.exists(trainer), (ROOT, trainer)
+import train as T  # noqa: E402  (tools/train.py; the trainer scripts import the same cached module)
+_pc = T.parse_config
+
+
+def parse_config():
+    a, cfg = _pc()
+    cfg.EXP_GROUP_PATH = ROOT + '/' + cfg.EXP_GROUP_PATH
+    print('[s1_train] run dir -> %s/%s/%s' % (cfg.EXP_GROUP_PATH, cfg.TAG, a.extra_tag), flush=True)
+    return a, cfg
+
+
+T.parse_config = parse_config
+sys.argv = ['train.py'] + args
+if os.path.basename(trainer) == 'train.py':
+    T.main()
+else:   # train_mm.py / train_kz_lid.py / train_mmk.py: register their detector classes, then T.main() on the patched module
+    sys.path.insert(0, os.path.dirname(trainer))
+    runpy.run_path(trainer, run_name='__main__')

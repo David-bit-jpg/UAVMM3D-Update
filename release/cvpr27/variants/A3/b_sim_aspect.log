@@ -1,0 +1,270 @@
+{
+ "n_frames_valid": 19490,
+ "n_obj": 42020,
+ "per_model": {
+  "DJI-avata2": {
+   "n_obj": 6892,
+   "aspect_mean": 0.44692738871870485,
+   "aspect_sd": 0.0,
+   "lwh_median": [
+    0.17799998819828033,
+    0.18000000715255737,
+    0.07999999821186066
+   ]
+  },
+  "DJI-mavic-mini": {
+   "n_obj": 6259,
+   "aspect_mean": 0.2056074654423985,
+   "aspect_sd": 2.7755575615628914e-17,
+   "lwh_median": [
+    0.2460000067949295,
+    0.289000004529953,
+    0.054999999701976776
+   ]
+  },
+  "DJI-phantom4": {
+   "n_obj": 6613,
+   "aspect_mean": 0.5718390996546869,
+   "aspect_sd": 1.1102230246251565e-16,
+   "lwh_median": [
+    0.3479999899864197,
+    0.3479999899864197,
+    0.19900000095367432
+   ]
+  },
+  "Matrice-600-Pro": {
+   "n_obj": 5311,
+   "aspect_mean": 0.3487323855691622,
+   "aspect_sd": 0.0,
+   "lwh_median": [
+    1.8389999866485596,
+    1.7110000848770142,
+    0.6190000176429749
+   ]
+  },
+  "drone-unk3": {
+   "n_obj": 5664,
+   "aspect_mean": 0.3322475386631726,
+   "aspect_sd": 1.1102230246251565e-16,
+   "lwh_median": [
+    0.3070000112056732,
+    0.3070000112056732,
+    0.10199999809265137
+   ]
+  },
+  "m210-rtk": {
+   "n_obj": 5652,
+   "aspect_mean": 0.4847417705713681,
+   "aspect_sd": 1.6653345369377348e-16,
+   "lwh_median": [
+    0.8830000162124634,
+    0.8209999799728394,
+    0.4129999876022339
+   ]
+  },
+  "matrix-300-RTK": {
+   "n_obj": 5629,
+   "aspect_mean": 0.3877933947535379,
+   "aspect_sd": 0.0,
+   "lwh_median": [
+    1.1030000448226929,
+    1.0269999504089355,
+    0.4129999876022339
+   ]
+  }
+ },
+ "a_per_object_mean": 0.39993598096984295,
+ "a_per_model_mean": 0.39684129191043305,
+ "b": {
+  "depth|real_col_c": {
+   "centres": [
+    62.621883392333984,
+    144.9248809814453
+   ],
+   "r_dark_bright_per_object": [
+    0.39867370755159287,
+    0.3966858485119322
+   ],
+   "r_dark_bright_per_model": [
+    0.4070891836313561,
+    0.3891553731197407
+   ],
+   "n_dark_bright": [
+    1153,
+    1603
+   ],
+   "model_class": {
+    "DJI-avata2": 1,
+    "DJI-mavic-mini": 1,
+    "DJI-phantom4": 1,
+    "Matrice-600-Pro": 0,
+    "drone-unk3": 1,
+    "m210-rtk": 0,
+    "matrix-300-RTK": 0
+   },
+   "model_frac_bright": {
+    "DJI-avata2": 0.555,
+    "DJI-mavic-mini": 0.7875,
+    "DJI-phantom4": 0.84,
+    "Matrice-600-Pro": 0.375,
+    "drone-unk3": 0.7675,
+    "m210-rtk": 0.49122807017543857,
+    "matrix-300-RTK": 0.23173803526448364
+   },
+   "model_lum_median": {
+    "DJI-avata2": 109.03115844726562,
+    "DJI-mavic-mini": 134.11148071289062,
+    "DJI-phantom4": 139.18550872802734,
+    "Matrice-600-Pro": 87.5238037109375,
+    "drone-unk3": 143.50645446777344,
+    "m210-rtk": 103.30899810791016,
+    "matrix-300-RTK": 86.39141845703125
+   }
+  },
+  "depth|sim_km2": {
+   "centres": [
+    83.98839950561523,
+    140.8160400390625
+   ],
+   "r_dark_bright_per_object": [
+    0.3993369671040387,
+    0.39579566670353256
+   ],
+   "r_dark_bright_per_model": [
+    0.4170487349031933,
+    0.36989803458675263
+   ],
+   "n_dark_bright": [
+    1340,
+    1416
+   ],
+   "model_class": {
+    "DJI-avata2": 0,
+    "DJI-mavic-mini": 1,
+    "DJI-phantom4": 1,
+    "Matrice-600-Pro": 0,
+    "drone-unk3": 1,
+    "m210-rtk": 0,
+    "matrix-300-RTK": 0
+   },
+   "model_frac_bright": {
+    "DJI-avata2": 0.4525,
+    "DJI-mavic-mini": 0.7225,
+    "DJI-phantom4": 0.79,
+    "Matrice-600-Pro": 0.2916666666666667,
+    "drone-unk3": 0.7375,
+    "m210-rtk": 0.40350877192982454,
+    "matrix-300-RTK": 0.17380352644836272
+   },
+   "model_lum_median": {
+    "DJI-avata2": 109.03115844726562,
+    "DJI-mavic-mini": 134.11148071289062,
+    "DJI-phantom4": 139.18550872802734,
+    "Matrice-600-Pro": 87.5238037109375,
+    "drone-unk3": 143.50645446777344,
+    "m210-rtk": 103.30899810791016,
+    "matrix-300-RTK": 86.39141845703125
+   }
+  },
+  "hull|real_col_c": {
+   "centres": [
+    62.621883392333984,
+    144.9248809814453
+   ],
+   "r_dark_bright_per_object": [
+    0.40088825856577925,
+    0.39536188103117265
+   ],
+   "r_dark_bright_per_model": [
+    0.4070891836313561,
+    0.3891553731197407
+   ],
+   "n_dark_bright": [
+    1075,
+    1681
+   ],
+   "model_class": {
+    "DJI-avata2": 1,
+    "DJI-mavic-mini": 1,
+    "DJI-phantom4": 1,
+    "Matrice-600-Pro": 0,
+    "drone-unk3": 1,
+    "m210-rtk": 0,
+    "matrix-300-RTK": 0
+   },
+   "model_frac_bright": {
+    "DJI-avata2": 0.5825,
+    "DJI-mavic-mini": 0.755,
+    "DJI-phantom4": 0.7925,
+    "Matrice-600-Pro": 0.4638888888888889,
+    "drone-unk3": 0.7325,
+    "m210-rtk": 0.47619047619047616,
+    "matrix-300-RTK": 0.4508816120906801
+   },
+   "model_lum_median": {
+    "DJI-avata2": 110.35081100463867,
+    "DJI-mavic-mini": 128.0408706665039,
+    "DJI-phantom4": 130.91397094726562,
+    "Matrice-600-Pro": 100.44992065429688,
+    "drone-unk3": 128.88410186767578,
+    "m210-rtk": 102.73693084716797,
+    "matrix-300-RTK": 98.91657257080078
+   }
+  },
+  "hull|sim_km2": {
+   "centres": [
+    85.46378326416016,
+    136.2191162109375
+   ],
+   "r_dark_bright_per_object": [
+    0.4011948030209421,
+    0.39428636596974753
+   ],
+   "r_dark_bright_per_model": [
+    0.4170487349031933,
+    0.36989803458675263
+   ],
+   "n_dark_bright": [
+    1289,
+    1467
+   ],
+   "model_class": {
+    "DJI-avata2": 0,
+    "DJI-mavic-mini": 1,
+    "DJI-phantom4": 1,
+    "Matrice-600-Pro": 0,
+    "drone-unk3": 1,
+    "m210-rtk": 0,
+    "matrix-300-RTK": 0
+   },
+   "model_frac_bright": {
+    "DJI-avata2": 0.4925,
+    "DJI-mavic-mini": 0.675,
+    "DJI-phantom4": 0.7275,
+    "Matrice-600-Pro": 0.40555555555555556,
+    "drone-unk3": 0.69,
+    "m210-rtk": 0.37593984962406013,
+    "matrix-300-RTK": 0.345088161209068
+   },
+   "model_lum_median": {
+    "DJI-avata2": 110.35081100463867,
+    "DJI-mavic-mini": 128.0408706665039,
+    "DJI-phantom4": 130.91397094726562,
+    "Matrice-600-Pro": 100.44992065429688,
+    "drone-unk3": 128.88410186767578,
+    "m210-rtk": 102.73693084716797,
+    "matrix-300-RTK": 98.91657257080078
+   }
+  }
+ },
+ "n_crops": 2756,
+ "n_crops_per_model": {
+  "DJI-avata2": 400,
+  "DJI-mavic-mini": 400,
+  "DJI-phantom4": 400,
+  "Matrice-600-Pro": 360,
+  "drone-unk3": 400,
+  "m210-rtk": 399,
+  "matrix-300-RTK": 397
+ }
+}

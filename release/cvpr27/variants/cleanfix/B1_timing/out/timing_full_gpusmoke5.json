@@ -1,0 +1,66 @@
+{
+ "load": {
+  "mean": 47.524220001650974,
+  "median": 20.6416999862995,
+  "p90": 91.45340000395663
+ },
+ "det": {
+  "mean": 124.87353999749757,
+  "median": 109.94309998932295,
+  "p90": 204.94368000072427
+ },
+ "io_raw": {
+  "mean": 35.41268000844866,
+  "median": 27.72949999780394,
+  "p90": 61.49004001636058
+ },
+ "depth": {
+  "mean": 60.12673999648541,
+  "median": 45.982400013599545,
+  "p90": 91.8557399942074
+ },
+ "orient": {
+  "mean": 130.5703399993945,
+  "median": 118.32400001003407,
+  "p90": 178.7707800103817
+ },
+ "height": {
+  "mean": 18.123940005898476,
+  "median": 9.309799992479384,
+  "p90": 34.748220012988895
+ },
+ "pnp": {
+  "mean": 0.5224999971687794,
+  "median": 0.5252999835647643,
+  "p90": 0.5618000112008303
+ },
+ "total_gpu_chain": {
+  "mean": 334.21705999644473,
+  "median": 325.1326000026893,
+  "p90": 475.7500799954869
+ },
+ "n_frames": 5,
+ "warmup": 2,
+ "mode": "full",
+ "weights_resident_MB": 738.2900390625,
+ "refiner_width_gate_clipped": 0,
+ "peak_mem_MB_inference": 809.978515625,
+ "gpu": "NVIDIA GeForce RTX 5090 Laptop GPU",
+ "nets": {
+  "det": [
+   "E:/Open3DUAVDet/output/models/uavdet_3d/camnorm/srcx/st_in2mav/DET1_s0/ckpt/checkpoint_epoch_3.pth",
+   "E:/Open3DUAVDet/output/models/uavdet_3d/camnorm/srcx/st_in2mav/DET1_s1/ckpt/checkpoint_epoch_3.pth",
+   "E:/Open3DUAVDet/output/models/uavdet_3d/camnorm/srcx/st_in2mav/DET1_s2/ckpt/checkpoint_epoch_3.pth"
+  ],
+  "ref": [
+   "E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/in2mav/ref/ref_st3_s5.pt",
+   "E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/in2mav/ref/ref_st3_s6.pt"
+  ],
+  "stu": [
+   "E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/in2mav/ou/S_ab0.pth",
+   "E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/in2mav/ou/S_ab1.pth"
+  ],
+  "kps": "E:/Open3DUAVDet/output/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom_irlid_kps/KPSs0/ckpt/checkpoint_epoch_8.pth"
+ },
+ "nvidia_smi_used_MB_at_end": "16980 MiB, 93 %"
+}

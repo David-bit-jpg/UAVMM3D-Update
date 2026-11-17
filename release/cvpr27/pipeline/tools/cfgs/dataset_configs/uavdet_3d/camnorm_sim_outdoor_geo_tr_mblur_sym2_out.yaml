@@ -1,0 +1,15 @@
+# [outdoor 11-11] clone of camnorm_sim_full_geo_tr_mblur_sym2 for the CARLA outdoor sim cache (PCMD outdoor run).
+# Changes (all from OUTDOOR SIM statistics only): DATA_PATH, NORM (tools/calc_cache_norm.py, 600 frames),
+# VIEW_AUG.t_range upper bound 3.0 -> 4.6 (= p95 of native t=log(Zv/diag) of qualified sim boxes on the 512-wide full frame;
+# indoor range assumed indoor apparent sizes), DEPTH/SIZE target stats (tools/calc_target_stats.py on this cache).
+_BASE_CONFIG_: cfgs/dataset_configs/uavdet_3d/camnorm_sim_full_geo_tr_mblur_sym2.yaml
+DATA_PATH: 'D:/S2MUAV3D/sim_outdoor_carla/cache'
+NORM_MEAN: [0.5174, 0.4442, 0.3115]
+NORM_STD: [0.2616, 0.1835, 0.2408]
+VIEW_AUG: {zoom: [1.0, 4.0], no_upscale: false, t_range: [1.0, 4.6], max_upscale: 2.0}
+VAL_ZOOMS: [1.0, 2.5]
+DEPTH_MEAN: 28.3561
+DEPTH_STD: 20.9749
+SIZE_MEAN: [0.8036, 0.7784, 0.3668]
+SIZE_STD: [0.4473, 0.4304, 0.2376]
+MIN_RGB_VIS: 0.0   # outdoor cache is clear-day only (filter existed for indoor night frames; no vis_score.npy)

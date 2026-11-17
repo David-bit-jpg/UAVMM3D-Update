@@ -1,0 +1,5 @@
+# SYM8MB 臂（2026-09-19）：SYM8（对称旋转损失 + rot 8，三种子确认倾斜减半、位置零代价）
+# + 长核运动模糊（MBLUR：25/45 px 拖影下检出 9%/1% -> 98%/95%，phantom4 原样不受影响）。5 轮。
+_BASE_CONFIG_: cfgs/models/uavdet_3d/camnorm/sim_full_r34_geo_tr_mix_rot8.yaml
+DATA_CONFIG:
+    _BASE_CONFIG_: cfgs/dataset_configs/uavdet_3d/camnorm_sim_full_geo_tr_mblur_sym2.yaml

@@ -1,0 +1,283 @@
+#!/bin/bash
+# [review1113 sensorfree] ONE reviewer-requested sensor-free control run (11-15). Queued via sf_laneA.sh / sf_laneB.sh; NOT RUN in full by its author.
+#   usage: bash run_sf.sh <arm E1|E2|E2a|E2b|E4> <tgt mav|antifs> <shift 0|10|20>          DRY=1: build the lib, print the config, check inputs, exit
+#          bash run_sf.sh POOL <arm> <tgt>                                                  pooled paired bootstrap over every finished seed pair
+#   env:   LATEST_START=MMDDHHMM  do not START after this machine time (default 11170800: the main-paper deadline is 11-17 19:59)
+# Arms (exact switches: make_sf_lib.py docstring; README.md):
+#   E1  RGB-only teachers (SX_TEACH=none) + constant height + EVERY composite matte = projected-3D-box convex hull (refiner composites ON
+#       with the hull, students' a_v -> hull). Whole chain recomputed. Paired with PST and with the RGB-only (none) run of the same seed shift.
+#   E2  box hull replaces the IR silhouette (target + matte), refiner-only protocol of review1113/boxhull (= heads H7), AntiUAV3D shifts 10/20.
+#   E2a hull only as the refiner's silhouette TARGET (IR matte kept), MAV6D s0.   E2b hull only as the composite MATTE (IR target kept), MAV6D s0.
+#   E4  RGB-only teachers + NO composites anywhere (students --paste 0) + constant height; s0. Upstream of the students copied from the
+#       same-seed none run (it never depends on the students); students -> w -> stage 3 -> deploy recomputed.
+# Real labels: only TEST labels, only via score_x.py (once per run, skipped when the score file exists) and heads_boot.py. Val is never scored.
+# Robustness (= heads/run_arm.sh): every GPU call through gpu_slot.sh light (inference via infer_wrap.py, memory fraction 0.2); CUDA OOM -> batch
+#   halved and retried (max 4, logs/retry.log; a halved TRAINING batch = RECIPE DEVIATION, also in sensorfree.log); trainings resume; every step
+#   skipped once its output exists; DataLoader workers 0; never kills processes. Markers <run>/.done | .failed | .skipped.
+#   Logs: <run>/logs/run.log and sensorfree/logs/sensorfree.log; final line "ALL DONE: ..." (test metrics + paired diff vs same-seed PST, 95% CI).
+GP=/e/Open3DUAVDet/output/camnorm/geo1004/gproto; GPW=E:/Open3DUAVDet/output/camnorm/geo1004/gproto
+SF=$GP/review1113/sensorfree; SFW=$GPW/review1113/sensorfree
+PY=D:/Miniconda3/envs/city/python.exe; SLOT="bash $GP/gpu_slot.sh"; M=E:/Open3DUAVDet/output/models/uavdet_3d/camnorm
+mkdir -p $SF/logs; GLOG=$SF/logs/sensorfree.log
+wp() { echo "$1" | sed -E 's|^/([a-z])/|\U\1:/|'; }                 # /e/x -> E:/x (for Python)
+pp() { echo "$1" | sed -E 's|^([A-Z]):/|/\L\1/|'; }                 # E:/x -> /e/x
+pst_of() { case "$1/$2" in mav/0) echo $GP/srcx/in2mav ;; mav/10) echo $GP/review1113/sup3/run ;; mav/20) echo $GP/review1113/seeds/mav_full_s20 ;;
+  antifs/0) echo $GP/srcx/out2antifs ;; antifs/10) echo $GP/review1113/seeds/antifs_full_s10 ;; antifs/20) echo $GP/review1113/seeds/antifs_full_s20 ;; esac; }
+none_of() { case "$1/$2" in mav/0) echo $GP/srcx/in2mav_none ;; mav/10) echo $GP/review1113/seeds/mav_none_s10 ;; mav/20) echo $GP/review1113/seeds/mav_none_s20 ;;
+  antifs/0) echo $GP/srcx/out2antifs_none ;; antifs/10) echo $GP/review1113/seeds/antifs_none_s10 ;; antifs/20) echo $GP/review1113/seeds/antifs_none_s20 ;; esac; }
+
+# ================================================================== POOL <arm> <tgt>: pooled paired bootstrap over the finished seed pairs
+pool() {   # $1 arm  $2 tgt  -> one "POOLED" line per reference (PST; for E1/E4 also RGB-only) in sensorfree.log
+  local A=$1 T=$2 a=$(echo $1 | tr 'A-Z' 'a-z') s d PP=() PN=() lab
+  for s in 0 10 20; do d=$SF/$A/${T}_s$s
+    if [ -f $d/.done ]; then PP+=("$(wp $d)/preds/${a}_fused_test.pkl" "$(wp $(pst_of $T $s))/preds/pcmd_fused_test.pkl")
+      PN+=("$(wp $d)/preds/${a}_fused_test.pkl" "$(wp $(none_of $T $s))/preds/pcmd_fused_test.pkl")
+    elif [ $A = E2 ] && [ $s = 0 ]; then   # existing box-hull runs at shift 0 (review1113/boxhull)
+      local C=in2mav; [ $T = antifs ] && C=out2antifs; local bp=$GP/review1113/boxhull/$C/preds/boxhull_fused_test.pkl
+      [ -f $bp ] && [ -f $bp.score_$( [ $T = mav ] && echo real_test || echo antifs_test).json ] && PP+=("$(wp $bp)" "$(wp $(pst_of $T 0))/preds/pcmd_fused_test.pkl")
+    elif [ $A = E2 ] && [ $T = mav ] && [ -f $GP/review1113/heads/H7/mav_s$s/.done ]; then   # MAV6D shifts 10/20 = heads H7 (not duplicated)
+      PP+=("$GPW/review1113/heads/H7/mav_s$s/preds/h7_fused_test.pkl" "$(wp $(pst_of $T $s))/preds/pcmd_fused_test.pkl"); fi
+  done
+  mkdir -p $SF/$A
+  if [ ${#PP[@]} -ge 2 ]; then lab="$A $T pooled vs PST ($(( ${#PP[@]} / 2 )) seed pairs)"
+    $PY $GPW/review1113/heads/heads_boot.py $T $SFW/$A/pooled_${T}_vsPST.json "$lab" "${PP[@]}" > $SF/$A/pool_${T}_vsPST.log 2>&1 \
+      && echo "$(date '+%m-%d %H:%M:%S') [POOLED] $(tail -1 $SF/$A/pool_${T}_vsPST.log)" >> $GLOG || echo "$(date '+%m-%d %H:%M:%S') [POOLED] !! $lab failed, see $SF/$A/pool_${T}_vsPST.log" >> $GLOG; fi
+  if [ $A = E1 ] || [ $A = E1b ] || [ $A = E4 ]; then if [ ${#PN[@]} -ge 2 ]; then lab="$A $T pooled vs RGB-only none ($(( ${#PN[@]} / 2 )) seed pairs)"
+    $PY $GPW/review1113/heads/heads_boot.py $T $SFW/$A/pooled_${T}_vsNONE.json "$lab" "${PN[@]}" > $SF/$A/pool_${T}_vsNONE.log 2>&1 \
+      && echo "$(date '+%m-%d %H:%M:%S') [POOLED] $(tail -1 $SF/$A/pool_${T}_vsNONE.log)" >> $GLOG || echo "$(date '+%m-%d %H:%M:%S') [POOLED] !! $lab failed" >> $GLOG; fi; fi
+}
+if [ "$1" = POOL ]; then pool $2 $3; exit 0; fi
+
+ARM=$1; TGT=$2; SHIFT=$3; DRY=${DRY:-0}
+case "$ARM" in E1|E1b) MODE=FULLNONE; TEACH=none ;; E2|E2a|E2b) MODE=BH; TEACH=full ;; E4) MODE=STU; TEACH=none ;; *) echo "bad arm $ARM"; exit 2 ;; esac
+case "$TGT" in mav) SRC=in; SPLIT=real_test ;; antifs) SRC=out; SPLIT=antifs_test ;; *) echo "bad tgt $TGT"; exit 2 ;; esac
+case "$SHIFT" in 0|10|20) ;; *) echo "bad shift $SHIFT"; exit 2 ;; esac
+CF=${SRC}2${TGT}; C=$CF; [ $TEACH = none ] && C=${CF}_none; RUN=${TGT}_s$SHIFT; PFX=$(echo $ARM | tr 'A-Z' 'a-z')
+export SX_SEEDSHIFT=$SHIFT SX_TEACH=$TEACH SX_SRC=$SRC SX_TGT=$TGT PYTHONUTF8=1 TORCH_HOME=E:/torch_home PYTHONPATH=E:/Open3DUAVDet UAV_PNP_EPNP_FALLBACK=1 SX_INFER_MEMFRAC=0.2
+export CUDA_VISIBLE_DEVICES=${CUDA_VISIBLE_DEVICES:-0}
+unset OU_INIT OU_BANK OU_CROPS REF_TAG REF_REAL REF_DP
+X=$SF/$ARM/$RUN; XW=$SFW/$ARM/$RUN; L=$XW/lib; IW="$PY $L/infer_wrap.py"
+RP=$(pst_of $TGT $SHIFT); RPW=$(wp $RP)                              # same-seed PST run (paired reference)
+RN=$(none_of $TGT $SHIFT); RNW=$(wp $RN)                            # same-seed RGB-only run
+F=$GP/srcx/$C                                                       # teach-matched reported run (shift 0): fixed stage-1 outputs
+BHD=$GP/review1113/boxhull/$CF                                      # box-hull array (ALIGNED to the clean sim sample list, all seeds share it)
+HULLS=/d/S2MUAV3D/srcx_work/sensorfree/hull_$SRC.npy               # students' box-hull matte (prep_hull.py)
+mkdir -p $X/logs; LOG=$X/logs/run.log; RLOG=$X/logs/retry.log
+say() { echo "$(date '+%m-%d %H:%M:%S') [$ARM $RUN] $1" | tee -a $LOG >> $GLOG; }
+die() { say "!! $1"; touch $X/.failed; exit 2; }
+isoom() { grep -qiE "out of memory|OutOfMemoryError|CUBLAS_STATUS_ALLOC_FAILED" "$1"; }
+waitf() { local n=0; until [ -f "$1" ]; do [ $n = 0 ] && say "waiting for $1"; n=1; sleep 120; done; }
+dev() { echo "$(date '+%m-%d %H:%M:%S') $1" | tee -a $RLOG >> $LOG; echo "$(date '+%m-%d %H:%M:%S') [$ARM $RUN] $1" >> $GLOG; }
+oomrun() {   # oomrun <log> "<VAR=start ...>" cmd...   on OOM all VARs halve (min 1), max 4 retries
+  local lg=$1; local -a vals=($2); shift 2; local try=0 kv k v
+  while true; do
+    if env "${vals[@]}" "$@" > $lg.try 2>&1; then cat $lg.try >> $lg; rm -f $lg.try; return 0; fi
+    cat $lg.try >> $lg
+    if isoom $lg.try && [ $try -lt 4 ]; then try=$((try + 1)); local -a nv=()
+      for kv in "${vals[@]}"; do k=${kv%%=*}; v=${kv#*=}; v=$((v / 2)); [ $v -lt 1 ] && v=1; nv+=("$k=$v"); done; vals=("${nv[@]}")
+      dev "OOM retry $try/4 with ${vals[*]} :: $* (a halved TRAINING batch = RECIPE DEVIATION)"
+    else dev "FAILED (not OOM or 4 retries used): $*  see $lg"; rm -f $lg.try; return 1; fi
+  done
+}
+lnk() { [ -f "$2" ] && return 0; $PY -c "import os, sys; os.link(sys.argv[1], sys.argv[2])" "$(wp $1)" "$(wp $2)" 2>/dev/null || cp "$1" "$2"; }   # hard link, else copy
+cpf() { [ -f "$2" ] || cp "$1" "$2" || die "copy $1"; }
+
+# ---------------- input checks (also in DRY)
+chk() {
+  [ -f $RP/preds/pcmd_fused_test.pkl ] || { echo "PST reference $RP not finished"; return 1; }
+  [ -f $RN/preds/pcmd_fused_test.pkl ] || { echo "RGB-only reference $RN not finished"; return 1; }
+  if [ $MODE = FULLNONE ] || [ $MODE = BH ]; then
+    grep -q '"mode": "ALIGNED' $BHD/ref/align_hull.json || { echo "box-hull array $BHD not ALIGNED"; return 1; }
+    local ref=$RP; [ $MODE = FULLNONE ] && ref=$F
+    cmp -s $BHD/ref/sim_meta.pkl $ref/ref/sim_meta.pkl || { echo "sim samples of $ref differ from the box-hull run's"; return 1; }
+  fi
+  if [ $MODE = FULLNONE ]; then [ -f $HULLS ] && [ -f ${HULLS%.npy}.json ] || { echo "student hull $HULLS missing (run prep_hull.py $SRC)"; return 1; }
+    for f in recs/det0.pkl ref/sim_meta.pkl ref/sim_rgb.npy ref/bank.npy ref/real_d0_meta.pkl ref/real_d0_rgb.npy wsim_cache.pkl; do [ -f $F/$f ] || { echo "missing $F/$f"; return 1; }; done; fi
+  if [ $MODE = STU ]; then local NWK=$(pp $(SX_NOMKDIR=1 $PY -c "import sys; sys.path.insert(0, '$L'); import sx; print(sx.W_REF)"))
+    for f in recs/det0.pkl recs/det1.pkl ref/ref_st2_s5.pt ref/ref_st2_s6.pt ref/inf_st2_det1_train.pkl ref/sim_meta.pkl ref/sim_rgb.npy ref/sim_sil.npy ref/bank.npy ref/real_d0_meta.pkl ref/real_d0_rgb.npy wsim_cache.pkl kps_tr1.pkl kps_val1.pkl kps_te1.pkl; do [ -f $RN/$f ] || { echo "missing $RN/$f"; return 1; }; done
+    for f in oc_tr1.npy oc_tr1.pkl oc_val1.npy oc_val1.pkl oc_te1.npy oc_te1.pkl pseudo_tr1.npz; do [ -f $NWK/$f ] || { echo "missing $NWK/$f"; return 1; }; done; fi
+  return 0
+}
+
+if [ $DRY = 1 ]; then
+  $PY $SFW/make_sf_lib.py $ARM $TGT $SHIFT || exit 2
+  SX_NOMKDIR=1 CUDA_VISIBLE_DEVICES="" $PY -c "
+import sys; sys.path.insert(0, '$L'); import sx
+print('  %s %s s%s mode %s teach %s NOIR %s | O %s | W %s' % ('$ARM', '$TGT', '$SHIFT', '$MODE', sx.TEACH, sx.NOIR, sx.O, sx.W))
+print('  REAL_CFG %s | ST_CFG %s | PSEUDO_TAG %s' % (sx.REAL_CFG, sx.ST_CFG, sx.PSEUDO_TAG))
+assert sx.O == '$XW' and sx.TEACH == '$TEACH'" || exit 2
+  chk && echo "  inputs ok | PST ref $RP | RGB-only ref $RN" || exit 2; exit 0
+fi
+
+[ -f $X/.done ] && { say "already done: $(grep 'ALL DONE' $LOG | tail -1 | cut -c1-300)"; exit 0; }
+LS=${LATEST_START:-11170800}
+NOW=$(date '+%m%d%H%M'); if [ $((10#$NOW)) -gt $((10#$LS)) ] && [ ! -d $X/ref ]; then
+  say "SKIPPED: machine time $NOW is past the latest start $LS"; touch $X/.skipped; exit 0; fi
+rm -f $X/.failed $X/.skipped
+say "start (mode $MODE, SX_TEACH=$TEACH, SX_SEEDSHIFT=$SHIFT, PST ref $RPW, RGB-only ref $RNW)"
+$PY $SFW/make_sf_lib.py $ARM $TGT $SHIFT >> $LOG 2>&1 || die make_sf_lib
+eval "$($PY -c "
+import sys; sys.path.insert(0, '$L'); import sx; S = sx.S
+assert sx.O == '$XW' and sx.TEACH == '$TEACH', (sx.O, sx.TEACH)
+print('DET0=%s DET1=%s DET2=%s KPS=%s' % (tuple(S['det']) + (S['kps'],)))
+print('REAL=%s ST_CFG=%s TAG=%s WK=%s WREF=%s' % (sx.REAL, sx.ST_CFG, sx.PSEUDO_TAG, sx.W, sx.W_REF))
+")" || die "sx config"
+WKP=$(pp $WK); WREFP=$(pp $WREF)
+mkdir -p $X/recs $X/ref $X/ou $X/preds $WKP; cd $X
+CHK=$(chk) || die "input check: $CHK"
+say "lib ok: W $WK, pseudo tag $TAG"
+if [ $SRC = in ]; then RG=$M/sim_full_r34_kp_w12_zoom; RG0=$RG/KZs0/ckpt/checkpoint_epoch_30.pth; RG1=$RG/KZs1/ckpt/checkpoint_epoch_30.pth
+else RG=$M/sim_out_r34_kp_w12_zoom_out; RG0=$RG/OKZrgb_s0/ckpt/checkpoint_epoch_30.pth; RG1=$RG/OKZrgb_s1/ckpt/checkpoint_epoch_30.pth; fi
+
+train_student() {   # $1 = nominal seed, $2 = extra args; resume from runs/S6I_s<seed>/resume.pth; OOM -> halve --bs-src/--bs-tgt (recipe deviation)
+  local s=$1 bs=8 bt=4 try=0 lg=$X/logs/ou_train_s$1.log
+  while [ ! -f ou/runs/S6I_s$s/ckpt_last.pth ]; do
+    OU_INIT=${INIT[$s]} $SLOT light $PY $L/ou_train_x.py --seed $s --tag S6I --tgt gate --mir 12 --pseudo pseudo_tr1 --runs-dir $XW/ou/runs --bs-src $bs --bs-tgt $bt $2 > $lg.try 2>&1
+    cat $lg.try >> $lg
+    [ -f ou/runs/S6I_s$s/ckpt_last.pth ] && break
+    if isoom $lg.try && [ $try -lt 4 ]; then try=$((try + 1)); bs=$(( bs > 1 ? bs / 2 : 1 )); bt=$(( bt > 1 ? bt / 2 : 1 ))
+      dev "student s$s OOM -> retry $try/4 with --bs-src $bs --bs-tgt $bt, resuming (RECIPE DEVIATION)"
+    else dev "student s$s FAILED, see $lg"; rm -f $lg.try; return 1; fi
+  done; rm -f $lg.try
+}
+students() {   # $1 = extra student args; then AdaBN + mirror readings tr1/val1/te1
+  for s in 0 1; do train_student $s "$1" & sleep 100; done; wait
+  for s in 0 1; do [ -f ou/runs/S6I_s$s/ckpt_last.pth ] || die "student s$s"
+    grep -h -m1 "INFO  init " logs/ou_train_s$s.log | sed 's/ | steps.*//' >> $LOG
+    grep -h "sensorfree E1\] student composite matte" logs/ou_train_s$s.log | tail -1 >> $LOG
+    say "student s$s: $(grep -ho "'paste_tried': [0-9]*, 'paste_done': [0-9]*" ou/runs/S6I_s$s/*.json logs/ou_train_s$s.log 2>/dev/null | tail -1)"
+    [ -f ou/S_ab$s.pth ] || oomrun logs/ori_infer.log "ORI_BS=16" $SLOT light $IW $L/ori_x.py adabn $XW/ou/runs/S6I_s$s/ckpt_last.pth tr1 $XW/ou/S_ab$s.pth 0 || die "student adabn $s"; done
+  for n in tr1 val1 te1; do [ -f ou/read_${n}_stu.pkl ] || ORI_MIRROR=1 oomrun logs/ori_infer.log "ORI_BS=16" $SLOT light $IW $L/ori_x.py read $n $XW/ou/read_${n}_stu.pkl $XW/ou/S_ab0.pth,$XW/ou/S_ab1.pth || die "read $n"; done
+  say "students done"
+}
+stage3() {   # w (sim val inverse variance) -> fused targets -> refiner stage 3 (seeds 5, 6) -> final inference -> seed average
+  if [ "${1:-}" = frozen ]; then WW=$($PY -c "import json; print(json.load(open('$XW/w_frozen.json'))['w'])") || die w; say "frozen w of the reference run = $WW"
+  else [ -f w_sim.json ] || oomrun logs/wsim.log "ORI_BS=16 REF_BS=128" $SLOT light $IW $L/wsim_x.py $DET0 $XW/ref/ref_st2_s5.pt,$XW/ref/ref_st2_s6.pt $XW/ou/runs/S6I_s0/ckpt_last.pth,$XW/ou/runs/S6I_s1/ckpt_last.pth $XW/w_sim.json || die wsim
+    WW=$($PY -c "import json; print(json.load(open('$XW/w_sim.json'))['w'])"); say "w (sim val inverse variance) = $WW"; fi
+  [ -f ref/dp_fused.npy ] || $PY $L/chain_x.py targets $WW >> logs/targets.log 2>&1 || die targets
+  ref3() { local j=$1; [ -f ref/ref_st3_s$j.pt ] || REF_REAL=d0 REF_DP=$XW/ref/dp_fused.npy oomrun logs/ref_st3_s$j.log "REF_TRAIN_BS=64" $SLOT light $PY $L/refiner_x.py train 3 $j; }
+  for j in 5 6; do ref3 $j & sleep 30; done; wait
+  for j in 5 6; do [ -f ref/ref_st3_s$j.pt ] || die "ref st3 $j"; done
+  for sp in train val test; do
+    for j in 5 6; do [ -f ref/fin_s${j}_$sp.pkl ] || oomrun logs/infer.log "REF_BS=128" $SLOT light $IW $L/refiner_x.py infer $XW/ref/ref_st3_s$j.pt $XW/recs/det1.pkl $sp $XW/ref/fin_s${j}_$sp.pkl || die "inf fin $j $sp"; done
+    [ -f ref/inf_fin_det1_$sp.pkl ] || $PY $L/avg_inf.py $XW/ref/inf_fin_det1_$sp.pkl $XW/ref/fin_s5_$sp.pkl $XW/ref/fin_s6_$sp.pkl >> $LOG 2>&1 || die "avg fin $sp"
+  done
+}
+st2det1() {
+  for j in 5 6; do [ -f ref/st2_s${j}_det1_train.pkl ] || oomrun logs/infer.log "REF_BS=128" $SLOT light $IW $L/refiner_x.py infer $XW/ref/ref_st2_s$j.pt $XW/recs/det1.pkl train $XW/ref/st2_s${j}_det1_train.pkl || die "inf st2 det1 $j"; done
+  [ -f ref/inf_st2_det1_train.pkl ] || $PY $L/avg_inf.py $XW/ref/inf_st2_det1_train.pkl $XW/ref/st2_s5_det1_train.pkl $XW/ref/st2_s6_det1_train.pkl >> $LOG 2>&1 || die "avg st2 det1"
+}
+ref12() { local j=$1
+  [ -f ref/ref_st1_s$j.pt ] || oomrun logs/ref_st1_s$j.log "REF_ST1_BS=128" $SLOT light $PY $L/refiner_x.py train 1 $j
+  [ -f ref/ref_st1_s$j.pt ] && { [ -f ref/ref_st2_s$j.pt ] || REF_REAL=d0 oomrun logs/ref_st2_s$j.log "REF_TRAIN_BS=64" $SLOT light $PY $L/refiner_x.py train 2 $j; }; }
+const_kps() {   # RGB-only arm (= seeds/run_seed_chain.sh teach none): every crop gets the constant aspect h / mean(l, w) of s_bar (no height network)
+  [ -f kps_te1.pkl ] || $PY -c "
+import pickle, numpy as np
+s = np.asarray(pickle.load(open('$XW/recs/det1.pkl', 'rb'))['size'], float); r = float(s[2] / ((s[0] + s[1]) / 2))
+for n in ('tr1', 'val1', 'te1'):
+    I = pickle.load(open('$WK/oc_%s.pkl' % n, 'rb'))['info']
+    pickle.dump({(f['seq'], f['frame']): r for f in I}, open('$XW/kps_%s.pkl' % n, 'wb'))
+print('constant height aspect', r)" >> $LOG 2>&1 || die "const kps"
+  say "$(grep 'constant height aspect' $LOG | tail -1)"
+}
+
+# ================================================================== E1: fully sensor-free chain (RGB-only teachers + hull mattes everywhere)
+if [ $MODE = FULLNONE ]; then
+  $PY $L/mkcfg.py >> $LOG 2>&1 || die mkcfg
+  cpf $F/recs/det0.pkl recs/det0.pkl
+  for f in sim_meta.pkl real_d0_meta.pkl; do cpf $F/ref/$f ref/$f; done
+  for f in sim_rgb.npy bank.npy real_d0_rgb.npy; do lnk $F/ref/$f ref/$f; [ -f ref/$f ] || die "link ref/$f"; done
+  lnk $BHD/ref/sim_sil.npy ref/sim_sil.npy; [ -f ref/sim_sil.npy ] || die "link hull"     # refiner composite alpha = box hull (SILW = 0: never a target)
+  cmp -s ref/sim_sil.npy $BHD/ref/sim_sil.npy || die "hull array differs"
+  cpf $F/wsim_cache.pkl wsim_cache.pkl
+  say "fixed stage-1 outputs from srcx/$C (det0, sim samples / bank / real d0 crops [hard links], wsim cache); refiner matte = box hull of review1113/boxhull/$CF"
+  for j in 5 6; do ref12 $j & sleep 30; done; wait
+  for j in 5 6; do [ -f ref/ref_st2_s$j.pt ] || die "refiner st2 s$j"; done
+  grep -h "\[sensorfree\] composites" logs/ref_st1_s5.log | tail -1 | while read -r l; do say "refiner: $l"; done
+  say "refiners stage 1-2 done"
+  for j in 5 6; do [ -f ref/st2_s${j}_det0_train.pkl ] || oomrun logs/infer.log "REF_BS=128" $SLOT light $IW $L/refiner_x.py infer $XW/ref/ref_st2_s$j.pt $XW/recs/det0.pkl train $XW/ref/st2_s${j}_det0_train.pkl || die "inf st2 det0 $j"; done
+  [ -f ref/inf_st2_det0_train.pkl ] || $PY $L/avg_inf.py $XW/ref/inf_st2_det0_train.pkl $XW/ref/st2_s5_det0_train.pkl $XW/ref/st2_s6_det0_train.pkl >> $LOG 2>&1 || die "avg st2 det0"
+  [ -f pseudo_$TAG.json ] || $PY $L/make_pseudo_x.py $XW/recs/det0.pkl $XW/ref/inf_st2_det0_train.pkl $TAG >> $LOG 2>&1 || die pseudo
+  say "pseudo-labels: $(tr -d '\n ' < pseudo_$TAG.json)"
+  STN=$(basename $ST_CFG .yaml); stck() { echo $M/srcx/$STN/DET1_s$1/ckpt/checkpoint_epoch_3.pth; }
+  DETS=($DET0 $DET1 $DET2)
+  train_det1() {   # = run_seed_chain.sh: train.py resumes from its latest epoch checkpoint; OOM -> halve --batch_size (recipe deviation)
+    local k=$1 bs=8 try=0 lg=$X/logs/train_det1_s$1.log
+    while [ ! -f $(stck $k) ]; do
+      ( cd /e/Open3DUAVDet/tools; $SLOT light $PY train.py --cfg_file $ST_CFG --batch_size $bs --workers 0 --fix_random_seed --cudnn_benchmark --use_amp \
+          --epochs 3 --max_ckpt_save_num 1 --logger_iter_interval 200 --skip_test_eval --seed $((k + SHIFT)) --extra_tag DET1_s$k --pretrained_model ${DETS[$k]} ) > $lg.try 2>&1
+      cat $lg.try >> $lg
+      [ -f $(stck $k) ] && break
+      if isoom $lg.try && [ $try -lt 4 ] && [ $bs -gt 1 ]; then try=$((try + 1)); bs=$((bs / 2))
+        dev "self-trained detector s$k OOM -> retry $try/4 with --batch_size $bs (RECIPE DEVIATION)"
+      else dev "self-trained detector s$k FAILED, see $lg"; rm -f $lg.try; return 1; fi
+    done; rm -f $lg.try
+  }
+  for k in 0 1 2; do train_det1 $k & sleep 100; done; wait
+  for k in 0 1 2; do [ -f $(stck $k) ] || die "self-trained detector s$k"; done
+  [ -f recs/det1.pkl ] || oomrun logs/det1_infer.log "DET_BS=8" $SLOT light $IW $L/det_infer_x.py --ckpt $(stck 0) $(stck 1) $(stck 2) --splits train val test --out $XW/recs/det1.pkl --size-fallback $XW/recs/det0.pkl || die "det1 infer"
+  say "detectors done"
+  for x in "train tr1" "val val1" "test te1"; do set -- $x; [ -f $WKP/oc_$2.pkl ] || $PY $L/ori_x.py crops $XW/recs/det1.pkl $1 1 $2 >> $LOG 2>&1 || die "crops $2"; done
+  [ -f $WKP/ou_bank.npy ] || $PY $L/ori_x.py bank $XW/recs/det1.pkl ou_bank >> $LOG 2>&1 || die "ou bank"
+  for f in $RG0 $RG1; do waitf $f; done
+  [ -f ou/T_rgb0.pth ] || oomrun logs/ori_infer.log "ORI_BS=16" $SLOT light $IW $L/ori_x.py adabn $RG0 tr1 $XW/ou/T_rgb0.pth 80 || die "adabn rgb0"
+  [ -f ou/T_rgb1.pth ] || oomrun logs/ori_infer.log "ORI_BS=16" $SLOT light $IW $L/ori_x.py adabn $RG1 tr1 $XW/ou/T_rgb1.pth 80 || die "adabn rgb1"
+  [ -f ou/read_tr1_teach.pkl ] || oomrun logs/ori_infer.log "ORI_BS=16" $SLOT light $IW $L/ori_x.py read tr1 $XW/ou/read_tr1_teach.pkl $XW/ou/T_rgb0.pth,$XW/ou/T_rgb1.pth || die "read teachers"
+  GRP="{\"T\": [\"$XW/ou/T_rgb0.pth\", \"$XW/ou/T_rgb1.pth\"], \"IR\": [\"$XW/ou/T_rgb0.pth\"], \"LiD\": [\"$XW/ou/T_rgb1.pth\"]}"   # = none arm: gate = agreement of the 2 RGB seeds
+  [ -f $WKP/pseudo_tr1.npz ] || $PY $L/ori_x.py pseudo tr1 $XW/ou/read_tr1_teach.pkl pseudo_tr1 "$GRP" >> $LOG 2>&1 || die pseudo_ori
+  say "$(grep 'pseudo pseudo_tr1' $LOG | tail -1)"
+  INIT=($RG0 $RG1)
+  students ""                                     # paste 0.5 (recipe default), alpha = box hull (lib patch)
+  [ $ARM = E1 ] && for s in 0 1; do grep -q "sensorfree E1\] student composite matte" logs/ou_train_s$s.log || die "student s$s did not use the box-hull matte"; done   # E1b: students keep the IR x LiDAR matte
+  const_kps
+  st2det1
+  stage3
+fi
+
+# ================================================================== E2 / E2a / E2b: box-hull refiner control (refiner st1-3 + deploy at frozen w)
+if [ $MODE = BH ]; then
+  for f in recs/det0.pkl recs/det1.pkl ou/read_tr1_stu.pkl ou/read_val1_stu.pkl ou/read_te1_stu.pkl kps_tr1.pkl kps_val1.pkl kps_te1.pkl ref/sim_meta.pkl ref/real_d0_meta.pkl; do mkdir -p $(dirname $f); cpf $RP/$f $f; done
+  for f in sim_rgb.npy bank.npy real_d0_rgb.npy; do lnk $RP/ref/$f ref/$f; [ -f ref/$f ] || die "link ref/$f"; done
+  case $ARM in   # target array ref/sim_sil.npy | composite alpha ref/sim_matte.npy (absent -> alpha = target array)
+    E2)  lnk $BHD/ref/sim_sil.npy ref/sim_sil.npy; say "silhouette target = box hull, composite matte = box hull" ;;
+    E2a) lnk $BHD/ref/sim_sil.npy ref/sim_sil.npy; lnk $RP/ref/sim_sil.npy ref/sim_matte.npy; say "silhouette target = box hull, composite matte = IR silhouette" ;;
+    E2b) lnk $RP/ref/sim_sil.npy ref/sim_sil.npy; lnk $BHD/ref/sim_sil.npy ref/sim_matte.npy; say "silhouette target = IR silhouette, composite matte = box hull" ;;
+  esac
+  for f in ref/sim_sil.npy $( [ $ARM = E2 ] || echo ref/sim_matte.npy ); do [ -f $f ] || die "missing $f"; done
+  cpf $RP/w_sim.json w_frozen.json
+  mkdir -p work; for f in oc_tr1.pkl oc_val1.pkl oc_te1.pkl; do cpf $WREFP/$f work/$f; done
+  [ -f $(pp $REAL)/train/index_pseudo_$TAG.pkl ] || die "reference pseudo-label index $TAG missing"
+  for j in 5 6; do ref12 $j & sleep 30; done; wait
+  for j in 5 6; do [ -f ref/ref_st2_s$j.pt ] || die "refiner st2 s$j"; done
+  grep -h "\[sensorfree\] composites" logs/ref_st1_s5.log | tail -1 | while read -r l; do say "refiner: $l"; done
+  st2det1
+  stage3 frozen
+fi
+
+# ================================================================== E4: pure self-training row (RGB-only teachers, no composites anywhere)
+if [ $MODE = STU ]; then
+  for f in recs/det0.pkl recs/det1.pkl ref/sim_meta.pkl ref/real_d0_meta.pkl ref/ref_st2_s5.pt ref/ref_st2_s6.pt ref/st2_s5_det1_train.pkl ref/st2_s6_det1_train.pkl ref/inf_st2_det1_train.pkl wsim_cache.pkl kps_tr1.pkl kps_val1.pkl kps_te1.pkl; do cpf $RN/$f $f; done
+  for f in sim_rgb.npy sim_sil.npy bank.npy real_d0_rgb.npy; do lnk $RN/ref/$f ref/$f; [ -f ref/$f ] || die "link ref/$f"; done
+  for f in oc_tr1.npy oc_tr1.pkl oc_val1.npy oc_val1.pkl oc_te1.npy oc_te1.pkl ou_bank.npy pseudo_tr1.npz; do lnk $WREFP/$f $WKP/$f; [ -f $WKP/$f ] || die "link $f"; done
+  say "upstream of the students from the same-seed RGB-only run $RNW (det0/det1, refiner st2, crops, gated pseudo-orientations [hard links], constant height)"
+  say "reference: $(grep -h 'pseudo pseudo_tr1' $RN/logs/*.log 2>/dev/null | tail -1)"
+  INIT=($RG0 $RG1)
+  students "--paste 0"
+  for s in 0 1; do grep -q "'paste': 0.0" logs/ou_train_s$s.log || die "student s$s: paste not 0"; done
+  stage3
+fi
+
+# ================================================================== deployment, ONE test scoring, paired bootstrap vs the same-seed PST (+ RGB-only) run
+[ -n "${WW:-}" ] || die "w unset"
+[ -f deploy_$PFX.json ] || $PY $L/chain_x.py deploy $WW $PFX > logs/deploy.log 2>&1 || die deploy
+grep -E '"c_k"|"r_k"|"col_centres"' -A3 deploy_$PFX.json | tr -d ' \n' | cut -c1-300 | while read -r l; do say "deploy constants: $l"; done
+[ -f preds/${PFX}_fused_test.pkl.score_$SPLIT.json ] || $PY $L/score_x.py $XW/preds/${PFX}_fused_test.pkl $SPLIT > logs/score.log 2>&1 || die "score test"
+$PY $GPW/review1113/heads/heads_boot.py $TGT $XW/boot_vsPST.json "$ARM $RUN vs PST $RUN" $XW/preds/${PFX}_fused_test.pkl $RPW/preds/pcmd_fused_test.pkl > logs/boot_pst.log 2>&1 || die "bootstrap vs PST"
+ONE="$(tail -1 logs/boot_pst.log)"
+if [ $TEACH = none ]; then
+  $PY $GPW/review1113/heads/heads_boot.py $TGT $XW/boot_vsNONE.json "$ARM $RUN vs RGB-only $RUN" $XW/preds/${PFX}_fused_test.pkl $RNW/preds/pcmd_fused_test.pkl > logs/boot_none.log 2>&1 || die "bootstrap vs none"
+  ONE="$ONE || $(tail -1 logs/boot_none.log | sed 's/.*| diff/vs RGB-only: diff/')"; fi
+NDEV=$(grep -c "RECIPE DEVIATION" $RLOG 2>/dev/null); NDEV=${NDEV:-0}
+say "ALL DONE: $ONE || recipe deviations: $NDEV"
+touch $X/.done
+pool $ARM $TGT

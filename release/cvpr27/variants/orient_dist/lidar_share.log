@@ -1,0 +1,117 @@
+1566 2000
+3004 4001
+3642 6001
+5202 8000
+5950 10000
+6746 12001
+7684 14003
+8347 16001
+{
+ "all objects": {
+  "0-20": {
+   "n_obj": 1858,
+   "share_nonempty": 0.965016146393972,
+   "median_returns": 43.0,
+   "share_zero": 0.03229278794402583
+  },
+  "20-40": {
+   "n_obj": 9407,
+   "share_nonempty": 0.9365366216647177,
+   "median_returns": 14.0,
+   "share_zero": 0.006590836611034336
+  },
+  "40-60": {
+   "n_obj": 4740,
+   "share_nonempty": 0.7050632911392405,
+   "median_returns": 8.0,
+   "share_zero": 0.021308016877637132
+  },
+  "60+": {
+   "n_obj": 1302,
+   "share_nonempty": 0.3187403993855607,
+   "median_returns": 3.0,
+   "share_zero": 0.06221198156682028
+  }
+ },
+ "small airframes": {
+  "0-20": {
+   "n_obj": 1565,
+   "share_nonempty": 0.9584664536741214,
+   "median_returns": 36.0,
+   "share_zero": 0.038338658146964855
+  },
+  "20-40": {
+   "n_obj": 5708,
+   "share_nonempty": 0.8961107217939733,
+   "median_returns": 9.0,
+   "share_zero": 0.010336370007007708
+  },
+  "40-60": {
+   "n_obj": 2330,
+   "share_nonempty": 0.4270386266094421,
+   "median_returns": 4.0,
+   "share_zero": 0.027896995708154508
+  },
+  "60+": {
+   "n_obj": 823,
+   "share_nonempty": 0.02187120291616039,
+   "median_returns": 2.0,
+   "share_zero": 0.09477521263669501
+  }
+ },
+ "large airframes": {
+  "0-20": {
+   "n_obj": 293,
+   "share_nonempty": 1.0,
+   "median_returns": 113.0,
+   "share_zero": 0.0
+  },
+  "20-40": {
+   "n_obj": 3699,
+   "share_nonempty": 0.998918626655853,
+   "median_returns": 28.0,
+   "share_zero": 0.0008110300081103001
+  },
+  "40-60": {
+   "n_obj": 2410,
+   "share_nonempty": 0.9738589211618257,
+   "median_returns": 14.0,
+   "share_zero": 0.014937759336099586
+  },
+  "60+": {
+   "n_obj": 479,
+   "share_nonempty": 0.8288100208768268,
+   "median_returns": 7.0,
+   "share_zero": 0.006263048016701462
+  }
+ },
+ "qualified objects": {
+  "0-20": {
+   "n_obj": 1825,
+   "share_nonempty": 0.9698630136986301,
+   "median_returns": 43.0,
+   "share_zero": 0.0273972602739726
+  },
+  "20-40": {
+   "n_obj": 9326,
+   "share_nonempty": 0.9368432339695475,
+   "median_returns": 14.0,
+   "share_zero": 0.00654085352777182
+  },
+  "40-60": {
+   "n_obj": 0,
+   "share_nonempty": NaN,
+   "median_returns": NaN,
+   "share_zero": NaN
+  },
+  "60+": {
+   "n_obj": 0,
+   "share_nonempty": NaN,
+   "median_returns": NaN,
+   "share_zero": NaN
+  }
+ },
+ "n_frames": 5367,
+ "n_missing_lidar": 0,
+ "lidar_offset": 6
+}

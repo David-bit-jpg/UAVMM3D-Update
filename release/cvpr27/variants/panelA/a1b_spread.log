@@ -1,0 +1,15 @@
+PST       det0 (kept)                                        n  5227 bias   -5.3% spread   9.7% med|rel|   7.6%
+PST       pseudo label (kept)                                n  5227 bias   +3.4% spread   7.4% med|rel|   5.9%
+PST       pseudo label, c_bar on kept set (counterfactual)   n  5227 bias   -2.1% spread   7.4% med|rel|   5.2%
+PST       student det1 (kept)                                n  5227 bias   +3.3% spread   7.3% med|rel|   5.6%
+PST       pseudo label (gate-kept crops)                     n  4751 bias   +3.5% spread   7.4% med|rel|   6.0%
+PST       fused stage-3 target (gate-kept crops)             n  4751 bias   +3.9% spread   6.7% med|rel|   5.6%
+PST       det0 (gate-kept crops)                             n  4751 bias   -4.5% spread   9.3% med|rel|   7.1%
+RGB-only  det0 (kept)                                        n  5227 bias   -5.3% spread   9.7% med|rel|   7.6%
+RGB-only  pseudo label (kept)                                n  5227 bias   +7.5% spread   8.1% med|rel|   8.8%
+RGB-only  pseudo label, c_bar on kept set (counterfactual)   n  5227 bias   -0.6% spread   8.1% med|rel|   5.5%
+RGB-only  student det1 (kept)                                n  5227 bias   +7.0% spread   8.1% med|rel|   8.4%
+RGB-only  pseudo label (gate-kept crops)                     n  3899 bias   +7.9% spread   8.3% med|rel|   9.2%
+RGB-only  fused stage-3 target (gate-kept crops)             n  3899 bias   +8.4% spread   7.9% med|rel|   9.3%
+RGB-only  det0 (gate-kept crops)                             n  3899 bias   -3.2% spread   9.0% med|rel|   6.6%
+['val', 'test']

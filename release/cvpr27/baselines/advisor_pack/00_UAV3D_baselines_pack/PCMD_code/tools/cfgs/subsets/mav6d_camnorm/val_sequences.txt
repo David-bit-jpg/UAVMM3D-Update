@@ -1,0 +1,17 @@
+# MAV6D 验证集序列（build_mav6d_cache.py --val-frac 0.15 --seed 2026），机型/场景/序列
+mavic2/02/0202
+mavic2/02/0204
+mavic2/02/0214
+mavic2/02/0221
+mavic2/02/0223
+mavic2/03/0301
+mavic2/03/0304
+phantom4/01/0110
+phantom4/01/0112
+phantom4/01/0120
+phantom4/01/0126
+phantom4/01/0130
+phantom4/01/0131
+phantom4/01/0132
+phantom4/01/0133
+phantom4/02/0206

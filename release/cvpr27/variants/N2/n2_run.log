@@ -1,0 +1,46 @@
+teacher check {'all': 20.64431685166432, 'passing': 16.517169367453445, 'all_med': 17.7619583330184, 'passing_med': 12.90509504388954, 'yaw_all_mean': 15.702499981371814, 'yaw_all_med': 12.415755600124495, 'yaw_pass_mean': 11.890691306647486, 'yaw_pass_med': 8.14004942210914, 'n_all': 4131, 'n_pass': 1491}
+MAV6D test 4800
+AntiUAV3D test 2624
+MAV6D train (all GT frames) 12866
+MAV6D train, teacher-label frames (all) 4131
+MAV6D train, teacher-label frames (passing) 1491
+MAV6D test                                     Random rotation (Haar)                            93.65  92.86  26.87  24.22 240000
+MAV6D test                                     Random yaw about body z (GT tilt kept)            22.48  22.50  22.48  22.50 240000
+MAV6D test                                     Best constant (oracle, fit on this split)         19.78  17.23  14.51   9.17   4800
+MAV6D test                                     Constant fit on sim train labels                  19.99  16.60  14.48   9.74   4800
+MAV6D test                                     Constant fit on MAV6D real train GT               26.09  26.86  22.84  24.18   4800
+MAV6D test                                     Identity in camera frame                          91.16  90.87  31.52  16.52   4800
+MAV6D test                                     Level, body x toward camera (-z_cam)              19.85  17.83  14.70   8.65   4800
+MAV6D test                                     Level, facing camera along GT line of sight       20.45  18.59  15.35  11.64   4800
+AntiUAV3D test                                 Random rotation (Haar)                            93.70  93.05  26.98  24.40 131200
+AntiUAV3D test                                 Random yaw about body z (GT tilt kept)            22.46  22.47  22.46  22.47 131200
+AntiUAV3D test                                 Best constant (oracle, fit on this split)         18.38  17.03  14.62  13.08   2624
+AntiUAV3D test                                 Constant fit on sim train labels                  20.43  18.93  15.58  13.71   2624
+AntiUAV3D test                                 Constant fit on MAV6D real train GT               30.21  30.81  27.03  28.57   2624
+AntiUAV3D test                                 Identity in camera frame                          83.70  84.57  27.59  19.91   2624
+AntiUAV3D test                                 Level, body x toward camera (-z_cam)              20.15  19.10  14.64  14.39   2624
+AntiUAV3D test                                 Level, facing camera along GT line of sight       19.60  19.42  14.25  11.12   2624
+MAV6D train (all GT frames)                    Random rotation (Haar)                            93.68  93.00  26.87  24.22 643300
+MAV6D train (all GT frames)                    Random yaw about body z (GT tilt kept)            22.48  22.48  22.48  22.48 643300
+MAV6D train (all GT frames)                    Best constant (oracle, fit on this split)         24.95  25.32  19.50  21.08  12866
+MAV6D train (all GT frames)                    Constant fit on sim train labels                  27.60  27.33  22.88  21.98  12866
+MAV6D train (all GT frames)                    Constant fit on MAV6D real train GT (in-sample)   24.95  25.32  19.50  21.08  12866
+MAV6D train (all GT frames)                    Identity in camera frame                          93.21  92.55  32.26  28.90  12866
+MAV6D train (all GT frames)                    Level, body x toward camera (-z_cam)              27.68  29.69  23.20  26.17  12866
+MAV6D train (all GT frames)                    Level, facing camera along GT line of sight       27.50  27.69  22.77  22.92  12866
+MAV6D train, teacher-label frames (all)        Random rotation (Haar)                            93.69  92.96  26.85  24.18 206550
+MAV6D train, teacher-label frames (all)        Random yaw about body z (GT tilt kept)            22.48  22.48  22.48  22.48 206550
+MAV6D train, teacher-label frames (all)        Best constant (oracle, fit on this split)         24.82  25.23  19.49  20.93   4131
+MAV6D train, teacher-label frames (all)        Constant fit on sim train labels                  27.61  27.24  23.00  22.02   4131
+MAV6D train, teacher-label frames (all)        Constant fit on MAV6D real train GT (in-sample)   24.82  25.26  19.49  20.88   4131
+MAV6D train, teacher-label frames (all)        Identity in camera frame                          93.15  92.57  32.18  28.80   4131
+MAV6D train, teacher-label frames (all)        Level, body x toward camera (-z_cam)              27.69  29.68  23.32  26.18   4131
+MAV6D train, teacher-label frames (all)        Level, facing camera along GT line of sight       27.45  27.91  22.83  22.98   4131
+MAV6D train, teacher-label frames (passing)    Random rotation (Haar)                            93.45  92.75  26.86  24.11  74550
+MAV6D train, teacher-label frames (passing)    Random yaw about body z (GT tilt kept)            22.53  22.56  22.53  22.56  74550
+MAV6D train, teacher-label frames (passing)    Best constant (oracle, fit on this split)         24.76  26.09  20.21  21.65   1491
+MAV6D train, teacher-label frames (passing)    Constant fit on sim train labels                  26.85  26.38  22.70  21.36   1491
+MAV6D train, teacher-label frames (passing)    Constant fit on MAV6D real train GT (in-sample)   24.81  25.49  20.25  21.85   1491
+MAV6D train, teacher-label frames (passing)    Identity in camera frame                          91.63  91.82  28.81  21.15   1491
+MAV6D train, teacher-label frames (passing)    Level, body x toward camera (-z_cam)              26.77  28.99  22.82  25.71   1491
+MAV6D train, teacher-label frames (passing)    Level, facing camera along GT line of sight       26.73  27.34  22.62  22.36   1491

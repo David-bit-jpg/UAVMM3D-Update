@@ -1,0 +1,12 @@
+# [review1113 lidraw, arm b] KZ-LiD (sim_full_r34_kp_w12_zoom_lid.yaml) with the body-map aux head replaced by a raw-point head
+# (center_det_lidpts.py). Everything else inherited unchanged (KZ recipe, multimodal KZ data, DISTILL.STUDENT_CHANNELS 3, weight 1.0).
+_BASE_CONFIG_: cfgs/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom_lid.yaml
+MODEL:
+    NAME: CenterDetLidPts
+    LIDAR_AUX:
+        WEIGHT: 1.0
+        DEPTH_CH: 4
+        TAG_CH: 5
+        N_POINTS: 64
+        MAX_TARGET: 512
+        UV_UNIT_PX: 64.0

@@ -1,0 +1,9 @@
+# [review1113 ourdet_baseproto] UPPER BOUND (real supervised): our detector recipe (indoor ramp config, ImageNet init) trained on the MAV6D REAL
+# train set with its real labels (cache index.pkl, 12,866 frames, RGB only). Target stats = the indoor source stats (decoder = real_in2mav.yaml).
+_BASE_CONFIG_: cfgs/models/uavdet_3d/camnorm/sim_full_r34_geo_tr_mix_sym8_mblur_ramp.yaml
+DATA_CONFIG:
+    DATA_PATH: 'F:/ourdet_baseproto_cache/mav6d_cn_obj'   # byte-identical copy of E:/mmcache/mav6d_cn_obj/train (GT index.pkl) on the F: SSD; epochs 2-7 (epoch 1 read E: directly)
+    INDEX_FILE: 'index.pkl'
+    NORM_MEAN: [0.4360, 0.4418, 0.4374]
+    NORM_STD: [0.2239, 0.2244, 0.2200]
+    MIN_RGB_VIS: 0.0

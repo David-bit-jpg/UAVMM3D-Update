@@ -1,0 +1,124 @@
+{
+ "member_names": [
+  "KZs0",
+  "KZs0M"
+ ],
+ "n_rgb": 5,
+ "search": 2,
+ "target_w2d": 95.0,
+ "z_range": [
+  1.0,
+  4.0
+ ],
+ "stride": 8,
+ "in_wh": [
+  512,
+  288
+ ],
+ "KP_SCALE": 64.0,
+ "W": 512.0,
+ "H": 288.0,
+ "dec_kwargs": {
+  "rot_repr": "euler6",
+  "euler_seq": "xyz",
+  "depth_mode": "virtual",
+  "f_ref": 512,
+  "rot_frame": "allo",
+  "rot_target": "euler"
+ },
+ "KNOWN_SIZE_at_install": [
+  0.34972722828388214,
+  0.34838710725307465,
+  0.19957870244979858
+ ],
+ "SIZE_SOURCE_at_install": "known",
+ "norm_mean": [
+  0.436,
+  0.4418,
+  0.4374
+ ],
+ "norm_std": [
+  0.2239,
+  0.2244,
+  0.22
+ ],
+ "device": "cuda:0",
+ "n_frames": 2336,
+ "kp2d_dtype": [
+  "torch.float32"
+ ],
+ "elapsed_s": 49.03401303291321,
+ "written_at": "2026-11-13 04:57:47",
+ "arm": "explicit",
+ "pos_set": "single",
+ "pos_ckpts": [
+  "E:/Open3DUAVDet/output/models/uavdet_3d/camnorm/st2nl075wa_mav6d_r34_geo_full_tr/NL075_s0/ckpt/checkpoint_epoch_3.pth"
+ ],
+ "dump_pkl": "real_ens5flip_nl075_val_kzt7q.pkl",
+ "dump_argv": [
+  "--ckpt",
+  "E:/Open3DUAVDet/output/models/uavdet_3d/camnorm/st2nl075wa_mav6d_r34_geo_full_tr/NL075_s0/ckpt/checkpoint_epoch_3.pth",
+  "--ensemble",
+  "--kp2d-from",
+  "E:/Open3DUAVDet/output/camnorm/geo1004/kzst7/train_q/LOO_s0/ckpt/checkpoint_epoch_3.pth",
+  "E:/Open3DUAVDet/output/camnorm/geo1004/kzst7/train_q/LOO_s1/ckpt/checkpoint_epoch_3.pth",
+  "E:/Open3DUAVDet/output/camnorm/geo1004/kzst7/train_q/LOO_s2/ckpt/checkpoint_epoch_3.pth",
+  "E:/Open3DUAVDet/output/camnorm/geo1004/kzst7/train_q/LOO_s3/ckpt/checkpoint_epoch_3.pth",
+  "E:/Open3DUAVDet/output/camnorm/geo1004/kzst7/train_q/LOO_s4/ckpt/checkpoint_epoch_3.pth",
+  "--kp2d-cfg",
+  "cfgs/models/uavdet_3d/camnorm/mav6d_r34_kp.yaml",
+  "--out",
+  "E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/M12/M1/repl\\nl075_val_kzt7q\\real_ens5flip_nl075_val_kzt7q.pkl",
+  "--kp2d-zoom",
+  "95",
+  "--split",
+  "val",
+  "--bg",
+  "none",
+  "--no-flip"
+ ],
+ "dump_finished_ok": true,
+ "split": "val",
+ "sampled_interval": 1,
+ "gt_sealed_frames": 2336,
+ "gt_summary_suppressed": true,
+ "sealed_gt": "sealed_gt_nl075_val_kzt7q.pkl",
+ "sealed_gt_sha256": "95789072a416cc6418a9ccd2b4b9f9389bb38eda44bb482b4ea32572cf2cf399",
+ "dump_pkl_sha256_labelfree": "bb5bfec4e50dda6e3d30aefd2849e33785e2f9f97fe157ed973c3d9fe640c640",
+ "checkpoints_sha256": {
+  "checkpoint_epoch_3.pth": "9629f28e44d8675d6e021ce0be51ba7220dc2da125626e28af89ab1fb8f4fb8f"
+ },
+ "wrapper": "dump_members_repl.py",
+ "wrapper_sha256": "80cc347158f10fca74fd4ded5d0e7b3a8dcc6102bc2e55f67de7f67e7f10b416",
+ "byte_copies_sha256": {
+  "kz_fuse_offline.py": "9ae9e963eec9dfb14c8c1b6d027ff65ab9891c90e5228960aab8db4f48d80f2f",
+  "kzst_common.py": "76353febd5b9990a9c6f66d8435aee88ae8be37f69a081fe39a8fdaae98aa512",
+  "dump_kz_members.py": "c25c6e33f67287d3af37e6a427891a8ab8a33cbaaacdac204d8252fa58ca236d",
+  "adabn_kz.py": "066984cf07a8536f0c93fa80a5e8f4b703dc2a5502a2383d93aa701b1acdfed9"
+ },
+ "mirrors": "e1sa / kzst1 member dumps (run_kz_0923 dump kpKZavg_zoom) with --split val, position set single",
+ "src_tag": "nl075_val_kzt7q",
+ "members": [
+  {
+   "name": "KZs0",
+   "path": "E:\\Open3DUAVDet\\output\\camnorm\\geo1004\\gproto\\nolabel\\nl075\\adabn_all\\S6I_s0.pth",
+   "role": "recut"
+  },
+  {
+   "name": "KZs0M",
+   "path": "E:\\Open3DUAVDet\\output\\camnorm\\geo1004\\gproto\\nolabel\\nl075\\adabn_all\\S6I_s0.pth",
+   "role": "recut-mirror"
+  }
+ ],
+ "replay_check": {
+  "n": 24,
+  "max_abs_kp": 0.0,
+  "max_abs_hm": 0.0,
+  "read_cell_same": 24,
+  "tol_kp": 0.002,
+  "tol_hm": 0.0002,
+  "pass": true
+ },
+ "batch_vs_single": {},
+ "script": "E:\\Open3DUAVDet\\output\\camnorm\\geo1004\\gproto\\review1113\\M12\\recut_mirror_m12.py"
+}

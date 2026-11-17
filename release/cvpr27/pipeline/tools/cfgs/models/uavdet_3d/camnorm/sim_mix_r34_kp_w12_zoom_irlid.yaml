@@ -1,0 +1,4 @@
+# [srcx/mix 11-11] clone of sim_full_r34_kp_w12_zoom_irlid on the mixed sim cache (recipe unchanged)
+_BASE_CONFIG_: cfgs/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom_irlid.yaml
+DATA_CONFIG:
+    _BASE_CONFIG_: cfgs/dataset_configs/uavdet_3d/camnorm_sim_mix_kp_t_zoom_mm_mix.yaml

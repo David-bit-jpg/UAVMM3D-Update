@@ -1,0 +1,168 @@
+11-14 15:05:47 waiting for gupnet_uda_mt_s0/.done and review1113/initabl/.done (poll 10 min)
+11-14 18:55:52 start B1
+ok E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/cleanfix/B1_timing/lib
+[timing] mode full: models loaded, allocated 738.3 MB
+{
+ "load": {
+  "mean": 33.738342335176036,
+  "median": 16.97125000646338,
+  "p90": 93.86287995730532
+ },
+ "det": {
+  "mean": 79.05547733185813,
+  "median": 72.71819998277351,
+  "p90": 141.9650800060481
+ },
+ "io_raw": {
+  "mean": 78.53340166873143,
+  "median": 63.78570001106709,
+  "p90": 156.2910200213083
+ },
+ "depth": {
+  "mean": 29.862974332645535,
+  "median": 24.031099979765713,
+  "p90": 46.21237001847476
+ },
+ "orient": {
+  "mean": 53.82993766863365,
+  "median": 38.947699998971075,
+  "p90": 96.86423999955878
+ },
+ "height": {
+  "mean": 12.080365332270352,
+  "median": 7.160850043874234,
+  "p90": 29.010289994766943
+ },
+ "pnp": {
+  "mean": 0.4770963334400828,
+  "median": 0.46164996456354856,
+  "p90": 0.5865899845957757
+ },
+ "total_gpu_chain": {
+  "mean": 175.30585099884775,
+  "median": 169.84934997162782,
+  "p90": 258.53908998542465
+ },
+ "n_frames": 300,
+ "warmup": 30,
+ "mode": "full",
+ "weights_resident_MB": 738.2900390625,
+ "refiner_width_gate_clipped": 0,
+ "peak_mem_MB_inference": 809.978515625,
+ "gpu": "NVIDIA GeForce RTX 5090 Laptop GPU",
+ "nets": {
+  "det": [
+   "E:/Open3DUAVDet/output/models/uavdet_3d/camnorm/srcx/st_in2mav/DET1_s0/ckpt/checkpoint_epoch_3.pth",
+   "E:/Open3DUAVDet/output/models/uavdet_3d/camnorm/srcx/st_in2mav/DET1_s1/ckpt/checkpoint_epoch_3.pth",
+   "E:/Open3DUAVDet/output/models/uavdet_3d/camnorm/srcx/st_in2mav/DET1_s2/ckpt/checkpoint_epoch_3.pth"
+  ],
+  "ref": [
+   "E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/in2mav/ref/ref_st3_s5.pt",
+   "E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/in2mav/ref/ref_st3_s6.pt"
+  ],
+  "stu": [
+   "E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/in2mav/ou/S_ab0.pth",
+   "E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/in2mav/ou/S_ab1.pth"
+  ],
+  "kps": "E:/Open3DUAVDet/output/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom_irlid_kps/KPSs0/ckpt/checkpoint_epoch_8.pth"
+ },
+ "nvidia_smi_used_MB_at_end": "13047 MiB, 81 %"
+}
+[timing] mode single: models loaded, allocated 371.2 MB
+{
+ "load": {
+  "mean": 14.65871533456569,
+  "median": 12.145649990998209,
+  "p90": 26.717719988664623
+ },
+ "det": {
+  "mean": 28.183355000219308,
+  "median": 17.770249978639185,
+  "p90": 61.367899965262104
+ },
+ "io_raw": {
+  "mean": 15.167881334394528,
+  "median": 14.792950008995831,
+  "p90": 17.070260032778606
+ },
+ "depth": {
+  "mean": 21.132322332511347,
+  "median": 21.979750017635524,
+  "p90": 33.30459999269807
+ },
+ "orient": {
+  "mean": 26.64888200117275,
+  "median": 24.518000020179898,
+  "p90": 45.95459999400191
+ },
+ "height": {
+  "mean": 20.207077665448498,
+  "median": 18.212150025647134,
+  "p90": 37.5025100191124
+ },
+ "pnp": {
+  "mean": 3.9071336652462683,
+  "median": 0.27535000117495656,
+  "p90": 0.3962199902161956
+ },
+ "total_gpu_chain": {
+  "mean": 100.07877066459817,
+  "median": 92.50389999942854,
+  "p90": 155.57665000087584
+ },
+ "n_frames": 300,
+ "warmup": 30,
+ "mode": "single",
+ "weights_resident_MB": 371.18359375,
+ "refiner_width_gate_clipped": 0,
+ "peak_mem_MB_inference": 431.205078125,
+ "gpu": "NVIDIA GeForce RTX 5090 Laptop GPU",
+ "nets": {
+  "det": [
+   "E:/Open3DUAVDet/output/models/uavdet_3d/camnorm/srcx/st_in2mav/DET1_s0/ckpt/checkpoint_epoch_3.pth"
+  ],
+  "ref": [
+   "E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/in2mav/ref/ref_st3_s5.pt"
+  ],
+  "stu": [
+   "E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/in2mav/ou/S_ab0.pth"
+  ],
+  "kps": "E:/Open3DUAVDet/output/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom_irlid_kps/KPSs0/ckpt/checkpoint_epoch_8.pth"
+ },
+ "nvidia_smi_used_MB_at_end": "16042 MiB, 66 %"
+}
+[timing] mode det: models loaded, allocated 107.5 MB
+{
+ "load": {
+  "mean": 13.132385667025423,
+  "median": 9.094150009332225,
+  "p90": 20.588100008899357
+ },
+ "det": {
+  "mean": 31.647021000972018,
+  "median": 21.044099994469434,
+  "p90": 68.45766003825702
+ },
+ "total_gpu_chain": {
+  "mean": 31.647021000972018,
+  "median": 21.044099994469434,
+  "p90": 68.45766003825702
+ },
+ "n_frames": 300,
+ "warmup": 30,
+ "mode": "det",
+ "weights_resident_MB": 107.45166015625,
+ "refiner_width_gate_clipped": 0,
+ "peak_mem_MB_inference": 150.4599609375,
+ "gpu": "NVIDIA GeForce RTX 5090 Laptop GPU",
+ "nets": {
+  "det": [
+   "E:/Open3DUAVDet/output/models/uavdet_3d/camnorm/srcx/st_in2mav/DET1_s0/ckpt/checkpoint_epoch_3.pth"
+  ],
+  "ref": [],
+  "stu": [],
+  "kps": null
+ },
+ "nvidia_smi_used_MB_at_end": "15756 MiB, 95 %"
+}
+11-14 19:03:54 ALL DONE: full 175.3 / 169.8 ms (p90 259), peak 810 MB, resident 738 MB, GPU load at end: 13047 MiB, 81 % || single 100.1 / 92.5 ms (p90 156), peak 431 MB, resident 371 MB, GPU load at end: 16042 MiB, 66 % || det 31.6 / 21.0 ms (p90 68), peak 150 MB, resident 107 MB, GPU load at end: 15756 MiB, 95 %

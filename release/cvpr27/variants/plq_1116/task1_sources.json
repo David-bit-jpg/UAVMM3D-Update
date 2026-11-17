@@ -1,0 +1,12 @@
+{
+ "notes": {
+  "CenterNet sim-only (all frames)": "srcx/in2mav/recs/det0.pkl (3-seed sim-only ensemble + flip, own box incl. own size); no filtering",
+  "MonoCD sim-only (all frames)": "D:/cmpfull_runs/monocd_st_real_s0/pred_real_train_by_sim.pkl (local sim-only MonoCD seed 0), top-1 per frame, no filtering",
+  "MonoCD +ST": "D:/cmpfull_runs/monocd_st_real_s0/pseudo_real_train.pkl (make_pseudo.py: own top-1, top-80% score)",
+  "CenterNet +ST (naive)": "index_pseudo_srcx_in2mav_naive.pkl (review1113/B4: own centre, s_bar, own rotation; frames conf>=0.5 = same frames as PST)",
+  "PST pseudo labels (+PST, step 1)": "D:/UAV3D_pack_fix_1114/data/pcmd_teacher_pseudo_real_train_clean.pkl (centre = step-1 IR-corrected, size s_bar, orientation = teacher)",
+  "PST step-3 fused depth target": "srcx/in2mav/ref/dp_fused.npy + real_d0_meta.pkl (log(z_target/z_det0)); centre = step-1 centre moved along its ray to z_target; size/orientation as step 1 (only depth is a step-3 target)"
+ },
+ "n_common": 3678,
+ "common_def": "frames present in every non-\"all frames\" table"
+}

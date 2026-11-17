@@ -1,0 +1,10 @@
+c_bar_train 0.09924978762865067
+check_index_pseudo_srcx_in2mav {'n_index': 5227, 'n_recon': 5227, 'same_keys': True, 'n_corrected': 5227, 'max_abs_logz_diff': 5.932172843520531e-08, 'max_abs_t_diff_m': 2.383203385747379e-07, 'index_c_bar': 0.09924978762865067}
+check_reinfer_train300 {'s5': {'n': 299, 'max_abs_d_diff': 5.78761100769043e-05, 'keys_subset': True}, 's6': {'n': 299, 'max_abs_d_diff': 3.5643577575683594e-05, 'keys_subset': True}}
+val_refiner {'n_crops': 2336, 'n_val': 2336, 'n_pl': 835, 'n_corrected': 835, 'delta_median_val': 0.0999268926680088, 'frac_in_guard': 1.0}
+det1_val                         n=  803 seq= 14 r=0.833 [0.726,0.901] sp=0.761 | demean r=0.846 [0.757,0.906] | |S-GT| 5.0% |PL-GT| 5.3% |S-PL| 3.0% | bias S +2.7 PL +2.8 | btw-seq var PL 0.13 {'teacher_conf_ok': 835, 'both_within_1m': 803}
+det1_train                       n= 5137 seq= 48 r=0.925 [0.903,0.940] sp=0.904 | demean r=0.914 [0.891,0.927] | |S-GT| 5.4% |PL-GT| 5.8% |S-PL| 1.8% | bias S +3.1 PL +3.3 | btw-seq var PL 0.20 {'teacher_conf_ok': 5227, 'both_within_1m': 5137}
+val_ctrl_student_vs_det0raw      n=  779 seq= 13 r=0.817 [0.651,0.882] sp=0.766 | demean r=0.821 [0.650,0.887] | |S-GT| 4.8% |PL-GT| 7.5% |S-PL| 9.9% | bias S +2.9 PL -6.5 | btw-seq var PL 0.13 {'teacher_conf_ok': 835, 'both_within_1m': 779}
+val_ctrl_det0raw_vs_pl           n=  775 seq= 13 r=0.812 [0.661,0.898] sp=0.740 | demean r=0.845 [0.736,0.915] | |S-GT| 7.5% |PL-GT| 5.0% |S-PL| 9.7% | bias S -6.7 PL +3.0 | btw-seq var PL 0.18 {'teacher_conf_ok': 835, 'both_within_1m': 775}
+train_ctrl_student_vs_det0raw    n= 5078 seq= 48 r=0.794 [0.751,0.830] sp=0.768 | demean r=0.815 [0.784,0.836] | |S-GT| 5.4% |PL-GT| 7.3% |S-PL| 9.9% | bias S +3.2 PL -5.3 | btw-seq var PL 0.21 {'teacher_conf_ok': 5227, 'both_within_1m': 5078}
+seq_overlap {'n_train_seq': 61, 'n_val_seq': 16, 'shared_seq': 0}

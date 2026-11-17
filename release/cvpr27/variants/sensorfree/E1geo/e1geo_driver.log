@@ -1,0 +1,48 @@
+11-15 02:54:50 driver started (pid 119161): waiting for E1/mav_s{0,10,20}/.done, poll 10 min; CPU only
+11-15 07:05:02 mav_s0: E1 done -> deploy-only variant
+11-15 07:09:12 mav_s0 run E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1/mav_s0 | lib copy E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1geo/mav_s0/lib | W D:/S2MUAV3D/srcx_work/sf_E1_in2mav_none_s0
+11-15 07:09:14 mav_s0 box-corner ratios tr1 from read_tr1_teach.pkl (2 nets): 12866 / 12866 crops (failed 0), median 0.467, s_bar aspect 0.561
+11-15 07:09:15 mav_s0 box-corner ratios tr1 from read_tr1_stu.pkl (4 nets): 12866 / 12866 crops (failed 0), median 0.535, s_bar aspect 0.561
+11-15 07:09:17 mav_s0 box-corner ratios val1 from read_val1_stu.pkl (4 nets): 2336 / 2336 crops (failed 0), median 0.552, s_bar aspect 0.561
+11-15 07:09:18 mav_s0 box-corner ratios te1 from read_te1_stu.pkl (4 nets): 4800 / 4800 crops (failed 0), median 0.547, s_bar aspect 0.561
+11-15 07:09:22 mav_s0 faithfulness: patched chain with switches OFF reproduces E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1/mav_s0/preds/e1_fused_test.pkl (max |diff| 0.0e+00, 4800 frames)
+11-15 07:09:24 mav_s0 constants E1 (one class): c_k {-1: 0.100, 0: 0.100, 1: nan} r_k {0: 0.561, 1: nan} beta'_k {0: 0.328}
+11-15 07:09:25 mav_s0 constants E1geo: centres [84.3, 138.4] (train bright frac 0.43) c_k {-1: 0.100, 0: 0.100, 1: 0.101} r_k(teachers) {0: 0.402, 1: 0.543} beta'_k {0: 0.363, 1: 0.267} | r_k(students, diag) {0: 0.524, 1: 0.548} | test frames w/o class 75
+11-15 07:09:27 mav_s0 scored test once: E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1geo/mav_s0/preds/e1geo_fused_test.pkl.score_real_test.json
+11-15 07:09:55 mav_s0 E1geo mav_s0 vs E1 mav_s0 [mav, 1 pair(s)] arm UDS 52.54 AP 29.52 ATE 0.413 ASE 2.54 AOE 15.82 mDR 96.52 | ref UDS 53.48 AP 31.38 ATE 0.401 ASE 2.65 AOE 15.83 mDR 96.56 | diff UDS -0.94 [-2.03, +0.73] AP -1.86 [-2.76, -0.38] ATE +0.012 [-0.004, +0.025] ASE -0.12 AOE -0.01 [-0.02, +0.00] mDR -0.04
+11-15 07:09:56 mav_s0 E1geo mav_s0 vs PST mav_s0 [mav, 1 pair(s)] arm UDS 52.54 AP 29.52 ATE 0.413 ASE 2.54 AOE 15.82 mDR 96.52 | ref UDS 60.81 AP 40.93 ATE 0.306 ASE 1.75 AOE 14.48 mDR 96.17 | diff UDS -8.28 [-10.60, -6.45] AP -11.41 [-14.75, -8.67] ATE +0.108 [+0.078, +0.145] ASE +0.78 AOE +1.34 [+0.32, +2.33] mDR +0.35
+11-15 07:10:08 POOLED E1geo mav pooled vs E1 (1 seed pairs) [mav, 1 pair(s)] arm UDS 52.54 AP 29.52 ATE 0.413 ASE 2.54 AOE 15.82 mDR 96.52 | ref UDS 53.48 AP 31.38 ATE 0.401 ASE 2.65 AOE 15.83 mDR 96.56 | diff UDS -0.94 [-2.03, +0.73] AP -1.86 [-2.76, -0.38] ATE +0.012 [-0.004, +0.025] ASE -0.12 AOE -0.01 [-0.02, +0.00] mDR -0.04
+11-15 07:10:47 POOLED E1geo mav pooled vs PST (1 seed pairs) [mav, 1 pair(s)] arm UDS 52.54 AP 29.52 ATE 0.413 ASE 2.54 AOE 15.82 mDR 96.52 | ref UDS 60.81 AP 40.93 ATE 0.306 ASE 1.75 AOE 14.48 mDR 96.17 | diff UDS -8.28 [-10.60, -6.45] AP -11.41 [-14.75, -8.67] ATE +0.108 [+0.078, +0.145] ASE +0.78 AOE +1.34 [+0.32, +2.33] mDR +0.35
+RESULT.md written
+11-15 12:31:57 mav_s10: E1 done -> deploy-only variant
+11-15 12:33:19 mav_s10 run E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1/mav_s10 | lib copy E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1geo/mav_s10/lib | W D:/S2MUAV3D/srcx_work/sf_E1_in2mav_none_s10
+11-15 12:33:19 mav_s10 box-corner ratios tr1 from read_tr1_teach.pkl (2 nets): 12866 / 12866 crops (failed 0), median 0.472, s_bar aspect 0.561
+11-15 12:33:19 mav_s10 box-corner ratios tr1 from read_tr1_stu.pkl (4 nets): 12866 / 12866 crops (failed 0), median 0.543, s_bar aspect 0.561
+11-15 12:33:19 mav_s10 box-corner ratios val1 from read_val1_stu.pkl (4 nets): 2336 / 2336 crops (failed 0), median 0.562, s_bar aspect 0.561
+11-15 12:33:19 mav_s10 box-corner ratios te1 from read_te1_stu.pkl (4 nets): 4800 / 4800 crops (failed 0), median 0.560, s_bar aspect 0.561
+11-15 12:33:19 mav_s10 faithfulness: patched chain with switches OFF reproduces E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1/mav_s10/preds/e1_fused_test.pkl (max |diff| 0.0e+00, 4800 frames)
+11-15 12:33:19 mav_s10 constants E1 (one class): c_k {-1: 0.088, 0: 0.088, 1: nan} r_k {0: 0.561, 1: nan} beta'_k {0: 0.373}
+11-15 12:33:19 mav_s10 constants E1geo: centres [86.0, 139.0] (train bright frac 0.44) c_k {-1: 0.088, 0: 0.084, 1: 0.090} r_k(teachers) {0: 0.405, 1: 0.546} beta'_k {0: 0.394, 1: 0.326} | r_k(students, diag) {0: 0.534, 1: 0.556} | test frames w/o class 148
+11-15 12:33:19 mav_s10 scored test once: E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1geo/mav_s10/preds/e1geo_fused_test.pkl.score_real_test.json
+11-15 12:33:33 mav_s10 E1geo mav_s10 vs E1 mav_s10 [mav, 1 pair(s)] arm UDS 61.36 AP 44.26 ATE 0.282 ASE 2.50 AOE 16.45 mDR 95.81 | ref UDS 61.70 AP 45.09 ATE 0.278 ASE 2.61 AOE 16.45 mDR 95.85 | diff UDS -0.34 [-1.13, +0.68] AP -0.83 [-1.53, -0.01] ATE +0.004 [-0.003, +0.010] ASE -0.10 AOE -0.00 [-0.00, +0.00] mDR -0.04
+11-15 12:33:33 mav_s10 E1geo mav_s10 vs PST mav_s10 [mav, 1 pair(s)] arm UDS 61.36 AP 44.26 ATE 0.282 ASE 2.50 AOE 16.45 mDR 95.81 | ref UDS 59.28 AP 38.40 ATE 0.313 ASE 1.78 AOE 14.87 mDR 95.65 | diff UDS +2.08 [-2.39, +5.52] AP +5.85 [-1.87, +11.52] ATE -0.031 [-0.078, +0.021] ASE +0.73 AOE +1.58 [+0.71, +2.46] mDR +0.17
+11-15 12:33:47 POOLED E1geo mav pooled vs E1 (2 seed pairs) [mav, 2 pair(s)] arm UDS 56.95 AP 36.89 ATE 0.348 ASE 2.52 AOE 16.13 mDR 96.17 | ref UDS 57.59 AP 38.24 ATE 0.339 ASE 2.63 AOE 16.14 mDR 96.21 | diff UDS -0.64 [-1.54, +0.68] AP -1.35 [-2.02, -0.31] ATE +0.008 [-0.003, +0.017] ASE -0.11 AOE -0.00 [-0.01, +0.00] mDR -0.04
+11-15 12:33:59 POOLED E1geo mav pooled vs PST (2 seed pairs) [mav, 2 pair(s)] arm UDS 56.95 AP 36.89 ATE 0.348 ASE 2.52 AOE 16.13 mDR 96.17 | ref UDS 60.04 AP 39.67 ATE 0.310 ASE 1.77 AOE 14.67 mDR 95.91 | diff UDS -3.10 [-5.84, -0.69] AP -2.78 [-7.42, +1.04] ATE +0.038 [+0.005, +0.076] ASE +0.75 AOE +1.46 [+0.52, +2.38] mDR +0.26
+RESULT.md written
+11-15 18:44:55 mav_s20: E1 done -> deploy-only variant
+11-15 18:46:53 mav_s20 run E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1/mav_s20 | lib copy E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1geo/mav_s20/lib | W D:/S2MUAV3D/srcx_work/sf_E1_in2mav_none_s20
+11-15 18:46:54 mav_s20 box-corner ratios tr1 from read_tr1_teach.pkl (2 nets): 12866 / 12866 crops (failed 0), median 0.468, s_bar aspect 0.561
+11-15 18:46:54 mav_s20 box-corner ratios tr1 from read_tr1_stu.pkl (4 nets): 12866 / 12866 crops (failed 0), median 0.540, s_bar aspect 0.561
+11-15 18:46:54 mav_s20 box-corner ratios val1 from read_val1_stu.pkl (4 nets): 2336 / 2336 crops (failed 0), median 0.559, s_bar aspect 0.561
+11-15 18:46:55 mav_s20 box-corner ratios te1 from read_te1_stu.pkl (4 nets): 4800 / 4800 crops (failed 0), median 0.547, s_bar aspect 0.561
+11-15 18:46:55 mav_s20 faithfulness: patched chain with switches OFF reproduces E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1/mav_s20/preds/e1_fused_test.pkl (max |diff| 0.0e+00, 4800 frames)
+11-15 18:46:56 mav_s20 constants E1 (one class): c_k {-1: 0.106, 0: 0.106, 1: nan} r_k {0: 0.561, 1: nan} beta'_k {0: 0.336}
+11-15 18:46:56 mav_s20 constants E1geo: centres [89.3, 151.1] (train bright frac 0.39) c_k {-1: 0.106, 0: 0.107, 1: 0.105} r_k(teachers) {0: 0.412, 1: 0.541} beta'_k {0: 0.363, 1: 0.295} | r_k(students, diag) {0: 0.534, 1: 0.550} | test frames w/o class 1
+11-15 18:46:57 mav_s20 scored test once: E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1geo/mav_s20/preds/e1geo_fused_test.pkl.score_real_test.json
+11-15 18:47:12 mav_s20 E1geo mav_s20 vs E1 mav_s20 [mav, 1 pair(s)] arm UDS 53.94 AP 31.94 ATE 0.381 ASE 2.57 AOE 15.60 mDR 94.77 | ref UDS 54.93 AP 33.70 ATE 0.371 ASE 2.59 AOE 15.60 mDR 94.81 | diff UDS -1.00 [-2.12, +0.68] AP -1.76 [-2.87, -0.29] ATE +0.010 [-0.007, +0.023] ASE -0.01 AOE -0.00 [-0.00, +0.00] mDR -0.04
+11-15 18:47:12 mav_s20 E1geo mav_s20 vs PST mav_s20 [mav, 1 pair(s)] arm UDS 53.94 AP 31.94 ATE 0.381 ASE 2.57 AOE 15.60 mDR 94.77 | ref UDS 62.70 AP 44.38 ATE 0.280 ASE 1.62 AOE 15.15 mDR 94.67 | diff UDS -8.76 [-10.00, -6.71] AP -12.43 [-14.64, -8.91] ATE +0.101 [+0.067, +0.131] ASE +0.96 AOE +0.45 [-0.96, +1.76] mDR +0.10
+11-15 18:47:35 POOLED E1geo mav pooled vs E1 (3 seed pairs) [mav, 3 pair(s)] arm UDS 55.95 AP 35.24 ATE 0.359 ASE 2.54 AOE 15.96 mDR 95.70 | ref UDS 56.71 AP 36.72 ATE 0.350 ASE 2.61 AOE 15.96 mDR 95.74 | diff UDS -0.76 [-1.72, +0.68] AP -1.48 [-2.26, -0.29] ATE +0.009 [-0.004, +0.019] ASE -0.08 AOE -0.00 [-0.01, +0.00] mDR -0.04
+11-15 18:47:57 POOLED E1geo mav pooled vs PST (3 seed pairs) [mav, 3 pair(s)] arm UDS 55.95 AP 35.24 ATE 0.359 ASE 2.54 AOE 15.96 mDR 95.70 | ref UDS 60.93 AP 41.24 ATE 0.300 ASE 1.72 AOE 14.83 mDR 95.49 | diff UDS -4.98 [-6.45, -3.67] AP -6.00 [-8.30, -4.03] ATE +0.059 [+0.036, +0.089] ASE +0.82 AOE +1.12 [+0.07, +2.15] mDR +0.21
+RESULT.md written
+RESULT.md written
+11-15 18:48:00 driver done; see E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1geo/RESULT.md

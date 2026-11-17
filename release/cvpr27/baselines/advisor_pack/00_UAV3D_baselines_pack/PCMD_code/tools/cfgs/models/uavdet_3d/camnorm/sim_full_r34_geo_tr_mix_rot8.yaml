@@ -1,0 +1,7 @@
+# ROT8 臂：MIX 臂只把旋转损失权重 4 -> 8（R16 的一半）。
+# 为什么（2026-09-19）：R16（rot 16）域内朝向收敛快了很多，但真实域位置（自标定）0.32 -> 0.44 m。
+# 取中间值看能否拿到一部分朝向增益而不付位置的代价。调度 OneCycle，必须与 MIX 一样训 5 轮。
+_BASE_CONFIG_: cfgs/models/uavdet_3d/camnorm/sim_full_r34_geo_tr_mix.yaml
+MODEL:
+    DENSE_HEAD_2D:
+      LOSS_WEIGHTS: {hm: 1.0, center_res: 2.0, center_dis: 8.0, dim: 2.0, rot: 8.0, size2d: 4.0}

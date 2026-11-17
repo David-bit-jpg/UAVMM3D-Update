@@ -1,0 +1,7 @@
+# D 臂：size2d 几何解深度【只用水平跨度】+ 目标级随机化 + 裁窗按机身倍数对齐。
+_BASE_CONFIG_: cfgs/models/uavdet_3d/camnorm/sim_full_r34_geo_t.yaml
+DATA_CONFIG:
+    _BASE_CONFIG_: cfgs/dataset_configs/uavdet_3d/camnorm_sim_full_geo_tr.yaml
+MODEL:
+    POST_PROCESSING:
+      SIZE2D_MODE: 'width'

@@ -1,0 +1,27 @@
+reproduction max |diff| {'val': 0.0, 'test': 0.0} b_k {1: 0.31752881434788005, 0: 0.528133260272083} {'1': 0.31752881434788005, '0': 0.528133260272083}
+val   PST without fusion (w = 0)                                             UDS 58.51  gain +0.00 [+0.00,+0.00]  vsPST -1.21 [-3.20,+0.52]  corr nan spread nan w* nan
+val   fused with: PST students (deployed, seed 0)                            UDS 59.71  gain +1.21 [-0.52,+3.20]  vsPST +0.00 [+0.00,+0.00]  corr 0.11 spread 0.163 w* 0.17
+val   fused with: PST students, seed run +10                                 UDS 59.65  gain +1.14 [-0.65,+3.14]  vsPST -0.06 [-0.94,+0.51]  corr 0.24 spread 0.146 w* 0.17
+val   fused with: PST students, seed run +20                                 UDS 59.25  gain +0.75 [-0.98,+2.83]  vsPST -0.46 [-1.07,+0.08]  corr 0.18 spread 0.160 w* 0.15
+val   fused with: PST students w/o mirror loss                               UDS 59.57  gain +1.07 [-0.82,+3.25]  vsPST -0.14 [-0.70,+0.30]  corr 0.10 spread 0.189 w* 0.14
+val   fused with: PST students w/o IR-LiDAR check                            UDS 59.55  gain +1.04 [-0.95,+3.47]  vsPST -0.17 [-0.85,+0.58]  corr -0.04 spread 0.173 w* 0.20
+val   fused with: RGB-only students (seed 0)                                 UDS 58.95  gain +0.45 [-1.85,+2.82]  vsPST -0.76 [-2.21,+0.19]  corr 0.19 spread 0.174 w* 0.13
+val   fused with: RGB-only students, seed run +10                            UDS 59.38  gain +0.87 [-1.39,+3.35]  vsPST -0.34 [-1.65,+0.84]  corr 0.20 spread 0.163 w* 0.14
+val   fused with: RGB-only students, seed run +20                            UDS 58.16  gain -0.35 [-2.38,+1.56]  vsPST -1.55 [-3.70,-0.38]  corr 0.17 spread 0.165 w* 0.14
+val   fused with: control: sim-only detector depth (det0)                    UDS 59.10  gain +0.59 [-0.44,+1.49]  vsPST -0.61 [-3.12,+1.38]  corr 0.15 spread 0.136 w* 0.25
+val   fused with: control: PST self-trained detector depth (det1, before refiner) UDS 58.17  gain -0.33 [-0.92,+0.11]  vsPST -1.54 [-3.74,+0.25]  corr 0.94 spread 0.102 w* -0.54
+val   fused with: control: RGB-only chain final depth (its pcmd_nofuse)      UDS 58.72  gain +0.21 [-0.63,+0.54]  vsPST -0.99 [-3.71,+0.95]  corr 0.87 spread 0.091 w* 0.26
+val   fused with: control: RGB-only chain self-trained detector depth (its det1) UDS 58.07  gain -0.43 [-1.19,+0.27]  vsPST -1.64 [-4.15,+0.45]  corr 0.85 spread 0.110 w* -0.20
+test  PST without fusion (w = 0)                                             UDS 56.67  gain +0.00 [+0.00,+0.00]  vsPST -4.14 [-5.71,-2.70]  corr nan spread nan w* nan
+test  fused with: PST students (deployed, seed 0)                            UDS 60.81  gain +4.14 [+2.70,+5.71]  vsPST +0.00 [+0.00,+0.00]  corr 0.11 spread 0.106 w* 0.35
+test  fused with: PST students, seed run +10                                 UDS 60.40  gain +3.73 [+2.33,+5.32]  vsPST -0.41 [-0.57,-0.16]  corr 0.18 spread 0.105 w* 0.34
+test  fused with: PST students, seed run +20                                 UDS 60.87  gain +4.21 [+2.50,+5.81]  vsPST +0.06 [-0.50,+0.46]  corr 0.14 spread 0.104 w* 0.35
+test  fused with: PST students w/o mirror loss                               UDS 60.66  gain +3.99 [+2.65,+5.52]  vsPST -0.15 [-0.39,+0.18]  corr 0.04 spread 0.121 w* 0.30
+test  fused with: PST students w/o IR-LiDAR check                            UDS 62.14  gain +5.47 [+3.68,+7.26]  vsPST +1.33 [+0.56,+2.13]  corr 0.08 spread 0.114 w* 0.32
+test  fused with: RGB-only students (seed 0)                                 UDS 61.17  gain +4.51 [+2.49,+6.40]  vsPST +0.36 [-0.79,+1.20]  corr 0.04 spread 0.132 w* 0.27
+test  fused with: RGB-only students, seed run +10                            UDS 61.86  gain +5.20 [+3.18,+7.12]  vsPST +1.05 [-0.19,+2.19]  corr 0.07 spread 0.132 w* 0.26
+test  fused with: RGB-only students, seed run +20                            UDS 59.44  gain +2.77 [-0.04,+5.27]  vsPST -1.37 [-3.98,+0.43]  corr 0.09 spread 0.116 w* 0.30
+test  fused with: control: sim-only detector depth (det0)                    UDS 57.56  gain +0.89 [-0.33,+1.91]  vsPST -3.25 [-4.66,-2.36]  corr 0.33 spread 0.120 w* 0.23
+test  fused with: control: PST self-trained detector depth (det1, before refiner) UDS 56.90  gain +0.24 [-0.35,+0.66]  vsPST -3.91 [-5.55,-2.70]  corr 0.90 spread 0.095 w* -0.16
+test  fused with: control: RGB-only chain final depth (its pcmd_nofuse)      UDS 56.73  gain +0.06 [-0.35,+0.50]  vsPST -4.08 [-5.68,-2.58]  corr 0.83 spread 0.082 w* 0.51
+test  fused with: control: RGB-only chain self-trained detector depth (its det1) UDS 56.21  gain -0.46 [-0.90,+0.25]  vsPST -4.60 [-6.11,-3.03]  corr 0.80 spread 0.096 w* 0.14

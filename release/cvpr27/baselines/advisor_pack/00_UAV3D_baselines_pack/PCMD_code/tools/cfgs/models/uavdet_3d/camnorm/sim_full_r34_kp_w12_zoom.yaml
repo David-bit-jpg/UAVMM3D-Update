@@ -1,0 +1,5 @@
+# KZ 臂（2026-09-22 夜，用户：裁窗版 K30 跑 5 个种子）：sim_full_r34_kp_w12（K30）原样，数据换成放大裁窗版。
+# 只当旋转来源（kp2d → PnP），位置仍全部来自发布版位置网络（eval_camnorm --kp2d-from ... --kp2d-zoom）。
+_BASE_CONFIG_: cfgs/models/uavdet_3d/camnorm/sim_full_r34_kp_w12.yaml
+DATA_CONFIG:
+    _BASE_CONFIG_: cfgs/dataset_configs/uavdet_3d/camnorm_sim_full_kp_t_zoom.yaml

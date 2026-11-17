@@ -1,0 +1,63 @@
+# 任务队列（按急需程度排）：从上往下领，卡一空就领下一个。本文件每领一次任务都会重新读，跑的过程中可以直接改（行首加 # 就是不跑）。
+# 格式：方法 种子 源域(in/out/mix) 步骤(sim/st/kd) 目标域(mav/anti/both)   # 单张 4090 预计小时数
+#   sim = 只用源域仿真训练，同一个模型测 MAV6D 和 AntiUAV3D 两个测试集（both）
+#   st  = 无标签自训练；kd = 加我们 PCMD 教师伪标签。MAV6D 的 st/kd 从 in 出发，AntiUAV3D 的从 out 出发
+#   st 要等同方法的源域模型：没好时工人自动跳过去领别的，不会空等
+# 不在队列里（我们本机已有）：gupnet/monocd/monodgp 种子 0 的 in sim（gupnet、monodgp 模型在 pretrained/）；monocd 在 MAV6D 上的 st/kd
+# 8 卡模拟：A 档约 4.5 天完成（瓶颈是 MonoDETR/MonoCoP 的 in sim→st 这条链，本身就要 4.5 天）；B 档约 3.3 天；C 档约 5.2 天
+
+# ==== A 档：MAV6D 主表（一定要；快的在前，8 张卡第一批就把 6 个快任务和 2 个关键路径一起开起来） ====
+gupnet    0 in  st  mav    #   7.0 h
+gupnet    0 in  kd  mav    #   6.3 h
+gupnet    1 in  sim both   #   6.3 h
+gupnet    2 in  sim both   #   6.3 h
+monocd    1 in  sim both   #   6.3 h
+monocd    2 in  sim both   #   6.3 h
+monodetr  0 in  sim both   #  42.3 h（关键路径）
+monocop   0 in  sim both   #  42.3 h（关键路径）
+monodgp   0 in  kd  mav    #  29.3 h
+monodgp   0 in  st  mav    #  37.7 h
+monodetr  0 in  kd  mav    #  51.1 h
+monocop   0 in  kd  mav    #  51.1 h
+monodetr  0 in  st  mav    #  65.2 h（等 monodetr in sim）
+monocop   0 in  st  mav    #  65.2 h（等 monocop in sim）
+
+# ==== B 档：AntiUAV3D（如果论文不用 AntiUAV3D，把这一档整段加 # 注释掉） ====
+monocd    0 out sim both   #   2.0 h
+gupnet    0 out sim both   #   6.3 h
+monodgp   0 out sim both   #   6.9 h
+monocd    0 out kd  anti   #   2.0 h
+monocd    0 out st  anti   #   3.1 h
+gupnet    0 out kd  anti   #   6.3 h
+gupnet    0 out st  anti   #   7.0 h
+monodgp   0 out kd  anti   #   7.3 h
+monodgp   0 out st  anti   #  10.5 h
+monodetr  0 out sim both   #  11.9 h
+monocop   0 out sim both   #  11.9 h
+monodetr  0 out kd  anti   #  12.5 h
+monocop   0 out kd  anti   #  12.5 h
+monodetr  0 out st  anti   #  18.0 h
+monocop   0 out st  anti   #  18.0 h
+
+# ==== C 档：混合精选源域对比（最不急，跑不完可以不要；最后两个最慢） ====
+monocd    0 mix sim both   #   8.4 h
+gupnet    0 mix sim both   #   6.3 h
+monodgp   0 mix sim both   #  32.8 h
+monodetr  0 mix sim both   #  57.2 h
+monocop   0 mix sim both   #  57.2 h
+
+# ==== D 档：AntiUAV3D 焦距统一版（11-12 新增，导师建议；先运行一次 python scripts/focal_unify.py）====
+#   sim antifu = 不重训，用上面训好的 out 源域模型预测焦距统一后的测试集（几分钟）；st/kd antifu = 同 B 档，但目标域图像换成焦距统一后的
+monocd    0 out sim antifu #   0.1 h（等 monocd out sim）
+gupnet    0 out sim antifu #   0.1 h
+monodgp   0 out sim antifu #   0.1 h
+monodetr  0 out sim antifu #   0.1 h
+monocop   0 out sim antifu #   0.1 h
+monocd    0 out kd  antifu #   2.0 h
+monocd    0 out st  antifu #   3.1 h
+gupnet    0 out kd  antifu #   6.3 h
+gupnet    0 out st  antifu #   7.0 h
+monodgp   0 out kd  antifu #   7.3 h
+monodgp   0 out st  antifu #  10.5 h
+# monodetr  0 out kd  antifu #  12.5 h（时间够再开）
+# monocop   0 out kd  antifu #  12.5 h

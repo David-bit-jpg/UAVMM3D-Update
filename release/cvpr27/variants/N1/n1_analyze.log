@@ -1,0 +1,21 @@
+cg_train 0.12626953423023224
+check_index_pseudo_nl075 {'n': 12257, 'max_abs_logz_diff': 5.8657738056170173e-08}
+nl075_train                          n=11893 seq= 61 r=0.970 [0.97,0.97] clip=0.970 sp=0.963 | demean r=0.966 [0.96,0.97] clip=0.966 | |S-GT| 5.6% |PL-GT| 5.3% |S-PL| 1.2% | bias S +1.7 PL +1.4 | btw-seq var PL 0.15 S 0.17
+    counts {'teacher_conf_ok': 12257, 'both_within_1m': 11893}
+nl075_val                            n= 1966 seq= 16 r=0.945 [0.92,0.96] clip=0.945 sp=0.940 | demean r=0.938 [0.92,0.95] clip=0.937 | |S-GT| 6.4% |PL-GT| 5.4% |S-PL| 1.9% | bias S -0.4 PL -0.4 | btw-seq var PL 0.25 S 0.27
+    counts {'teacher_conf_ok': 2110, 'both_within_1m': 1966}
+nl075_val_ctrl_ST2raw_vs_pl          n= 1871 seq= 16 r=0.893 [0.84,0.94] clip=0.893 sp=0.874 | demean r=0.920 [0.89,0.94] clip=0.919 | |S-GT| 8.9% |PL-GT| 5.1% |S-PL| 5.6% | bias S -5.4 PL -0.3 | btw-seq var PL 0.23 S 0.31
+    counts {'teacher_conf_ok': 2110, 'both_within_1m': 1871}
+nl075_val_ctrl_student_vs_ST2raw     n= 1869 seq= 16 r=0.861 [0.79,0.92] clip=0.861 sp=0.837 | demean r=0.907 [0.88,0.93] clip=0.905 | |S-GT| 6.0% |PL-GT| 8.9% |S-PL| 5.7% | bias S -0.3 PL -5.4 | btw-seq var PL 0.31 S 0.25
+    counts {'teacher_conf_ok': 2110, 'both_within_1m': 1869}
+nl075_train_ctrl_student_vs_ST2raw   n=11339 seq= 61 r=0.864 [0.83,0.89] clip=0.864 sp=0.849 | demean r=0.895 [0.87,0.91] clip=0.894 | |S-GT| 5.3% |PL-GT| 9.0% |S-PL| 6.1% | bias S +1.6 PL -2.7 | btw-seq var PL 0.22 S 0.16
+    counts {'teacher_conf_ok': 12257, 'both_within_1m': 11339}
+wa_val                               n= 2094 seq= 16 r=0.908 [0.89,0.93] clip=0.908 sp=0.919 | demean r=0.901 [0.87,0.93] clip=0.901 | |S-GT| 6.5% |PL-GT| 6.3% |S-PL| 2.2% | bias S -2.3 PL -2.5 | btw-seq var PL 0.19 S 0.22
+    counts {'teacher_conf_ok': 2316, 'both_within_1m': 2094}
+wa_val_nobg                          n= 2079 seq= 16 r=0.890 [0.86,0.92] clip=0.890 sp=0.905 | demean r=0.879 [0.83,0.91] clip=0.879 | |S-GT| 6.5% |PL-GT| 6.3% |S-PL| 2.3% | bias S -2.5 PL -2.5 | btw-seq var PL 0.19 S 0.24
+    counts {'teacher_conf_ok': 2316, 'both_within_1m': 2079}
+wa_train_seed0                       n=11906 seq= 61 r=0.971 [0.96,0.98] clip=0.960 sp=0.938 | demean r=0.967 [0.95,0.98] clip=0.955 | |S-GT| 5.8% |PL-GT| 5.5% |S-PL| 1.7% | bias S -0.2 PL -0.5 | btw-seq var PL 0.13 S 0.14
+wa_train_seed1                       n=11906 seq= 61 r=0.969 [0.96,0.98] clip=0.958 sp=0.938 | demean r=0.966 [0.95,0.98] clip=0.952 | |S-GT| 5.9% |PL-GT| 5.5% |S-PL| 1.8% | bias S -0.3 PL -0.5 | btw-seq var PL 0.13 S 0.13
+wa_train_seed2                       n=11905 seq= 61 r=0.968 [0.96,0.98] clip=0.956 sp=0.935 | demean r=0.965 [0.95,0.97] clip=0.950 | |S-GT| 5.9% |PL-GT| 5.5% |S-PL| 1.7% | bias S -0.3 PL -0.5 | btw-seq var PL 0.13 S 0.14
+wa_train_mean3                       n=11902 seq= 61 r=0.979 [0.97,0.98] clip=0.971 sp=0.954 | demean r=0.977 [0.97,0.98] clip=0.967 | |S-GT| 5.7% |PL-GT| 5.5% |S-PL| 1.5% | bias S -0.3 PL -0.5 | btw-seq var PL 0.13 S 0.14
+seq_overlap {'n_train_seq': 61, 'n_val_seq': 16, 'shared_seq': 0, 'val_scenes': ['mavic2/02', 'mavic2/03', 'phantom4/01', 'phantom4/02'], 'val_scenes_also_in_train': ['mavic2/02', 'mavic2/03', 'phantom4/01', 'phantom4/02']}

@@ -1,0 +1,7 @@
+# [srcx] out2mav: target mav real detector config + decoder stats of source out (written by srcx/lib/mkcfg.py)
+_BASE_CONFIG_: cfgs/models/uavdet_3d/camnorm/mav6d_r34_geo_full_tr.yaml
+DATA_CONFIG:
+    DEPTH_MEAN: 28.3561
+    DEPTH_STD: 20.9749
+    SIZE_MEAN: [0.8036, 0.7784, 0.3668]
+    SIZE_STD: [0.4473, 0.4304, 0.2376]

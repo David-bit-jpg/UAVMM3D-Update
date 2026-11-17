@@ -1,0 +1,147 @@
+# -*- coding: utf-8 -*-
+"""[review1113 sensorfree] isolated lib copies of srcx/lib for ONE sensor-free control run (reviewer-requested, 11-15).
+usage: python make_sf_lib.py <arm E1|E2|E2a|E2b|E4> <tgt mav|antifs> <shift 0|10|20>     (idempotent; writes only sensorfree/<arm>/<tgt>_s<shift>/lib)
+Built on review1113/sup_patch.py (= the seed / heads runs: SX_SEEDSHIFT on every training seed, env batches for OOM halving, resume states,
+sys.path -> copy). shift 0 = the nominal seeds of the reported runs. Every patch asserts its anchor; method code otherwise byte-identical.
+
+Arms (driver: run_sf.sh):
+  E1  FULLY SENSOR-FREE CHAIN, composites kept.  SX_TEACH=none (= srcx/<C>_none and seeds/<tgt>_none_s*: RGB-only orientation teachers
+      KZs0/1 | OKZrgb_s0/1 as teachers + student init, gate = agreement of the 2 seeds, refiner without IR-silhouette loss (SILW = 0),
+      one colour class, constant height aspect of s_bar) PLUS every composite matte = filled convex hull of the projected 3-D GT box:
+        refiner_x sim_batch: composites switched back ON (SF_COMPOSITE) with alpha = ref/sim_sil.npy, which the driver fills with the
+                             box-hull array of review1113/boxhull/<C>/ref/sim_sil.npy (ALIGNED to the same sim sample list; md5 of
+                             sim_meta.pkl asserted equal). SILW stays 0, so the hull is ONLY a matte, never a target.
+        ou_train_x (students):  the source crop cache's a_v (IR x LiDAR matte) / a_ir are replaced by D:/S2MUAV3D/srcx_work/sensorfree/
+                             hull_<src>.npy (prep_hull.py; same crops, same has_matte gate -> same composite rate as PST).
+      Whole downstream chain recomputed (refiner st1-2 -> pseudo-labels -> 3 self-trained detectors -> det1 -> crops / RGB teachers / gate /
+      students -> w (sim val) -> stage-3 targets -> stage 3 -> deploy). Names *_sfE1s<shift>.
+  E2  BOX HULL replaces the IR silhouette (target AND matte) = review1113/boxhull protocol (= heads H7) for AntiUAV3D at shift 10 / 20:
+      refiner st1-3 seed-shifted + deploy at the reference run's frozen w; det0/det1, Module-3 pseudo-labels, students, height readings
+      held fixed (copied from the same-seed PST run). SX_TEACH=full.
+  E2a as E2 on MAV6D shift 0, hull ONLY as the refiner's silhouette TARGET (sim_sil.npy = hull); composite matte = the IR silhouette
+      (ref/sim_matte.npy = the clean IR array).
+  E2b as E2 on MAV6D shift 0, hull ONLY as the composite MATTE (ref/sim_matte.npy = hull); silhouette target = the IR silhouette.
+  E4  PURE SELF-TRAINING ROW: SX_TEACH=none chain with NO composites anywhere (refiner none-arm already has none; students --paste 0),
+      constant height. Everything upstream of the students is a deterministic function of inputs the students never touch (refiner st1-2,
+      pseudo-labels, self-trained detectors, det1, crops, RGB-teacher readings, gated pseudo-orientations) and is copied / hard-linked from
+      the same-seed none run srcx/<C>_none; students (paste 0) -> readings -> w -> stage-3 targets -> stage 3 -> deploy are recomputed.
+The refiner copy of every arm gets the generic matte hook: composite alpha = ref/sim_matte.npy if that file exists, else sim_sil.npy
+(so E1 / E2 / E4 behave exactly like the unpatched code w.r.t. which array is the alpha)."""
+import os, sys
+HERE = os.path.dirname(os.path.abspath(__file__)).replace(os.sep, '/')
+GP = 'E:/Open3DUAVDet/output/camnorm/geo1004/gproto'
+sys.path.insert(0, GP + '/review1113')
+import sup_patch as P  # noqa
+
+PST = {('mav', 0): (GP + '/srcx/in2mav', 'D:/S2MUAV3D/srcx_work/in2mav', 'srcx_in2mav'),
+       ('mav', 10): (GP + '/review1113/sup3/run', 'D:/S2MUAV3D/srcx_work/in2mav_seed2', 'srcx_in2mav_seed2'),
+       ('mav', 20): (GP + '/review1113/seeds/mav_full_s20', 'D:/S2MUAV3D/srcx_work/in2mav_sd20', 'srcx_in2mav_sd20'),
+       ('antifs', 0): (GP + '/srcx/out2antifs', 'D:/S2MUAV3D/srcx_work/out2antifs', 'srcx_out2antifs'),
+       ('antifs', 10): (GP + '/review1113/seeds/antifs_full_s10', 'D:/S2MUAV3D/srcx_work/out2antifs_sd10', 'srcx_out2antifs_sd10'),
+       ('antifs', 20): (GP + '/review1113/seeds/antifs_full_s20', 'D:/S2MUAV3D/srcx_work/out2antifs_sd20', 'srcx_out2antifs_sd20')}
+NONE = {('mav', 0): (GP + '/srcx/in2mav_none', 'D:/S2MUAV3D/srcx_work/in2mav_none', 'srcx_in2mav_none'),
+        ('mav', 10): (GP + '/review1113/seeds/mav_none_s10', 'D:/S2MUAV3D/srcx_work/in2mav_none_sd10', 'srcx_in2mav_none_sd10'),
+        ('mav', 20): (GP + '/review1113/seeds/mav_none_s20', 'D:/S2MUAV3D/srcx_work/in2mav_none_sd20', 'srcx_in2mav_none_sd20'),
+        ('antifs', 0): (GP + '/srcx/out2antifs_none', 'D:/S2MUAV3D/srcx_work/out2antifs_none', 'srcx_out2antifs_none'),
+        ('antifs', 10): (GP + '/review1113/seeds/antifs_none_s10', 'D:/S2MUAV3D/srcx_work/out2antifs_none_sd10', 'srcx_out2antifs_none_sd10'),
+        ('antifs', 20): (GP + '/review1113/seeds/antifs_none_s20', 'D:/S2MUAV3D/srcx_work/out2antifs_none_sd20', 'srcx_out2antifs_none_sd20')}
+MODE = {'E1': 'FULLNONE', 'E1b': 'FULLNONE', 'E2': 'BH', 'E2a': 'BH', 'E2b': 'BH', 'E4': 'STU'}
+TEACH = {'E1': 'none', 'E1b': 'none', 'E2': 'full', 'E2a': 'full', 'E2b': 'full', 'E4': 'none'}
+ALLOWED = {'E1': {('mav', 0), ('mav', 10), ('mav', 20), ('antifs', 0), ('antifs', 10), ('antifs', 20)},
+           'E1b': {('mav', 0), ('mav', 10), ('mav', 20), ('antifs', 0), ('antifs', 10), ('antifs', 20)},
+           'E2': {('antifs', 10), ('antifs', 20)}, 'E2a': {('mav', 0)}, 'E2b': {('mav', 0)}, 'E4': {('mav', 0), ('antifs', 0)}}
+SRC = {'mav': 'in', 'antifs': 'out'}
+HULL_STU = 'D:/S2MUAV3D/srcx_work/sensorfree/hull_%s.npy'
+
+
+def paths(arm, tgt, shift):
+    C = '%s2%s' % (SRC[tgt], tgt) + ('_none' if TEACH[arm] == 'none' else '')
+    B = '%s/%s/%s_s%d' % (HERE, arm, tgt, shift)
+    W = B + '/work' if MODE[arm] == 'BH' else 'D:/S2MUAV3D/srcx_work/sf_%s_%s_s%d' % (arm, C, shift)
+    return C, B, W, MODE[arm]
+
+
+SB_OLD = """    x = rgb[idx].copy(); m = sil[idx].astype(np.float32) / 255.0
+    for n in range(len(idx)):
+        if not sx.NOIR and rng.random() < 0.5 and sil[idx[n]].max() > 128:   # [11-12] no IR: no silhouette composites"""
+SB_NEW = """    x = rgb[idx].copy(); m = sil[idx].astype(np.float32) / 255.0
+    MT = _sf_matte(sil); mt = MT[idx].astype(np.float32) / 255.0   # [sensorfree] composite alpha array (= sil unless ref/sim_matte.npy exists)
+    for n in range(len(idx)):
+        if (SF_COMPOSITE or not sx.NOIR) and rng.random() < 0.5 and MT[idx[n]].max() > 128:   # [sensorfree] SF_COMPOSITE: composites ON without IR"""
+SB_DEF = '''_SF_MT = []
+
+
+def _sf_matte(sil):
+    """[sensorfree] composite alpha: ref/sim_matte.npy if present (E2a: IR silhouette, E2b: box hull), else the silhouette array itself"""
+    if not _SF_MT:
+        p = RO + '/sim_matte.npy'
+        _SF_MT.append(np.load(p) if os.path.exists(p) else None)
+        if _SF_MT[0] is not None:
+            assert _SF_MT[0].shape == sil.shape, (_SF_MT[0].shape, sil.shape)
+        print('[sensorfree] composites %s; alpha = %s' % ('ON' if (SF_COMPOSITE or not sx.NOIR) else 'OFF', p if _SF_MT[0] is not None else 'ref/sim_sil.npy'), flush=True)
+    return sil if _SF_MT[0] is None else _SF_MT[0]
+
+
+def sim_batch('''
+
+if __name__ == '__main__':
+    arm, tgt, shift = sys.argv[1], sys.argv[2], int(sys.argv[3])
+    assert arm in MODE and (tgt, shift) in ALLOWED[arm], sys.argv
+    C, B, W, mode = paths(arm, tgt, shift)
+    teach = TEACH[arm]
+    REFDIR, REFW, REFTAG = (NONE if teach == 'none' else PST)[(tgt, shift)]
+    D = B + '/lib'
+
+    t = P.rd('sx.py')
+    t = P.rep(t, P.SX_OW, "O = '%s'          # [sensorfree] %s %s shift %d (%s)\nW = '%s'\nO_REF = '%s'; W_REF = '%s'   # same-seed reference run (%s), read only\n"
+              % (B, arm, tgt, shift, mode, W, REFDIR, REFW, 'RGB-only' if teach == 'none' else 'PST'))
+    if mode == 'FULLNONE':
+        t = P.rep(t, "REAL_CFG = CFGD + 'srcx/real_%s.yaml' % COMBO", "REAL_CFG = CFGD + 'srcx/real_%%s_sf%ss%d.yaml' %% COMBO" % (arm, shift))
+        t = P.rep(t, "ST_CFG = CFGD + 'srcx/st_%s.yaml' % COMBO", "ST_CFG = CFGD + 'srcx/st_%%s_sf%ss%d.yaml' %% COMBO" % (arm, shift))
+        t = P.rep(t, "PSEUDO_TAG = 'srcx_' + COMBO", "PSEUDO_TAG = 'srcx_' + COMBO + '_sf%ss%d'" % (arm, shift))
+    else:   # BH / STU: Module-3 pseudo-labels of the same-seed reference run, read only (chain_x targets)
+        t = P.rep(t, "PSEUDO_TAG = 'srcx_' + COMBO", "PSEUDO_TAG = '%s'   # [sensorfree %s] the reference run's Module-3 pseudo-labels, read only" % (REFTAG, arm))
+    t = P.rep(t, "S = SOURCES.get(SRC); T = TARGETS.get(TGT)",
+              "assert (SRC, TGT, TEACH) == (%r, %r, %r), (SRC, TGT, TEACH)   # [sensorfree] this copy is for %s %s s%d only\n"
+              "SF_ARM = %r\nS = SOURCES.get(SRC); T = TARGETS.get(TGT)" % (SRC[tgt], tgt, teach, arm, tgt, shift, arm))
+    t = P.rep(t, "for d in (O, W):\n    os.makedirs(d, exist_ok=True)", "for d in ((O, W) if os.environ.get('SX_NOMKDIR') != '1' else ()):\n    os.makedirs(d, exist_ok=True)")
+    P.wr(D, 'sx.py', t, '[sensorfree %s %s s%d, mode %s, teach %s] O -> %s, W -> %s' % (arm, tgt, shift, mode, teach, B, W))
+
+    # refiner: env batches + resume + seed shift (sup_patch) + generic matte hook; E1 switches composites back on without IR
+    t = P.refiner(P.path(P.rd('refiner_x.py'), D), seedshift=True)
+    t = P.rep(t, SB_OLD, SB_NEW)
+    t = P.rep(t, "            a = m[n][..., None]", "            a = mt[n][..., None]   # [sensorfree] alpha from the matte array")
+    t = P.rep(t, "def sim_batch(", SB_DEF)
+    SW = "SILW = 0.0 if sx.NOIR else 1.0   # [11-12] no-teacher control: IR silhouette losses off without IR"
+    t = P.rep(t, SW, SW + "\nSF_COMPOSITE = %r   # [sensorfree] composites without IR (E1: box-hull matte)" % (arm in ('E1', 'E1b')))
+    if arm in ('E1', 'E1b'): t = t.replace(SW, SW + "\nSILW = 1.0   # [sensorfree E1, 11-15] region head supervised by the box hull (ref/sim_sil.npy = hull); no sensor", 1)
+    P.wr(D, 'refiner_x.py', t, 'SX_SEEDSHIFT on training seeds; env batches; resume states; [sensorfree] matte hook, SF_COMPOSITE=%r' % (arm in ('E1', 'E1b')))
+
+    t = P.path(P.rd('chain_x.py'), D)
+    P.wr(D, 'chain_x.py', t, 'sys.path -> copy; code unchanged (one colour class iff sx.NOIR)')
+    P.wr(D, 'ori_x.py', P.ori_bs(P.path(P.rd('ori_x.py'), D)), 'batch = $ORI_BS (default 16 = deployed)')
+    for f in ('score_x.py', 'avg_inf.py', 'to_pred.py'):
+        P.wr(D, f, P.path(P.rd(f), D), 'sys.path -> redirected sx; code unchanged')
+    P.infer_wrap(D)
+
+    if mode in ('FULLNONE', 'STU'):
+        t = P.ou_train(P.path(P.rd('ou_train_x.py'), D), seedshift=True)
+        if arm == 'E1':
+            anchor = "src = (FgCacheDS if (a.fg_col > 0 or a.fg_blur > 0 or a.proto_xp) else KP.CacheDS)(cfg.DATA_CONFIG, sx.S['sim_crops'], training=True, logger=logger, xbg=xbg, seed=SEED)\n"
+            t = P.rep(t, anchor, anchor + (
+                "    _HM = %r %% sx.SRC   # [sensorfree E1] student composite alpha = filled projected-GT-box hull (prep_hull.py), not the IR x LiDAR matte\n"
+                "    _H = np.load(_HM, mmap_mode='r'); _R = np.load(sx.S['sim_crops'] + '/rgb.npy', mmap_mode='r')\n"
+                "    assert _H.shape == _R.shape[:3] and _H.shape[0] == len(src.cmeta), (_H.shape, _R.shape, len(src.cmeta))\n"
+                "    src._c = {'rgb': _R, 'a_v': _H, 'a_ir': _H}   # CacheDS loads _c lazily only when None (workers 0) -> the cache's a_v / a_ir are never read\n"
+                "    logger.info('[sensorfree E1] student composite matte = %%s (box hull), paste prob %%.2f' %% (_HM, a.paste))\n") % HULL_STU)
+        P.wr(D, 'ou_train_x.py', t, 'SX_SEEDSHIFT on every RNG seed; resume state; recipe unchanged' + ('; [E1] composite matte = box hull' if arm == 'E1' else ''))
+        P.wr(D, 'wsim_x.py', P.path(P.rd('wsim_x.py'), D), 'sys.path -> redirected sx; code unchanged')
+    if mode == 'FULLNONE':
+        P.wr(D, 'det_infer_x.py', P.det_bs(P.path(P.rd('det_infer_x.py'), D)), 'batch = $DET_BS (default 8 = deployed)')
+        for f in ('make_pseudo_x.py', 'mkcfg.py'):
+            P.wr(D, f, P.path(P.rd(f), D), 'sys.path -> redirected sx; code unchanged')
+    for f in os.listdir(D):
+        if f.endswith('.py'):
+            s = open(D + '/' + f, encoding='utf-8').read()
+            assert 'gproto/srcx/lib' not in s.split('\n', 1)[1], f
+    print('ok', arm, tgt, shift, mode, teach, D)

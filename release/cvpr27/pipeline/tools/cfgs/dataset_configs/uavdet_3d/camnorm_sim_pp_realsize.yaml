@@ -1,0 +1,8 @@
+# 2026-09-16 重采的 PowerPlant（真机尺寸 = 旧 drone_info、录制器原生机头 +x、路径多样性），原分辨率 JPEG + 多焦距裁窗。
+# 标签无需任何修正索引（index.pkl 即正确标签，raw_label_fix = native）。其余与 camnorm_sim_indoor8_mz.yaml 相同。
+_BASE_CONFIG_: cfgs/dataset_configs/uavdet_3d/camnorm_sim_indoor8_mz.yaml
+DATA_PATH: 'E:/mmcache/pp_realsize'
+
+# 本域归一化统计量（tools/calc_cache_norm.py 实测，E:/mmcache/pp_realsize/train）
+NORM_MEAN: [0.4237, 0.4282, 0.4229]
+NORM_STD: [0.2135, 0.2133, 0.2060]

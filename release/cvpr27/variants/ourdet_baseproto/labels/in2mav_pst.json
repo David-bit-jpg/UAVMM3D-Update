@@ -1,0 +1,11 @@
+{
+ "combo": "in2mav",
+ "mode": "pst",
+ "n": 5227,
+ "n_train": 12866,
+ "index": "D:/S2MUAV3D/ourdet_baseproto_cache/mav6d_cn_obj/train/index_pst.pkl",
+ "roundtrip_max_px": 0.0,
+ "roundtrip_float32_max_px": 1.0421305120189572e-05,
+ "K_in_vs_labels_K_max": 0.0,
+ "source": "D:/UAV3D_pack_fix_1114/data/pcmd_teacher_pseudo_real_train_clean.pkl"
+}

@@ -1,0 +1,9 @@
+RealDrone3D arms: ['PST', 'IR', 'LiDAR', 'none', 'E1']
+RealDrone3D brightness read 2624 frames in 94 s
+RealDrone3D bootstrap 45 s
+D:\Miniconda3\envs\city\lib\site-packages\numpy\lib\nanfunctions.py:1384: RuntimeWarning: All-NaN slice encountered
+  return _nanquantile_unchecked(
+MAV6D arms: ['PST', 'none']
+MAV6D brightness read 4800 frames in 469 s
+MAV6D bootstrap 21 s
+done

@@ -1,0 +1,4 @@
+sim_train 19490 帧，有框 19490
+sim_val 4924 帧，有框 4924
+real_train 12866 帧
+real_test 4800 帧

@@ -1,0 +1,14 @@
+# [11-12] AntiUAV3D outdoor subset v2 (focal-stratified, intrinsics verified against images; D:/S2MUAV3D/real_outdoor_antiuav3d_fs).
+# Same as camnorm_outreal_geo_full_t_out.yaml except DATA_PATH and NORM (600 unlabeled train frames of the new split).
+# DEPTH/SIZE stats here are placeholders; srcx/lib/mkcfg.py overrides them with the SOURCE detector's training stats.
+_BASE_CONFIG_: cfgs/dataset_configs/uavdet_3d/camnorm_mav6d.yaml
+DATA_PATH: 'D:/mmcache/outdoor_real_fs'
+NORM_MEAN: [0.4968, 0.5059, 0.5084]
+NORM_STD: [0.1854, 0.1816, 0.1970]
+MIN_RGB_VIS: 0.0
+TARGET_NORM: 'standard'
+MAKE_SIZE2D: true
+DEPTH_MEAN: 28.3561
+DEPTH_STD: 20.9749
+SIZE_MEAN: [0.8036, 0.7784, 0.3668]
+SIZE_STD: [0.4473, 0.4304, 0.2376]

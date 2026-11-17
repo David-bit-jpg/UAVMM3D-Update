@@ -1,0 +1,5 @@
+11-11 06:37:51 start out2anti
+11-11 06:37:53 waiting for E:/Open3DUAVDet/output/models/uavdet_3d/camnorm/sim_out_r34_geo_ramp_out/DET_s1/ckpt/checkpoint_epoch_5.pth
+11-11 12:18:02 waiting for E:/Open3DUAVDet/output/models/uavdet_3d/camnorm/sim_out_r34_geo_ramp_out/DET_s2/ckpt/checkpoint_epoch_5.pth
+/e/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/run_x.sh: line 29: syntax error near unexpected token `do'
+/e/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/run_x.sh: line 29: `1 $DET2; do waitf $c; done'

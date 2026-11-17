@@ -1,0 +1,8 @@
+# RAMP 臂（2026-09-20，用户要求：在不掉位置的前提下提升朝向）：SYM8MB 原样，rot 权重从 2 线性爬到 16。
+# 为什么这样切：NOROT24/ROT24 已证明长训练伤位置不是 rot 损失造成的，而 rot 权重一开始就 16 会伤位置
+# （自标定位置 0.32 -> 0.44 m），权重 8 不伤但朝向只到「追平常数基线」。
+# 爬升让两件事错开：前几轮低 rot 权重，位置/深度先收敛；后几轮 OneCycle 学习率已衰减，再把 rot 推到 16。
+_BASE_CONFIG_: cfgs/models/uavdet_3d/camnorm/sim_full_r34_geo_tr_mix_sym8_mblur.yaml
+MODEL:
+    DENSE_HEAD_2D:
+      LOSS_WEIGHT_RAMP: {rot: [2.0, 16.0]}

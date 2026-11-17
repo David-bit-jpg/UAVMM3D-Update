@@ -1,0 +1,1 @@
+RGB self-train vs PST [mav, 1 pair(s)] arm UDS 56.37 AP 36.31 ATE 0.358 ASE 2.59 AOE 16.41 mDR 96.00 | ref UDS 60.81 AP 40.93 ATE 0.306 ASE 1.75 AOE 14.48 mDR 96.17 | diff UDS -4.45 [-6.22, -2.98] AP -4.62 [-7.20, -2.27] ATE +0.052 [+0.033, +0.070] ASE +0.84 AOE +1.93 [+0.85, +3.15] mDR -0.17

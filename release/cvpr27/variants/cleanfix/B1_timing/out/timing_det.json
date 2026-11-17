@@ -1,0 +1,33 @@
+{
+ "load": {
+  "mean": 13.132385667025423,
+  "median": 9.094150009332225,
+  "p90": 20.588100008899357
+ },
+ "det": {
+  "mean": 31.647021000972018,
+  "median": 21.044099994469434,
+  "p90": 68.45766003825702
+ },
+ "total_gpu_chain": {
+  "mean": 31.647021000972018,
+  "median": 21.044099994469434,
+  "p90": 68.45766003825702
+ },
+ "n_frames": 300,
+ "warmup": 30,
+ "mode": "det",
+ "weights_resident_MB": 107.45166015625,
+ "refiner_width_gate_clipped": 0,
+ "peak_mem_MB_inference": 150.4599609375,
+ "gpu": "NVIDIA GeForce RTX 5090 Laptop GPU",
+ "nets": {
+  "det": [
+   "E:/Open3DUAVDet/output/models/uavdet_3d/camnorm/srcx/st_in2mav/DET1_s0/ckpt/checkpoint_epoch_3.pth"
+  ],
+  "ref": [],
+  "stu": [],
+  "kps": null
+ },
+ "nvidia_smi_used_MB_at_end": "15756 MiB, 95 %"
+}

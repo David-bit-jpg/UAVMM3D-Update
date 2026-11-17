@@ -1,0 +1,9 @@
+{
+ "tag": "srcx_in2mav_naive",
+ "refiner": "none",
+ "n": 5227,
+ "n_corrected": 0,
+ "c_bar": 0.0,
+ "lam": 0.75,
+ "n_train": 12866
+}

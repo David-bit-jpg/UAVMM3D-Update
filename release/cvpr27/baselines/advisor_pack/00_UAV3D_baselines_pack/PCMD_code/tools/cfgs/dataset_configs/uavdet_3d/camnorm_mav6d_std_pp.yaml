@@ -1,0 +1,10 @@
+# 评测 N1（pp_realsize 上标准化训练的模型）时用的 MAV6D 配置。
+# 【关键】解码要用【训练域】的 mu/sigma —— 网络学的是训练域标准化后的量。
+# 解码器从 dataset_cfg 读这些常数，所以评测配置必须显式带上训练域的值，
+# 否则会误用 MAV6D 自己的统计量，解出来的深度整体错一个比例。
+_BASE_CONFIG_: cfgs/dataset_configs/uavdet_3d/camnorm_mav6d.yaml
+TARGET_NORM: 'standard'
+DEPTH_MEAN: 6.1180
+DEPTH_STD: 2.8330
+SIZE_MEAN: [0.6744, 0.6452, 0.2617]
+SIZE_STD: [0.5453, 0.4945, 0.1943]

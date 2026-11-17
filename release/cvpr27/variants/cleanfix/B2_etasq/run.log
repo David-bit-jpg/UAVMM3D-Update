@@ -1,0 +1,67 @@
+11-14 15:07:50 waiting for gupnet_uda_mt_s0/.done and review1113/initabl/.done (poll 10 min)
+11-14 18:57:51 start B2
+sim samples 885 | real clean train crops 2000 of 12866
+2026-11-14 19:32:49,380   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-14 19:32:49,381   INFO  MMCache[test]: RGB 可见度 >= 5.0 过滤 4924 -> 4646 帧
+2026-11-14 19:32:49,381   INFO  MMCache[test]: 4646 帧, 模态 ['rgb', 'ir', 'depth', 'tag'] -> 6 通道, 缓存 E:\mmcache\full_v2\test
+KPSs0 40 s layer2/win:eta2 0.259 auc 1.000 layer2/ctr:eta2 0.147 auc 1.000 layer2/motor:eta2 0.057 auc 0.998 layer2/body8:eta2 0.056 auc 0.998 layer3/win:eta2 0.230 auc 1.000 layer3/ctr:eta2 0.078 auc 1.000 layer3/motor:eta2 0.049 auc 0.999 layer3/body8:eta2 0.053 auc 0.999 layer4/win:eta2 0.135 auc 1.000 layer4/ctr:eta2 0.052 auc 0.997 layer4/motor:eta2 0.053 auc 0.998 layer4/body8:eta2 0.049 auc 0.998 head/win:eta2 0.115 auc 1.000 head/ctr:eta2 0.055 auc 1.000 head/motor:eta2 0.041 auc 0.993 head/body8:eta2 0.045 auc 0.996
+2026-11-14 19:33:29,382   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-14 19:33:29,382   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-14 19:33:29,382   INFO  MMCache[test]: RGB 可见度 >= 5.0 过滤 4924 -> 4646 帧
+2026-11-14 19:33:29,382   INFO  MMCache[test]: RGB 可见度 >= 5.0 过滤 4924 -> 4646 帧
+2026-11-14 19:33:29,382   INFO  MMCache[test]: 4646 帧, 模态 ['rgb', 'ir', 'depth', 'tag'] -> 6 通道, 缓存 E:\mmcache\full_v2\test
+2026-11-14 19:33:29,382   INFO  MMCache[test]: 4646 帧, 模态 ['rgb', 'ir', 'depth', 'tag'] -> 6 通道, 缓存 E:\mmcache\full_v2\test
+KPSs1 37 s layer2/win:eta2 0.319 auc 1.000 layer2/ctr:eta2 0.169 auc 1.000 layer2/motor:eta2 0.064 auc 0.996 layer2/body8:eta2 0.062 auc 0.997 layer3/win:eta2 0.242 auc 1.000 layer3/ctr:eta2 0.089 auc 1.000 layer3/motor:eta2 0.047 auc 0.998 layer3/body8:eta2 0.053 auc 0.998 layer4/win:eta2 0.162 auc 1.000 layer4/ctr:eta2 0.066 auc 0.997 layer4/motor:eta2 0.064 auc 0.996 layer4/body8:eta2 0.059 auc 0.994 head/win:eta2 0.183 auc 1.000 head/ctr:eta2 0.112 auc 0.999 head/motor:eta2 0.056 auc 0.994 head/body8:eta2 0.060 auc 0.997
+2026-11-14 19:34:06,810   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-14 19:34:06,810   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-14 19:34:06,810   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-14 19:34:06,810   INFO  MMCache[test]: RGB 可见度 >= 5.0 过滤 4924 -> 4646 帧
+2026-11-14 19:34:06,810   INFO  MMCache[test]: RGB 可见度 >= 5.0 过滤 4924 -> 4646 帧
+2026-11-14 19:34:06,810   INFO  MMCache[test]: RGB 可见度 >= 5.0 过滤 4924 -> 4646 帧
+2026-11-14 19:34:06,810   INFO  MMCache[test]: 4646 帧, 模态 ['rgb', 'ir', 'depth', 'tag'] -> 6 通道, 缓存 E:\mmcache\full_v2\test
+2026-11-14 19:34:06,810   INFO  MMCache[test]: 4646 帧, 模态 ['rgb', 'ir', 'depth', 'tag'] -> 6 通道, 缓存 E:\mmcache\full_v2\test
+2026-11-14 19:34:06,810   INFO  MMCache[test]: 4646 帧, 模态 ['rgb', 'ir', 'depth', 'tag'] -> 6 通道, 缓存 E:\mmcache\full_v2\test
+KPSs2 42 s layer2/win:eta2 0.277 auc 1.000 layer2/ctr:eta2 0.151 auc 1.000 layer2/motor:eta2 0.071 auc 0.998 layer2/body8:eta2 0.066 auc 0.998 layer3/win:eta2 0.205 auc 1.000 layer3/ctr:eta2 0.070 auc 1.000 layer3/motor:eta2 0.049 auc 0.997 layer3/body8:eta2 0.054 auc 0.999 layer4/win:eta2 0.183 auc 1.000 layer4/ctr:eta2 0.076 auc 0.999 layer4/motor:eta2 0.075 auc 0.996 layer4/body8:eta2 0.071 auc 0.995 head/win:eta2 0.181 auc 1.000 head/ctr:eta2 0.087 auc 0.999 head/motor:eta2 0.048 auc 0.996 head/body8:eta2 0.052 auc 0.997
+# cleanfix B2: part-level domain gap on CLEAN real crops (srcx/in2mav det1 train crops); sim = partgap sim_samples (885)
+
+seeds [0, 1, 2]; n_sim 885, n_real 2000
+
+| layer | pool | AUC mean | eta2 | Frechet |
+|---|---|---|---|---|
+| layer2 | win | 1.000 | 0.285 | 1.403 |
+| layer2 | ctr | 1.000 | 0.156 | 0.770 |
+| layer2 | motor | 0.997 | 0.064 | 0.356 |
+| layer2 | nose | 0.965 | 0.021 | 0.196 |
+| layer2 | tail | 0.960 | 0.020 | 0.174 |
+| layer2 | top | 0.978 | 0.025 | 0.198 |
+| layer2 | bottom | 0.965 | 0.022 | 0.189 |
+| layer2 | body8 | 0.998 | 0.061 | 0.356 |
+| layer3 | win | 1.000 | 0.226 | 1.168 |
+| layer3 | ctr | 1.000 | 0.079 | 0.552 |
+| layer3 | motor | 0.998 | 0.048 | 0.418 |
+| layer3 | nose | 0.987 | 0.026 | 0.323 |
+| layer3 | tail | 0.980 | 0.025 | 0.324 |
+| layer3 | top | 0.992 | 0.033 | 0.393 |
+| layer3 | bottom | 0.989 | 0.034 | 0.429 |
+| layer3 | body8 | 0.999 | 0.053 | 0.456 |
+| layer4 | win | 1.000 | 0.160 | 0.944 |
+| layer4 | ctr | 0.998 | 0.065 | 0.635 |
+| layer4 | motor | 0.997 | 0.064 | 0.598 |
+| layer4 | nose | 0.990 | 0.038 | 0.513 |
+| layer4 | tail | 0.986 | 0.038 | 0.501 |
+| layer4 | top | 0.987 | 0.035 | 0.497 |
+| layer4 | bottom | 0.991 | 0.030 | 0.468 |
+| layer4 | body8 | 0.995 | 0.060 | 0.585 |
+| head | win | 1.000 | 0.160 | 0.882 |
+| head | ctr | 0.999 | 0.085 | 0.581 |
+| head | motor | 0.994 | 0.048 | 0.496 |
+| head | nose | 0.970 | 0.024 | 0.363 |
+| head | tail | 0.966 | 0.024 | 0.357 |
+| head | top | 0.986 | 0.024 | 0.421 |
+| head | bottom | 0.987 | 0.023 | 0.446 |
+| head | body8 | 0.997 | 0.053 | 0.522 |
+11-14 19:34:49 eta2 done: | layer2 | win | 1.000 | 0.285 | 1.403 | | layer2 | ctr | 1.000 | 0.156 | 0.770 | | layer2 | motor | 0.997 | 0.064 | 0.356 | | layer2 | body8 | 0.998 | 0.061 | 0.356 | 
+window done 2885
+airframe done 2885
+wrote E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/cleanfix/B2_etasq/tsne_domain_gap.csv 5770 rows
+11-14 19:39:53 ALL DONE (summary E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/cleanfix/B2_etasq/PARTGAP_CLEAN_SUMMARY.md, csv D:/CVPR27_UAV/figures/data/tsne_domain_gap.csv)

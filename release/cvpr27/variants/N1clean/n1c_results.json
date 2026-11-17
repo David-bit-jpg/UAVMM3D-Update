@@ -1,0 +1,182 @@
+{
+ "c_bar_train": 0.09924978762865067,
+ "check_index_pseudo_srcx_in2mav": {
+  "n_index": 5227,
+  "n_recon": 5227,
+  "same_keys": true,
+  "n_corrected": 5227,
+  "max_abs_logz_diff": 5.932172843520531e-08,
+  "max_abs_t_diff_m": 2.383203385747379e-07,
+  "index_c_bar": 0.09924978762865067
+ },
+ "check_reinfer_train300": {
+  "s5": {
+   "n": 299,
+   "max_abs_d_diff": 5.78761100769043e-05,
+   "keys_subset": true
+  },
+  "s6": {
+   "n": 299,
+   "max_abs_d_diff": 3.5643577575683594e-05,
+   "keys_subset": true
+  }
+ },
+ "val_refiner": {
+  "n_crops": 2336,
+  "n_val": 2336,
+  "n_pl": 835,
+  "n_corrected": 835,
+  "delta_median_val": 0.0999268926680088,
+  "frac_in_guard": 1.0
+ },
+ "det1_val": {
+  "name": "student det1 vs pseudo label / val held-out sequences",
+  "n": 803,
+  "n_seq": 14,
+  "pearson": 0.8326396531008348,
+  "pearson_clip": 0.8326396531008348,
+  "spearman": 0.7607781627695043,
+  "pearson_demean": 0.8459725059070565,
+  "pearson_demean_clip": 0.8459725059070565,
+  "med_rel_student_gt": 0.04974596852127333,
+  "med_rel_pl_gt": 0.05332936608409922,
+  "med_rel_student_pl": 0.029504463040757045,
+  "bias_student": 0.026580458463173067,
+  "bias_pl": 0.028020248590824793,
+  "frac_between_seq_var_pl": 0.13024102619483646,
+  "frac_between_seq_var_student": 0.12176686756340016,
+  "pearson_ci": [
+   0.725813808043318,
+   0.9010611791201922
+  ],
+  "pearson_demean_ci": [
+   0.7572212635530924,
+   0.9059114492369218
+  ],
+  "counts": {
+   "teacher_conf_ok": 835,
+   "both_within_1m": 803
+  }
+ },
+ "det1_train": {
+  "name": "student det1 vs pseudo label / train (fitted) frames",
+  "n": 5137,
+  "n_seq": 48,
+  "pearson": 0.9254876255332363,
+  "pearson_clip": 0.9254422551782633,
+  "spearman": 0.9044055684070108,
+  "pearson_demean": 0.9137937807412861,
+  "pearson_demean_clip": 0.9137937807412859,
+  "med_rel_student_gt": 0.05437189665336839,
+  "med_rel_pl_gt": 0.058288168714752286,
+  "med_rel_student_pl": 0.01793475936600597,
+  "bias_student": 0.031222051767088466,
+  "bias_pl": 0.03279899639357992,
+  "frac_between_seq_var_pl": 0.20005653053709882,
+  "frac_between_seq_var_student": 0.2208895814927453,
+  "pearson_ci": [
+   0.9030655997818987,
+   0.9401306752205957
+  ],
+  "pearson_demean_ci": [
+   0.8912334482439741,
+   0.9273318512958681
+  ],
+  "counts": {
+   "teacher_conf_ok": 5227,
+   "both_within_1m": 5137
+  }
+ },
+ "val_ctrl_student_vs_det0raw": {
+  "name": "control: student vs raw det0 (before refiner) / val",
+  "n": 779,
+  "n_seq": 13,
+  "pearson": 0.8169524926700424,
+  "pearson_clip": 0.8169524926700424,
+  "spearman": 0.7660066258770682,
+  "pearson_demean": 0.8207867682376527,
+  "pearson_demean_clip": 0.8207867682376524,
+  "med_rel_student_gt": 0.04812268383978546,
+  "med_rel_pl_gt": 0.07488262627162967,
+  "med_rel_student_pl": 0.09949009053378499,
+  "bias_student": 0.02940619593939269,
+  "bias_pl": -0.06546876200328905,
+  "frac_between_seq_var_pl": 0.13482806083553767,
+  "frac_between_seq_var_student": 0.13705048826249722,
+  "pearson_ci": [
+   0.6506351340378658,
+   0.882254743837284
+  ],
+  "pearson_demean_ci": [
+   0.6504420809895117,
+   0.8869882788970893
+  ],
+  "counts": {
+   "teacher_conf_ok": 835,
+   "both_within_1m": 779
+  }
+ },
+ "val_ctrl_det0raw_vs_pl": {
+  "name": "control: raw det0 vs pseudo label / val",
+  "n": 775,
+  "n_seq": 13,
+  "pearson": 0.8121686716934693,
+  "pearson_clip": 0.8121686716934693,
+  "spearman": 0.7395603282263864,
+  "pearson_demean": 0.8450618041348663,
+  "pearson_demean_clip": 0.8450618041348663,
+  "med_rel_student_gt": 0.07455839715672563,
+  "med_rel_pl_gt": 0.050330836902772624,
+  "med_rel_student_pl": 0.097286559564148,
+  "bias_student": -0.06664684802638864,
+  "bias_pl": 0.030161569589451247,
+  "frac_between_seq_var_pl": 0.1771487151968374,
+  "frac_between_seq_var_student": 0.12747325290860723,
+  "pearson_ci": [
+   0.6610977513380152,
+   0.8981345140358828
+  ],
+  "pearson_demean_ci": [
+   0.7359246078523073,
+   0.9148644404276093
+  ],
+  "counts": {
+   "teacher_conf_ok": 835,
+   "both_within_1m": 775
+  }
+ },
+ "train_ctrl_student_vs_det0raw": {
+  "name": "control: student vs raw det0 / train",
+  "n": 5078,
+  "n_seq": 48,
+  "pearson": 0.7938136598501669,
+  "pearson_clip": 0.7936816183100814,
+  "spearman": 0.7684382142667466,
+  "pearson_demean": 0.8152733918638786,
+  "pearson_demean_clip": 0.8150681684014511,
+  "med_rel_student_gt": 0.05403722755941642,
+  "med_rel_pl_gt": 0.07345411933316215,
+  "med_rel_student_pl": 0.09856091165662628,
+  "bias_student": 0.032376483980043336,
+  "bias_pl": -0.0533039019571602,
+  "frac_between_seq_var_pl": 0.21388496219871456,
+  "frac_between_seq_var_student": 0.2247569750020516,
+  "pearson_ci": [
+   0.7511537556200641,
+   0.8301491369138655
+  ],
+  "pearson_demean_ci": [
+   0.7835095187408185,
+   0.8357513001944855
+  ],
+  "counts": {
+   "teacher_conf_ok": 5227,
+   "both_within_1m": 5078
+  }
+ },
+ "seq_overlap": {
+  "n_train_seq": 61,
+  "n_val_seq": 16,
+  "shared_seq": 0
+ }
+}

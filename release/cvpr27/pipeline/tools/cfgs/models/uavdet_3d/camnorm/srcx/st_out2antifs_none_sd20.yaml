@@ -1,0 +1,11 @@
+# [srcx] out2antifs_none: Module 3 detector self-training (recipe = st_outreal_r34_geo_full_tr_out = indoor st2nl075wa)
+_BASE_CONFIG_: cfgs/models/uavdet_3d/camnorm/srcx/real_out2antifs_none_sd20.yaml
+DATA_CONFIG:
+    INDEX_FILE: 'index_pseudo_srcx_out2antifs_none_sd20.pkl'
+    AUG: {hflip: 0.5, scale: [1.0, 1.0], photometric: false, noise: 0.0, blur: 0.0, blur_prob: 0.5}
+MODEL:
+    DENSE_HEAD_2D:
+      LOSS_WEIGHTS: {hm: 1.0, center_res: 2.0, center_dis: 8.0, dim: 2.0, rot: 0.0, size2d: 4.0}
+OPTIMIZATION:
+    LR: 0.0002
+    NUM_EPOCHS: 3

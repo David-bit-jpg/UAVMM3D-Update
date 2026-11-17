@@ -1,0 +1,145 @@
+<title>无人机三维检测对比实验清单</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@600;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* 布局：一张主表为核心，上方数据与指标两栏说明，下方待老师拍板清单 */
+:root{
+  --bg:#f5f7f8; --panel:#ffffff; --fg:#17232b; --muted:#5b6b75; --line:#d6dee3;
+  --accent:#1f6f8b; --accent-soft:#e2f0f5; --must:#256b3d; --must-soft:#e3f2e7; --ask:#9a5b06; --ask-soft:#fbefd9;
+  --f-display:"Noto Serif SC","Songti SC",serif; --f-body:"Noto Sans SC","PingFang SC","Microsoft YaHei",sans-serif; --f-mono:"JetBrains Mono",Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#10181d; --panel:#172229; --fg:#e4ecef; --muted:#9aaab3; --line:#2b3a43;
+  --accent:#6cc0dc; --accent-soft:#1b3440; --must:#7fd19a; --must-soft:#1b3326; --ask:#f0b862; --ask-soft:#3a2c15; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#10181d; --panel:#172229; --fg:#e4ecef; --muted:#9aaab3; --line:#2b3a43;
+  --accent:#6cc0dc; --accent-soft:#1b3440; --must:#7fd19a; --must-soft:#1b3326; --ask:#f0b862; --ask-soft:#3a2c15; color-scheme:dark}
+body{background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:15px;line-height:1.6}
+.wrap{max-width:1180px;margin:0 auto;padding-block:32px 48px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:grid;gap:28px}
+h1{font-family:var(--f-display);font-size:1.75rem;margin:0;text-wrap:balance}
+h2{font-family:var(--f-display);font-size:1.15rem;margin:0 0 10px}
+.lead{color:var(--muted);margin:6px 0 0;max-width:70ch}
+.lead b{color:var(--fg)}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px}
+.two>section{min-width:0;background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:16px 18px}
+dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:6px 14px}
+dt{font-family:var(--f-mono);font-size:.85rem;color:var(--accent);white-space:nowrap}
+dd{margin:0;color:var(--fg)}
+dd small{color:var(--muted)}
+.num{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+.tbl{overflow-x:auto;background:var(--panel);border:1px solid var(--line);border-radius:8px}
+table{border-collapse:collapse;width:100%;min-width:980px}
+th,td{text-align:left;vertical-align:top;padding:11px 12px;border-bottom:1px solid var(--line)}
+th{font-size:.78rem;letter-spacing:.06em;color:var(--muted);font-weight:500;background:var(--bg);position:sticky;top:0}
+tr:last-child td{border-bottom:0}
+td.id{font-family:var(--f-mono);font-weight:600;color:var(--accent);white-space:nowrap}
+td.name{font-weight:700;white-space:nowrap}
+td .sub{display:block;color:var(--muted);font-size:.86rem;margin-top:2px}
+tr.group td{background:var(--accent-soft);font-weight:700;font-size:.85rem;padding:7px 12px;color:var(--accent)}
+.chip{display:inline-block;font-size:.78rem;font-weight:700;padding:1px 8px;border-radius:999px;white-space:nowrap}
+.chip.must{background:var(--must-soft);color:var(--must)}
+.chip.ask{background:var(--ask-soft);color:var(--ask)}
+.runs{font-family:var(--f-mono);white-space:nowrap}
+.total{display:flex;flex-wrap:wrap;gap:10px 28px;padding:12px 16px;border-top:1px solid var(--line);color:var(--muted);font-size:.9rem}
+.total b{color:var(--fg);font-family:var(--f-mono)}
+ol.ask{margin:0;padding-left:1.4em;display:grid;gap:8px;max-width:80ch}
+ol.ask li::marker{color:var(--ask);font-weight:700}
+.note{color:var(--muted);font-size:.88rem;max-width:80ch}
+</style>
+
+<div class="wrap">
+<header>
+  <h1>对比实验清单（发给老师确认用）</h1>
+  <p class="lead">规则：<b>所有方法训练只用我们的仿真数据</b>（自训练只用真实图的伪标签，不碰真实标签）；<b>只看真实测试集结果</b>；测试时只输入彩色图（RGB）。对手方法都按 AntiUAV3D 的做法：官方代码、整张图输入、尽量不改。</p>
+</header>
+
+<div class="two">
+<section>
+  <h2>用到的数据</h2>
+  <dl>
+    <dt>sim_train</dt><dd><span class="num">19,490</span> 帧仿真图，带标签 <small>（训练用）</small></dd>
+    <dt>sim_val</dt><dd><span class="num">4,924</span> 帧仿真图 <small>（只用来检查代码移植对不对）</small></dd>
+    <dt>real_train</dt><dd><span class="num">12,866</span> 帧真实图，<b>不用标签</b> <small>（自训练时出伪标签）</small></dd>
+    <dt>real_test</dt><dd><span class="num">4,800</span> 帧真实图（MAV6D） <small>（标签只用于最后打分）</small></dd>
+  </dl>
+</section>
+<section>
+  <h2>打分指标（照 AntiUAV3D 表 2）</h2>
+  <dl>
+    <dt>AOE</dt><dd>朝向误差（度），四旋翼转 90° 算同一朝向</dd>
+    <dt>ATE</dt><dd>位置误差（米）</dd>
+    <dt>ASE</dt><dd>尺寸误差</dd>
+    <dt>3D AP</dt><dd>检出率，中心距离阈值 <span class="num">0.1/0.2/0.4/0.8</span> m</dd>
+    <dt>UDS</dt><dd>综合分（仿自动驾驶 NDS 的做法自定义）</dd>
+    <dt>分距离</dt><dd>AP 和 UDS 再按 <span class="num">&lt;3 m / 3–4 m / ≥4 m</span> 各报一次</dd>
+  </dl>
+</section>
+</div>
+
+<section>
+<h2>实验表</h2>
+<div class="tbl">
+<table>
+<thead><tr><th>编号</th><th>实验名</th><th>方法</th><th>训练数据</th><th>测试数据</th><th>为了对比什么</th><th>跑几次</th><th>状态</th></tr></thead>
+<tbody>
+<tr class="group"><td colspan="8">第 0 步：先确认跑的东西是对的</td></tr>
+<tr><td class="id">E0</td><td class="name">移植正确性检查</td>
+<td>下面 5 个对手方法，每个短训练一次</td><td>sim_train</td><td>sim_val<span class="sub">＋把预测的 3D 框画到图上人工看</span></td>
+<td>在仿真上应该准；不准就说明代码改错了，先修再正式跑</td><td class="runs">5 × 1</td><td><span class="chip must">必做</span></td></tr>
+
+<tr class="group"><td colspan="8">对手方法（主表上半部分）</td></tr>
+<tr><td class="id">E1</td><td class="name">对手 · 只用仿真</td>
+<td>GUPNet、MonoDETR、MonoCD、MonoDGP、MonoCoP<span class="sub">官方代码、官方批大小和学习率、整图输入</span></td>
+<td>sim_train</td><td>real_test</td>
+<td>别人的方法从仿真直接搬到真实能做到多好（基线水平）</td><td class="runs">5 × 3 种子</td><td><span class="chip must">必做</span></td></tr>
+<tr><td class="id">E2</td><td class="name">对手 · ＋自训练</td>
+<td>E1 的模型给 real_train 打伪标签，<b>所有方法用同一个置信度门槛</b>筛选，再用仿真＋伪标签重训</td>
+<td>sim_train ＋ real_train（无标签）</td><td>real_test</td>
+<td>公平对比：我们也用了自训练，要排除"我们只是赢在自训练"</td><td class="runs">5 × 3 种子</td><td><span class="chip must">必做</span></td></tr>
+<tr><td class="id">E6</td><td class="name">补齐表 2 的另外两个</td>
+<td>DEVIANT、Omni3D（AntiUAV3D 表 2 里有，我们还没移植）</td>
+<td>同 E1 / E2</td><td>real_test</td>
+<td>让对手列表和 AntiUAV3D 原文 7 个方法完全一致</td><td class="runs">2 × 3 × 2</td><td><span class="chip ask">待老师定</span></td></tr>
+<tr><td class="id">E7</td><td class="name">模态缺失方法</td>
+<td>ShaSpec（训练时用多模态、测试时缺模态的通用方法）</td>
+<td>sim_train（彩色＋红外＋LiDAR）</td><td>real_test（只给彩色）</td>
+<td>和我们设定最像的对手：同样训练有多模态、测试只有彩色</td><td class="runs">1 × 3</td><td><span class="chip ask">待老师定</span></td></tr>
+
+<tr class="group"><td colspan="8">我们的方法（主表下半部分 ＋ 消融）</td></tr>
+<tr><td class="id">E3</td><td class="name">我们 · 完整版</td>
+<td>红外/LiDAR 教师 → 彩色网络蒸馏 ＋ 真实图自训练</td>
+<td>sim_train（彩色＋红外＋LiDAR）＋ real_train（无标签）</td><td>real_test（只给彩色）</td>
+<td>主表 "Ours" 那一行</td><td class="runs">3 种子</td><td><span class="chip must">必做</span></td></tr>
+<tr><td class="id">E4</td><td class="name">消融 · 去掉蒸馏</td>
+<td>同一套管线，不用红外/LiDAR 教师</td><td>sim_train ＋ real_train（无标签）</td><td>real_test</td>
+<td>证明红外/LiDAR 蒸馏本身有用</td><td class="runs">3 种子</td><td><span class="chip must">必做</span></td></tr>
+<tr><td class="id">E5</td><td class="name">消融 · 只蒸馏红外</td>
+<td>只用红外教师，不用 LiDAR</td><td>同 E3</td><td>real_test</td>
+<td>拆开看红外和 LiDAR 各贡献多少</td><td class="runs">3 种子</td><td><span class="chip must">建议做</span></td></tr>
+
+<tr class="group"><td colspan="8">不用重新训练</td></tr>
+<tr><td class="id">R1</td><td class="name">测试时自适应</td>
+<td>上面所有模型，测试时再加 AdaBN（用测试图更新归一化统计量）各报一次</td><td>—</td><td>real_test</td>
+<td>主表统一用不加的数字（AntiUAV3D 没用）；加了的放附表</td><td class="runs">0</td><td><span class="chip ask">待老师定</span></td></tr>
+</tbody>
+</table>
+<div class="total">
+  <span>必做训练：<b>5</b> 次短训练 ＋ <b>39</b> 次正式训练</span>
+  <span>老师同意的可选项：再加 <b>15</b> 次</span>
+  <span>估计用时（8 卡服务器）：第 0 步约半天，E1/E2 各约 1 天，我们的方法约半天 <small>（估计，租好机器测一次速度再更新）</small></span>
+</div>
+</div>
+</section>
+
+<section>
+<h2>需要老师拍板</h2>
+<ol class="ask">
+  <li>对手方法也做自训练（E2），用同一个置信度门槛，可以吗？</li>
+  <li>每个实验跑 3 个随机种子、报平均值，够不够？</li>
+  <li>要不要补 DEVIANT 和 Omni3D（E6），凑齐原文 7 个方法？</li>
+  <li>要不要加 ShaSpec（E7）这种"训练多模态、测试缺模态"的对手？</li>
+  <li>主表统一不用测试时自适应（R1），加了的放附表，可以吗？</li>
+</ol>
+<p class="note">表注会写明：我们的距离阈值比原文小（无人机近、尺寸小）；UDS 是我们自己定义的；原文对手是用真实标签训练的，我们统一只用仿真，所以数字不能和原文表 2 直接比。</p>
+</section>
+</div>

@@ -1,0 +1,66 @@
+{
+ "load": {
+  "mean": 432.06189999667305,
+  "median": 372.508900007233,
+  "p90": 516.580339986831
+ },
+ "det": {
+  "mean": 629.8632333346177,
+  "median": 628.0159000016283,
+  "p90": 668.6786199861672
+ },
+ "io_raw": {
+  "mean": 732.6664000089901,
+  "median": 790.6589000194799,
+  "p90": 892.4606600019615
+ },
+ "depth": {
+  "mean": 32.80909999739379,
+  "median": 30.66469999612309,
+  "p90": 36.88741999794729
+ },
+ "orient": {
+  "mean": 414.6499666676391,
+  "median": 435.7376999978442,
+  "p90": 454.55137999379076
+ },
+ "height": {
+  "mean": 112.29209998661342,
+  "median": 106.87779998988844,
+  "p90": 128.64243998774327
+ },
+ "pnp": {
+  "mean": 0.5456000023211042,
+  "median": 0.5584000027738512,
+  "p90": 0.5607199971564114
+ },
+ "total_gpu_chain": {
+  "mean": 1190.159999988585,
+  "median": 1236.8386999878567,
+  "p90": 1267.2185399744194
+ },
+ "n_frames": 3,
+ "warmup": 1,
+ "mode": "full",
+ "weights_resident_MB": NaN,
+ "refiner_width_gate_clipped": 0,
+ "peak_mem_MB_inference": null,
+ "gpu": "cpu (SMOKE)",
+ "nets": {
+  "det": [
+   "E:/Open3DUAVDet/output/models/uavdet_3d/camnorm/srcx/st_in2mav/DET1_s0/ckpt/checkpoint_epoch_3.pth",
+   "E:/Open3DUAVDet/output/models/uavdet_3d/camnorm/srcx/st_in2mav/DET1_s1/ckpt/checkpoint_epoch_3.pth",
+   "E:/Open3DUAVDet/output/models/uavdet_3d/camnorm/srcx/st_in2mav/DET1_s2/ckpt/checkpoint_epoch_3.pth"
+  ],
+  "ref": [
+   "E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/in2mav/ref/ref_st3_s5.pt",
+   "E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/in2mav/ref/ref_st3_s6.pt"
+  ],
+  "stu": [
+   "E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/in2mav/ou/S_ab0.pth",
+   "E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/in2mav/ou/S_ab1.pth"
+  ],
+  "kps": "E:/Open3DUAVDet/output/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom_irlid_kps/KPSs0/ckpt/checkpoint_epoch_8.pth"
+ },
+ "nvidia_smi_used_MB_at_end": "15619 MiB, 99 %"
+}

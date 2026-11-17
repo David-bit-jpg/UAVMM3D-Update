@@ -1,0 +1,79 @@
+2026-10-29 22:54:29,682   INFO  {"args": {"labels": ["D:/cmpfull/sim_train/labels.pkl"], "out": "E:/Open3DUAVDet/output/camnorm/geo1004/cmpfull/gupnet/smoke/run1", "seed": 444, "epochs": 10, "epoch_size": 80, "batch_size": 4, "lr": null, "workers": 2, "mean_size_from": "D:/cmpfull/sim_train/labels.pkl", "max_iters": 200, "config": "E:\\Open3DUAVDet\\output\\camnorm\\geo1004\\cmpfull\\gupnet\\code\\experiments/config_uav.yaml"}, "batch_size": 4, "lr": 0.00015625, "epoch_size": 80, "n_train": 19490, "mean_size_hwl": [[0.2509450912475586, 0.6194683909416199, 0.6461937427520752]], "decay_list": [6, 9], "pretrained": false}
+pre-training loss stat:   0%|          | 0/20 [00:00<?, ?it/s]pre-training loss stat:   5%|▌         | 1/20 [00:14<04:32, 14.35s/it]pre-training loss stat:  20%|██        | 4/20 [00:14<00:43,  2.75s/it]pre-training loss stat:  35%|███▌      | 7/20 [00:14<00:16,  1.30s/it]pre-training loss stat:  50%|█████     | 10/20 [00:14<00:07,  1.30it/s]pre-training loss stat:  50%|█████     | 10/20 [00:14<00:14,  1.49s/it]
+2026-10-29 22:54:44,839   INFO  ------ TRAIN EPOCH 001 ------
+2026-10-29 22:54:44,840   INFO  Learning Rate: 0.000010
+2026-10-29 22:54:44,840   INFO  Weights:  depth_:0.0000, heading_:0.0000, offset2d_:1.0000, offset3d_:0.0000, seg_:1.0000, size2d_:1.0000, size3d_:0.0000,
+E:\Open3DUAVDet\output\camnorm\geo1004\cmpfull\gupnet\code\lib\helpers\trainer_helper.py:167: UserWarning: Converting a tensor with requires_grad=True to a scalar may lead to unexpected behavior.
+Consider using tensor.detach() first. (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\torch\csrc\autograd\generated\python_variable_methods.cpp:837.)
+  log_str += ' %s:%.4f,' %(key, disp_dict[key])
+2026-10-29 22:54:55,551   INFO  BATCH[0005/0020] [0.00s/5it peakmem 3.34GB] depth_loss:7.6120, heading_loss:10.0498, offset2d_loss:0.6339, offset3d_loss:0.5160, seg_loss:16.6567, size2d_loss:14.9821, size3d_loss:0.7428,
+2026-10-29 22:54:56,346   INFO  BATCH[0010/0020] [0.78s/5it peakmem 3.34GB] depth_loss:7.6153, heading_loss:9.7684, offset2d_loss:0.5997, offset3d_loss:0.4986, seg_loss:13.5774, size2d_loss:11.6291, size3d_loss:0.7888,
+2026-10-29 22:54:57,378   INFO  BATCH[0015/0020] [1.02s/5it peakmem 3.34GB] depth_loss:7.5798, heading_loss:9.6164, offset2d_loss:0.8115, offset3d_loss:0.5648, seg_loss:13.6044, size2d_loss:16.3122, size3d_loss:0.7729,
+2026-10-29 22:54:58,248   INFO  BATCH[0020/0020] [0.87s/5it peakmem 3.34GB] depth_loss:7.5748, heading_loss:9.6029, offset2d_loss:0.7256, offset3d_loss:0.4713, seg_loss:10.8118, size2d_loss:15.1071, size3d_loss:0.7803,
+2026-10-29 22:54:58,249   INFO  ------ TRAIN EPOCH 002 ------
+2026-10-29 22:54:58,249   INFO  Learning Rate: 0.000024
+2026-10-29 22:54:58,258   INFO  Weights:  depth_:0.0000, heading_:0.0000, offset2d_:1.0000, offset3d_:0.0000, seg_:1.0000, size2d_:1.0000, size3d_:0.0000,
+2026-10-29 22:54:59,477   INFO  BATCH[0005/0020] [1.22s/5it peakmem 3.34GB] depth_loss:7.5867, heading_loss:10.2362, offset2d_loss:0.6398, offset3d_loss:0.6075, seg_loss:9.0748, size2d_loss:13.6892, size3d_loss:0.8199,
+2026-10-29 22:55:00,453   INFO  BATCH[0010/0020] [0.91s/5it peakmem 3.34GB] depth_loss:7.6296, heading_loss:9.6749, offset2d_loss:0.8497, offset3d_loss:0.5111, seg_loss:7.1894, size2d_loss:17.6531, size3d_loss:0.7956,
+2026-10-29 22:55:01,348   INFO  BATCH[0015/0020] [0.97s/5it peakmem 3.34GB] depth_loss:7.5595, heading_loss:9.6112, offset2d_loss:0.9967, offset3d_loss:0.5959, seg_loss:6.2730, size2d_loss:18.4758, size3d_loss:0.8462,
+2026-10-29 22:55:02,296   INFO  BATCH[0020/0020] [0.94s/5it peakmem 3.34GB] depth_loss:7.5308, heading_loss:9.3479, offset2d_loss:0.7024, offset3d_loss:0.5358, seg_loss:6.3549, size2d_loss:14.6838, size3d_loss:0.7326,
+2026-10-29 22:55:02,297   INFO  ------ TRAIN EPOCH 003 ------
+2026-10-29 22:55:02,297   INFO  Learning Rate: 0.000061
+2026-10-29 22:55:02,298   INFO  Weights:  depth_:0.0000, heading_:0.0000, offset2d_:1.0000, offset3d_:0.0000, seg_:1.0000, size2d_:1.0000, size3d_:0.0000,
+2026-10-29 22:55:03,403   INFO  BATCH[0005/0020] [1.11s/5it peakmem 3.34GB] depth_loss:7.6669, heading_loss:9.6604, offset2d_loss:0.6923, offset3d_loss:0.6123, seg_loss:5.0625, size2d_loss:13.4724, size3d_loss:0.7494,
+2026-10-29 22:55:04,351   INFO  BATCH[0010/0020] [0.87s/5it peakmem 3.34GB] depth_loss:7.5420, heading_loss:9.7106, offset2d_loss:0.7863, offset3d_loss:0.6512, seg_loss:4.4087, size2d_loss:17.4024, size3d_loss:0.7254,
+2026-10-29 22:55:05,241   INFO  BATCH[0015/0020] [0.99s/5it peakmem 3.34GB] depth_loss:7.6043, heading_loss:9.9867, offset2d_loss:0.6891, offset3d_loss:0.6859, seg_loss:4.3088, size2d_loss:16.7445, size3d_loss:0.7837,
+2026-10-29 22:55:06,129   INFO  BATCH[0020/0020] [0.84s/5it peakmem 3.34GB] depth_loss:7.5103, heading_loss:9.4769, offset2d_loss:0.5751, offset3d_loss:0.6441, seg_loss:3.8902, size2d_loss:13.2760, size3d_loss:0.7654,
+2026-10-29 22:55:06,130   INFO  ------ TRAIN EPOCH 004 ------
+2026-10-29 22:55:06,130   INFO  Learning Rate: 0.000106
+2026-10-29 22:55:06,141   INFO  Weights:  depth_:0.0000, heading_:0.0000, offset2d_:1.0000, offset3d_:0.0000, seg_:1.0000, size2d_:1.0000, size3d_:0.0000,
+2026-10-29 22:55:07,321   INFO  BATCH[0005/0020] [1.22s/5it peakmem 3.34GB] depth_loss:7.2943, heading_loss:9.7785, offset2d_loss:0.7450, offset3d_loss:0.6156, seg_loss:3.7109, size2d_loss:15.2735, size3d_loss:0.7599,
+2026-10-29 22:55:08,184   INFO  BATCH[0010/0020] [0.84s/5it peakmem 3.34GB] depth_loss:6.8140, heading_loss:9.5584, offset2d_loss:0.5701, offset3d_loss:0.6240, seg_loss:3.6523, size2d_loss:13.3274, size3d_loss:0.7191,
+2026-10-29 22:55:09,145   INFO  BATCH[0015/0020] [0.99s/5it peakmem 3.34GB] depth_loss:6.5853, heading_loss:9.9565, offset2d_loss:0.7488, offset3d_loss:0.6356, seg_loss:3.6597, size2d_loss:15.8141, size3d_loss:0.7767,
+2026-10-29 22:55:10,127   INFO  BATCH[0020/0020] [0.98s/5it peakmem 3.34GB] depth_loss:6.1566, heading_loss:9.3465, offset2d_loss:0.5809, offset3d_loss:0.6350, seg_loss:3.6109, size2d_loss:14.1982, size3d_loss:0.8076,
+2026-10-29 22:55:10,128   INFO  ------ TRAIN EPOCH 005 ------
+2026-10-29 22:55:10,128   INFO  Learning Rate: 0.000142
+2026-10-29 22:55:10,129   INFO  Weights:  depth_:0.0000, heading_:0.0000, offset2d_:1.0000, offset3d_:0.0000, seg_:1.0000, size2d_:1.0000, size3d_:0.0000,
+2026-10-29 22:55:11,233   INFO  BATCH[0005/0020] [1.11s/5it peakmem 3.34GB] depth_loss:5.8057, heading_loss:9.5787, offset2d_loss:0.8006, offset3d_loss:0.6407, seg_loss:3.6081, size2d_loss:16.1600, size3d_loss:0.8251,
+2026-10-29 22:55:12,199   INFO  BATCH[0010/0020] [0.95s/5it peakmem 3.34GB] depth_loss:5.2835, heading_loss:9.3291, offset2d_loss:0.6904, offset3d_loss:0.5458, seg_loss:3.5834, size2d_loss:15.8766, size3d_loss:0.7770,
+2026-10-29 22:55:13,103   INFO  BATCH[0015/0020] [0.92s/5it peakmem 3.34GB] depth_loss:4.8887, heading_loss:9.7267, offset2d_loss:0.6810, offset3d_loss:0.5662, seg_loss:3.6071, size2d_loss:13.9030, size3d_loss:0.7298,
+2026-10-29 22:55:14,079   INFO  BATCH[0020/0020] [0.97s/5it peakmem 3.34GB] depth_loss:4.5495, heading_loss:9.2554, offset2d_loss:0.6988, offset3d_loss:0.5017, seg_loss:3.6276, size2d_loss:12.0252, size3d_loss:0.6901,
+2026-10-29 22:55:14,080   INFO  ------ TRAIN EPOCH 006 ------
+D:\Miniconda3\envs\city\lib\site-packages\torch\optim\lr_scheduler.py:462: UserWarning: To get the last learning rate computed by the scheduler, please use `get_last_lr()`.
+  _warn_get_lr_called_within_step(self)
+2026-10-29 22:55:14,158   INFO  Learning Rate: 0.000156
+2026-10-29 22:55:14,206   INFO  Weights:  depth_:0.0000, heading_:0.0000, offset2d_:1.0000, offset3d_:0.0000, seg_:1.0000, size2d_:1.0000, size3d_:0.0000,
+2026-10-29 22:55:15,234   INFO  BATCH[0005/0020] [1.17s/5it peakmem 3.34GB] depth_loss:3.9728, heading_loss:9.2054, offset2d_loss:0.6320, offset3d_loss:0.4413, seg_loss:3.6308, size2d_loss:10.0820, size3d_loss:0.6891,
+2026-10-29 22:55:16,206   INFO  BATCH[0010/0020] [0.95s/5it peakmem 3.34GB] depth_loss:3.9695, heading_loss:9.1804, offset2d_loss:0.7813, offset3d_loss:0.4793, seg_loss:3.5749, size2d_loss:11.1294, size3d_loss:0.6981,
+2026-10-29 22:55:17,077   INFO  BATCH[0015/0020] [0.88s/5it peakmem 3.34GB] depth_loss:3.5143, heading_loss:9.3487, offset2d_loss:0.6355, offset3d_loss:0.4852, seg_loss:3.4522, size2d_loss:7.9358, size3d_loss:0.6402,
+2026-10-29 22:55:18,024   INFO  BATCH[0020/0020] [0.96s/5it peakmem 3.34GB] depth_loss:3.5937, heading_loss:9.3084, offset2d_loss:0.7016, offset3d_loss:0.4874, seg_loss:3.5829, size2d_loss:10.7164, size3d_loss:0.6416,
+2026-10-29 22:55:18,026   INFO  ------ TRAIN EPOCH 007 ------
+2026-10-29 22:55:18,026   INFO  Learning Rate: 0.000156
+2026-10-29 22:55:18,028   INFO  Weights:  depth_:0.2058, heading_:0.1923, offset2d_:1.0000, offset3d_:0.1923, seg_:1.0000, size2d_:1.0000, size3d_:0.1923,
+2026-10-29 22:55:19,224   INFO  BATCH[0005/0020] [1.11s/5it peakmem 3.34GB] depth_loss:3.4309, heading_loss:8.5698, offset2d_loss:0.6646, offset3d_loss:0.4278, seg_loss:3.5619, size2d_loss:10.5521, size3d_loss:0.6394,
+2026-10-29 22:55:20,201   INFO  BATCH[0010/0020] [1.05s/5it peakmem 3.34GB] depth_loss:3.2370, heading_loss:8.4347, offset2d_loss:0.7757, offset3d_loss:0.4322, seg_loss:3.5534, size2d_loss:10.7837, size3d_loss:0.4476,
+2026-10-29 22:55:21,200   INFO  BATCH[0015/0020] [1.02s/5it peakmem 3.34GB] depth_loss:3.0404, heading_loss:7.4178, offset2d_loss:0.6057, offset3d_loss:0.4468, seg_loss:3.6295, size2d_loss:8.5989, size3d_loss:0.4502,
+2026-10-29 22:55:22,079   INFO  BATCH[0020/0020] [0.87s/5it peakmem 3.34GB] depth_loss:3.2972, heading_loss:6.9329, offset2d_loss:0.5893, offset3d_loss:0.3923, seg_loss:3.3366, size2d_loss:6.3243, size3d_loss:0.4909,
+2026-10-29 22:55:22,079   INFO  ------ TRAIN EPOCH 008 ------
+2026-10-29 22:55:22,079   INFO  Learning Rate: 0.000156
+2026-10-29 22:55:22,082   INFO  Weights:  depth_:2.8039, heading_:0.2363, offset2d_:1.0000, offset3d_:0.2363, seg_:1.0000, size2d_:1.0000, size3d_:0.2363,
+2026-10-29 22:55:23,113   INFO  BATCH[0005/0020] [1.03s/5it peakmem 3.34GB] depth_loss:3.1313, heading_loss:6.1805, offset2d_loss:0.7014, offset3d_loss:0.4425, seg_loss:3.5513, size2d_loss:10.2492, size3d_loss:0.4814,
+2026-10-29 22:55:24,113   INFO  BATCH[0010/0020] [1.00s/5it peakmem 3.34GB] depth_loss:3.0580, heading_loss:5.9311, offset2d_loss:0.9365, offset3d_loss:0.4068, seg_loss:3.5640, size2d_loss:12.4268, size3d_loss:0.5197,
+2026-10-29 22:55:25,102   INFO  BATCH[0015/0020] [0.99s/5it peakmem 3.34GB] depth_loss:3.1022, heading_loss:5.7391, offset2d_loss:0.6020, offset3d_loss:0.4038, seg_loss:3.3277, size2d_loss:7.7483, size3d_loss:0.4913,
+2026-10-29 22:55:25,984   INFO  BATCH[0020/0020] [0.88s/5it peakmem 3.34GB] depth_loss:2.7713, heading_loss:5.2659, offset2d_loss:0.7179, offset3d_loss:0.3266, seg_loss:3.3844, size2d_loss:7.4581, size3d_loss:0.3702,
+2026-10-29 22:55:25,984   INFO  ------ TRAIN EPOCH 009 ------
+2026-10-29 22:55:25,984   INFO  Learning Rate: 0.000156
+2026-10-29 22:55:25,987   INFO  Weights:  depth_:2218416406528.0000, heading_:0.0473, offset2d_:1.0000, offset3d_:0.0473, seg_:1.0000, size2d_:1.0000, size3d_:0.0473,
+2026-10-29 22:55:27,020   INFO  BATCH[0005/0020] [1.04s/5it peakmem 3.34GB] depth_loss:2.7557, heading_loss:4.7692, offset2d_loss:0.5350, offset3d_loss:0.3335, seg_loss:3.5763, size2d_loss:7.5806, size3d_loss:0.4605,
+2026-10-29 22:55:28,021   INFO  BATCH[0010/0020] [0.96s/5it peakmem 3.34GB] depth_loss:2.9585, heading_loss:4.9188, offset2d_loss:0.6037, offset3d_loss:0.4134, seg_loss:3.6091, size2d_loss:9.9949, size3d_loss:0.6098,
+2026-10-29 22:55:28,877   INFO  BATCH[0015/0020] [0.90s/5it peakmem 3.34GB] depth_loss:2.7843, heading_loss:5.3019, offset2d_loss:0.6004, offset3d_loss:0.4479, seg_loss:3.8613, size2d_loss:12.4757, size3d_loss:0.6282,
+2026-10-29 22:55:29,816   INFO  BATCH[0020/0020] [0.93s/5it peakmem 3.34GB] depth_loss:2.7453, heading_loss:5.2891, offset2d_loss:0.5196, offset3d_loss:0.3091, seg_loss:3.8806, size2d_loss:9.9720, size3d_loss:0.5534,
+2026-10-29 22:55:29,816   INFO  ------ TRAIN EPOCH 010 ------
+2026-10-29 22:55:29,816   INFO  Learning Rate: 0.000156
+2026-10-29 22:55:29,820   INFO  Weights:  depth_:452949536.0000, heading_:0.2702, offset2d_:1.0000, offset3d_:0.2702, seg_:1.0000, size2d_:1.0000, size3d_:0.2702,
+2026-10-29 22:55:30,949   INFO  BATCH[0005/0020] [1.14s/5it peakmem 3.34GB] depth_loss:2.6815, heading_loss:5.0968, offset2d_loss:0.6455, offset3d_loss:0.3254, seg_loss:3.6782, size2d_loss:16.3551, size3d_loss:0.7019,
+2026-10-29 22:55:31,992   INFO  BATCH[0010/0020] [1.04s/5it peakmem 3.34GB] depth_loss:2.7451, heading_loss:4.4494, offset2d_loss:1.0416, offset3d_loss:0.3625, seg_loss:3.6305, size2d_loss:18.5482, size3d_loss:0.7633,
+2026-10-29 22:55:32,944   INFO  BATCH[0015/0020] [0.92s/5it peakmem 3.34GB] depth_loss:2.9239, heading_loss:4.7835, offset2d_loss:0.8588, offset3d_loss:0.3610, seg_loss:3.6265, size2d_loss:17.4596, size3d_loss:0.7057,
+2026-10-29 22:55:33,805   INFO  BATCH[0020/0020] [0.89s/5it peakmem 3.34GB] depth_loss:3.5925, heading_loss:5.1854, offset2d_loss:0.7937, offset3d_loss:0.3303, seg_loss:3.6181, size2d_loss:15.4665, size3d_loss:0.8025,
+2026-10-29 22:55:33,872   INFO  ==> Saving to checkpoint 'E:/Open3DUAVDet/output/camnorm/geo1004/cmpfull/gupnet/smoke/run1/checkpoints\checkpoint_epoch_10'
+2026-10-29 22:55:37,288   INFO  ==> Saving to checkpoint 'E:/Open3DUAVDet/output/camnorm/geo1004/cmpfull/gupnet/smoke/run1/checkpoints\checkpoint_final'

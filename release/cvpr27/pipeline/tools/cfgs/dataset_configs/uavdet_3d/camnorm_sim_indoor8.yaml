@@ -1,0 +1,9 @@
+# 新室内仿真（D:/data_collect 四场景）的相机归一化 RGB 缓存。
+# 子集 cfgs/subsets/indoor8（全部目标相机系 Z <= 8 m），build_mm_cache.py --rgb-only --every 3。
+_BASE_CONFIG_: cfgs/dataset_configs/uavdet_3d/camnorm_base.yaml
+DATA_PATH: 'E:/mmcache/indoor8cn'
+# RGB 局部对比度 < 5 灰度级的帧不用（tools/mm_vis_score.py 生成 vis_score.npy）
+MIN_RGB_VIS: 5.0
+# 本域归一化统计量（train 抽 600 帧，float64 累加；BGR，x/255 后）
+NORM_MEAN: [0.3506, 0.4013, 0.4481]
+NORM_STD: [0.2686, 0.2072, 0.2308]

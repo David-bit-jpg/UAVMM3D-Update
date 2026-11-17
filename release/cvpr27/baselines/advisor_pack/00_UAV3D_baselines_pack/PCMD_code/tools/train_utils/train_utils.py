@@ -1,0 +1,190 @@
+import glob
+import os
+import time
+
+import torch
+import tqdm
+from torch.nn.utils import clip_grad_norm_
+import numpy as np
+from uavdet3d.model import load_data_to_gpu
+import copy
+
+
+def train_one_epoch(model, optimizer, train_loader, model_func, lr_scheduler, accumulated_iter, optim_cfg,
+                    rank, tbar, total_it_each_epoch, dataloader_iter, tb_log=None, leave_pbar=False,
+                    logger=None, log_interval=50, use_amp=False):
+    if total_it_each_epoch == len(train_loader):
+        dataloader_iter = iter(train_loader)
+
+    if rank == 0:
+        pbar = tqdm.tqdm(total=total_it_each_epoch, leave=leave_pbar, desc='train', dynamic_ncols=True)
+
+    accus = 1
+    _t_start = time.time()
+    # 本轮分项损失的累计，轮末打印均值 —— 判断各头是否收敛（审查 P20：只看总损失看不出深度/旋转学没学好）
+    _term_sum, _term_n = {}, 0
+
+    for cur_it in range(total_it_each_epoch):
+        try:
+            batch = next(dataloader_iter)
+        except StopIteration:
+            dataloader_iter = iter(train_loader)
+            batch = next(dataloader_iter)
+
+        lr_scheduler.step(accumulated_iter)
+
+        try:
+            cur_lr = float(optimizer.lr)
+        except:
+            cur_lr = optimizer.param_groups[0]['lr']
+
+        if tb_log is not None:
+            tb_log.add_scalar('meta_data/learning_rate', cur_lr, accumulated_iter)
+
+        model.train()
+
+        # --use_amp：bfloat16 自动混合精度（无需 GradScaler；BN / 损失里的 sigmoid-log 仍按 float32 算）
+        with torch.autocast('cuda', dtype=torch.bfloat16, enabled=bool(use_amp)):
+            loss = model_func(model, batch)
+        loss = loss / accus
+        loss.backward()
+        if ((cur_it + 1) % accus) == 0:
+            clip_grad_norm_(model.parameters(), optim_cfg.GRAD_NORM_CLIP)
+            optimizer.step()
+            optimizer.zero_grad()
+
+        accumulated_iter += 1
+
+        disp_dict = {}
+        disp_dict.update({'loss': loss.item() * accus, 'lr': cur_lr})
+        _terms = getattr(getattr(model, 'dense_head_2d', None), 'loss_terms', None) or {}
+        _term_sum['total'] = _term_sum.get('total', 0.0) + loss.item() * accus
+        for _k, _v in _terms.items():
+            _term_sum[_k] = _term_sum.get(_k, 0.0) + float(_v)
+        _term_n += 1
+
+        # log to console and tensorboard
+        if rank == 0:
+            pbar.update()
+            pbar.set_postfix(dict(total_it=accumulated_iter))
+            tbar.set_postfix(disp_dict)
+            tbar.refresh()
+
+            if tb_log is not None:
+                tb_log.add_scalar('train/loss', loss, accumulated_iter)
+                tb_log.add_scalar('meta_data/learning_rate', cur_lr, accumulated_iter)
+
+            # 定期往日志文件里写一行。原来只有 tqdm 写 stderr，重定向到文件时
+            # 被 Python 缓冲住，后台跑的时候完全看不到进度，也没法判断是慢还是卡死。
+            if logger is not None and (cur_it % log_interval == 0 or cur_it + 1 == total_it_each_epoch):
+                elapsed = time.time() - _t_start
+                done = cur_it + 1
+                ips = done / max(elapsed, 1e-6)
+                eta = (total_it_each_epoch - done) / max(ips, 1e-9)
+                # 顺带打印各头的分项损失。实测总损失里 hm 一项就占 88.8% 且近乎常数，
+                # 只看总损失基本看不出旋转、深度这些真正在学的头有没有进展。
+                terms = getattr(getattr(model, 'dense_head_2d', None), 'loss_terms', None)
+                term_str = ''
+                if terms:
+                    term_str = '  [' + ' '.join('%s %.3f' % (k, v) for k, v in terms.items()) + ']'
+                logger.info('  iter %d/%d  loss %.3f  lr %.2e  %.2f it/s  本轮剩余 %.1f 分钟%s'
+                            % (done, total_it_each_epoch, loss.item() * accus, cur_lr,
+                               ips, eta / 60.0, term_str))
+
+    if rank == 0:
+        pbar.close()
+        if logger is not None and _term_n:
+            logger.info('  本轮平均损失（%d iter，%.1f 分钟）: %s'
+                        % (_term_n, (time.time() - _t_start) / 60.0,
+                           ' '.join('%s %.4f' % (k, v / _term_n) for k, v in _term_sum.items())))
+    return accumulated_iter
+
+
+def train_model(model, optimizer, train_loader, model_func, lr_scheduler, optim_cfg,
+                start_epoch, total_epochs, start_iter, rank, tb_log, ckpt_save_dir, train_sampler=None,
+                lr_warmup_scheduler=None, ckpt_save_interval=1, max_ckpt_save_num=50,
+                logger=None, log_interval=50, on_epoch_start=None, on_epoch_end=None, use_amp=False):
+    accumulated_iter = start_iter
+    with tqdm.trange(start_epoch, total_epochs, desc='epochs', dynamic_ncols=True, leave=(rank == 0)) as tbar:
+        total_it_each_epoch = len(train_loader)
+
+        dataloader_iter = iter(train_loader)
+        for cur_epoch in tbar:
+            # 渐进解冻等按轮次生效的调整挂在这里
+            if on_epoch_start is not None:
+                on_epoch_start(cur_epoch)
+            if train_sampler is not None:
+                train_sampler.set_epoch(cur_epoch)
+
+            # train one epoch
+            if lr_warmup_scheduler is not None and cur_epoch < optim_cfg.WARMUP_EPOCH:
+                cur_scheduler = lr_warmup_scheduler
+            else:
+                cur_scheduler = lr_scheduler
+            accumulated_iter = train_one_epoch(
+                model, optimizer, train_loader, model_func,
+                lr_scheduler=cur_scheduler,
+                accumulated_iter=accumulated_iter, optim_cfg=optim_cfg,
+                rank=rank, tbar=tbar, tb_log=tb_log,
+                leave_pbar=(cur_epoch + 1 == total_epochs),
+                total_it_each_epoch=total_it_each_epoch,
+                dataloader_iter=dataloader_iter,
+                logger=logger, log_interval=log_interval, use_amp=use_amp
+            )
+
+            # save trained model
+            trained_epoch = cur_epoch + 1
+            if trained_epoch % ckpt_save_interval == 0 and rank == 0:
+
+                ckpt_list = glob.glob(str(ckpt_save_dir / 'checkpoint_epoch_*.pth'))
+                ckpt_list.sort(key=os.path.getmtime)
+
+                if ckpt_list.__len__() >= max_ckpt_save_num:
+                    for cur_file_idx in range(0, len(ckpt_list) - max_ckpt_save_num + 1):
+                        os.remove(ckpt_list[cur_file_idx])
+
+                ckpt_name = ckpt_save_dir / ('checkpoint_epoch_%d' % trained_epoch)
+                save_checkpoint(
+                    checkpoint_state(model, optimizer, trained_epoch, accumulated_iter), filename=ckpt_name,
+                )
+
+            # 按验证集选轮等「每轮结束」的动作（train.py --val_split）
+            if on_epoch_end is not None and rank == 0:
+                on_epoch_end(trained_epoch, accumulated_iter)
+
+
+def model_state_to_cpu(model_state):
+    model_state_cpu = type(model_state)()  # ordered dict
+    for key, val in model_state.items():
+        model_state_cpu[key] = val.cpu()
+    return model_state_cpu
+
+
+def checkpoint_state(model=None, optimizer=None, epoch=None, it=None):
+    optim_state = optimizer.state_dict() if optimizer is not None else None
+    if model is not None:
+        if isinstance(model, torch.nn.parallel.DistributedDataParallel):
+            model_state = model_state_to_cpu(model.module.state_dict())
+        else:
+            model_state = model.state_dict()
+    else:
+        model_state = None
+
+    try:
+        import pcdet
+        version = 'pcdet+' + pcdet.__version__
+    except:
+        version = 'none'
+
+    return {'epoch': epoch, 'it': it, 'model_state': model_state, 'optimizer_state': optim_state, 'version': version}
+
+
+def save_checkpoint(state, filename='checkpoint'):
+    if False and 'optimizer_state' in state:
+        optimizer_state = state['optimizer_state']
+        state.pop('optimizer_state', None)
+        optimizer_filename = '{}_optim.pth'.format(filename)
+        torch.save({'optimizer_state': optimizer_state}, optimizer_filename, _use_new_zipfile_serialization=False)
+
+    filename = '{}.pth'.format(filename)
+    torch.save(state, filename, _use_new_zipfile_serialization=False)

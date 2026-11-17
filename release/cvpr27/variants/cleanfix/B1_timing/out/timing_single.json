@@ -1,0 +1,62 @@
+{
+ "load": {
+  "mean": 14.65871533456569,
+  "median": 12.145649990998209,
+  "p90": 26.717719988664623
+ },
+ "det": {
+  "mean": 28.183355000219308,
+  "median": 17.770249978639185,
+  "p90": 61.367899965262104
+ },
+ "io_raw": {
+  "mean": 15.167881334394528,
+  "median": 14.792950008995831,
+  "p90": 17.070260032778606
+ },
+ "depth": {
+  "mean": 21.132322332511347,
+  "median": 21.979750017635524,
+  "p90": 33.30459999269807
+ },
+ "orient": {
+  "mean": 26.64888200117275,
+  "median": 24.518000020179898,
+  "p90": 45.95459999400191
+ },
+ "height": {
+  "mean": 20.207077665448498,
+  "median": 18.212150025647134,
+  "p90": 37.5025100191124
+ },
+ "pnp": {
+  "mean": 3.9071336652462683,
+  "median": 0.27535000117495656,
+  "p90": 0.3962199902161956
+ },
+ "total_gpu_chain": {
+  "mean": 100.07877066459817,
+  "median": 92.50389999942854,
+  "p90": 155.57665000087584
+ },
+ "n_frames": 300,
+ "warmup": 30,
+ "mode": "single",
+ "weights_resident_MB": 371.18359375,
+ "refiner_width_gate_clipped": 0,
+ "peak_mem_MB_inference": 431.205078125,
+ "gpu": "NVIDIA GeForce RTX 5090 Laptop GPU",
+ "nets": {
+  "det": [
+   "E:/Open3DUAVDet/output/models/uavdet_3d/camnorm/srcx/st_in2mav/DET1_s0/ckpt/checkpoint_epoch_3.pth"
+  ],
+  "ref": [
+   "E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/in2mav/ref/ref_st3_s5.pt"
+  ],
+  "stu": [
+   "E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/in2mav/ou/S_ab0.pth"
+  ],
+  "kps": "E:/Open3DUAVDet/output/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom_irlid_kps/KPSs0/ckpt/checkpoint_epoch_8.pth"
+ },
+ "nvidia_smi_used_MB_at_end": "16042 MiB, 66 %"
+}

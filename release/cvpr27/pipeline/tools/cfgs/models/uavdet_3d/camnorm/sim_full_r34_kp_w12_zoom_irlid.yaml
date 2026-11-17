@@ -1,0 +1,11 @@
+# KZ-IRLiD（2026-10-12 夜，用户：朝向里 IR 和 LiDAR 一起加）：KZ 原配方，只看 RGB；训练时辅助答案 = LiDAR 深度剪影 + LiDAR 区域里的红外剪影
+# （geo1004/lidar/kzlid/center_det_mm.py，由 train_mm.py 注册）。数据 = KZ 多模态版。
+_BASE_CONFIG_: cfgs/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom.yaml
+DATA_CONFIG:
+    _BASE_CONFIG_: cfgs/dataset_configs/uavdet_3d/camnorm_sim_full_kp_t_zoom_mm.yaml
+MODEL:
+    NAME: CenterDetMM
+    DISTILL:
+        STUDENT_CHANNELS: 3
+    LIDAR_AUX: {WEIGHT: 1.0, DEPTH_CH: 4, TAG_CH: 5}
+    IR_AUX: {WEIGHT: 1.0, IR_CH: 3}

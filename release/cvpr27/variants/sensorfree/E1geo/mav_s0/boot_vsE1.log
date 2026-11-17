@@ -1,0 +1,1 @@
+E1geo mav_s0 vs E1 mav_s0 [mav, 1 pair(s)] arm UDS 52.54 AP 29.52 ATE 0.413 ASE 2.54 AOE 15.82 mDR 96.52 | ref UDS 53.48 AP 31.38 ATE 0.401 ASE 2.65 AOE 15.83 mDR 96.56 | diff UDS -0.94 [-2.03, +0.73] AP -1.86 [-2.76, -0.38] ATE +0.012 [-0.004, +0.025] ASE -0.12 AOE -0.01 [-0.02, +0.00] mDR -0.04

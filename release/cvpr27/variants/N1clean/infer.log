@@ -1,0 +1,5 @@
+n1c infer s5 train: 299 crops / 300 frames, delta_hat median +0.1078
+n1c infer s5 val: 2336 crops / 2336 frames, delta_hat median +0.1127
+n1c infer s6 train: 299 crops / 300 frames, delta_hat median +0.0812
+n1c infer s6 val: 2336 crops / 2336 frames, delta_hat median +0.0921
+INFER_DONE

@@ -1,0 +1,10 @@
+[E1geo] run E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1/mav_s0 | lib copy E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1geo/mav_s0/lib | W D:/S2MUAV3D/srcx_work/sf_E1_in2mav_none_s0
+[E1geo] box-corner ratios tr1 from read_tr1_teach.pkl (2 nets): 12866 / 12866 crops (failed 0), median 0.467, s_bar aspect 0.561
+[E1geo] box-corner ratios tr1 from read_tr1_stu.pkl (4 nets): 12866 / 12866 crops (failed 0), median 0.535, s_bar aspect 0.561
+[E1geo] box-corner ratios val1 from read_val1_stu.pkl (4 nets): 2336 / 2336 crops (failed 0), median 0.552, s_bar aspect 0.561
+[E1geo] box-corner ratios te1 from read_te1_stu.pkl (4 nets): 4800 / 4800 crops (failed 0), median 0.547, s_bar aspect 0.561
+[E1geo] faithfulness: patched chain with switches OFF reproduces E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1/mav_s0/preds/e1_fused_test.pkl (max |diff| 0.0e+00, 4800 frames)
+[E1geo] constants E1 (one class): c_k {-1: 0.100, 0: 0.100, 1: nan} r_k {0: 0.561, 1: nan} beta'_k {0: 0.328}
+[E1geo] constants E1geo: centres [84.3, 138.4] (train bright frac 0.43) c_k {-1: 0.100, 0: 0.100, 1: 0.101} r_k(teachers) {0: 0.402, 1: 0.543} beta'_k {0: 0.363, 1: 0.267} | r_k(students, diag) {0: 0.524, 1: 0.548} | test frames w/o class 75
+[E1geo] scored test once: E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1geo/mav_s0/preds/e1geo_fused_test.pkl.score_real_test.json
+OK

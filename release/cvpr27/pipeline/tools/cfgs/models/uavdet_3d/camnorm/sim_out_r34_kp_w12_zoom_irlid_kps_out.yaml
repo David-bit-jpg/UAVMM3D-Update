@@ -1,0 +1,7 @@
+# [outdoor 11-11] height network (KZ-KPS recipe: from IR+LiDAR member 30-epoch weights, LR 2e-4, 8 epochs) on the outdoor sim; templates rebuilt from outdoor LiDAR
+_BASE_CONFIG_: cfgs/models/uavdet_3d/camnorm/sim_out_r34_kp_w12_zoom_irlid_out.yaml
+MODEL:
+    NAME: CenterDetMMK
+    KPS_AUX: {TEMPLATES: 'E:/Open3DUAVDet/output/camnorm/geo1004/gproto/outdoor/templates_out.npy', KP_WEIGHT: 12.0, LAYOUT_WEIGHT: 4.0}
+OPTIMIZATION:
+    LR: 0.0002

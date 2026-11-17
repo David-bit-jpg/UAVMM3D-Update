@@ -1,0 +1,8 @@
+# [review1113 stage1seeds] lines for gproto/local_queue_1113.txt (format name|command). Append them in THIS order.
+# Priority order of the work is inside the lanes (README.md): C = priority 1 (MAV6D PST + E1) then 2 (OutdoorUAV3D PST + E1); A/B = stage-1
+# trainings (indoor sd30 -> indoor sd40 -> outdoor sd30 -> outdoor sd40), then priority 3 (E4) at their end.
+# Lane C is listed first on purpose: it only waits for files at the start (no training), so the runner (starts a line only while < 2 training
+# processes) can still start A and B right after it; if C came last it could wait for a gap between two stage-1 trainings.
+stage1seeds_laneC|bash /e/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/lane.sh C
+stage1seeds_laneA|bash /e/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/lane.sh A
+stage1seeds_laneB|bash /e/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/lane.sh B
