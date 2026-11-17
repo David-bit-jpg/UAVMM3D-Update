@@ -1,0 +1,41 @@
+11-14 18:56:41 waiting for cleanfix .done markers:B1_timing B2_etasq B3_noself B4_orient B5_bgrel B6_gtceil (or 12 h after start; poll 10 min)
+11-14 20:46:47 start lidraw (WORKERS=2 slot=heavy PAR=1 seeds: 0 1 2); cleanfix pending at start:
+[lidraw] eval lib written to E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/lidraw/eval/lib
+11-14 20:46:52 train KZPs0 (cfg sim_full_r34_kp_w12_zoom_lidpts, seed 0, batch 8, workers 2; resumes from the newest epoch checkpoint if any)
+11-15 01:26:19 KZPs0 epoch 30 done
+11-15 01:26:19 train KZPs1 (cfg sim_full_r34_kp_w12_zoom_lidpts, seed 1, batch 8, workers 2; resumes from the newest epoch checkpoint if any)
+11-16 04:36:59 start lidraw (WORKERS=2 slot=heavy PAR=1 seeds: 0 1 2); cleanfix pending at start:
+[lidraw] eval lib written to E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/lidraw/eval/lib
+11-16 04:37:01 KZPs0 epoch 30 done
+11-16 04:37:01 train KZPs1 (cfg sim_full_r34_kp_w12_zoom_lidpts, seed 1, batch 8, workers 2; resumes from the newest epoch checkpoint if any)
+11-16 08:27:26 KZPs1 epoch 30 done
+11-16 08:27:26 train KZPs2 (cfg sim_full_r34_kp_w12_zoom_lidpts, seed 2, batch 8, workers 2; resumes from the newest epoch checkpoint if any)
+11-16 12:49:49 KZPs2 epoch 30 done
+11-16 12:49:49 train KZLs2 (cfg sim_full_r34_kp_w12_zoom_lid, seed 2, batch 8, workers 2; resumes from the newest epoch checkpoint if any)
+11-17 01:09:45 start lidraw (WORKERS=0 slot=light PAR=1 seeds: 0 1 2); cleanfix pending at start:
+[lidraw] eval lib written to E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/lidraw/eval/lib
+11-17 01:09:47 KZPs0 epoch 30 done
+11-17 01:09:48 KZPs1 epoch 30 done
+11-17 01:09:48 KZPs2 epoch 30 done
+11-17 01:09:48 train KZLs2 (cfg sim_full_r34_kp_w12_zoom_lid, seed 2, batch 8, workers 0; resumes from the newest epoch checkpoint if any)
+11-17 01:38:17 start lidraw (WORKERS=0 slot=light PAR=1 seeds: 0 1 2); cleanfix pending at start:
+[lidraw] eval lib written to E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/lidraw/eval/lib
+11-17 01:38:18 KZPs0 epoch 30 done
+11-17 01:38:18 KZPs1 epoch 30 done
+11-17 01:38:18 KZPs2 epoch 30 done
+11-17 01:38:18 train KZLs2 (cfg sim_full_r34_kp_w12_zoom_lid, seed 2, batch 8, workers 0; resumes from the newest epoch checkpoint if any)
+11-17 07:33:44 start lidraw (WORKERS=2 slot=heavy PAR=1 seeds: 0 1 2); cleanfix pending at start:
+[lidraw] eval lib written to E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/lidraw/eval/lib
+11-17 07:33:45 KZPs0 epoch 30 done
+11-17 07:33:45 KZPs1 epoch 30 done
+11-17 07:33:45 KZPs2 epoch 30 done
+11-17 07:33:45 train KZLs2 (cfg sim_full_r34_kp_w12_zoom_lid, seed 2, batch 8, workers 2; resumes from the newest epoch checkpoint if any)
+11-17 09:52:54 KZLs2 failed (not OOM) -> one resume retry, see /e/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/lidraw/logs/train_KZLs2.log
+11-17 09:52:54 train KZLs2 (cfg sim_full_r34_kp_w12_zoom_lid, seed 2, batch 8, workers 2; resumes from the newest epoch checkpoint if any)
+11-17 21:27:57 KZLs2 epoch 30 done
+b_s0.pth: 289 tensors (8 removed), epoch 30
+b_s1.pth: 289 tensors (8 removed), epoch 30
+a_s2.pth: 289 tensors (4 removed), epoch 30
+b_s2.pth: 289 tensors (8 removed), epoch 30
+predict T_a_s0.pth: 4800 crops, PnP failures 0 -> E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/lidraw/eval/pred_a_s0.npz
+11-17 22:19:56 a_s0 read (ckpt E:/Open3DUAVDet/output/camnorm/geo1004/lidar/irlid/release/kzl_s0.pth)

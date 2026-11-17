@@ -1,0 +1,5 @@
+11-17 01:38:17 start lidraw (WORKERS=0 slot=light PAR=1 seeds: 0 1 2); cleanfix pending at start:
+11-17 01:38:18 KZPs0 epoch 30 done
+11-17 01:38:18 KZPs1 epoch 30 done
+11-17 01:38:18 KZPs2 epoch 30 done
+11-17 01:38:18 train KZLs2 (cfg sim_full_r34_kp_w12_zoom_lid, seed 2, batch 8, workers 0; resumes from the newest epoch checkpoint if any)

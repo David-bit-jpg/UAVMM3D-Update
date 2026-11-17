@@ -1,0 +1,33 @@
+11-15 02:36:49 [E1 mav_s0] start (mode FULLNONE, SX_TEACH=none, SX_SEEDSHIFT=0, PST ref E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/in2mav, RGB-only ref E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/in2mav_none)
+ok E1 mav 0 FULLNONE none E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1/mav_s0/lib
+11-15 02:36:50 [E1 mav_s0] lib ok: W D:/S2MUAV3D/srcx_work/sf_E1_in2mav_none_s0, pseudo tag srcx_in2mav_none_sfE1s0
+configs cfgs/models/uavdet_3d/camnorm/srcx/real_in2mav_none_sfE1s0.yaml cfgs/models/uavdet_3d/camnorm/srcx/st_in2mav_none_sfE1s0.yaml
+11-15 02:44:30 [E1 mav_s0] fixed stage-1 outputs from srcx/in2mav_none (det0, sim samples / bank / real d0 crops [hard links], wsim cache); refiner matte = box hull of review1113/boxhull/in2mav
+11-15 03:31:18 [E1 mav_s0] refiner: [sensorfree] composites ON; alpha = ref/sim_sil.npy
+11-15 03:31:18 [E1 mav_s0] refiners stage 1-2 done
+avg_inf E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1/mav_s0/ref/inf_st2_det0_train.pkl: 12865 keys from 2 files
+{'tag': 'srcx_in2mav_none_sfE1s0', 'n': 5227, 'n_corrected': 5227, 'c_bar': 0.06208853982388973, 'lam': 0.75, 'n_train': 12866}
+11-15 03:51:01 [E1 mav_s0] pseudo-labels: {"tag":"srcx_in2mav_none_sfE1s0","n":5227,"n_corrected":5227,"c_bar":0.06208853982388973,"lam":0.75,"n_train":12866}
+11-15 04:19:49 [E1 mav_s0] detectors done
+crops tr1: 12866 (train every 1); zoom median 1.83, clipped at ZMAX 0.2%
+crops val1: 2336 (val every 1); zoom median 1.79, clipped at ZMAX 0.2%
+crops te1: 4800 (test every 1); zoom median 1.90, clipped at ZMAX 0.0%
+orientation bank ou_bank: 4819 windows
+pseudo pseudo_tr1: 12866 / 12866 crops have a pseudo-orientation; gate (IR vs LiDAR <= 10 deg) passes 3502 (27.2%); d_il median 18.4
+11-15 04:54:54 [E1 mav_s0] pseudo pseudo_tr1: 12866 / 12866 crops have a pseudo-orientation; gate (IR vs LiDAR <= 10 deg) passes 3502 (27.2%); d_il median 18.4
+2026-11-15 04:55:41,214   INFO  init E:/Open3DUAVDet/output/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom/KZs0/ckpt/checkpoint_epoch_30.pth
+2026-11-15 04:55:40,581   INFO  [sensorfree E1] student composite matte = D:/S2MUAV3D/srcx_work/sensorfree/hull_in.npy (box hull), paste prob 0.50
+11-15 05:22:30 [E1 mav_s0] student s0: 'paste_tried': 8962, 'paste_done': 8962
+2026-11-15 04:57:14,436   INFO  init E:/Open3DUAVDet/output/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom/KZs1/ckpt/checkpoint_epoch_30.pth
+2026-11-15 04:57:13,678   INFO  [sensorfree E1] student composite matte = D:/S2MUAV3D/srcx_work/sensorfree/hull_in.npy (box hull), paste prob 0.50
+11-15 05:26:32 [E1 mav_s0] student s1: 'paste_tried': 8815, 'paste_done': 8815
+11-15 05:39:09 [E1 mav_s0] students done
+constant height aspect 0.5611324252760256
+11-15 05:39:10 [E1 mav_s0] constant height aspect 0.5611324252760256
+avg_inf E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1/mav_s0/ref/inf_st2_det1_train.pkl: 12866 keys from 2 files
+11-15 05:59:17 [E1 mav_s0] w (sim val inverse variance) = 0.1679490924489914
+avg_inf E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1/mav_s0/ref/inf_fin_det1_train.pkl: 12866 keys from 2 files
+avg_inf E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1/mav_s0/ref/inf_fin_det1_val.pkl: 2336 keys from 2 files
+avg_inf E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1/mav_s0/ref/inf_fin_det1_test.pkl: 4800 keys from 2 files
+11-15 06:55:51 [E1 mav_s0] deploy constants: "col_centres":[0.0,0.0],"c_k":{"0":0.10020405799150467,"1":NaN,"-1":0.10020405799150467--"r_k":{"0":0.5611324252760256,"1":NaN},
+11-15 06:56:09 [E1 mav_s0] ALL DONE: E1 mav_s0 vs PST mav_s0 [mav, 1 pair(s)] arm UDS 53.48 AP 31.38 ATE 0.401 ASE 2.65 AOE 15.83 mDR 96.56 | ref UDS 60.81 AP 40.93 ATE 0.306 ASE 1.75 AOE 14.48 mDR 96.17 | diff UDS -7.33 [-9.93, -5.15] AP -9.55 [-13.48, -6.45] ATE +0.095 [+0.059, +0.141] ASE +0.90 AOE +1.35 [+0.33, +2.33] mDR +0.40 || vs RGB-only: diff UDS -3.90 [-6.01, -2.03] AP -6.65 [-10.10, -3.74] ATE +0.053 [+0.022, +0.091] ASE +0.07 AOE -0.49 [-1.32, -0.03] mDR +0.58 || recipe deviations: 0

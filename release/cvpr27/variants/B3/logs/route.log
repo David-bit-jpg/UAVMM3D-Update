@@ -1,0 +1,8 @@
+ok E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/B3/lib
+11-14 03:48:50 start B3 route (ARMS=feat both FULL=0 MIRVIEW=1 FEAT_TARGET=adapt -> E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/B3); teachers E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/in2mav/ou/T_irlid0.pth,E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/in2mav/ou/T_irlid1.pth,E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/in2mav/ou/T_kdir0.pth,E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/in2mav/ou/T_kdir1.pth,E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/in2mav/ou/T_lid0.pth,E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/in2mav/ou/T_lid1.pth
+11-14 03:50:26 calibration (fixed for all arms/seeds): L_pl 2.2292 L_feat 0.7564 L_soft 2.3047 (hm 0.9371 kp 0.1140) L_mir 0.1428 -> w_feat 2.947 w_soft 0.9672; teacher feature cos min 0.087
+11-14 04:26:53 feat students done ("max_mem_gb": 3.772086272 "max_mem_gb": 3.772086272 )
+11-14 05:06:38 both students done ("max_mem_gb": 3.775195648 "max_mem_gb": 3.775195648 )
+11-14 05:19:02 feat scored
+11-14 05:54:04 both scored
+11-14 05:54:04 ALL DONE: test hard UDS 60.81 AP 40.93 ATE 0.306 AOE 14.48 / feat UDS 61.20 AP 41.66 ATE 0.306 AOE 14.37 / both UDS 61.06 AP 41.43 ATE 0.301 AOE 14.74 | val hard UDS 59.71 AP 43.69 ATE 0.320 AOE 21.11 / feat UDS 58.99 AP 42.57 ATE 0.339 AOE 20.80 / both UDS 59.38 AP 43.38 ATE 0.325 AOE 21.65   (hard = srcx/in2mav reused; FULL=0; feat target adapt; w_feat 2.947046202424703 w_soft 0.9672492693317505)

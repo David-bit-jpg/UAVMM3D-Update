@@ -1,0 +1,33 @@
+11-15 02:37:35 [E1 antifs_s0] start (mode FULLNONE, SX_TEACH=none, SX_SEEDSHIFT=0, PST ref E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/out2antifs, RGB-only ref E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/out2antifs_none)
+ok E1 antifs 0 FULLNONE none E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1/antifs_s0/lib
+11-15 02:38:08 [E1 antifs_s0] lib ok: W D:/S2MUAV3D/srcx_work/sf_E1_out2antifs_none_s0, pseudo tag srcx_out2antifs_none_sfE1s0
+configs cfgs/models/uavdet_3d/camnorm/srcx/real_out2antifs_none_sfE1s0.yaml cfgs/models/uavdet_3d/camnorm/srcx/st_out2antifs_none_sfE1s0.yaml
+11-15 02:40:01 [E1 antifs_s0] fixed stage-1 outputs from srcx/out2antifs_none (det0, sim samples / bank / real d0 crops [hard links], wsim cache); refiner matte = box hull of review1113/boxhull/out2antifs
+11-15 03:17:19 [E1 antifs_s0] refiner: [sensorfree] composites ON; alpha = ref/sim_sil.npy
+11-15 03:17:19 [E1 antifs_s0] refiners stage 1-2 done
+avg_inf E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1/antifs_s0/ref/inf_st2_det0_train.pkl: 3007 keys from 2 files
+{'tag': 'srcx_out2antifs_none_sfE1s0', 'n': 909, 'n_corrected': 862, 'c_bar': 0.033489564433693886, 'lam': 0.75, 'n_train': 3293}
+11-15 03:20:40 [E1 antifs_s0] pseudo-labels: {"tag":"srcx_out2antifs_none_sfE1s0","n":909,"n_corrected":862,"c_bar":0.033489564433693886,"lam":0.75,"n_train":3293}
+11-15 03:31:27 [E1 antifs_s0] detectors done
+crops tr1: 3293 (train every 1); zoom median 7.02, clipped at ZMAX 0.2%
+crops val1: 1148 (val every 1); zoom median 8.16, clipped at ZMAX 0.0%
+crops te1: 2624 (test every 1); zoom median 6.45, clipped at ZMAX 0.0%
+orientation bank ou_bank: 791 windows
+pseudo pseudo_tr1: 3293 / 3293 crops have a pseudo-orientation; gate (IR vs LiDAR <= 10 deg) passes 620 (18.8%); d_il median 21.2
+11-15 03:39:07 [E1 antifs_s0] pseudo pseudo_tr1: 3293 / 3293 crops have a pseudo-orientation; gate (IR vs LiDAR <= 10 deg) passes 620 (18.8%); d_il median 21.2
+2026-11-15 03:39:16,656   INFO  init E:/Open3DUAVDet/output/models/uavdet_3d/camnorm/sim_out_r34_kp_w12_zoom_out/OKZrgb_s0/ckpt/checkpoint_epoch_30.pth
+2026-11-15 03:39:15,834   INFO  [sensorfree E1] student composite matte = D:/S2MUAV3D/srcx_work/sensorfree/hull_out.npy (box hull), paste prob 0.50
+11-15 04:08:41 [E1 antifs_s0] student s0: 'paste_tried': 8807, 'paste_done': 8807
+2026-11-15 03:40:56,229   INFO  init E:/Open3DUAVDet/output/models/uavdet_3d/camnorm/sim_out_r34_kp_w12_zoom_out/OKZrgb_s1/ckpt/checkpoint_epoch_30.pth
+2026-11-15 03:40:55,325   INFO  [sensorfree E1] student composite matte = D:/S2MUAV3D/srcx_work/sensorfree/hull_out.npy (box hull), paste prob 0.50
+11-15 04:10:12 [E1 antifs_s0] student s1: 'paste_tried': 8689, 'paste_done': 8689
+11-15 04:16:42 [E1 antifs_s0] students done
+constant height aspect 0.4430550659907123
+11-15 04:16:48 [E1 antifs_s0] constant height aspect 0.4430550659907123
+avg_inf E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1/antifs_s0/ref/inf_st2_det1_train.pkl: 3121 keys from 2 files
+11-15 04:21:29 [E1 antifs_s0] w (sim val inverse variance) = 0.0692664988459608
+avg_inf E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1/antifs_s0/ref/inf_fin_det1_train.pkl: 3121 keys from 2 files
+avg_inf E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1/antifs_s0/ref/inf_fin_det1_val.pkl: 1147 keys from 2 files
+avg_inf E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1/antifs_s0/ref/inf_fin_det1_test.pkl: 2624 keys from 2 files
+11-15 04:48:38 [E1 antifs_s0] deploy constants: "col_centres":[0.0,0.0],"c_k":{"0":0.02410143055021763,"1":NaN,"-1":0.02410143055021763--"r_k":{"0":0.4430550659907123,"1":NaN},
+11-15 04:48:49 [E1 antifs_s0] ALL DONE: E1 antifs_s0 vs PST antifs_s0 [antifs, 1 pair(s)] arm UDS 40.93 AP 26.58 ATE 0.103 ASE 16.05 AOE 17.00 mDR 92.15 | ref UDS 41.73 AP 27.89 ATE 0.099 ASE 16.30 AOE 17.11 mDR 91.92 | diff UDS -0.80 [-2.21, +0.69] AP -1.31 [-3.50, +1.00] ATE +0.004 [-0.002, +0.010] ASE -0.25 AOE -0.11 [-0.51, +0.34] mDR +0.23 || vs RGB-only: diff UDS +2.01 [+0.34, +3.71] AP +3.19 [+0.53, +5.92] ATE -0.008 [-0.015, +0.000] ASE +0.08 AOE +0.55 [+0.21, +0.89] mDR +1.22 || recipe deviations: 0

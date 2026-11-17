@@ -1,0 +1,35 @@
+# [UAV] 由 experiments/config.yaml 改写：除数据相关项外全部为官方默认
+random_seed: 444
+
+dataset:
+  type: 'uav'
+  batch_size: 32          # 官方
+  use_3d_center: True     # 官方
+  random_flip: 0.5        # 官方
+  random_crop: 0.5        # 官方
+  scale: 0.4              # 官方
+  shift: 0.1              # 官方
+  epoch_size: 3712        # [UAV] 每"轮"样本数 = 官方 KITTI train 3712 张，使官方按轮的日程（warmup 5、衰减 90/120、HTL T/窗口 5）按迭代数对齐
+
+model:
+  type: 'gupnet'
+  backbone: 'dla34'
+  neck: 'DLAUp'
+
+optimizer:
+  type: 'adam'
+  lr: 0.00125
+  weight_decay: 0.00001
+
+lr_scheduler:
+  warmup: True  # 5 epoches, cosine warmup, init_lir=0.00001 in default
+  decay_rate: 0.1
+  decay_list: [90, 120]
+
+trainer:
+  max_epoch: 140
+  save_frequency: 10
+  disp_frequency: 5
+  log_dir: 'log'
+tester:
+  threshold: 0.2  # 官方置信度过滤（predict.py 默认不过滤，只取前 10，见 NOTES）

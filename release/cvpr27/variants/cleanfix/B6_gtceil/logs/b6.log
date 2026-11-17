@@ -1,0 +1,4 @@
+11-14 15:35:59 waiting for D:/cmpfull_runs/gupnet_uda_mt_s0/.done and review1113/initabl/.done (poll every 10 min)
+11-14 18:56:00 start B6 (GT-rotation oracle labels)
+11-14 19:47:21 E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/cleanfix/B6_gtceil/arm: test "AOE": 11.224985335594766 "UDS": 61.985968830695406  (PST reported: AOE 14.48 UDS 60.81)
+11-14 19:47:21 ALL DONE (test, 4,800 frames): PST AOE 14.48 UDS 60.81 -> GT-rotation labels AOE 11.22 UDS 61.99

@@ -1,0 +1,10 @@
+cp: cannot stat '/e/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/M12/M1/single_val.pkl': No such file or directory
+11-13 04:52:07 orientation dumps present
+11-13 04:57:48 recut done
+11-13 05:02:42 unc done
+11-13 05:05:59 kps done; scoring (once)
+臂 nl075：w = 0.1579（仿真验证集逆方差）
+偏差 b_k（无标签验证集图像，按颜色原型）： {0: 0.4756, 1: 0.3567, -1: 1.2889} 帧数 {0: 1294, 1: 1036, -1: 6}
+nl075 val w=0.158 UDS 60.60 | AP 45.64 | ATE 0.334 m（中位 0.178）| ASE 2.63 cm | AOE 21.77°（航向中位 13.39）| 检出 100.0% | 近 <3 m AP 60.61 UDS 70.30 中 3–4 m AP 46.00 UDS 61.00 远 ≥4 m AP 35.47 UDS 52.91
+nl075 test w=0.158 UDS 68.86 | AP 54.44 | ATE 0.236 m（中位 0.141）| ASE 1.79 cm | AOE 14.39°（航向中位 6.41）| 检出 99.8% | 近 <3 m AP 56.34 UDS 69.39 中 3–4 m AP 60.48 UDS 72.66 远 ≥4 m AP 45.56 UDS 63.65
+11-13 05:06:31 ALL DONE

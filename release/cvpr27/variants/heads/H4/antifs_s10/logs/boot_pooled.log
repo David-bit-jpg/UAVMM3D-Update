@@ -1,0 +1,1 @@
+H4 pooled (2 seed pairs) [antifs, 2 pair(s)] arm UDS 41.66 AP 27.49 ATE 0.100 ASE 16.51 AOE 16.17 mDR 91.56 | ref UDS 41.56 AP 27.57 ATE 0.100 ASE 16.51 AOE 16.84 mDR 91.56 | diff UDS +0.10 [-0.09, +0.28] AP -0.08 [-0.42, +0.23] ATE +0.000 [-0.000, +0.001] ASE +0.00 AOE -0.67 [-0.94, -0.43] mDR +0.00

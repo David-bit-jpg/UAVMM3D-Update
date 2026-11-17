@@ -1,0 +1,1 @@
+E1b antifs_s10 vs PST antifs_s10 [antifs, 1 pair(s)] arm UDS 38.31 AP 22.34 ATE 0.119 ASE 15.86 AOE 16.30 mDR 92.95 | ref UDS 41.38 AP 27.25 ATE 0.101 ASE 16.72 AOE 16.58 mDR 91.20 | diff UDS -3.07 [-5.28, -0.48] AP -4.91 [-8.17, -1.08] ATE +0.018 [+0.007, +0.029] ASE -0.86 AOE -0.28 [-0.79, +0.26] mDR +1.75

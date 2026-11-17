@@ -1,0 +1,29 @@
+11-14 02:42:30 start boxhull out2antifs
+sx ok E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/boxhull/out2antifs D:/mmcache/outdoor_real_fs srcx_out2antifs
+11-14 02:42:30 !! w_sim
+11-14 06:42:13 start boxhull out2antifs
+sx ok E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/boxhull/out2antifs D:/mmcache/outdoor_real_fs srcx_out2antifs
+11-14 06:42:15 frozen w (clean chain sim-val inverse variance) = 0.09641904940855338; sim detector s0 = E:/Open3DUAVDet/output/models/uavdet_3d/camnorm/sim_out_r34_geo_ramp_out/DET_s0/ckpt/checkpoint_epoch_5.pth
+align_hull {"n_clean": 3299, "n_regen": 3299, "max_dw_px": 0.0, "max_ddelta": 0.0, "ir_sil_iou_median": 1.0, "ir_sil_identical_frac": 1.0, "mode": "ALIGNED (clean sim_rgb / sim_meta kept, silhouette array = box hull)", "hull_area_frac_mean": 0.1545691373096014, "clean_ir_sil_area_frac_mean": 0.04578534022502084, "clean_ir_sil_empty_frac": 0.26795998787511366, "hull_empty_frac": 0.25189451348893604, "composite_eligible_frac_hull": 0.748105486511064}
+11-14 06:57:10 sample alignment: ALIGNED
+avg_inf E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/boxhull/out2antifs/ref/inf_st2_det1_train.pkl: 3094 keys from 2 files
+avg_inf E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/boxhull/out2antifs/ref/inf_fin_det1_train.pkl: 3094 keys from 2 files
+avg_inf E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/boxhull/out2antifs/ref/inf_fin_det1_val.pkl: 1145 keys from 2 files
+avg_inf E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/boxhull/out2antifs/ref/inf_fin_det1_test.pkl: 2618 keys from 2 files
+all      AOE 20.826  ATE 0.099  ASE 15.698  AP 19.115  UDS 34.292  mDR 73.780
+0-25     AOE 32.609  ATE 0.089  ASE 17.069  AP 6.711  UDS 21.760  mDR 39.659
+25-50    AOE 13.901  ATE 0.078  ASE 16.025  AP 34.002  UDS 46.117  mDR 88.471
+50-999   AOE 22.409  ATE 0.126  ASE 14.673  AP 19.666  UDS 35.888  mDR 97.929
+all      AOE 20.826  ATE 0.099  ASE 15.698  AP 18.667  UDS 34.056  mDR 73.780
+0-25     AOE 32.609  ATE 0.087  ASE 17.069  AP 6.880  UDS 21.923  mDR 39.659
+25-50    AOE 13.901  ATE 0.078  ASE 16.025  AP 33.885  UDS 46.059  mDR 88.471
+50-999   AOE 22.409  ATE 0.127  ASE 14.673  AP 18.706  UDS 35.341  mDR 97.929
+all      AOE 17.108  ATE 0.102  ASE 16.159  AP 26.752  UDS 41.010  mDR 91.921
+0-25     AOE 15.891  ATE 0.089  ASE 17.279  AP 27.495  UDS 41.244  mDR 83.349
+25-50    AOE 17.371  ATE 0.117  ASE 16.088  AP 26.446  UDS 40.719  mDR 96.894
+50-999   AOE 18.584  ATE 0.099  ASE 14.509  AP 28.424  UDS 42.601  mDR 99.290
+all      AOE 17.108  ATE 0.102  ASE 16.159  AP 27.166  UDS 41.250  mDR 91.921
+0-25     AOE 15.891  ATE 0.092  ASE 17.279  AP 26.862  UDS 40.793  mDR 83.349
+25-50    AOE 17.371  ATE 0.116  ASE 16.088  AP 26.652  UDS 40.835  mDR 96.894
+50-999   AOE 18.584  ATE 0.093  ASE 14.509  AP 30.715  UDS 44.079  mDR 99.290
+11-14 09:39:19 ALL DONE: out2antifs 

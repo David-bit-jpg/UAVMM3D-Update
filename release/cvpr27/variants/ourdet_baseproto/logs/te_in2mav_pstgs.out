@@ -1,0 +1,3 @@
+11-17 14:42:19 [in2mav] train in2mav_pstgs batch 8 (waiting for gpu slot)
+11-17 15:34:33 [in2mav] trained in2mav_pstgs
+11-17 15:38:47 [in2mav] in2mav_pstgs: all      AOE 20.988  ATE 0.558  ASE 3.061  AP 21.088  UDS 45.023  mDR 98.917

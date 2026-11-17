@@ -1,0 +1,3 @@
+11-16 17:14:13 [in2mav] train in2mav_ub batch 8 epochs 7 (waiting for gpu slot)
+11-16 17:52:49 [in2mav] trained in2mav_ub
+11-16 17:58:10 [in2mav] in2mav_ub: all      AOE 17.624  ATE 0.276  ASE 0.053  AP 45.458  UDS 65.357  mDR 99.938

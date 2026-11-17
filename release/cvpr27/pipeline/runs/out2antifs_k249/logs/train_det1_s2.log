@@ -1,0 +1,617 @@
+2026-11-17 12:42:18,303   INFO  **********************Start logging**********************
+2026-11-17 12:42:18,304   INFO  CUDA_VISIBLE_DEVICES=ALL
+2026-11-17 12:42:18,304   INFO  Training with a single process
+2026-11-17 12:42:18,304   INFO  cfg_file         cfgs/models/uavdet_3d/camnorm/srcx/st_out2antifs_k249.yaml
+2026-11-17 12:42:18,304   INFO  batch_size       8
+2026-11-17 12:42:18,304   INFO  epochs           3
+2026-11-17 12:42:18,304   INFO  workers          0
+2026-11-17 12:42:18,304   INFO  extra_tag        DET1_s2
+2026-11-17 12:42:18,304   INFO  ckpt             None
+2026-11-17 12:42:18,304   INFO  pretrained_model E:/Open3DUAVDet/output/models/uavdet_3d/camnorm/sim_out_r34_geo_ramp_out/DET_s2/ckpt/checkpoint_epoch_5.pth
+2026-11-17 12:42:18,304   INFO  pretrained_skip  None
+2026-11-17 12:42:18,304   INFO  freeze           None
+2026-11-17 12:42:18,304   INFO  freeze_epochs    0
+2026-11-17 12:42:18,304   INFO  backbone_lr_mult 1.0
+2026-11-17 12:42:18,304   INFO  freeze_bn_stats  False
+2026-11-17 12:42:18,304   INFO  pretrained_src_max_dis None
+2026-11-17 12:42:18,304   INFO  launcher         none
+2026-11-17 12:42:18,304   INFO  tcp_port         18888
+2026-11-17 12:42:18,304   INFO  sync_bn          False
+2026-11-17 12:42:18,304   INFO  fix_random_seed  True
+2026-11-17 12:42:18,304   INFO  seed             2
+2026-11-17 12:42:18,304   INFO  cudnn_benchmark  True
+2026-11-17 12:42:18,304   INFO  val_split        None
+2026-11-17 12:42:18,304   INFO  val_interval     1
+2026-11-17 12:42:18,304   INFO  val_every        1
+2026-11-17 12:42:18,304   INFO  val_match        top1
+2026-11-17 12:42:18,304   INFO  skip_test_eval   True
+2026-11-17 12:42:18,304   INFO  ckpt_save_interval 1
+2026-11-17 12:42:18,304   INFO  local_rank       None
+2026-11-17 12:42:18,304   INFO  max_ckpt_save_num 1
+2026-11-17 12:42:18,304   INFO  merge_all_iters_to_one_epoch False
+2026-11-17 12:42:18,304   INFO  set_cfgs         None
+2026-11-17 12:42:18,304   INFO  max_waiting_mins 0
+2026-11-17 12:42:18,304   INFO  start_epoch      0
+2026-11-17 12:42:18,304   INFO  num_epochs_to_eval 0
+2026-11-17 12:42:18,304   INFO  save_to_file     False
+2026-11-17 12:42:18,304   INFO  use_tqdm_to_record False
+2026-11-17 12:42:18,306   INFO  logger_iter_interval 200
+2026-11-17 12:42:18,306   INFO  ckpt_save_time_interval 300
+2026-11-17 12:42:18,306   INFO  wo_gpu_stat      False
+2026-11-17 12:42:18,306   INFO  use_amp          True
+2026-11-17 12:42:18,306   INFO  anchor_ckpt      None
+2026-11-17 12:42:18,306   INFO  anchor_keys      hm,center_res,center_dis,dim,size2d
+2026-11-17 12:42:18,306   INFO  anchor_weight    1.0
+2026-11-17 12:42:18,306   INFO  da_cfg           None
+2026-11-17 12:42:18,306   INFO  da_weight        0.1
+2026-11-17 12:42:18,306   INFO  da_workers       2
+2026-11-17 12:42:18,306   INFO  proto_cfg        None
+2026-11-17 12:42:18,306   INFO  proto_weight     0.1
+2026-11-17 12:42:18,306   INFO  proto_k          30
+2026-11-17 12:42:18,306   INFO  proto_temp       0.1
+2026-11-17 12:42:18,306   INFO  proto_nsim       8000
+2026-11-17 12:42:18,306   INFO  proto_bank       None
+2026-11-17 12:42:18,306   INFO  proto_min_dis    0.0
+2026-11-17 12:42:18,306   INFO  proto_clean      False
+2026-11-17 12:42:18,306   INFO  proto_dist       ce
+2026-11-17 12:42:18,306   INFO  src_cfg          None
+2026-11-17 12:42:18,306   INFO  src_weight       1.0
+2026-11-17 12:42:18,306   INFO  src_workers      2
+2026-11-17 12:42:18,306   INFO  gp_bank          None
+2026-11-17 12:42:18,306   INFO  gp_weight        0.1
+2026-11-17 12:42:18,306   INFO  gp_temp          0.1
+2026-11-17 12:42:18,306   INFO  gp_thr           0.0
+2026-11-17 12:42:18,306   INFO  gp_now           False
+2026-11-17 12:42:18,306   INFO  cfg.ROOT_DIR: E:\Open3DUAVDet
+2026-11-17 12:42:18,306   INFO  cfg.LOCAL_RANK: 0
+2026-11-17 12:42:18,306   INFO  
+cfg.MODEL = edict()
+2026-11-17 12:42:18,306   INFO  cfg.MODEL.NAME: CenterDet
+2026-11-17 12:42:18,306   INFO  
+cfg.MODEL.BACKBONE_2D = edict()
+2026-11-17 12:42:18,306   INFO  cfg.MODEL.BACKBONE_2D.NAME: TvResNet
+2026-11-17 12:42:18,306   INFO  cfg.MODEL.BACKBONE_2D.NORM_TYPE: bn
+2026-11-17 12:42:18,306   INFO  
+cfg.MODEL.BACKBONE_2D.MIXSTYLE = edict()
+2026-11-17 12:42:18,306   INFO  cfg.MODEL.BACKBONE_2D.MIXSTYLE.p: 0.0
+2026-11-17 12:42:18,306   INFO  cfg.MODEL.BACKBONE_2D.MIXSTYLE.alpha: 0.1
+2026-11-17 12:42:18,306   INFO  cfg.MODEL.BACKBONE_2D.MIXSTYLE.layers: [1, 2]
+2026-11-17 12:42:18,306   INFO  cfg.MODEL.BACKBONE_2D.NUM_FILTERS: [64, 128, 256, 512]
+2026-11-17 12:42:18,306   INFO  cfg.MODEL.BACKBONE_2D.INPUT_CHANNELS: 3
+2026-11-17 12:42:18,306   INFO  cfg.MODEL.BACKBONE_2D.OUT_CHANNELS: 512
+2026-11-17 12:42:18,306   INFO  cfg.MODEL.BACKBONE_2D.ARCH: resnet34
+2026-11-17 12:42:18,306   INFO  cfg.MODEL.BACKBONE_2D.PRETRAINED: True
+2026-11-17 12:42:18,306   INFO  cfg.MODEL.BACKBONE_2D.BGR_INPUT: True
+2026-11-17 12:42:18,306   INFO  cfg.MODEL.BACKBONE_2D.FPN_CHANNELS: 128
+2026-11-17 12:42:18,306   INFO  cfg.MODEL.BACKBONE_2D.FREEZE_BN: False
+2026-11-17 12:42:18,306   INFO  
+cfg.MODEL.DENSE_HEAD_2D = edict()
+2026-11-17 12:42:18,306   INFO  cfg.MODEL.DENSE_HEAD_2D.NAME: CenterHead
+2026-11-17 12:42:18,306   INFO  cfg.MODEL.DENSE_HEAD_2D.NORM_TYPE: bn
+2026-11-17 12:42:18,306   INFO  cfg.MODEL.DENSE_HEAD_2D.INPUT_CHANNELS: 512
+2026-11-17 12:42:18,306   INFO  cfg.MODEL.DENSE_HEAD_2D.HM_LOSS: focal
+2026-11-17 12:42:18,306   INFO  cfg.MODEL.DENSE_HEAD_2D.HM_BIAS_PRIOR: -2.19
+2026-11-17 12:42:18,306   INFO  
+cfg.MODEL.DENSE_HEAD_2D.LOSS_WEIGHTS = edict()
+2026-11-17 12:42:18,306   INFO  cfg.MODEL.DENSE_HEAD_2D.LOSS_WEIGHTS.hm: 1.0
+2026-11-17 12:42:18,307   INFO  cfg.MODEL.DENSE_HEAD_2D.LOSS_WEIGHTS.center_res: 2.0
+2026-11-17 12:42:18,307   INFO  cfg.MODEL.DENSE_HEAD_2D.LOSS_WEIGHTS.center_dis: 8.0
+2026-11-17 12:42:18,307   INFO  cfg.MODEL.DENSE_HEAD_2D.LOSS_WEIGHTS.dim: 2.0
+2026-11-17 12:42:18,307   INFO  cfg.MODEL.DENSE_HEAD_2D.LOSS_WEIGHTS.rot: 0.0
+2026-11-17 12:42:18,307   INFO  cfg.MODEL.DENSE_HEAD_2D.LOSS_WEIGHTS.size2d: 4.0
+2026-11-17 12:42:18,307   INFO  
+cfg.MODEL.DENSE_HEAD_2D.SEPARATE_HEAD_CFG = edict()
+2026-11-17 12:42:18,307   INFO  cfg.MODEL.DENSE_HEAD_2D.SEPARATE_HEAD_CFG.HEAD_ORDER: ['hm', 'center_res', 'center_dis', 'dim', 'rot', 'size2d']
+2026-11-17 12:42:18,307   INFO  
+cfg.MODEL.DENSE_HEAD_2D.SEPARATE_HEAD_CFG.HEAD_DICT = edict()
+2026-11-17 12:42:18,307   INFO  
+cfg.MODEL.DENSE_HEAD_2D.SEPARATE_HEAD_CFG.HEAD_DICT.hm = edict()
+2026-11-17 12:42:18,307   INFO  cfg.MODEL.DENSE_HEAD_2D.SEPARATE_HEAD_CFG.HEAD_DICT.hm.out_channels: 1
+2026-11-17 12:42:18,307   INFO  cfg.MODEL.DENSE_HEAD_2D.SEPARATE_HEAD_CFG.HEAD_DICT.hm.conv_dim: 128
+2026-11-17 12:42:18,307   INFO  
+cfg.MODEL.DENSE_HEAD_2D.SEPARATE_HEAD_CFG.HEAD_DICT.center_res = edict()
+2026-11-17 12:42:18,307   INFO  cfg.MODEL.DENSE_HEAD_2D.SEPARATE_HEAD_CFG.HEAD_DICT.center_res.out_channels: 2
+2026-11-17 12:42:18,307   INFO  cfg.MODEL.DENSE_HEAD_2D.SEPARATE_HEAD_CFG.HEAD_DICT.center_res.conv_dim: 128
+2026-11-17 12:42:18,307   INFO  
+cfg.MODEL.DENSE_HEAD_2D.SEPARATE_HEAD_CFG.HEAD_DICT.center_dis = edict()
+2026-11-17 12:42:18,307   INFO  cfg.MODEL.DENSE_HEAD_2D.SEPARATE_HEAD_CFG.HEAD_DICT.center_dis.out_channels: 1
+2026-11-17 12:42:18,307   INFO  cfg.MODEL.DENSE_HEAD_2D.SEPARATE_HEAD_CFG.HEAD_DICT.center_dis.conv_dim: 128
+2026-11-17 12:42:18,307   INFO  
+cfg.MODEL.DENSE_HEAD_2D.SEPARATE_HEAD_CFG.HEAD_DICT.dim = edict()
+2026-11-17 12:42:18,307   INFO  cfg.MODEL.DENSE_HEAD_2D.SEPARATE_HEAD_CFG.HEAD_DICT.dim.out_channels: 3
+2026-11-17 12:42:18,307   INFO  cfg.MODEL.DENSE_HEAD_2D.SEPARATE_HEAD_CFG.HEAD_DICT.dim.conv_dim: 128
+2026-11-17 12:42:18,307   INFO  
+cfg.MODEL.DENSE_HEAD_2D.SEPARATE_HEAD_CFG.HEAD_DICT.rot = edict()
+2026-11-17 12:42:18,307   INFO  cfg.MODEL.DENSE_HEAD_2D.SEPARATE_HEAD_CFG.HEAD_DICT.rot.out_channels: 6
+2026-11-17 12:42:18,307   INFO  cfg.MODEL.DENSE_HEAD_2D.SEPARATE_HEAD_CFG.HEAD_DICT.rot.conv_dim: 128
+2026-11-17 12:42:18,307   INFO  
+cfg.MODEL.DENSE_HEAD_2D.SEPARATE_HEAD_CFG.HEAD_DICT.size2d = edict()
+2026-11-17 12:42:18,308   INFO  cfg.MODEL.DENSE_HEAD_2D.SEPARATE_HEAD_CFG.HEAD_DICT.size2d.out_channels: 2
+2026-11-17 12:42:18,308   INFO  cfg.MODEL.DENSE_HEAD_2D.SEPARATE_HEAD_CFG.HEAD_DICT.size2d.conv_dim: 128
+2026-11-17 12:42:18,308   INFO  cfg.MODEL.DENSE_HEAD_2D.HEAD_BIAS: True
+2026-11-17 12:42:18,308   INFO  
+cfg.MODEL.POST_PROCESSING = edict()
+2026-11-17 12:42:18,308   INFO  cfg.MODEL.POST_PROCESSING.DECONDER: center_point_decoder_mav6d
+2026-11-17 12:42:18,308   INFO  cfg.MODEL.POST_PROCESSING.DEPTH_FROM_SIZE2D: True
+2026-11-17 12:42:18,308   INFO  cfg.MODEL.POST_PROCESSING.SIZE2D_MODE: width
+2026-11-17 12:42:18,308   INFO  cfg.MODEL.POST_PROCESSING.SIZE_SOURCE: pred
+2026-11-17 12:42:18,308   INFO  cfg.MODEL.POST_PROCESSING.KNOWN_SIZE: [0.34, 0.34, 0.23]
+2026-11-17 12:42:18,308   INFO  cfg.MODEL.POST_PROCESSING.MAX_OBJ: 1
+2026-11-17 12:42:18,308   INFO  cfg.MODEL.POST_PROCESSING.SCORE_THRESH: 0.0
+2026-11-17 12:42:18,308   INFO  
+cfg.OPTIMIZATION = edict()
+2026-11-17 12:42:18,308   INFO  cfg.OPTIMIZATION.BATCH_SIZE_PER_GPU: 8
+2026-11-17 12:42:18,308   INFO  cfg.OPTIMIZATION.NUM_EPOCHS: 3
+2026-11-17 12:42:18,308   INFO  cfg.OPTIMIZATION.OPTIMIZER: adam_onecycle
+2026-11-17 12:42:18,308   INFO  cfg.OPTIMIZATION.LR: 0.0002
+2026-11-17 12:42:18,308   INFO  cfg.OPTIMIZATION.WEIGHT_DECAY: 0.01
+2026-11-17 12:42:18,308   INFO  cfg.OPTIMIZATION.MOMENTUM: 0.9
+2026-11-17 12:42:18,308   INFO  cfg.OPTIMIZATION.MOMS: [0.95, 0.85]
+2026-11-17 12:42:18,308   INFO  cfg.OPTIMIZATION.PCT_START: 0.4
+2026-11-17 12:42:18,308   INFO  cfg.OPTIMIZATION.DIV_FACTOR: 10
+2026-11-17 12:42:18,308   INFO  cfg.OPTIMIZATION.DECAY_STEP_LIST: [35, 45]
+2026-11-17 12:42:18,308   INFO  cfg.OPTIMIZATION.LR_DECAY: 0.1
+2026-11-17 12:42:18,309   INFO  cfg.OPTIMIZATION.LR_CLIP: 1e-07
+2026-11-17 12:42:18,309   INFO  cfg.OPTIMIZATION.LR_WARMUP: False
+2026-11-17 12:42:18,309   INFO  cfg.OPTIMIZATION.WARMUP_EPOCH: 1
+2026-11-17 12:42:18,309   INFO  cfg.OPTIMIZATION.GRAD_NORM_CLIP: 35
+2026-11-17 12:42:18,309   INFO  cfg._BASE_CONFIG_: cfgs/models/uavdet_3d/camnorm/srcx/real_out2antifs_k249.yaml
+2026-11-17 12:42:18,309   INFO  
+cfg.DATA_CONFIG = edict()
+2026-11-17 12:42:18,309   INFO  cfg.DATA_CONFIG.DATASET: MMCache_Det_Dataset
+2026-11-17 12:42:18,309   INFO  cfg.DATA_CONFIG.CLASS_NAMES: ['drone']
+2026-11-17 12:42:18,309   INFO  cfg.DATA_CONFIG.HM_CLASS_NAMES: ['drone']
+2026-11-17 12:42:18,309   INFO  
+cfg.DATA_CONFIG.DATA_SPLIT = edict()
+2026-11-17 12:42:18,309   INFO  cfg.DATA_CONFIG.DATA_SPLIT.train: train
+2026-11-17 12:42:18,309   INFO  cfg.DATA_CONFIG.DATA_SPLIT.test: test
+2026-11-17 12:42:18,310   INFO  
+cfg.DATA_CONFIG.SAMPLED_INTERVAL = edict()
+2026-11-17 12:42:18,310   INFO  cfg.DATA_CONFIG.SAMPLED_INTERVAL.train: 1
+2026-11-17 12:42:18,310   INFO  cfg.DATA_CONFIG.SAMPLED_INTERVAL.test: 1
+2026-11-17 12:42:18,310   INFO  cfg.DATA_CONFIG.MODALITIES: ['rgb']
+2026-11-17 12:42:18,310   INFO  cfg.DATA_CONFIG.MIN_RGB_VIS: 0.0
+2026-11-17 12:42:18,310   INFO  cfg.DATA_CONFIG.TRAIN_REPEAT: 1
+2026-11-17 12:42:18,310   INFO  
+cfg.DATA_CONFIG.AUG = edict()
+2026-11-17 12:42:18,310   INFO  cfg.DATA_CONFIG.AUG.hflip: 0.5
+2026-11-17 12:42:18,310   INFO  cfg.DATA_CONFIG.AUG.scale: [1.0, 1.0]
+2026-11-17 12:42:18,310   INFO  cfg.DATA_CONFIG.AUG.photometric: False
+2026-11-17 12:42:18,310   INFO  cfg.DATA_CONFIG.AUG.noise: 0.0
+2026-11-17 12:42:18,310   INFO  cfg.DATA_CONFIG.AUG.blur: 0.0
+2026-11-17 12:42:18,310   INFO  cfg.DATA_CONFIG.AUG.blur_prob: 0.5
+2026-11-17 12:42:18,310   INFO  cfg.DATA_CONFIG.IM_RESIZE: [512, 288]
+2026-11-17 12:42:18,310   INFO  cfg.DATA_CONFIG.IM_NUM: 1
+2026-11-17 12:42:18,310   INFO  cfg.DATA_CONFIG.CENTER_RAD: 2
+2026-11-17 12:42:18,310   INFO  cfg.DATA_CONFIG.STRIDE: 8
+2026-11-17 12:42:18,310   INFO  cfg.DATA_CONFIG.DEPTH_MODE: virtual
+2026-11-17 12:42:18,310   INFO  cfg.DATA_CONFIG.DEPTH_F_REF: 512
+2026-11-17 12:42:18,310   INFO  cfg.DATA_CONFIG.MAX_DIS: 24
+2026-11-17 12:42:18,310   INFO  cfg.DATA_CONFIG.MAX_SIZE: 2
+2026-11-17 12:42:18,310   INFO  cfg.DATA_CONFIG.MAKE_SIZE2D: True
+2026-11-17 12:42:18,310   INFO  cfg.DATA_CONFIG.ROT_FRAME: allo
+2026-11-17 12:42:18,310   INFO  cfg.DATA_CONFIG.ROT_REPR: euler6
+2026-11-17 12:42:18,310   INFO  cfg.DATA_CONFIG.EULER_SEQ: xyz
+2026-11-17 12:42:18,310   INFO  cfg.DATA_CONFIG.OB_SIZE: [[1.0, 1.0, 1.0]]
+2026-11-17 12:42:18,310   INFO  cfg.DATA_CONFIG.DATA_PRE_PROCESSOR: [{'NAME': 'convert_box9d_to_centermap', 'OFFSET': [0.0, 0.0, 0], 'ENCODER': 'center_point_encoder_mav6d'}]
+2026-11-17 12:42:18,310   INFO  
+cfg.DATA_CONFIG.DATA_AUGMENTOR = edict()
+2026-11-17 12:42:18,310   INFO  cfg.DATA_CONFIG.DATA_AUGMENTOR.AUG_CONFIG_LIST: [{'NAME': 'image_flip', 'DATA_LIST': ['image', 'heatmap'], 'ALONG_AXIS_LIST': ['x']}]
+2026-11-17 12:42:18,310   INFO  cfg.DATA_CONFIG._BASE_CONFIG_: cfgs/dataset_configs/uavdet_3d/camnorm_outreal_fs.yaml
+2026-11-17 12:42:18,310   INFO  cfg.DATA_CONFIG.DATA_PATH: D:/mmcache/outdoor_real_fs
+2026-11-17 12:42:18,310   INFO  cfg.DATA_CONFIG.NORM_MEAN: [0.4968, 0.5059, 0.5084]
+2026-11-17 12:42:18,310   INFO  cfg.DATA_CONFIG.NORM_STD: [0.1854, 0.1816, 0.197]
+2026-11-17 12:42:18,310   INFO  cfg.DATA_CONFIG.TARGET_NORM: standard
+2026-11-17 12:42:18,310   INFO  cfg.DATA_CONFIG.DEPTH_MEAN: 28.3561
+2026-11-17 12:42:18,310   INFO  cfg.DATA_CONFIG.DEPTH_STD: 20.9749
+2026-11-17 12:42:18,311   INFO  cfg.DATA_CONFIG.SIZE_MEAN: [0.8036, 0.7784, 0.3668]
+2026-11-17 12:42:18,311   INFO  cfg.DATA_CONFIG.SIZE_STD: [0.4473, 0.4304, 0.2376]
+2026-11-17 12:42:18,311   INFO  cfg.DATA_CONFIG.INDEX_FILE: index_pseudo_srcx_out2antifs_k249.pkl
+2026-11-17 12:42:18,311   INFO  cfg.TAG: st_out2antifs_k249
+2026-11-17 12:42:18,311   INFO  cfg.EXP_GROUP_PATH: models/uavdet_3d/camnorm/srcx
+2026-11-17 12:42:18,504   INFO  ----------- Create dataloader & network & optimizer -----------
+2026-11-17 12:42:18,506   INFO  MMCache[train]: 标签索引 index_pseudo_srcx_out2antifs_k249.pkl（label_fix=None）
+2026-11-17 12:42:18,506   INFO  MMCache[train]: 249 帧, 模态 ['rgb'] -> 3 通道, 缓存 D:\mmcache\outdoor_real_fs\train
+2026-11-17 12:42:26,646   INFO  loading weights: 载入 289/289 个张量, 27.93M/27.93M 参数 (100.0%)
+2026-11-17 12:42:26,648   INFO  ----------- Model CenterDet created, param count: 27909455 -----------
+2026-11-17 12:42:26,649   INFO  CenterDet(
+  (backbone_2d): TvResNet(
+    (stem): Sequential(
+      (0): Conv2d(3, 64, kernel_size=(7, 7), stride=(2, 2), padding=(3, 3), bias=False)
+      (1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (2): ReLU(inplace=True)
+      (3): MaxPool2d(kernel_size=3, stride=2, padding=1, dilation=1, ceil_mode=False)
+    )
+    (layer1): Sequential(
+      (0): BasicBlock(
+        (conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu): ReLU(inplace=True)
+        (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (1): BasicBlock(
+        (conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu): ReLU(inplace=True)
+        (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (2): BasicBlock(
+        (conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu): ReLU(inplace=True)
+        (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (layer2): Sequential(
+      (0): BasicBlock(
+        (conv1): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+        (bn1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu): ReLU(inplace=True)
+        (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (downsample): Sequential(
+          (0): Conv2d(64, 128, kernel_size=(1, 1), stride=(2, 2), bias=False)
+          (1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        )
+      )
+      (1): BasicBlock(
+        (conv1): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu): ReLU(inplace=True)
+        (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (2): BasicBlock(
+        (conv1): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu): ReLU(inplace=True)
+        (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (3): BasicBlock(
+        (conv1): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu): ReLU(inplace=True)
+        (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (layer3): Sequential(
+      (0): BasicBlock(
+        (conv1): Conv2d(128, 256, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+        (bn1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu): ReLU(inplace=True)
+        (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (downsample): Sequential(
+          (0): Conv2d(128, 256, kernel_size=(1, 1), stride=(2, 2), bias=False)
+          (1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        )
+      )
+      (1): BasicBlock(
+        (conv1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu): ReLU(inplace=True)
+        (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (2): BasicBlock(
+        (conv1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu): ReLU(inplace=True)
+        (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (3): BasicBlock(
+        (conv1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu): ReLU(inplace=True)
+        (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (4): BasicBlock(
+        (conv1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu): ReLU(inplace=True)
+        (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (5): BasicBlock(
+        (conv1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu): ReLU(inplace=True)
+        (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (layer4): Sequential(
+      (0): BasicBlock(
+        (conv1): Conv2d(256, 512, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+        (bn1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu): ReLU(inplace=True)
+        (conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (downsample): Sequential(
+          (0): Conv2d(256, 512, kernel_size=(1, 1), stride=(2, 2), bias=False)
+          (1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        )
+      )
+      (1): BasicBlock(
+        (conv1): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu): ReLU(inplace=True)
+        (conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+      (2): BasicBlock(
+        (conv1): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu): ReLU(inplace=True)
+        (conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (lat8): Conv2d(128, 128, kernel_size=(1, 1), stride=(1, 1))
+    (lat16): Conv2d(256, 128, kernel_size=(1, 1), stride=(1, 1))
+    (lat32): Conv2d(512, 128, kernel_size=(1, 1), stride=(1, 1))
+    (out): Sequential(
+      (0): Conv2d(128, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (2): ReLU(inplace=True)
+      (3): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (4): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (5): ReLU(inplace=True)
+    )
+  )
+  (backbone_3d): None
+  (dense_head_2d): CenterHead(
+    (hm): Sequential(
+      (0): Conv2d(512, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+      (1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (2): ReLU()
+      (3): Conv2d(128, 1, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    )
+    (center_res): Sequential(
+      (0): Conv2d(512, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+      (1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (2): ReLU()
+      (3): Conv2d(128, 2, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    )
+    (center_dis): Sequential(
+      (0): Conv2d(512, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+      (1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (2): ReLU()
+      (3): Conv2d(128, 1, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    )
+    (dim): Sequential(
+      (0): Conv2d(512, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+      (1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (2): ReLU()
+      (3): Conv2d(128, 3, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    )
+    (rot): Sequential(
+      (0): Conv2d(512, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+      (1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (2): ReLU()
+      (3): Conv2d(128, 6, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    )
+    (size2d): Sequential(
+      (0): Conv2d(512, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+      (1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (2): ReLU()
+      (3): Conv2d(128, 2, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    )
+  )
+  (dense_head_3d): None
+  (roi_head_2d): None
+  (roi_head_3d): None
+)
+2026-11-17 12:42:26,650   INFO  **********************Start training models/uavdet_3d/camnorm/srcx/st_out2antifs_k249(DET1_s2)**********************
+epochs:   0%|          | 0/3 [00:00<?, ?it/s]
+train:   0%|          | 0/32 [00:00<?, ?it/s][A
+train:   3%|▎         | 1/32 [00:19<10:09, 19.65s/it][A
+train:   3%|▎         | 1/32 [00:19<10:09, 19.65s/it, total_it=1][Aepochs:   0%|          | 0/3 [00:19<?, ?it/s, loss=13, lr=2e-5]epochs:   0%|          | 0/3 [00:19<?, ?it/s, loss=13, lr=2e-5]2026-11-17 12:42:46,307   INFO    iter 1/32  loss 13.006  lr 2.00e-05  0.05 it/s  本轮剩余 10.2 分钟  [hm 0.749 center_res 0.045 center_dis 1.113 dim 1.000 rot 0.523 size2d 0.316]
+
+train:   6%|▋         | 2/32 [00:19<09:49, 19.65s/it, total_it=2][Aepochs:   0%|          | 0/3 [00:19<?, ?it/s, loss=10.1, lr=2.03e-5]epochs:   0%|          | 0/3 [00:19<?, ?it/s, loss=10.1, lr=2.03e-5]
+train:   9%|▉         | 3/32 [00:19<02:30,  5.18s/it, total_it=2][A
+train:   9%|▉         | 3/32 [00:19<02:30,  5.18s/it, total_it=3][Aepochs:   0%|          | 0/3 [00:19<?, ?it/s, loss=10.1, lr=2.12e-5]epochs:   0%|          | 0/3 [00:19<?, ?it/s, loss=10.1, lr=2.12e-5]
+train:  12%|█▎        | 4/32 [00:20<01:36,  3.44s/it, total_it=3][A
+train:  12%|█▎        | 4/32 [00:20<01:36,  3.44s/it, total_it=4][Aepochs:   0%|          | 0/3 [00:20<?, ?it/s, loss=9.66, lr=2.28e-5]epochs:   0%|          | 0/3 [00:20<?, ?it/s, loss=9.66, lr=2.28e-5]
+train:  16%|█▌        | 5/32 [00:20<01:03,  2.36s/it, total_it=4][A
+train:  16%|█▌        | 5/32 [00:20<01:03,  2.36s/it, total_it=5][Aepochs:   0%|          | 0/3 [00:20<?, ?it/s, loss=8.81, lr=2.49e-5]epochs:   0%|          | 0/3 [00:20<?, ?it/s, loss=8.81, lr=2.49e-5]
+train:  19%|█▉        | 6/32 [00:20<00:42,  1.65s/it, total_it=5][A
+train:  19%|█▉        | 6/32 [00:20<00:42,  1.65s/it, total_it=6][Aepochs:   0%|          | 0/3 [00:20<?, ?it/s, loss=8, lr=2.76e-5]   epochs:   0%|          | 0/3 [00:20<?, ?it/s, loss=8, lr=2.76e-5]
+train:  22%|██▏       | 7/32 [00:20<00:29,  1.17s/it, total_it=6][A
+train:  22%|██▏       | 7/32 [00:20<00:29,  1.17s/it, total_it=7][Aepochs:   0%|          | 0/3 [00:20<?, ?it/s, loss=7.6, lr=3.08e-5]epochs:   0%|          | 0/3 [00:20<?, ?it/s, loss=7.6, lr=3.08e-5]
+train:  25%|██▌       | 8/32 [00:20<00:27,  1.17s/it, total_it=8][Aepochs:   0%|          | 0/3 [00:20<?, ?it/s, loss=7.54, lr=3.47e-5]epochs:   0%|          | 0/3 [00:20<?, ?it/s, loss=7.54, lr=3.47e-5]
+train:  28%|██▊       | 9/32 [00:20<00:15,  1.52it/s, total_it=8][A
+train:  28%|██▊       | 9/32 [00:20<00:15,  1.52it/s, total_it=9][Aepochs:   0%|          | 0/3 [00:20<?, ?it/s, loss=6.43, lr=3.9e-5] epochs:   0%|          | 0/3 [00:20<?, ?it/s, loss=6.43, lr=3.9e-5]
+train:  31%|███▏      | 10/32 [00:20<00:11,  1.92it/s, total_it=9][A
+train:  31%|███▏      | 10/32 [00:20<00:11,  1.92it/s, total_it=10][Aepochs:   0%|          | 0/3 [00:20<?, ?it/s, loss=7.7, lr=4.38e-5]epochs:   0%|          | 0/3 [00:20<?, ?it/s, loss=7.7, lr=4.38e-5]
+train:  34%|███▍      | 11/32 [00:20<00:08,  2.34it/s, total_it=10][A
+train:  34%|███▍      | 11/32 [00:20<00:08,  2.34it/s, total_it=11][Aepochs:   0%|          | 0/3 [00:20<?, ?it/s, loss=5.84, lr=4.9e-5]epochs:   0%|          | 0/3 [00:20<?, ?it/s, loss=5.84, lr=4.9e-5]
+train:  38%|███▊      | 12/32 [00:21<00:06,  2.96it/s, total_it=11][A
+train:  38%|███▊      | 12/32 [00:21<00:06,  2.96it/s, total_it=12][Aepochs:   0%|          | 0/3 [00:21<?, ?it/s, loss=6.62, lr=5.47e-5]epochs:   0%|          | 0/3 [00:21<?, ?it/s, loss=6.62, lr=5.47e-5]
+train:  41%|████      | 13/32 [00:21<00:06,  2.96it/s, total_it=13][Aepochs:   0%|          | 0/3 [00:21<?, ?it/s, loss=5.95, lr=6.08e-5]epochs:   0%|          | 0/3 [00:21<?, ?it/s, loss=5.95, lr=6.08e-5]
+train:  44%|████▍     | 14/32 [00:21<00:04,  4.20it/s, total_it=13][A
+train:  44%|████▍     | 14/32 [00:21<00:04,  4.20it/s, total_it=14][Aepochs:   0%|          | 0/3 [00:21<?, ?it/s, loss=5.19, lr=6.72e-5]epochs:   0%|          | 0/3 [00:21<?, ?it/s, loss=5.19, lr=6.72e-5]
+train:  47%|████▋     | 15/32 [00:21<00:03,  4.70it/s, total_it=14][A
+train:  47%|████▋     | 15/32 [00:21<00:03,  4.70it/s, total_it=15][Aepochs:   0%|          | 0/3 [00:21<?, ?it/s, loss=5.76, lr=7.38e-5]epochs:   0%|          | 0/3 [00:21<?, ?it/s, loss=5.76, lr=7.38e-5]
+train:  50%|█████     | 16/32 [00:21<00:02,  5.40it/s, total_it=15][A
+train:  50%|█████     | 16/32 [00:21<00:02,  5.40it/s, total_it=16][Aepochs:   0%|          | 0/3 [00:21<?, ?it/s, loss=5.33, lr=8.08e-5]epochs:   0%|          | 0/3 [00:21<?, ?it/s, loss=5.33, lr=8.08e-5]
+train:  53%|█████▎    | 17/32 [00:21<00:02,  5.40it/s, total_it=17][Aepochs:   0%|          | 0/3 [00:21<?, ?it/s, loss=4.77, lr=8.79e-5]epochs:   0%|          | 0/3 [00:21<?, ?it/s, loss=4.77, lr=8.79e-5]
+train:  56%|█████▋    | 18/32 [00:21<00:02,  6.73it/s, total_it=17][A
+train:  56%|█████▋    | 18/32 [00:21<00:02,  6.73it/s, total_it=18][Aepochs:   0%|          | 0/3 [00:21<?, ?it/s, loss=3.62, lr=9.52e-5]epochs:   0%|          | 0/3 [00:21<?, ?it/s, loss=3.62, lr=9.52e-5]
+train:  59%|█████▉    | 19/32 [00:21<00:02,  6.18it/s, total_it=18][A
+train:  59%|█████▉    | 19/32 [00:21<00:02,  6.18it/s, total_it=19][Aepochs:   0%|          | 0/3 [00:21<?, ?it/s, loss=4.81, lr=0.000103]epochs:   0%|          | 0/3 [00:21<?, ?it/s, loss=4.81, lr=0.000103]
+train:  62%|██████▎   | 20/32 [00:21<00:01,  6.18it/s, total_it=20][Aepochs:   0%|          | 0/3 [00:21<?, ?it/s, loss=3.28, lr=0.00011] epochs:   0%|          | 0/3 [00:21<?, ?it/s, loss=3.28, lr=0.00011]
+train:  66%|██████▌   | 21/32 [00:22<00:01,  6.78it/s, total_it=20][A
+train:  66%|██████▌   | 21/32 [00:22<00:01,  6.78it/s, total_it=21][Aepochs:   0%|          | 0/3 [00:22<?, ?it/s, loss=2.92, lr=0.000117]epochs:   0%|          | 0/3 [00:22<?, ?it/s, loss=2.92, lr=0.000117]
+train:  69%|██████▉   | 22/32 [00:22<00:01,  6.88it/s, total_it=21][A
+train:  69%|██████▉   | 22/32 [00:22<00:01,  6.88it/s, total_it=22][Aepochs:   0%|          | 0/3 [00:22<?, ?it/s, loss=4.82, lr=0.000125]epochs:   0%|          | 0/3 [00:22<?, ?it/s, loss=4.82, lr=0.000125]
+train:  72%|███████▏  | 23/32 [00:22<00:01,  6.55it/s, total_it=22][A
+train:  72%|███████▏  | 23/32 [00:22<00:01,  6.55it/s, total_it=23][Aepochs:   0%|          | 0/3 [00:22<?, ?it/s, loss=3.05, lr=0.000132]epochs:   0%|          | 0/3 [00:22<?, ?it/s, loss=3.05, lr=0.000132]
+train:  75%|███████▌  | 24/32 [00:22<00:01,  6.70it/s, total_it=23][A
+train:  75%|███████▌  | 24/32 [00:22<00:01,  6.70it/s, total_it=24][Aepochs:   0%|          | 0/3 [00:22<?, ?it/s, loss=2.27, lr=0.000139]epochs:   0%|          | 0/3 [00:22<?, ?it/s, loss=2.27, lr=0.000139]
+train:  78%|███████▊  | 25/32 [00:22<00:00,  7.18it/s, total_it=24][A
+train:  78%|███████▊  | 25/32 [00:22<00:00,  7.18it/s, total_it=25][Aepochs:   0%|          | 0/3 [00:22<?, ?it/s, loss=1.7, lr=0.000146] epochs:   0%|          | 0/3 [00:22<?, ?it/s, loss=1.7, lr=0.000146]
+train:  81%|████████▏ | 26/32 [00:22<00:00,  7.33it/s, total_it=25][A
+train:  81%|████████▏ | 26/32 [00:22<00:00,  7.33it/s, total_it=26][Aepochs:   0%|          | 0/3 [00:22<?, ?it/s, loss=1.69, lr=0.000153]epochs:   0%|          | 0/3 [00:22<?, ?it/s, loss=1.69, lr=0.000153]
+train:  84%|████████▍ | 27/32 [00:22<00:00,  7.32it/s, total_it=26][A
+train:  84%|████████▍ | 27/32 [00:22<00:00,  7.32it/s, total_it=27][Aepochs:   0%|          | 0/3 [00:22<?, ?it/s, loss=2.21, lr=0.000159]epochs:   0%|          | 0/3 [00:22<?, ?it/s, loss=2.21, lr=0.000159]
+train:  88%|████████▊ | 28/32 [00:23<00:00,  7.53it/s, total_it=27][A
+train:  88%|████████▊ | 28/32 [00:23<00:00,  7.53it/s, total_it=28][Aepochs:   0%|          | 0/3 [00:23<?, ?it/s, loss=2.96, lr=0.000165]epochs:   0%|          | 0/3 [00:23<?, ?it/s, loss=2.96, lr=0.000165]
+train:  91%|█████████ | 29/32 [00:23<00:00,  7.53it/s, total_it=29][Aepochs:   0%|          | 0/3 [00:23<?, ?it/s, loss=2.85, lr=0.000171]epochs:   0%|          | 0/3 [00:23<?, ?it/s, loss=2.85, lr=0.000171]
+train:  94%|█████████▍| 30/32 [00:23<00:00,  8.83it/s, total_it=29][A
+train:  94%|█████████▍| 30/32 [00:23<00:00,  8.83it/s, total_it=30][Aepochs:   0%|          | 0/3 [00:23<?, ?it/s, loss=2.66, lr=0.000176]epochs:   0%|          | 0/3 [00:23<?, ?it/s, loss=2.66, lr=0.000176]
+train:  97%|█████████▋| 31/32 [00:23<00:00,  8.83it/s, total_it=31][Aepochs:   0%|          | 0/3 [00:23<?, ?it/s, loss=1.93, lr=0.000181]epochs:   0%|          | 0/3 [00:23<?, ?it/s, loss=1.93, lr=0.000181]
+train: 100%|██████████| 32/32 [00:39<00:00,  3.25s/it, total_it=31][A
+train: 100%|██████████| 32/32 [00:39<00:00,  3.25s/it, total_it=32][Aepochs:   0%|          | 0/3 [00:39<?, ?it/s, loss=3.38, lr=0.000185]epochs:   0%|          | 0/3 [00:39<?, ?it/s, loss=3.38, lr=0.000185]2026-11-17 12:43:06,161   INFO    iter 32/32  loss 3.379  lr 1.85e-04  0.81 it/s  本轮剩余 0.0 分钟  [hm 0.859 center_res 0.020 center_dis 0.246 dim 0.116 rot 0.698 size2d 0.069]
+
+                                                                   [A2026-11-17 12:43:06,162   INFO    本轮平均损失（32 iter，0.7 分钟）: total 5.3925 hm 0.6953 center_res 0.0609 center_dis 0.3784 dim 0.3678 rot 0.3930 size2d 0.2031
+epochs:  33%|███▎      | 1/3 [01:15<02:31, 75.82s/it, loss=3.38, lr=0.000185]
+train:   0%|          | 0/32 [00:00<?, ?it/s][A
+train:   3%|▎         | 1/32 [00:00<00:04,  7.21it/s][A
+train:   3%|▎         | 1/32 [00:00<00:04,  7.21it/s, total_it=33][Aepochs:  33%|███▎      | 1/3 [01:15<02:31, 75.82s/it, loss=2.01, lr=0.000189]epochs:  33%|███▎      | 1/3 [01:15<02:31, 75.82s/it, loss=2.01, lr=0.000189]2026-11-17 12:43:42,617   INFO    iter 1/32  loss 2.014  lr 1.89e-04  7.16 it/s  本轮剩余 0.1 分钟  [hm 0.327 center_res 0.038 center_dis 0.125 dim 0.025 rot 0.615 size2d 0.139]
+
+train:   6%|▋         | 2/32 [00:00<00:04,  6.67it/s, total_it=33][A
+train:   6%|▋         | 2/32 [00:00<00:04,  6.67it/s, total_it=34][Aepochs:  33%|███▎      | 1/3 [01:16<02:31, 75.82s/it, loss=1.91, lr=0.000192]epochs:  33%|███▎      | 1/3 [01:16<02:31, 75.82s/it, loss=1.91, lr=0.000192]
+train:   9%|▉         | 3/32 [00:00<00:04,  6.96it/s, total_it=34][A
+train:   9%|▉         | 3/32 [00:00<00:04,  6.96it/s, total_it=35][Aepochs:  33%|███▎      | 1/3 [01:16<02:31, 75.82s/it, loss=1.73, lr=0.000195]epochs:  33%|███▎      | 1/3 [01:16<02:31, 75.82s/it, loss=1.73, lr=0.000195]
+train:  12%|█▎        | 4/32 [00:00<00:04,  6.78it/s, total_it=35][A
+train:  12%|█▎        | 4/32 [00:00<00:04,  6.78it/s, total_it=36][Aepochs:  33%|███▎      | 1/3 [01:16<02:31, 75.82s/it, loss=1.98, lr=0.000197]epochs:  33%|███▎      | 1/3 [01:16<02:31, 75.82s/it, loss=1.98, lr=0.000197]
+train:  16%|█▌        | 5/32 [00:00<00:03,  7.01it/s, total_it=36][A
+train:  16%|█▌        | 5/32 [00:00<00:03,  7.01it/s, total_it=37][Aepochs:  33%|███▎      | 1/3 [01:16<02:31, 75.82s/it, loss=1.14, lr=0.000199]epochs:  33%|███▎      | 1/3 [01:16<02:31, 75.82s/it, loss=1.14, lr=0.000199]
+train:  19%|█▉        | 6/32 [00:00<00:03,  6.99it/s, total_it=37][A
+train:  19%|█▉        | 6/32 [00:00<00:03,  6.99it/s, total_it=38][Aepochs:  33%|███▎      | 1/3 [01:16<02:31, 75.82s/it, loss=2.59, lr=0.0002]  epochs:  33%|███▎      | 1/3 [01:16<02:31, 75.82s/it, loss=2.59, lr=0.0002]
+train:  22%|██▏       | 7/32 [00:00<00:03,  7.11it/s, total_it=38][A
+train:  22%|██▏       | 7/32 [00:00<00:03,  7.11it/s, total_it=39][Aepochs:  33%|███▎      | 1/3 [01:16<02:31, 75.82s/it, loss=1.27, lr=0.0002]epochs:  33%|███▎      | 1/3 [01:16<02:31, 75.82s/it, loss=1.27, lr=0.0002]
+train:  25%|██▌       | 8/32 [00:01<00:03,  7.34it/s, total_it=39][A
+train:  25%|██▌       | 8/32 [00:01<00:03,  7.34it/s, total_it=40][Aepochs:  33%|███▎      | 1/3 [01:16<02:31, 75.82s/it, loss=1.25, lr=0.0002]epochs:  33%|███▎      | 1/3 [01:16<02:31, 75.82s/it, loss=1.25, lr=0.0002]
+train:  28%|██▊       | 9/32 [00:01<00:03,  7.65it/s, total_it=40][A
+train:  28%|██▊       | 9/32 [00:01<00:03,  7.65it/s, total_it=41][Aepochs:  33%|███▎      | 1/3 [01:17<02:31, 75.82s/it, loss=2.39, lr=0.000199]epochs:  33%|███▎      | 1/3 [01:17<02:31, 75.82s/it, loss=2.39, lr=0.000199]
+train:  31%|███▏      | 10/32 [00:01<00:02,  7.70it/s, total_it=41][A
+train:  31%|███▏      | 10/32 [00:01<00:02,  7.70it/s, total_it=42][Aepochs:  33%|███▎      | 1/3 [01:17<02:31, 75.82s/it, loss=1.63, lr=0.000199]epochs:  33%|███▎      | 1/3 [01:17<02:31, 75.82s/it, loss=1.63, lr=0.000199]
+train:  34%|███▍      | 11/32 [00:01<00:02,  7.89it/s, total_it=42][A
+train:  34%|███▍      | 11/32 [00:01<00:02,  7.89it/s, total_it=43][Aepochs:  33%|███▎      | 1/3 [01:17<02:31, 75.82s/it, loss=1.08, lr=0.000198]epochs:  33%|███▎      | 1/3 [01:17<02:31, 75.82s/it, loss=1.08, lr=0.000198]
+train:  38%|███▊      | 12/32 [00:01<00:02,  8.09it/s, total_it=43][A
+train:  38%|███▊      | 12/32 [00:01<00:02,  8.09it/s, total_it=44][Aepochs:  33%|███▎      | 1/3 [01:17<02:31, 75.82s/it, loss=2.02, lr=0.000196]epochs:  33%|███▎      | 1/3 [01:17<02:31, 75.82s/it, loss=2.02, lr=0.000196]
+train:  41%|████      | 13/32 [00:01<00:02,  8.14it/s, total_it=44][A
+train:  41%|████      | 13/32 [00:01<00:02,  8.14it/s, total_it=45][Aepochs:  33%|███▎      | 1/3 [01:17<02:31, 75.82s/it, loss=1.07, lr=0.000195]epochs:  33%|███▎      | 1/3 [01:17<02:31, 75.82s/it, loss=1.07, lr=0.000195]
+train:  44%|████▍     | 14/32 [00:01<00:02,  8.06it/s, total_it=45][A
+train:  44%|████▍     | 14/32 [00:01<00:02,  8.06it/s, total_it=46][Aepochs:  33%|███▎      | 1/3 [01:17<02:31, 75.82s/it, loss=1.07, lr=0.000193]epochs:  33%|███▎      | 1/3 [01:17<02:31, 75.82s/it, loss=1.07, lr=0.000193]
+train:  47%|████▋     | 15/32 [00:01<00:02,  7.98it/s, total_it=46][A
+train:  47%|████▋     | 15/32 [00:01<00:02,  7.98it/s, total_it=47][Aepochs:  33%|███▎      | 1/3 [01:17<02:31, 75.82s/it, loss=1.63, lr=0.000191]epochs:  33%|███▎      | 1/3 [01:17<02:31, 75.82s/it, loss=1.63, lr=0.000191]
+train:  50%|█████     | 16/32 [00:02<00:02,  7.98it/s, total_it=47][A
+train:  50%|█████     | 16/32 [00:02<00:02,  7.98it/s, total_it=48][Aepochs:  33%|███▎      | 1/3 [01:17<02:31, 75.82s/it, loss=2.54, lr=0.000188]epochs:  33%|███▎      | 1/3 [01:17<02:31, 75.82s/it, loss=2.54, lr=0.000188]
+train:  53%|█████▎    | 17/32 [00:02<00:01,  8.02it/s, total_it=48][A
+train:  53%|█████▎    | 17/32 [00:02<00:01,  8.02it/s, total_it=49][Aepochs:  33%|███▎      | 1/3 [01:18<02:31, 75.82s/it, loss=1.71, lr=0.000186]epochs:  33%|███▎      | 1/3 [01:18<02:31, 75.82s/it, loss=1.71, lr=0.000186]
+train:  56%|█████▋    | 18/32 [00:02<00:01,  7.91it/s, total_it=49][A
+train:  56%|█████▋    | 18/32 [00:02<00:01,  7.91it/s, total_it=50][Aepochs:  33%|███▎      | 1/3 [01:18<02:31, 75.82s/it, loss=1.86, lr=0.000183]epochs:  33%|███▎      | 1/3 [01:18<02:31, 75.82s/it, loss=1.86, lr=0.000183]
+train:  59%|█████▉    | 19/32 [00:02<00:01,  7.75it/s, total_it=50][A
+train:  59%|█████▉    | 19/32 [00:02<00:01,  7.75it/s, total_it=51][Aepochs:  33%|███▎      | 1/3 [01:18<02:31, 75.82s/it, loss=0.931, lr=0.00018]epochs:  33%|███▎      | 1/3 [01:18<02:31, 75.82s/it, loss=0.931, lr=0.00018]
+train:  62%|██████▎   | 20/32 [00:02<00:01,  7.79it/s, total_it=51][A
+train:  62%|██████▎   | 20/32 [00:02<00:01,  7.79it/s, total_it=52][Aepochs:  33%|███▎      | 1/3 [01:18<02:31, 75.82s/it, loss=2.31, lr=0.000176]epochs:  33%|███▎      | 1/3 [01:18<02:31, 75.82s/it, loss=2.31, lr=0.000176]
+train:  66%|██████▌   | 21/32 [00:02<00:01,  8.07it/s, total_it=52][A
+train:  66%|██████▌   | 21/32 [00:02<00:01,  8.07it/s, total_it=53][Aepochs:  33%|███▎      | 1/3 [01:18<02:31, 75.82s/it, loss=2.49, lr=0.000173]epochs:  33%|███▎      | 1/3 [01:18<02:31, 75.82s/it, loss=2.49, lr=0.000173]
+train:  69%|██████▉   | 22/32 [00:02<00:01,  7.79it/s, total_it=53][A
+train:  69%|██████▉   | 22/32 [00:02<00:01,  7.79it/s, total_it=54][Aepochs:  33%|███▎      | 1/3 [01:18<02:31, 75.82s/it, loss=1.05, lr=0.000169]epochs:  33%|███▎      | 1/3 [01:18<02:31, 75.82s/it, loss=1.05, lr=0.000169]
+train:  72%|███████▏  | 23/32 [00:03<00:01,  7.79it/s, total_it=54][A
+train:  72%|███████▏  | 23/32 [00:03<00:01,  7.79it/s, total_it=55][Aepochs:  33%|███▎      | 1/3 [01:18<02:31, 75.82s/it, loss=2.36, lr=0.000165]epochs:  33%|███▎      | 1/3 [01:18<02:31, 75.82s/it, loss=2.36, lr=0.000165]
+train:  75%|███████▌  | 24/32 [00:03<00:00,  8.03it/s, total_it=55][A
+train:  75%|███████▌  | 24/32 [00:03<00:00,  8.03it/s, total_it=56][Aepochs:  33%|███▎      | 1/3 [01:18<02:31, 75.82s/it, loss=1.36, lr=0.000161]epochs:  33%|███▎      | 1/3 [01:18<02:31, 75.82s/it, loss=1.36, lr=0.000161]
+train:  78%|███████▊  | 25/32 [00:03<00:00,  8.16it/s, total_it=56][A
+train:  78%|███████▊  | 25/32 [00:03<00:00,  8.16it/s, total_it=57][Aepochs:  33%|███▎      | 1/3 [01:19<02:31, 75.82s/it, loss=1.1, lr=0.000156] epochs:  33%|███▎      | 1/3 [01:19<02:31, 75.82s/it, loss=1.1, lr=0.000156]
+train:  81%|████████▏ | 26/32 [00:03<00:00,  8.01it/s, total_it=57][A
+train:  81%|████████▏ | 26/32 [00:03<00:00,  8.01it/s, total_it=58][Aepochs:  33%|███▎      | 1/3 [01:19<02:31, 75.82s/it, loss=1.5, lr=0.000152]epochs:  33%|███▎      | 1/3 [01:19<02:31, 75.82s/it, loss=1.5, lr=0.000152]
+train:  84%|████████▍ | 27/32 [00:03<00:00,  7.81it/s, total_it=58][A
+train:  84%|████████▍ | 27/32 [00:03<00:00,  7.81it/s, total_it=59][Aepochs:  33%|███▎      | 1/3 [01:19<02:31, 75.82s/it, loss=1.85, lr=0.000147]epochs:  33%|███▎      | 1/3 [01:19<02:31, 75.82s/it, loss=1.85, lr=0.000147]
+train:  88%|████████▊ | 28/32 [00:03<00:00,  6.55it/s, total_it=59][A
+train:  88%|████████▊ | 28/32 [00:03<00:00,  6.55it/s, total_it=60][Aepochs:  33%|███▎      | 1/3 [01:19<02:31, 75.82s/it, loss=0.856, lr=0.000142]epochs:  33%|███▎      | 1/3 [01:19<02:31, 75.82s/it, loss=0.856, lr=0.000142]
+train:  91%|█████████ | 29/32 [00:03<00:00,  6.69it/s, total_it=60][A
+train:  91%|█████████ | 29/32 [00:03<00:00,  6.69it/s, total_it=61][Aepochs:  33%|███▎      | 1/3 [01:19<02:31, 75.82s/it, loss=1.31, lr=0.000137] epochs:  33%|███▎      | 1/3 [01:19<02:31, 75.82s/it, loss=1.31, lr=0.000137]
+train:  94%|█████████▍| 30/32 [00:04<00:00,  6.35it/s, total_it=61][A
+train:  94%|█████████▍| 30/32 [00:04<00:00,  6.35it/s, total_it=62][Aepochs:  33%|███▎      | 1/3 [01:19<02:31, 75.82s/it, loss=1.18, lr=0.000132]epochs:  33%|███▎      | 1/3 [01:19<02:31, 75.82s/it, loss=1.18, lr=0.000132]
+train:  97%|█████████▋| 31/32 [00:04<00:00,  6.27it/s, total_it=62][A
+train:  97%|█████████▋| 31/32 [00:04<00:00,  6.27it/s, total_it=63][Aepochs:  33%|███▎      | 1/3 [01:20<02:31, 75.82s/it, loss=1.16, lr=0.000127]epochs:  33%|███▎      | 1/3 [01:20<02:31, 75.82s/it, loss=1.16, lr=0.000127]
+train: 100%|██████████| 32/32 [00:04<00:00,  6.93it/s, total_it=63][A
+train: 100%|██████████| 32/32 [00:04<00:00,  6.93it/s, total_it=64][Aepochs:  33%|███▎      | 1/3 [01:20<02:31, 75.82s/it, loss=1.36, lr=0.000122]epochs:  33%|███▎      | 1/3 [01:20<02:31, 75.82s/it, loss=1.36, lr=0.000122]2026-11-17 12:43:46,786   INFO    iter 32/32  loss 1.364  lr 1.22e-04  7.43 it/s  本轮剩余 0.0 分钟  [hm 0.593 center_res 0.100 center_dis 0.016 dim 0.067 rot 0.735 size2d 0.077]
+
+                                                                   [A2026-11-17 12:43:46,786   INFO    本轮平均损失（32 iter，0.1 分钟）: total 1.6161 hm 0.2977 center_res 0.0510 center_dis 0.0895 dim 0.0274 rot 0.4567 size2d 0.1114
+epochs:  67%|██████▋   | 2/3 [01:31<00:40, 40.58s/it, loss=1.36, lr=0.000122]
+train:   0%|          | 0/32 [00:00<?, ?it/s][A
+train:   3%|▎         | 1/32 [00:00<00:04,  7.35it/s][A
+train:   3%|▎         | 1/32 [00:00<00:04,  7.35it/s, total_it=65][Aepochs:  67%|██████▋   | 2/3 [01:31<00:40, 40.58s/it, loss=1.22, lr=0.000116]epochs:  67%|██████▋   | 2/3 [01:31<00:40, 40.58s/it, loss=1.22, lr=0.000116]2026-11-17 12:43:58,515   INFO    iter 1/32  loss 1.219  lr 1.16e-04  7.35 it/s  本轮剩余 0.1 分钟  [hm 0.341 center_res 0.035 center_dis 0.060 dim 0.024 rot 0.380 size2d 0.070]
+
+train:   6%|▋         | 2/32 [00:00<00:04,  6.40it/s, total_it=65][A
+train:   6%|▋         | 2/32 [00:00<00:04,  6.40it/s, total_it=66][Aepochs:  67%|██████▋   | 2/3 [01:32<00:40, 40.58s/it, loss=1.41, lr=0.000111]epochs:  67%|██████▋   | 2/3 [01:32<00:40, 40.58s/it, loss=1.41, lr=0.000111]
+train:   9%|▉         | 3/32 [00:00<00:04,  6.38it/s, total_it=66][A
+train:   9%|▉         | 3/32 [00:00<00:04,  6.38it/s, total_it=67][Aepochs:  67%|██████▋   | 2/3 [01:32<00:40, 40.58s/it, loss=1.34, lr=0.000106]epochs:  67%|██████▋   | 2/3 [01:32<00:40, 40.58s/it, loss=1.34, lr=0.000106]
+train:  12%|█▎        | 4/32 [00:00<00:04,  6.11it/s, total_it=67][A
+train:  12%|█▎        | 4/32 [00:00<00:04,  6.11it/s, total_it=68][Aepochs:  67%|██████▋   | 2/3 [01:32<00:40, 40.58s/it, loss=0.989, lr=0.0001] epochs:  67%|██████▋   | 2/3 [01:32<00:40, 40.58s/it, loss=0.989, lr=0.0001]
+train:  16%|█▌        | 5/32 [00:00<00:04,  6.01it/s, total_it=68][A
+train:  16%|█▌        | 5/32 [00:00<00:04,  6.01it/s, total_it=69][Aepochs:  67%|██████▋   | 2/3 [01:32<00:40, 40.58s/it, loss=1.16, lr=9.47e-5]epochs:  67%|██████▋   | 2/3 [01:32<00:40, 40.58s/it, loss=1.16, lr=9.47e-5]
+train:  19%|█▉        | 6/32 [00:00<00:04,  6.33it/s, total_it=69][A
+train:  19%|█▉        | 6/32 [00:00<00:04,  6.33it/s, total_it=70][Aepochs:  67%|██████▋   | 2/3 [01:32<00:40, 40.58s/it, loss=1.34, lr=8.93e-5]epochs:  67%|██████▋   | 2/3 [01:32<00:40, 40.58s/it, loss=1.34, lr=8.93e-5]
+train:  22%|██▏       | 7/32 [00:01<00:04,  5.86it/s, total_it=70][A
+train:  22%|██▏       | 7/32 [00:01<00:04,  5.86it/s, total_it=71][Aepochs:  67%|██████▋   | 2/3 [01:32<00:40, 40.58s/it, loss=1.3, lr=8.39e-5] epochs:  67%|██████▋   | 2/3 [01:32<00:40, 40.58s/it, loss=1.3, lr=8.39e-5]
+train:  25%|██▌       | 8/32 [00:01<00:03,  6.30it/s, total_it=71][A
+train:  25%|██▌       | 8/32 [00:01<00:03,  6.30it/s, total_it=72][Aepochs:  67%|██████▋   | 2/3 [01:33<00:40, 40.58s/it, loss=1.67, lr=7.86e-5]epochs:  67%|██████▋   | 2/3 [01:33<00:40, 40.58s/it, loss=1.67, lr=7.86e-5]
+train:  28%|██▊       | 9/32 [00:01<00:03,  6.21it/s, total_it=72][A
+train:  28%|██▊       | 9/32 [00:01<00:03,  6.21it/s, total_it=73][Aepochs:  67%|██████▋   | 2/3 [01:33<00:40, 40.58s/it, loss=0.861, lr=7.34e-5]epochs:  67%|██████▋   | 2/3 [01:33<00:40, 40.58s/it, loss=0.861, lr=7.34e-5]
+train:  31%|███▏      | 10/32 [00:01<00:03,  6.04it/s, total_it=73][A
+train:  31%|███▏      | 10/32 [00:01<00:03,  6.04it/s, total_it=74][Aepochs:  67%|██████▋   | 2/3 [01:33<00:40, 40.58s/it, loss=0.831, lr=6.82e-5]epochs:  67%|██████▋   | 2/3 [01:33<00:40, 40.58s/it, loss=0.831, lr=6.82e-5]
+train:  34%|███▍      | 11/32 [00:01<00:03,  5.44it/s, total_it=74][A
+train:  34%|███▍      | 11/32 [00:01<00:03,  5.44it/s, total_it=75][Aepochs:  67%|██████▋   | 2/3 [01:33<00:40, 40.58s/it, loss=0.856, lr=6.31e-5]epochs:  67%|██████▋   | 2/3 [01:33<00:40, 40.58s/it, loss=0.856, lr=6.31e-5]
+train:  38%|███▊      | 12/32 [00:02<00:03,  5.61it/s, total_it=75][A
+train:  38%|███▊      | 12/32 [00:02<00:03,  5.61it/s, total_it=76][Aepochs:  67%|██████▋   | 2/3 [01:33<00:40, 40.58s/it, loss=0.907, lr=5.82e-5]epochs:  67%|██████▋   | 2/3 [01:33<00:40, 40.58s/it, loss=0.907, lr=5.82e-5]
+train:  41%|████      | 13/32 [00:02<00:03,  5.38it/s, total_it=76][A
+train:  41%|████      | 13/32 [00:02<00:03,  5.38it/s, total_it=77][Aepochs:  67%|██████▋   | 2/3 [01:33<00:40, 40.58s/it, loss=0.969, lr=5.33e-5]epochs:  67%|██████▋   | 2/3 [01:33<00:40, 40.58s/it, loss=0.969, lr=5.33e-5]
+train:  44%|████▍     | 14/32 [00:02<00:03,  5.62it/s, total_it=77][A
+train:  44%|████▍     | 14/32 [00:02<00:03,  5.62it/s, total_it=78][Aepochs:  67%|██████▋   | 2/3 [01:34<00:40, 40.58s/it, loss=1.11, lr=4.86e-5] epochs:  67%|██████▋   | 2/3 [01:34<00:40, 40.58s/it, loss=1.11, lr=4.86e-5]
+train:  47%|████▋     | 15/32 [00:02<00:03,  5.60it/s, total_it=78][A
+train:  47%|████▋     | 15/32 [00:02<00:03,  5.60it/s, total_it=79][Aepochs:  67%|██████▋   | 2/3 [01:34<00:40, 40.58s/it, loss=0.958, lr=4.4e-5]epochs:  67%|██████▋   | 2/3 [01:34<00:40, 40.58s/it, loss=0.958, lr=4.4e-5]
+train:  50%|█████     | 16/32 [00:02<00:02,  5.59it/s, total_it=79][A
+train:  50%|█████     | 16/32 [00:02<00:02,  5.59it/s, total_it=80][Aepochs:  67%|██████▋   | 2/3 [01:34<00:40, 40.58s/it, loss=0.648, lr=3.96e-5]epochs:  67%|██████▋   | 2/3 [01:34<00:40, 40.58s/it, loss=0.648, lr=3.96e-5]
+train:  53%|█████▎    | 17/32 [00:02<00:02,  5.61it/s, total_it=80][A
+train:  53%|█████▎    | 17/32 [00:02<00:02,  5.61it/s, total_it=81][Aepochs:  67%|██████▋   | 2/3 [01:34<00:40, 40.58s/it, loss=0.76, lr=3.54e-5] epochs:  67%|██████▋   | 2/3 [01:34<00:40, 40.58s/it, loss=0.76, lr=3.54e-5]
+train:  56%|█████▋    | 18/32 [00:03<00:02,  5.50it/s, total_it=81][A
+train:  56%|█████▋    | 18/32 [00:03<00:02,  5.50it/s, total_it=82][Aepochs:  67%|██████▋   | 2/3 [01:34<00:40, 40.58s/it, loss=0.971, lr=3.14e-5]epochs:  67%|██████▋   | 2/3 [01:34<00:40, 40.58s/it, loss=0.971, lr=3.14e-5]
+train:  59%|█████▉    | 19/32 [00:03<00:02,  5.52it/s, total_it=82][A
+train:  59%|█████▉    | 19/32 [00:03<00:02,  5.52it/s, total_it=83][Aepochs:  67%|██████▋   | 2/3 [01:35<00:40, 40.58s/it, loss=1.22, lr=2.76e-5] epochs:  67%|██████▋   | 2/3 [01:35<00:40, 40.58s/it, loss=1.22, lr=2.76e-5]
+train:  62%|██████▎   | 20/32 [00:03<00:02,  5.50it/s, total_it=83][A
+train:  62%|██████▎   | 20/32 [00:03<00:02,  5.50it/s, total_it=84][Aepochs:  67%|██████▋   | 2/3 [01:35<00:40, 40.58s/it, loss=1.26, lr=2.4e-5] epochs:  67%|██████▋   | 2/3 [01:35<00:40, 40.58s/it, loss=1.26, lr=2.4e-5]
+train:  66%|██████▌   | 21/32 [00:03<00:01,  5.97it/s, total_it=84][A
+train:  66%|██████▌   | 21/32 [00:03<00:01,  5.97it/s, total_it=85][Aepochs:  67%|██████▋   | 2/3 [01:35<00:40, 40.58s/it, loss=1.41, lr=2.06e-5]epochs:  67%|██████▋   | 2/3 [01:35<00:40, 40.58s/it, loss=1.41, lr=2.06e-5]
+train:  69%|██████▉   | 22/32 [00:03<00:01,  5.85it/s, total_it=85][A
+train:  69%|██████▉   | 22/32 [00:03<00:01,  5.85it/s, total_it=86][Aepochs:  67%|██████▋   | 2/3 [01:35<00:40, 40.58s/it, loss=1.19, lr=1.74e-5]epochs:  67%|██████▋   | 2/3 [01:35<00:40, 40.58s/it, loss=1.19, lr=1.74e-5]
+train:  72%|███████▏  | 23/32 [00:03<00:01,  6.30it/s, total_it=86][A
+train:  72%|███████▏  | 23/32 [00:03<00:01,  6.30it/s, total_it=87][Aepochs:  67%|██████▋   | 2/3 [01:35<00:40, 40.58s/it, loss=2.23, lr=1.45e-5]epochs:  67%|██████▋   | 2/3 [01:35<00:40, 40.58s/it, loss=2.23, lr=1.45e-5]
+train:  75%|███████▌  | 24/32 [00:04<00:01,  6.14it/s, total_it=87][A
+train:  75%|███████▌  | 24/32 [00:04<00:01,  6.14it/s, total_it=88][Aepochs:  67%|██████▋   | 2/3 [01:35<00:40, 40.58s/it, loss=1.03, lr=1.18e-5]epochs:  67%|██████▋   | 2/3 [01:35<00:40, 40.58s/it, loss=1.03, lr=1.18e-5]
+train:  78%|███████▊  | 25/32 [00:04<00:01,  6.01it/s, total_it=88][A
+train:  78%|███████▊  | 25/32 [00:04<00:01,  6.01it/s, total_it=89][Aepochs:  67%|██████▋   | 2/3 [01:35<00:40, 40.58s/it, loss=1.03, lr=9.43e-6]epochs:  67%|██████▋   | 2/3 [01:35<00:40, 40.58s/it, loss=1.03, lr=9.43e-6]
+train:  81%|████████▏ | 26/32 [00:04<00:01,  5.80it/s, total_it=89][A
+train:  81%|████████▏ | 26/32 [00:04<00:01,  5.80it/s, total_it=90][Aepochs:  67%|██████▋   | 2/3 [01:36<00:40, 40.58s/it, loss=1.48, lr=7.3e-6] epochs:  67%|██████▋   | 2/3 [01:36<00:40, 40.58s/it, loss=1.48, lr=7.3e-6]
+train:  84%|████████▍ | 27/32 [00:04<00:00,  5.76it/s, total_it=90][A
+train:  84%|████████▍ | 27/32 [00:04<00:00,  5.76it/s, total_it=91][Aepochs:  67%|██████▋   | 2/3 [01:36<00:40, 40.58s/it, loss=0.776, lr=5.43e-6]epochs:  67%|██████▋   | 2/3 [01:36<00:40, 40.58s/it, loss=0.776, lr=5.43e-6]
+train:  88%|████████▊ | 28/32 [00:04<00:00,  6.11it/s, total_it=91][A
+train:  88%|████████▊ | 28/32 [00:04<00:00,  6.11it/s, total_it=92][Aepochs:  67%|██████▋   | 2/3 [01:36<00:40, 40.58s/it, loss=1.8, lr=3.84e-6]  epochs:  67%|██████▋   | 2/3 [01:36<00:40, 40.58s/it, loss=1.8, lr=3.84e-6]
+train:  91%|█████████ | 29/32 [00:04<00:00,  6.21it/s, total_it=92][A
+train:  91%|█████████ | 29/32 [00:04<00:00,  6.21it/s, total_it=93][Aepochs:  67%|██████▋   | 2/3 [01:36<00:40, 40.58s/it, loss=0.654, lr=2.54e-6]epochs:  67%|██████▋   | 2/3 [01:36<00:40, 40.58s/it, loss=0.654, lr=2.54e-6]
+train:  94%|█████████▍| 30/32 [00:05<00:00,  6.44it/s, total_it=93][A
+train:  94%|█████████▍| 30/32 [00:05<00:00,  6.44it/s, total_it=94][Aepochs:  67%|██████▋   | 2/3 [01:36<00:40, 40.58s/it, loss=1.23, lr=1.52e-6] epochs:  67%|██████▋   | 2/3 [01:36<00:40, 40.58s/it, loss=1.23, lr=1.52e-6]
+train:  97%|█████████▋| 31/32 [00:05<00:00,  6.23it/s, total_it=94][A
+train:  97%|█████████▋| 31/32 [00:05<00:00,  6.23it/s, total_it=95][Aepochs:  67%|██████▋   | 2/3 [01:36<00:40, 40.58s/it, loss=1.55, lr=7.86e-7]epochs:  67%|██████▋   | 2/3 [01:36<00:40, 40.58s/it, loss=1.55, lr=7.86e-7]
+train: 100%|██████████| 32/32 [00:05<00:00,  6.91it/s, total_it=95][A
+train: 100%|██████████| 32/32 [00:05<00:00,  6.91it/s, total_it=96][Aepochs:  67%|██████▋   | 2/3 [01:37<00:40, 40.58s/it, loss=0.67, lr=3.47e-7]epochs:  67%|██████▋   | 2/3 [01:37<00:40, 40.58s/it, loss=0.67, lr=3.47e-7]2026-11-17 12:44:03,717   INFO    iter 32/32  loss 0.670  lr 3.47e-07  5.99 it/s  本轮剩余 0.0 分钟  [hm 0.111 center_res 0.090 center_dis 0.025 dim 0.010 rot 0.071 size2d 0.040]
+train: 100%|██████████| 32/32 [00:05<00:00,  5.99it/s, total_it=96]
+2026-11-17 12:44:03,717   INFO    本轮平均损失（32 iter，0.1 分钟）: total 1.1509 hm 0.2111 center_res 0.0443 center_dis 0.0615 dim 0.0165 rot 0.3664 size2d 0.0815
+epochs: 100%|██████████| 3/3 [01:59<00:00, 34.89s/it, loss=0.67, lr=3.47e-7]epochs: 100%|██████████| 3/3 [01:59<00:00, 39.95s/it, loss=0.67, lr=3.47e-7]
+2026-11-17 12:44:26,497   INFO  **********************End training models/uavdet_3d/camnorm/srcx/st_out2antifs_k249(DET1_s2)**********************
+
+
+

@@ -1,0 +1,37 @@
+11-16 11:26:31 [lane C] lane start (12 steps)
+11-16 11:26:31 [lane C] step: prep_shared.sh mav 30
+11-16 11:26:33 [prep mav sd30] start shared stage-1 outputs (re-seeded sim detectors of seed set 30)
+11-16 11:26:34 [prep mav sd30] waiting for stage-1 in sd30 det:0 -> E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/release/in_sd30/ramp_s30.pth
+11-16 11:28:32 [lane A] lane start (6 steps)
+11-16 11:28:33 [lane A] step: train_stage1.sh in 30 det:0 det:1 det:2 rgb:0 rgb:1 irT:0 kdir:0 kdir:1
+11-16 12:06:35 [prep mav sd30] waiting for stage-1 in sd30 det:1 -> E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/release/in_sd30/ramp_s31.pth
+11-16 12:41:36 [prep mav sd30] waiting for stage-1 in sd30 det:2 -> E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/release/in_sd30/ramp_s32.pth
+11-16 14:08:49 [prep mav sd30] hull check {"n": 9121, "ir_sil_mass_inside_hull": 0.9958594580344511, "hull_area_frac_mean": 0.1529523148739002, "ir_sil_area_frac_mean": 0.0650320723317927, "hull_empty_frac": 0.10086613309944086, "i
+11-16 14:10:49 [lane B] lane start (6 steps)
+11-16 14:10:50 [lane B] step: train_stage1.sh in 30 irlid:0 irlid:1 kps:0 lid:0 lid:1
+11-16 14:18:54 [prep mav sd30] shared stage-1 outputs done
+11-16 14:18:54 [lane C] ok: prep_shared.sh mav 30
+11-16 14:18:54 [lane C] step: run_group.sh E1 mav 30
+11-16 14:18:55 [E1 mav sd30] start mav_E1_s1sd30 (SX_TEACH=none, SX_SEEDSHIFT=30, SERIAL=0, stage-1 seed set 30)
+11-16 14:23:24 [E1 mav sd30] refiner silhouette/matte array = box hull of the same sim samples (shared/ref/sim_hull.npy)
+11-16 14:23:24 [E1 mav sd30] shared stage-1 outputs linked from E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/shared/mav_sd30
+11-17 01:09:41 [lane A] lane start (6 steps)
+11-17 01:09:41 [lane A] step: train_stage1.sh in 30 det:0 det:1 det:2 rgb:0 rgb:1 irT:0 kdir:0 kdir:1
+11-17 01:10:21 [lane B] lane start (6 steps)
+11-17 01:10:21 [lane B] step: train_stage1.sh in 30 irlid:0 irlid:1 kps:0 lid:0 lid:1
+11-17 01:11:01 [lane C] lane start (12 steps)
+11-17 01:11:01 [lane C] step: prep_shared.sh mav 30
+11-17 01:11:01 [prep mav sd30] already done
+11-17 01:11:01 [lane C] ok: prep_shared.sh mav 30
+11-17 01:11:02 [lane C] step: run_group.sh E1 mav 30
+11-17 01:11:02 [E1 mav sd30] start mav_E1_s1sd30 (SX_TEACH=none, SX_SEEDSHIFT=30, SERIAL=0, stage-1 seed set 30)
+11-17 01:11:36 [E1 mav sd30] refiner silhouette/matte array = box hull of the same sim samples (shared/ref/sim_hull.npy)
+11-17 01:11:36 [E1 mav sd30] shared stage-1 outputs linked from E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/shared/mav_sd30
+11-17 01:30:50 [E1 mav sd30] refiner: [sensorfree] composites ON; alpha = ref/sim_sil.npy
+11-17 01:30:51 [E1 mav sd30] refiners stage 1-2 done
+11-17 02:32:15 [E1 mav sd30] pseudo-labels: {"tag":"srcx_in2mav_none_s1E1sd30","n":4927,"n_corrected":4927,"c_bar":0.06957650650292635,"lam":0.75,"n_train":12866}
+11-17 03:16:28 [E1 mav sd30] detectors done
+11-17 03:57:53 [E1 mav sd30] waiting for stage-1 in sd30 rgb:1 -> D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom/S1X_KZ_s31/ckpt/checkpoint_epoch_30.pth
+11-17 08:41:07 [E1 mav sd30] pseudo pseudo_tr1: 12866 / 12866 crops have a pseudo-orientation; gate (IR vs LiDAR <= 10 deg) passes 3362 (26.1%); d_il median 18.4
+11-17 13:41:28 [E1 mav sd30] orientation branch done
+11-17 17:28:41 [E1 mav sd30] w (sim val inverse variance) = 0.158401638098577

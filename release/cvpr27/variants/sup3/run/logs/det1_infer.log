@@ -1,0 +1,18 @@
+[infer_wrap] memory fraction 0.20 -> E:\Open3DUAVDet\output\camnorm\geo1004\gproto\review1113\sup3\lib\det_infer_x.py --ckpt E:/Open3DUAVDet/output/models/uavdet_3d/camnorm/srcx/st_in2mav_seed2/DET1_s0/ckpt/checkpoint_epoch_3.pth E:/Open3DUAVDet/output/models/uavdet_3d/camnorm/srcx/st_in2mav_seed2/DET1_s1/ckpt/checkpoint_epoch_3.pth E:/Open3DUAVDet/output/models/uavdet_3d/camnorm/srcx/st_in2mav_seed2/DET1_s2/ckpt/checkpoint_epoch_3.pth --splits train val test --out E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sup3/run/recs/det1.pkl --size-fallback E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sup3/run/recs/det0.pkl
+2026-11-13 15:35:25,788   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-13 15:35:25,788   INFO  MMCache[test]: 4800 帧, 模态 ['rgb'] -> 3 通道, 缓存 E:\mmcache\mav6d_cn_obj\test
+2026-11-13 15:35:26,367   INFO  loading weights: 载入 289/289 个张量, 27.93M/27.93M 参数 (100.0%)
+2026-11-13 15:35:26,835   INFO  loading weights: 载入 289/289 个张量, 27.93M/27.93M 参数 (100.0%)
+2026-11-13 15:35:27,274   INFO  loading weights: 载入 289/289 个张量, 27.93M/27.93M 参数 (100.0%)
+2026-11-13 15:35:27,357   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-13 15:35:27,357   INFO  MMCache[test]: 1168 帧, 模态 ['rgb'] -> 3 通道, 缓存 E:\mmcache\mav6d_cn_obj\val
+2026-11-13 15:36:09,083   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-13 15:36:09,083   INFO  MMCache[test]: 12866 帧, 模态 ['rgb'] -> 3 通道, 缓存 E:\mmcache\mav6d_cn_obj\train
+s_bar (val unlabeled, 476 boxes conf>=0.7 of 1168) = [0.3473 0.3486 0.1954]
+train: 12866 frames, conf median 0.664, >=0.5 63.3%, >=0.3 75.8%
+2026-11-13 15:42:24,503   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-13 15:42:24,503   INFO  MMCache[test]: 2336 帧, 模态 ['rgb'] -> 3 通道, 缓存 E:\mmcache\mav6d_cn_obj\val
+val: 2336 frames, conf median 0.633, >=0.5 61.8%, >=0.3 74.4%
+2026-11-13 15:43:37,998   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-13 15:43:37,999   INFO  MMCache[test]: 4800 帧, 模态 ['rgb'] -> 3 通道, 缓存 E:\mmcache\mav6d_cn_obj\test
+test: 4800 frames, conf median 0.795, >=0.5 76.9%, >=0.3 83.5%

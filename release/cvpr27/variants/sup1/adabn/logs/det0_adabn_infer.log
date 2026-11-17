@@ -1,0 +1,25 @@
+[sup1] sim-only detectors (sx.S[det]): ['E:/Open3DUAVDet/output/release_20260920/ramp_s0.pth', 'E:/Open3DUAVDet/output/release_20260920/ramp_s1.pth', 'E:/Open3DUAVDet/output/release_20260920/ramp_s2.pth'] | memory fraction 0.20 | batch 8
+2026-11-13 13:57:14,322   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-13 13:57:14,322   INFO  MMCache[test]: 4800 帧, 模态 ['rgb'] -> 3 通道, 缓存 E:\mmcache\mav6d_cn_obj\test
+2026-11-13 13:57:16,933   INFO  loading weights: 载入 289/289 个张量, 27.93M/27.93M 参数 (100.0%)
+2026-11-13 13:57:17,742   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-13 13:57:17,742   INFO  MMCache[test]: 12866 帧, 模态 ['rgb'] -> 3 通道, 缓存 E:\mmcache\mav6d_cn_obj\train
+member 0 AdaBN: 44 BN layers re-estimated on 1609 batches x 8 unlabeled train frames (interval 1), 1136 s
+2026-11-13 14:16:19,881   INFO  loading weights: 载入 289/289 个张量, 27.93M/27.93M 参数 (100.0%)
+2026-11-13 14:16:20,395   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-13 14:16:20,396   INFO  MMCache[test]: 12866 帧, 模态 ['rgb'] -> 3 通道, 缓存 E:\mmcache\mav6d_cn_obj\train
+member 1 AdaBN: 44 BN layers re-estimated on 1609 batches x 8 unlabeled train frames (interval 1), 376 s
+2026-11-13 14:22:47,622   INFO  loading weights: 载入 289/289 个张量, 27.93M/27.93M 参数 (100.0%)
+2026-11-13 14:22:47,815   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-13 14:22:47,815   INFO  MMCache[test]: 12866 帧, 模态 ['rgb'] -> 3 通道, 缓存 E:\mmcache\mav6d_cn_obj\train
+member 2 AdaBN: 44 BN layers re-estimated on 1609 batches x 8 unlabeled train frames (interval 1), 360 s
+2026-11-13 14:28:50,884   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-13 14:28:50,885   INFO  MMCache[test]: 1168 帧, 模态 ['rgb'] -> 3 通道, 缓存 E:\mmcache\mav6d_cn_obj\val
+s_bar (val unlabeled, 13 boxes conf>=0.7 of 1168) = [0.3466 0.3468 0.1891]
+2026-11-13 14:30:11,004   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-13 14:30:11,004   INFO  MMCache[test]: 2336 帧, 模态 ['rgb'] -> 3 通道, 缓存 E:\mmcache\mav6d_cn_obj\val
+val: 2336 frames, conf median 0.562, >=0.5 92.8%, >=0.3 99.7%
+2026-11-13 14:34:01,430   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-13 14:34:01,431   INFO  MMCache[test]: 4800 帧, 模态 ['rgb'] -> 3 通道, 缓存 E:\mmcache\mav6d_cn_obj\test
+test: 4800 frames, conf median 0.564, >=0.5 96.9%, >=0.3 99.6%
+wrote E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sup1/adabn/recs/det0_adabn.pkl

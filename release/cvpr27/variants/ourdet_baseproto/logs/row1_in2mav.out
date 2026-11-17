@@ -1,0 +1,2 @@
+11-16 17:24:42 [in2mav] st labels: {"combo":"in2mav","mode":"st","n":10293,"n_train":12866,"index":"F:/ourdet_baseproto_cache/mav6d_cn_obj/train/index_st.pkl","roundtrip_max_px":0.0,"roundtrip_float32_max_px":2.3732913662755095e
+11-16 17:24:44 [in2mav] row1 sim-only s0: all      AOE 20.420  ATE 0.666  ASE 5.920  AP 13.088  UDS 32.588  mDR 69.792

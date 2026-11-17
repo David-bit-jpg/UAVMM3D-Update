@@ -1,0 +1,2 @@
+[sup3] refiner stage 3 nominal seed 5 -> effective seed 5
+[sensorfree] composites ON; alpha = ref/sim_sil.npy

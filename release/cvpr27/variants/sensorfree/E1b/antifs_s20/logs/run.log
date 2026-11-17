@@ -1,0 +1,31 @@
+11-16 01:43:10 [E1b antifs_s20] start (mode FULLNONE, SX_TEACH=none, SX_SEEDSHIFT=20, PST ref E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/antifs_full_s20, RGB-only ref E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/antifs_none_s20)
+ok E1b antifs 20 FULLNONE none E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1b/antifs_s20/lib
+11-16 01:43:15 [E1b antifs_s20] lib ok: W D:/S2MUAV3D/srcx_work/sf_E1b_out2antifs_none_s20, pseudo tag srcx_out2antifs_none_sfE1bs20
+configs cfgs/models/uavdet_3d/camnorm/srcx/real_out2antifs_none_sfE1bs20.yaml cfgs/models/uavdet_3d/camnorm/srcx/st_out2antifs_none_sfE1bs20.yaml
+11-16 01:44:37 [E1b antifs_s20] fixed stage-1 outputs from srcx/out2antifs_none (det0, sim samples / bank / real d0 crops [hard links], wsim cache); refiner matte = box hull of review1113/boxhull/out2antifs
+11-16 02:16:34 [E1b antifs_s20] refiner: [sensorfree] composites ON; alpha = ref/sim_sil.npy
+11-16 02:16:34 [E1b antifs_s20] refiners stage 1-2 done
+avg_inf E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1b/antifs_s20/ref/inf_st2_det0_train.pkl: 3007 keys from 2 files
+{'tag': 'srcx_out2antifs_none_sfE1bs20', 'n': 909, 'n_corrected': 862, 'c_bar': 0.016074812039732933, 'lam': 0.75, 'n_train': 3293}
+11-16 02:17:51 [E1b antifs_s20] pseudo-labels: {"tag":"srcx_out2antifs_none_sfE1bs20","n":909,"n_corrected":862,"c_bar":0.016074812039732933,"lam":0.75,"n_train":3293}
+11-16 02:32:51 [E1b antifs_s20] detectors done
+crops tr1: 3293 (train every 1); zoom median 7.17, clipped at ZMAX 0.2%
+crops val1: 1148 (val every 1); zoom median 8.15, clipped at ZMAX 0.0%
+crops te1: 2624 (test every 1); zoom median 6.39, clipped at ZMAX 0.0%
+orientation bank ou_bank: 766 windows
+pseudo pseudo_tr1: 3293 / 3293 crops have a pseudo-orientation; gate (IR vs LiDAR <= 10 deg) passes 651 (19.8%); d_il median 21.2
+11-16 03:04:28 [E1b antifs_s20] pseudo pseudo_tr1: 3293 / 3293 crops have a pseudo-orientation; gate (IR vs LiDAR <= 10 deg) passes 651 (19.8%); d_il median 21.2
+2026-11-16 03:04:52,895   INFO  init E:/Open3DUAVDet/output/models/uavdet_3d/camnorm/sim_out_r34_kp_w12_zoom_out/OKZrgb_s0/ckpt/checkpoint_epoch_30.pth
+11-16 03:37:09 [E1b antifs_s20] student s0: 'paste_tried': 8647, 'paste_done': 8647
+2026-11-16 03:07:29,651   INFO  init E:/Open3DUAVDet/output/models/uavdet_3d/camnorm/sim_out_r34_kp_w12_zoom_out/OKZrgb_s1/ckpt/checkpoint_epoch_30.pth
+11-16 03:37:41 [E1b antifs_s20] student s1: 'paste_tried': 8866, 'paste_done': 8866
+11-16 03:41:53 [E1b antifs_s20] students done
+constant height aspect 0.4443170943925439
+11-16 03:41:57 [E1b antifs_s20] constant height aspect 0.4443170943925439
+avg_inf E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1b/antifs_s20/ref/inf_st2_det1_train.pkl: 3116 keys from 2 files
+11-16 03:44:28 [E1b antifs_s20] w (sim val inverse variance) = 0.074486664485563
+avg_inf E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1b/antifs_s20/ref/inf_fin_det1_train.pkl: 3116 keys from 2 files
+avg_inf E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1b/antifs_s20/ref/inf_fin_det1_val.pkl: 1148 keys from 2 files
+avg_inf E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1b/antifs_s20/ref/inf_fin_det1_test.pkl: 2617 keys from 2 files
+11-16 04:04:50 [E1b antifs_s20] deploy constants: "col_centres":[0.0,0.0],"c_k":{"0":0.000614434015005827,"1":NaN,"-1":0.000614434015005827--"r_k":{"0":0.4443170943925439,"1":NaN},
+11-16 04:05:11 [E1b antifs_s20] ALL DONE: E1b antifs_s20 vs PST antifs_s20 [antifs, 1 pair(s)] arm UDS 41.78 AP 28.39 ATE 0.101 ASE 17.06 AOE 16.48 mDR 90.02 | ref UDS 42.01 AP 28.27 ATE 0.098 ASE 16.65 AOE 16.85 mDR 91.58 | diff UDS -0.22 [-2.94, +2.29] AP +0.12 [-4.17, +3.93] ATE +0.003 [-0.008, +0.015] ASE +0.41 AOE -0.37 [-1.01, +0.29] mDR -1.56 || vs RGB-only: diff UDS +9.71 [+4.20, +14.63] AP +15.48 [+7.58, +22.58] ATE -0.046 [-0.075, -0.016] ASE +2.23 AOE +0.26 [-0.22, +0.72] mDR -2.44 || recipe deviations: 0

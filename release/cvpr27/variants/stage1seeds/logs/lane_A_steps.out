@@ -1,0 +1,23 @@
+11-16 11:28:34 [stage1 in sd30] train det:0 (seed 30, tag S1X_DET_s30, batch 8, workers 2, slot heavy; resumes from the newest epoch checkpoint if any)
+11-16 11:32:27 [stage1 in sd30] det:0 failed (not OOM) -> one resume retry, see /e/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/logs/train_in_sd30_det0.log
+11-16 11:33:27 [stage1 in sd30] train det:0 (seed 30, tag S1X_DET_s30, batch 8, workers 2, slot heavy; resumes from the newest epoch checkpoint if any)
+11-16 12:06:33 [stage1 in sd30] det:0 done -> E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/release/in_sd30/ramp_s30.pth
+11-16 12:06:33 [stage1 in sd30] train det:1 (seed 31, tag S1X_DET_s31, batch 8, workers 2, slot heavy; resumes from the newest epoch checkpoint if any)
+11-16 12:40:47 [stage1 in sd30] det:1 done -> E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/release/in_sd30/ramp_s31.pth
+11-16 12:40:49 [stage1 in sd30] train det:2 (seed 32, tag S1X_DET_s32, batch 8, workers 2, slot heavy; resumes from the newest epoch checkpoint if any)
+11-16 13:19:58 [stage1 in sd30] det:2 done -> E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/release/in_sd30/ramp_s32.pth
+11-16 13:19:59 [stage1 in sd30] train rgb:0 (seed 30, tag S1X_KZ_s30, batch 8, workers 2, slot heavy; resumes from the newest epoch checkpoint if any)
+11-17 01:09:42 [stage1 in sd30] skip det:0 (exists: D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_full_r34_geo_tr_mix_sym8_mblur_ramp/S1X_DET_s30/ckpt/checkpoint_epoch_5.pth)
+11-17 01:09:43 [stage1 in sd30] skip det:1 (exists: D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_full_r34_geo_tr_mix_sym8_mblur_ramp/S1X_DET_s31/ckpt/checkpoint_epoch_5.pth)
+11-17 01:09:44 [stage1 in sd30] skip det:2 (exists: D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_full_r34_geo_tr_mix_sym8_mblur_ramp/S1X_DET_s32/ckpt/checkpoint_epoch_5.pth)
+11-17 01:09:44 [stage1 in sd30] train rgb:0 (seed 30, tag S1X_KZ_s30, batch 8, workers 2, slot heavy; resumes from the newest epoch checkpoint if any)
+11-17 01:17:29 [stage1 in sd30] rgb:0 done -> D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom/S1X_KZ_s30/ckpt/checkpoint_epoch_30.pth
+11-17 01:17:30 [stage1 in sd30] train rgb:1 (seed 31, tag S1X_KZ_s31, batch 8, workers 2, slot heavy; resumes from the newest epoch checkpoint if any)
+11-17 01:24:08 [stage1 in sd30] rgb:1 failed (not OOM) -> one resume retry, see /e/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/logs/train_in_sd30_rgb1.log
+11-17 01:25:08 [stage1 in sd30] train rgb:1 (seed 31, tag S1X_KZ_s31, batch 8, workers 2, slot heavy; resumes from the newest epoch checkpoint if any)
+11-17 05:55:59 [stage1 in sd30] rgb:1 done -> D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom/S1X_KZ_s31/ckpt/checkpoint_epoch_30.pth
+11-17 05:56:00 [stage1 in sd30] train irT:0 (seed 30, tag S1X_KZTIR_s30, batch 8, workers 2, slot heavy; resumes from the newest epoch checkpoint if any)
+11-17 13:05:03 [stage1 in sd30] irT:0 done -> D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom_irT/S1X_KZTIR_s30/ckpt/checkpoint_epoch_30.pth
+11-17 13:05:03 [stage1 in sd30] train kdir:0 (seed 30, tag S1X_KZKDir_s30, batch 8, workers 2, slot heavy; resumes from the newest epoch checkpoint if any)
+11-17 18:55:09 [stage1 in sd30] kdir:0 done -> D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom_kdir/S1X_KZKDir_s30/ckpt/checkpoint_epoch_30.pth
+11-17 18:55:10 [stage1 in sd30] train kdir:1 (seed 31, tag S1X_KZKDir_s31, batch 8, workers 2, slot heavy; resumes from the newest epoch checkpoint if any)

@@ -1,0 +1,29 @@
+
+-------------------------------------------------------------------------------
+   ROBOCOPY     ::     Robust File Copy for Windows                              
+-------------------------------------------------------------------------------
+
+  Started : Monday, November 16, 2026 2:01:39 PM
+   Source = E:\mmcache\full_v2\
+     Dest = F:\mmcache\full_v2\
+
+    Files : *.*
+	    
+  Options : *.* /NDL /NFL /S /E /DCOPY:DA /COPY:DAT /NP /R:2 /W:5 
+
+------------------------------------------------------------------------------
+
+
+------------------------------------------------------------------------------
+
+               Total    Copied   Skipped  Mismatch    FAILED    Extras
+    Dirs :         3         3         0         0         0         0
+   Files :        28        28         0         0         0         0
+   Bytes :  13.021 g  13.021 g         0         0         0         0
+   Times :   0:05:55   0:05:55                       0:00:00   0:00:00
+
+
+   Speed :           39,381,362 Bytes/sec.
+   Speed :            2,253.420 MegaBytes/min.
+   Ended : Monday, November 16, 2026 2:07:34 PM
+

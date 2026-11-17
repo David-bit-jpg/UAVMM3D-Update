@@ -1,0 +1,8 @@
+11-16 14:10:50 [stage1 in sd30] train irlid:0 (seed 30, tag S1X_KZM_s30, batch 8, workers 2, slot heavy; resumes from the newest epoch checkpoint if any)
+11-17 01:10:21 [stage1 in sd30] train irlid:0 (seed 30, tag S1X_KZM_s30, batch 8, workers 2, slot heavy; resumes from the newest epoch checkpoint if any)
+11-17 02:32:34 [stage1 in sd30] irlid:0 done -> E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/release/in_sd30/kzm_s30.pth
+11-17 02:32:34 [stage1 in sd30] train irlid:1 (seed 31, tag S1X_KZM_s31, batch 8, workers 2, slot heavy; resumes from the newest epoch checkpoint if any)
+11-17 07:10:59 [stage1 in sd30] irlid:1 done -> E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/release/in_sd30/kzm_s31.pth
+11-17 07:11:01 [stage1 in sd30] train kps:0 (seed 30, tag S1X_KPS_s30, batch 8, workers 2, slot heavy; resumes from the newest epoch checkpoint if any)
+11-17 09:10:24 [stage1 in sd30] kps:0 done -> D:/S2MUAV3D/stage1seeds_models/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom_irlid_kps/S1X_KPS_s30/ckpt/checkpoint_epoch_8.pth
+11-17 09:10:25 [stage1 in sd30] train lid:0 (seed 30, tag S1X_KZL_s30, batch 8, workers 2, slot heavy; resumes from the newest epoch checkpoint if any)

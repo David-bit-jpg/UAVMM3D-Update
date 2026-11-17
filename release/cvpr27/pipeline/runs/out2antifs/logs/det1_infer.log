@@ -1,0 +1,17 @@
+2026-11-12 02:55:05,396   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-12 02:55:05,397   INFO  MMCache[test]: 2624 帧, 模态 ['rgb'] -> 3 通道, 缓存 D:\mmcache\outdoor_real_fs\test
+2026-11-12 02:55:06,532   INFO  loading weights: 载入 289/289 个张量, 27.93M/27.93M 参数 (100.0%)
+2026-11-12 02:55:07,529   INFO  loading weights: 载入 289/289 个张量, 27.93M/27.93M 参数 (100.0%)
+2026-11-12 02:55:08,655   INFO  loading weights: 载入 289/289 个张量, 27.93M/27.93M 参数 (100.0%)
+2026-11-12 02:55:08,952   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-12 02:55:08,952   INFO  MMCache[test]: 574 帧, 模态 ['rgb'] -> 3 通道, 缓存 D:\mmcache\outdoor_real_fs\val
+2026-11-12 02:56:38,302   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-12 02:56:38,302   INFO  MMCache[test]: 3293 帧, 模态 ['rgb'] -> 3 通道, 缓存 D:\mmcache\outdoor_real_fs\train
+s_bar (val unlabeled, 271 boxes conf>=0.7 of 574) = [0.5307 0.5268 0.2344]
+train: 3293 frames, conf median 0.283, >=0.5 30.1%, >=0.3 48.2%
+2026-11-12 03:00:57,726   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-12 03:00:57,726   INFO  MMCache[test]: 1148 帧, 模态 ['rgb'] -> 3 通道, 缓存 D:\mmcache\outdoor_real_fs\val
+val: 1148 frames, conf median 0.684, >=0.5 65.0%, >=0.3 72.5%
+2026-11-12 03:02:58,397   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-12 03:02:58,398   INFO  MMCache[test]: 2624 帧, 模态 ['rgb'] -> 3 通道, 缓存 D:\mmcache\outdoor_real_fs\test
+test: 2624 frames, conf median 0.679, >=0.5 71.2%, >=0.3 86.3%

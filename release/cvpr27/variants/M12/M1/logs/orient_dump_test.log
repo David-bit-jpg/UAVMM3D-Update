@@ -1,0 +1,32 @@
+[repl] cwd E:\Open3DUAVDet\tools; split test; interval 1; pos single; members explicit; argv --ckpt E:/Open3DUAVDet/output/models/uavdet_3d/camnorm/st2nl075wa_mav6d_r34_geo_full_tr/NL075_s0/ckpt/checkpoint_epoch_3.pth --ensemble --kp2d-from E:/Open3DUAVDet/output/camnorm/geo1004/kzst7/train_q/LOO_s0/ckpt/checkpoint_epoch_3.pth E:/Open3DUAVDet/output/camnorm/geo1004/kzst7/train_q/LOO_s1/ckpt/checkpoint_epoch_3.pth E:/Open3DUAVDet/output/camnorm/geo1004/kzst7/train_q/LOO_s2/ckpt/checkpoint_epoch_3.pth E:/Open3DUAVDet/output/camnorm/geo1004/kzst7/train_q/LOO_s3/ckpt/checkpoint_epoch_3.pth E:/Open3DUAVDet/output/camnorm/geo1004/kzst7/train_q/LOO_s4/ckpt/checkpoint_epoch_3.pth --kp2d-cfg cfgs/models/uavdet_3d/camnorm/mav6d_r34_kp.yaml --out E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/M12/M1/repl\nl075_test_kzt7q\real_ens5flip_nl075_test_kzt7q.pkl --kp2d-zoom 95 --split test --bg none --no-flip
+2026-11-13 04:13:04,033   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-13 04:13:04,033   INFO  MMCache[test]: 4800 帧, 模态 ['rgb'] -> 3 通道, 缓存 E:\mmcache\mav6d_cn_obj\test
+2026-11-13 04:13:06,088   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-13 04:13:06,088   INFO  MMCache[test]: 4800 帧, 模态 ['rgb'] -> 3 通道, 缓存 E:\mmcache\mav6d_cn_obj\test
+2026-11-13 04:13:45,725   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-13 04:13:45,725   INFO  MMCache[test]: 1168 帧, 模态 ['rgb'] -> 3 通道, 缓存 E:\mmcache\mav6d_cn_obj\val
+loading weights: 载入 289/289 个张量, 27.93M/27.93M 参数 (100.0%)
+loading weights: 载入 289/289 个张量, 27.95M/27.95M 参数 (100.0%)
+loading weights: 载入 289/289 个张量, 27.95M/27.95M 参数 (100.0%)
+loading weights: 载入 289/289 个张量, 27.95M/27.95M 参数 (100.0%)
+loading weights: 载入 289/289 个张量, 27.95M/27.95M 参数 (100.0%)
+loading weights: 载入 289/289 个张量, 27.95M/27.95M 参数 (100.0%)
+[e1sa] 400 frames recorded, 216 s
+[e1sa] 800 frames recorded, 329 s
+[e1sa] 1200 frames recorded, 446 s
+[e1sa] 1600 frames recorded, 659 s
+[e1sa] 2000 frames recorded, 995 s
+[e1sa] 2400 frames recorded, 1224 s
+[e1sa] 2800 frames recorded, 1344 s
+[e1sa] 3200 frames recorded, 1446 s
+[e1sa] 3600 frames recorded, 1582 s
+[e1sa] 4000 frames recorded, 1671 s
+[e1sa] 4400 frames recorded, 1758 s
+[e1sa] 4800 frames recorded, 1837 s
+放大裁窗：4800 帧，缩放倍数中位 1.77 [5%, 95%] = [1.04, 2.42]
+  phantom4  缩放倍数中位 1.83 [1.17, 2.42]，位置网络预测的 2D 宽中位 52 px [39, 81]
+  mavic2    缩放倍数中位 1.52 [1.00, 2.48]，位置网络预测的 2D 宽中位 63 px [38, 124]
+[M12] DUMP: ground-truth summary suppressed
+写出 E:\Open3DUAVDet\output\camnorm\geo1004\gproto\review1113\M12\M1\repl\nl075_test_kzt7q\real_ens5flip_nl075_test_kzt7q.pkl：4800 帧，检出 <masked>，自标定 lwh [0.35, 0.348, 0.2]，用时 1839 s
+[e1sa] wrote E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/M12/M1/repl\nl075_test_kzt7q\kz_members_nl075_test_kzt7q.npz (4800 frames, 44.1 MB, sha256 723e92ffc4e0bc3926fa0f44ead0527eab741e6bc341feb9b32d3424de82b1cb)
+[repl] done: E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/M12/M1/repl\nl075_test_kzt7q\real_ens5flip_nl075_test_kzt7q.pkl (gt sealed in sealed_gt_nl075_test_kzt7q.pkl: 4800 frames)

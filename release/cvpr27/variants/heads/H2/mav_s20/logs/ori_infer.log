@@ -1,0 +1,36 @@
+[infer_wrap] memory fraction 0.20 -> E:\Open3DUAVDet\output\camnorm\geo1004\gproto\review1113\heads\H2\mav_s20\lib\ori_x.py adabn E:/Open3DUAVDet/output/camnorm/geo1004/lidar/irlid/release/kzm_s0.pth tr1 E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H2/mav_s20/ou/T_irlid0.pth 80
+2026-11-17 21:08:40,090   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-17 21:08:40,115   INFO  MMCache[test]: RGB 可见度 >= 5.0 过滤 4924 -> 4646 帧
+2026-11-17 21:08:40,115   INFO  MMCache[test]: 4646 帧, 模态 ['rgb'] -> 3 通道, 缓存 E:\mmcache\full_v2\test
+2026-11-17 21:08:44,794   INFO  loading weights: 载入 289/289 个张量, 27.95M/27.95M 参数 (100.0%)
+adabn kzm_s0.pth: 44 BN layers on 3640 crops -> E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H2/mav_s20/ou/T_irlid0.pth
+[infer_wrap] memory fraction 0.20 -> E:\Open3DUAVDet\output\camnorm\geo1004\gproto\review1113\heads\H2\mav_s20\lib\ori_x.py adabn E:/Open3DUAVDet/output/camnorm/geo1004/lidar/irlid/release/kzm_s1.pth tr1 E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H2/mav_s20/ou/T_irlid1.pth 80
+2026-11-17 21:17:07,901   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-17 21:17:07,902   INFO  MMCache[test]: RGB 可见度 >= 5.0 过滤 4924 -> 4646 帧
+2026-11-17 21:17:07,902   INFO  MMCache[test]: 4646 帧, 模态 ['rgb'] -> 3 通道, 缓存 E:\mmcache\full_v2\test
+2026-11-17 21:17:11,601   INFO  loading weights: 载入 289/289 个张量, 27.95M/27.95M 参数 (100.0%)
+adabn kzm_s1.pth: 44 BN layers on 3640 crops -> E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H2/mav_s20/ou/T_irlid1.pth
+[infer_wrap] memory fraction 0.20 -> E:\Open3DUAVDet\output\camnorm\geo1004\gproto\review1113\heads\H2\mav_s20\lib\ori_x.py adabn E:/Open3DUAVDet/output/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom_kdir/KZKDir_s0/ckpt/checkpoint_epoch_30.pth tr1 E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H2/mav_s20/ou/T_kdir0.pth 80
+2026-11-17 21:19:08,087   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-17 21:19:08,088   INFO  MMCache[test]: RGB 可见度 >= 5.0 过滤 4924 -> 4646 帧
+2026-11-17 21:19:08,088   INFO  MMCache[test]: 4646 帧, 模态 ['rgb'] -> 3 通道, 缓存 E:\mmcache\full_v2\test
+2026-11-17 21:19:16,657   INFO  loading weights: 载入 289/289 个张量, 27.95M/27.95M 参数 (100.0%)
+adabn checkpoint_epoch_30.pth: 44 BN layers on 3640 crops -> E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H2/mav_s20/ou/T_kdir0.pth
+[infer_wrap] memory fraction 0.20 -> E:\Open3DUAVDet\output\camnorm\geo1004\gproto\review1113\heads\H2\mav_s20\lib\ori_x.py adabn E:/Open3DUAVDet/output/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom_kdir/KZKDir_s1/ckpt/checkpoint_epoch_30.pth tr1 E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H2/mav_s20/ou/T_kdir1.pth 80
+2026-11-17 21:20:28,891   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-17 21:20:28,892   INFO  MMCache[test]: RGB 可见度 >= 5.0 过滤 4924 -> 4646 帧
+2026-11-17 21:20:28,892   INFO  MMCache[test]: 4646 帧, 模态 ['rgb'] -> 3 通道, 缓存 E:\mmcache\full_v2\test
+2026-11-17 21:20:40,253   INFO  loading weights: 载入 289/289 个张量, 27.95M/27.95M 参数 (100.0%)
+adabn checkpoint_epoch_30.pth: 44 BN layers on 3640 crops -> E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H2/mav_s20/ou/T_kdir1.pth
+[infer_wrap] memory fraction 0.20 -> E:\Open3DUAVDet\output\camnorm\geo1004\gproto\review1113\heads\H2\mav_s20\lib\ori_x.py adabn E:/Open3DUAVDet/output/camnorm/geo1004/lidar/irlid/release/kzl_s0.pth tr1 E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H2/mav_s20/ou/T_lid0.pth 80
+2026-11-17 22:28:24,099   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-17 22:28:24,099   INFO  MMCache[test]: RGB 可见度 >= 5.0 过滤 4924 -> 4646 帧
+2026-11-17 22:28:24,100   INFO  MMCache[test]: 4646 帧, 模态 ['rgb'] -> 3 通道, 缓存 E:\mmcache\full_v2\test
+2026-11-17 22:28:28,813   INFO  loading weights: 载入 289/289 个张量, 27.95M/27.95M 参数 (100.0%)
+adabn kzl_s0.pth: 44 BN layers on 3640 crops -> E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H2/mav_s20/ou/T_lid0.pth
+[infer_wrap] memory fraction 0.20 -> E:\Open3DUAVDet\output\camnorm\geo1004\gproto\review1113\heads\H2\mav_s20\lib\ori_x.py adabn E:/Open3DUAVDet/output/camnorm/geo1004/lidar/irlid/release/kzl_s1.pth tr1 E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H2/mav_s20/ou/T_lid1.pth 80
+2026-11-17 22:36:09,768   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-17 22:36:09,821   INFO  MMCache[test]: RGB 可见度 >= 5.0 过滤 4924 -> 4646 帧
+2026-11-17 22:36:09,821   INFO  MMCache[test]: 4646 帧, 模态 ['rgb'] -> 3 通道, 缓存 E:\mmcache\full_v2\test
+2026-11-17 22:36:24,532   INFO  loading weights: 载入 289/289 个张量, 27.95M/27.95M 参数 (100.0%)
+adabn kzl_s1.pth: 44 BN layers on 3640 crops -> E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H2/mav_s20/ou/T_lid1.pth

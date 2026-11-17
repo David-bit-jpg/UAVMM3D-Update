@@ -1,0 +1,3 @@
+11-17 09:52:56 [out2antifs] train out2antifs_pstu batch 8 (waiting for gpu slot)
+11-17 10:16:29 [out2antifs] trained out2antifs_pstu
+11-17 10:21:34 [out2antifs] out2antifs_pstu: all      AOE 19.655  ATE 0.201  ASE 14.202  AP 4.294  UDS 23.389  mDR 84.642

@@ -1,0 +1,1 @@
+E1 mav_s0 vs PST mav_s0 [mav, 1 pair(s)] arm UDS 53.48 AP 31.38 ATE 0.401 ASE 2.65 AOE 15.83 mDR 96.56 | ref UDS 60.81 AP 40.93 ATE 0.306 ASE 1.75 AOE 14.48 mDR 96.17 | diff UDS -7.33 [-9.93, -5.15] AP -9.55 [-13.48, -6.45] ATE +0.095 [+0.059, +0.141] ASE +0.90 AOE +1.35 [+0.33, +2.33] mDR +0.40

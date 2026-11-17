@@ -1,0 +1,102 @@
+11-14 01:26:17 start antifs_full_s10 (combo out2antifs, SX_SEEDSHIFT=10, COPY_FIXED=1, SERIAL=0)
+ok antifs_full_s10 out2antifs_sd10 E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/antifs_full_s10/lib
+configs cfgs/models/uavdet_3d/camnorm/srcx/real_out2antifs_sd10.yaml cfgs/models/uavdet_3d/camnorm/srcx/st_out2antifs_sd10.yaml
+11-14 01:26:49 copied fixed stage-1 outputs from srcx/out2antifs (det0, srconly preds, refiner sim samples / bank / real d0 crops, wsim cache)
+11-14 01:46:51 refiners stage 1-2 done
+avg_inf E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/antifs_full_s10/ref/inf_st2_det0_train.pkl: 3007 keys from 2 files
+{'tag': 'srcx_out2antifs_sd10', 'n': 909, 'n_corrected': 862, 'c_bar': -0.0019055576995015144, 'lam': 0.75, 'n_train': 3293}
+{
+ "tag": "srcx_out2antifs_sd10",
+ "n": 909,
+ "n_corrected": 862,
+ "c_bar": -0.0019055576995015144,
+ "lam": 0.75,
+ "n_train": 3293
+}s_bar (val unlabeled, 291 boxes conf>=0.7 of 574) = [0.5311 0.5265 0.2351]
+train: 3293 frames, conf median 0.293, >=0.5 30.7%, >=0.3 49.2%
+val: 1148 frames, conf median 0.706, >=0.5 66.0%, >=0.3 71.4%
+test: 2624 frames, conf median 0.698, >=0.5 74.0%, >=0.3 87.8%
+11-14 01:58:19 detectors done
+crops tr1: 3293 (train every 1); zoom median 6.96, clipped at ZMAX 0.1%
+crops val1: 1148 (val every 1); zoom median 8.05, clipped at ZMAX 0.0%
+crops te1: 2624 (test every 1); zoom median 6.29, clipped at ZMAX 0.0%
+orientation bank ou_bank: 778 windows
+pseudo pseudo_tr1: 3293 / 3293 crops have a pseudo-orientation; gate (IR vs LiDAR <= 10 deg) passes 812 (24.7%); d_il median 18.5
+11-14 02:45:05 orientation branch done
+avg_inf E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/antifs_full_s10/ref/inf_st2_det1_train.pkl: 3093 keys from 2 files
+11-14 02:49:40 w (sim val inverse variance) = 0.08167835972819329
+targets {'w': 0.08167835972819329, 'col_centres': [60.782791406588444, 138.926954438337], 'b_train': {0: 0.7590830271049899, 1: 1.1949498157451406}, 'n_zL': 3293, 'n_dd': 844, 'n_crops': 862, 'n_target': 758, 'n_fused': 655}
+avg_inf E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/antifs_full_s10/ref/inf_fin_det1_train.pkl: 3093 keys from 2 files
+avg_inf E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/antifs_full_s10/ref/inf_fin_det1_val.pkl: 1147 keys from 2 files
+avg_inf E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/antifs_full_s10/ref/inf_fin_det1_test.pkl: 2620 keys from 2 files
+{
+ "w": 0.08167835972819329,
+ "s_bar": [
+  0.5311291217803955,
+  0.5265071392059326,
+  0.2351144552230835
+ ],
+ "col_centres": [
+  51.0703785328116,
+  138.35272703170776
+ ],
+ "c_k": {
+  "0": 0.020920603070408106,
+  "1": 0.010614250786602497,
+  "-1": 0.005965970456600189
+ },
+ "r_k": {
+  "0": 0.4587579667568207,
+  "1": 0.4716946929693222
+ },
+ "b_k_val_images": {
+  "0": 0.49402107081814556,
+  "1": 0.9452409444827196
+ },
+ "alpha": 0.5,
+ "fused_val": {
+  "n": 1148,
+  "n_fused": 853,
+  "n_rot_student": 1148,
+  "file": "E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/antifs_full_s10/preds/pcmd_fused_val.pkl"
+ },
+ "nofuse_val": {
+  "n": 1148,
+  "n_fused": 0,
+  "n_rot_student": 1148,
+  "file": "E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/antifs_full_s10/preds/pcmd_nofuse_val.pkl"
+ },
+ "fused_test": {
+  "n": 2624,
+  "n_fused": 2208,
+  "n_rot_student": 2624,
+  "file": "E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/antifs_full_s10/preds/pcmd_fused_test.pkl"
+ },
+ "nofuse_test": {
+  "n": 2624,
+  "n_fused": 0,
+  "n_rot_student": 2624,
+  "file": "E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/antifs_full_s10/preds/pcmd_nofuse_test.pkl"
+ }
+}
+all      AOE 29.217  ATE 0.104  ASE 15.001  AP 16.579  UDS 30.155  mDR 67.596
+0-25     AOE 26.616  ATE 0.130  ASE 15.001  AP 1.435  UDS 16.395  mDR 23.844
+25-50    AOE 26.893  ATE 0.104  ASE 15.001  AP 23.275  UDS 36.513  mDR 87.719
+50-999   AOE 32.474  ATE 0.096  ASE 15.001  AP 29.230  UDS 39.848  mDR 97.041
+all      AOE 20.002  ATE 0.110  ASE 16.300  AP 15.978  UDS 32.233  mDR 72.909
+0-25     AOE 29.208  ATE 0.093  ASE 18.588  AP 6.027  UDS 21.655  mDR 37.226
+25-50    AOE 13.718  ATE 0.101  ASE 16.676  AP 26.465  UDS 41.286  mDR 88.722
+50-999   AOE 22.475  ATE 0.128  ASE 14.836  AP 17.481  UDS 34.640  mDR 97.633
+all      AOE 20.002  ATE 0.109  ASE 16.300  AP 16.639  UDS 32.623  mDR 72.909
+0-25     AOE 29.208  ATE 0.090  ASE 18.588  AP 6.299  UDS 21.919  mDR 37.226
+25-50    AOE 13.718  ATE 0.100  ASE 16.676  AP 26.732  UDS 41.439  mDR 88.722
+50-999   AOE 22.475  ATE 0.127  ASE 14.836  AP 18.728  UDS 35.333  mDR 97.633
+all      AOE 26.058  ATE 0.132  ASE 15.363  AP 16.037  UDS 30.552  mDR 78.544
+0-25     AOE 21.784  ATE 0.135  ASE 15.001  AP 7.325  UDS 23.971  mDR 54.468
+25-50    AOE 28.325  ATE 0.147  ASE 15.800  AP 17.848  UDS 32.098  mDR 93.487
+50-999   AOE 26.711  ATE 0.104  ASE 15.001  AP 28.629  UDS 40.478  mDR 97.513
+all      AOE 16.578  ATE 0.101  ASE 16.717  AP 27.252  UDS 41.379  mDR 91.197
+0-25     AOE 15.490  ATE 0.092  ASE 18.671  AP 27.551  UDS 41.038  mDR 81.750
+25-50    AOE 16.721  ATE 0.112  ASE 16.191  AP 27.453  UDS 41.562  mDR 96.794
+50-999   AOE 18.023  ATE 0.094  ASE 14.585  AP 29.495  UDS 43.481  mDR 99.112
+11-14 03:14:47 ALL DONE: test UDS 41.38 AP 27.25 ATE 0.101 ASE 16.72 AOE 16.58 mDR 91.20 | val UDS 32.23 AP 15.98 ATE 0.110 ASE 16.30 AOE 20.00 mDR 72.91 | antifs_full_s10 w 0.0817 | reported (shift 0): test 41.74 / val 34.98

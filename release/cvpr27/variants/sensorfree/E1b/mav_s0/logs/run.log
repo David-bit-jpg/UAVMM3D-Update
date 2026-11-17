@@ -1,0 +1,32 @@
+11-15 06:46:38 [E1b mav_s0] start (mode FULLNONE, SX_TEACH=none, SX_SEEDSHIFT=0, PST ref E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/in2mav, RGB-only ref E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/in2mav_none)
+ok E1b mav 0 FULLNONE none E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1b/mav_s0/lib
+11-15 06:46:44 [E1b mav_s0] lib ok: W D:/S2MUAV3D/srcx_work/sf_E1b_in2mav_none_s0, pseudo tag srcx_in2mav_none_sfE1bs0
+configs cfgs/models/uavdet_3d/camnorm/srcx/real_in2mav_none_sfE1bs0.yaml cfgs/models/uavdet_3d/camnorm/srcx/st_in2mav_none_sfE1bs0.yaml
+11-15 06:51:47 [E1b mav_s0] fixed stage-1 outputs from srcx/in2mav_none (det0, sim samples / bank / real d0 crops [hard links], wsim cache); refiner matte = box hull of review1113/boxhull/in2mav
+11-15 07:41:55 [E1b mav_s0] refiner: [sensorfree] composites ON; alpha = ref/sim_sil.npy
+11-15 07:41:56 [E1b mav_s0] refiners stage 1-2 done
+avg_inf E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1b/mav_s0/ref/inf_st2_det0_train.pkl: 12865 keys from 2 files
+{'tag': 'srcx_in2mav_none_sfE1bs0', 'n': 5227, 'n_corrected': 5227, 'c_bar': 0.08145435154438019, 'lam': 0.75, 'n_train': 12866}
+11-15 08:46:00 [E1b mav_s0] pseudo-labels: {"tag":"srcx_in2mav_none_sfE1bs0","n":5227,"n_corrected":5227,"c_bar":0.08145435154438019,"lam":0.75,"n_train":12866}
+11-15 09:48:44 [E1b mav_s0] detectors done
+crops tr1: 12866 (train every 1); zoom median 1.78, clipped at ZMAX 0.1%
+crops val1: 2336 (val every 1); zoom median 1.75, clipped at ZMAX 0.2%
+crops te1: 4800 (test every 1); zoom median 1.88, clipped at ZMAX 0.0%
+orientation bank ou_bank: 4620 windows
+pseudo pseudo_tr1: 12866 / 12866 crops have a pseudo-orientation; gate (IR vs LiDAR <= 10 deg) passes 3504 (27.2%); d_il median 18.3
+11-15 10:55:40 [E1b mav_s0] pseudo pseudo_tr1: 12866 / 12866 crops have a pseudo-orientation; gate (IR vs LiDAR <= 10 deg) passes 3504 (27.2%); d_il median 18.3
+2026-11-15 10:55:48,308   INFO  init E:/Open3DUAVDet/output/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom/KZs0/ckpt/checkpoint_epoch_30.pth
+11-15 11:22:19 [E1b mav_s0] student s0: 'paste_tried': 8962, 'paste_done': 8962
+2026-11-15 10:57:27,729   INFO  init E:/Open3DUAVDet/output/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom/KZs1/ckpt/checkpoint_epoch_30.pth
+11-15 11:24:10 [E1b mav_s0] student s1: 'paste_tried': 8815, 'paste_done': 8815
+11-15 11:35:51 [E1b mav_s0] students done
+constant height aspect 0.5611353118033053
+11-15 11:35:57 [E1b mav_s0] constant height aspect 0.5611353118033053
+avg_inf E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1b/mav_s0/ref/inf_st2_det1_train.pkl: 12866 keys from 2 files
+11-15 11:53:12 [E1b mav_s0] w (sim val inverse variance) = 0.18194894218736127
+avg_inf E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1b/mav_s0/ref/inf_fin_det1_train.pkl: 12866 keys from 2 files
+avg_inf E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1b/mav_s0/ref/inf_fin_det1_val.pkl: 2336 keys from 2 files
+avg_inf E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1b/mav_s0/ref/inf_fin_det1_test.pkl: 4800 keys from 2 files
+11-15 12:25:32 [E1b mav_s0] deploy constants: "col_centres":[0.0,0.0],"c_k":{"0":0.10136106610298157,"1":NaN,"-1":0.10136106610298157--"r_k":{"0":0.5611353118033053,"1":NaN},
+11-15 12:25:51 [E1b mav_s0] ALL DONE: E1b mav_s0 vs PST mav_s0 [mav, 1 pair(s)] arm UDS 56.25 AP 35.68 ATE 0.355 ASE 2.63 AOE 15.42 mDR 96.08 | ref UDS 60.81 AP 40.93 ATE 0.306 ASE 1.75 AOE 14.48 mDR 96.17 | diff UDS -4.56 [-6.33, -3.01] AP -5.25 [-7.30, -3.42] ATE +0.050 [+0.027, +0.081] ASE +0.88 AOE +0.94 [+0.23, +1.75] mDR -0.08 || vs RGB-only: diff UDS -1.13 [-1.97, +0.04] AP -2.36 [-3.69, -0.32] ATE +0.008 [-0.008, +0.024] ASE +0.05 AOE -0.91 [-1.53, -0.36] mDR +0.10 || recipe deviations: 0
+11-15 18:45:46 [E1b mav_s0] already done: 11-15 12:25:51 [E1b mav_s0] ALL DONE: E1b mav_s0 vs PST mav_s0 [mav, 1 pair(s)] arm UDS 56.25 AP 35.68 ATE 0.355 ASE 2.63 AOE 15.42 mDR 96.08 | ref UDS 60.81 AP 40.93 ATE 0.306 ASE 1.75 AOE 14.48 mDR 96.17 | diff UDS -4.56 [-6.33, -3.01] AP -5.25 [-7.30, -3.42] ATE +0.050 [+0.027, +0.081] ASE +0.88 

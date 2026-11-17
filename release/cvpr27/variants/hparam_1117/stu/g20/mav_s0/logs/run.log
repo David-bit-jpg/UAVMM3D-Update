@@ -1,0 +1,6 @@
+ok mav_s0 E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/hparam_1117/stu/g20/mav_s0/lib base E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/in2mav
+gate 20 deg: 7821 / 12866 crops pass (deployed 10 deg: 4301)
+11-17 16:51:52 [stu g20 mav_s0] start: base E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/in2mav (w 0.190282282581008, SX_SEEDSHIFT 0) | --tgt gate --mir 12 gate 20 deg gate 20 deg: 7821 / 12866 crops pass (deployed 10 deg: 4301)
+[s0] 2026-11-17 17:28:51,090   INFO  目标域：gate，帧池 6257（gate 7821 / 全部 12866），随机 80% → 6257 帧
+[s1] 2026-11-17 18:26:25,035   INFO  目标域：gate，帧池 6257（gate 7821 / 全部 12866），随机 80% → 6257 帧
+11-17 19:40:28 [stu g20 mav_s0] students done (gate，帧池 6257（gate 7821 / 全部 12866），随机 80% → 6257 帧)

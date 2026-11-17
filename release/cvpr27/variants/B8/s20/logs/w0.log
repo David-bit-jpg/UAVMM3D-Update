@@ -1,0 +1,4 @@
+11-14 05:58:57 start s20 (seed run E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/mav_full_s20, SX_SEEDSHIFT=20): stage-3 retrain with omega = 0
+ok s20 E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/B8/s20/lib
+[B8] O E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/B8/s20 | pseudo index srcx_in2mav_sd20
+11-14 10:22:39 RUN DONE: s20 IR-only(w0) test UDS 61.33 AP 42.09 ATE 0.289 | val UDS 59.82 || PST test 62.70 val 59.87 || fused - IR-only: test +1.37 val +0.05 (w 0.2050)

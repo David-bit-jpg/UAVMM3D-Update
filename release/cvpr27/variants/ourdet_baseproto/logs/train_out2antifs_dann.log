@@ -1,0 +1,46 @@
+2026-11-16 16:37:34,974   INFO  MMCache[train]: 标签索引 index.pkl（label_fix=None）
+2026-11-16 16:37:35,046   INFO  MMCache[train]: 5367 帧, 模态 ['rgb'] -> 3 通道, 缓存 D:\S2MUAV3D\sim_outdoor_carla\cache\train
+2026-11-16 16:37:35,475   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-16 16:37:35,475   INFO  MMCache[test]: 3293 帧, 模态 ['rgb'] -> 3 通道, 缓存 D:\S2MUAV3D\ourdet_baseproto_cache\outdoor_real_fs\train
+2026-11-16 16:37:45,093   INFO  loading weights: 载入 289/289 个张量, 27.93M/27.93M 参数 (100.0%)
+2026-11-16 16:37:45,114   INFO  loss weights (end of sim-only training): {'hm': 1.0, 'center_res': 2.0, 'center_dis': 8.0, 'dim': 2.0, 'rot': 16.0, 'size2d': 4.0}
+2026-11-16 16:37:47,427   INFO  {'combo': 'out2antifs', 'out': 'D:/S2MUAV3D/ourdet_baseproto_models/dann/out2antifs_dann', 'batch': 8, 'epochs': 5, 'seed': 0, 'grl_max': 0.1, 'disc_lr_mult': 10.0, 'lr_mult': 0.1, 'log_every': 100, 'init': 'E:/Open3DUAVDet/output/models/uavdet_3d/camnorm/sim_out_r34_geo_ramp_out/DET_s0/ckpt/checkpoint_epoch_5.pth', 'sim_cfg': 'cfgs/models/uavdet_3d/camnorm/sim_out_r34_geo_ramp_out.yaml', 'sim_path': 'D:/S2MUAV3D/sim_outdoor_carla/cache', 'real_path': 'D:/S2MUAV3D/ourdet_baseproto_cache/outdoor_real_fs', 'lr': 0.0001, 'disc_lr': 0.001, 'feat_channels': 512, 'iters_per_epoch': 671, 'total_iters': 3355, 'n_src': 5367, 'n_tgt': 3293, 'loss_weights': {'hm': 1.0, 'center_res': 2.0, 'center_dis': 8.0, 'dim': 2.0, 'rot': 16.0, 'size2d': 4.0}, 'bn': 'frozen', 'grad_clip': 35.0}
+2026-11-16 16:41:49,374   INFO  it 100/3355 ep 1 0.41 it/s peak 1.7GB det 11.2583 dom_src 0.5748 dom_tgt 0.5661 dacc 0.7194 lam 0.0074
+2026-11-16 16:44:57,625   INFO  it 200/3355 ep 1 0.53 it/s peak 1.7GB det 11.3714 dom_src 0.2716 dom_tgt 0.2820 dacc 0.8862 lam 0.0219
+2026-11-16 16:47:25,847   INFO  it 300/3355 ep 1 0.67 it/s peak 1.7GB det 11.0530 dom_src 0.1040 dom_tgt 0.1253 dacc 0.9675 lam 0.0355
+2026-11-16 16:49:12,909   INFO  it 400/3355 ep 1 0.93 it/s peak 1.7GB det 11.0759 dom_src 0.0654 dom_tgt 0.0778 dacc 0.9744 lam 0.0478
+2026-11-16 16:49:44,071   INFO  it 500/3355 ep 1 3.21 it/s peak 1.7GB det 10.7678 dom_src 0.0693 dom_tgt 0.0801 dacc 0.9794 lam 0.0584
+2026-11-16 16:50:08,977   INFO  it 600/3355 ep 1 4.02 it/s peak 1.7GB det 11.1074 dom_src 0.0440 dom_tgt 0.0581 dacc 0.9838 lam 0.0674
+2026-11-16 16:50:56,600   INFO  epoch 1 done (it 671)
+2026-11-16 16:51:02,569   INFO  it 700/3355 ep 2 1.87 it/s peak 1.7GB det 11.1191 dom_src 0.0513 dom_tgt 0.0530 dacc 0.9849 lam 0.0747
+2026-11-16 16:51:28,427   INFO  it 800/3355 ep 2 3.87 it/s peak 1.7GB det 10.8563 dom_src 0.0427 dom_tgt 0.0361 dacc 0.9912 lam 0.0806
+2026-11-16 16:51:55,095   INFO  it 900/3355 ep 2 3.75 it/s peak 1.7GB det 11.0039 dom_src 0.0614 dom_tgt 0.0688 dacc 0.9775 lam 0.0852
+2026-11-16 16:52:20,847   INFO  it 1000/3355 ep 2 3.88 it/s peak 1.7GB det 10.9416 dom_src 0.0283 dom_tgt 0.0414 dacc 0.9875 lam 0.0888
+2026-11-16 16:53:02,558   INFO  it 1100/3355 ep 2 2.40 it/s peak 1.7GB det 10.5629 dom_src 0.0318 dom_tgt 0.0331 dacc 0.9912 lam 0.0916
+2026-11-16 16:53:25,561   INFO  it 1200/3355 ep 2 4.35 it/s peak 1.7GB det 11.2947 dom_src 0.0349 dom_tgt 0.0518 dacc 0.9906 lam 0.0937
+2026-11-16 16:53:49,123   INFO  it 1300/3355 ep 2 4.24 it/s peak 1.7GB det 11.1787 dom_src 0.0395 dom_tgt 0.0303 dacc 0.9906 lam 0.0953
+2026-11-16 16:54:20,631   INFO  epoch 2 done (it 1342)
+2026-11-16 16:54:35,822   INFO  it 1400/3355 ep 3 2.14 it/s peak 1.7GB det 11.0389 dom_src 0.0266 dom_tgt 0.0378 dacc 0.9931 lam 0.0965
+2026-11-16 16:55:02,159   INFO  it 1500/3355 ep 3 3.80 it/s peak 1.7GB det 11.0168 dom_src 0.0233 dom_tgt 0.0422 dacc 0.9925 lam 0.0974
+2026-11-16 16:55:28,309   INFO  it 1600/3355 ep 3 3.82 it/s peak 1.7GB det 10.7182 dom_src 0.0528 dom_tgt 0.0523 dacc 0.9894 lam 0.0980
+2026-11-16 16:55:50,395   INFO  it 1700/3355 ep 3 4.53 it/s peak 1.7GB det 10.7566 dom_src 0.0370 dom_tgt 0.0258 dacc 0.9906 lam 0.0985
+2026-11-16 16:56:04,450   INFO  it 1800/3355 ep 3 7.11 it/s peak 1.7GB det 10.8194 dom_src 0.0253 dom_tgt 0.0128 dacc 0.9975 lam 0.0989
+2026-11-16 16:56:26,802   INFO  it 1900/3355 ep 3 4.47 it/s peak 1.7GB det 10.9425 dom_src 0.0222 dom_tgt 0.0156 dacc 0.9944 lam 0.0992
+2026-11-16 16:56:51,937   INFO  it 2000/3355 ep 3 3.98 it/s peak 1.7GB det 10.8664 dom_src 0.0271 dom_tgt 0.0245 dacc 0.9906 lam 0.0994
+2026-11-16 16:57:13,420   INFO  epoch 3 done (it 2013)
+2026-11-16 16:57:36,290   INFO  it 2100/3355 ep 4 2.25 it/s peak 1.7GB det 10.8054 dom_src 0.0590 dom_tgt 0.0223 dacc 0.9925 lam 0.0996
+2026-11-16 16:58:02,505   INFO  it 2200/3355 ep 4 3.81 it/s peak 1.7GB det 10.3842 dom_src 0.0163 dom_tgt 0.0240 dacc 0.9944 lam 0.0997
+2026-11-16 16:58:24,607   INFO  it 2300/3355 ep 4 4.52 it/s peak 1.7GB det 11.1133 dom_src 0.0505 dom_tgt 0.0375 dacc 0.9888 lam 0.0998
+2026-11-16 16:58:43,153   INFO  it 2400/3355 ep 4 5.39 it/s peak 1.7GB det 13.0714 dom_src 2.2019 dom_tgt 2.3794 dacc 0.9413 lam 0.0998
+2026-11-16 16:59:01,618   INFO  it 2500/3355 ep 4 5.42 it/s peak 1.7GB det 10.8732 dom_src 0.4117 dom_tgt 0.3422 dacc 0.9069 lam 0.0999
+2026-11-16 16:59:19,968   INFO  it 2600/3355 ep 4 5.45 it/s peak 1.7GB det 10.6898 dom_src 0.1284 dom_tgt 0.1373 dacc 0.9594 lam 0.0999
+2026-11-16 16:59:45,604   INFO  epoch 4 done (it 2684)
+2026-11-16 16:59:48,572   INFO  it 2700/3355 ep 5 3.50 it/s peak 1.7GB det 10.7946 dom_src 0.0552 dom_tgt 0.0813 dacc 0.9837 lam 0.0999
+2026-11-16 17:00:06,994   INFO  it 2800/3355 ep 5 5.43 it/s peak 1.7GB det 10.3986 dom_src 0.0696 dom_tgt 0.0555 dacc 0.9812 lam 0.0999
+2026-11-16 17:00:26,704   INFO  it 2900/3355 ep 5 5.07 it/s peak 1.7GB det 10.8705 dom_src 0.0532 dom_tgt 0.0400 dacc 0.9875 lam 0.1000
+2026-11-16 17:00:46,139   INFO  it 3000/3355 ep 5 5.15 it/s peak 1.7GB det 10.8662 dom_src 0.0324 dom_tgt 0.0365 dacc 0.9881 lam 0.1000
+2026-11-16 17:01:18,595   INFO  it 3100/3355 ep 5 3.08 it/s peak 1.7GB det 10.7958 dom_src 0.0326 dom_tgt 0.0225 dacc 0.9906 lam 0.1000
+2026-11-16 17:01:37,629   INFO  it 3200/3355 ep 5 5.25 it/s peak 1.7GB det 10.6327 dom_src 0.0444 dom_tgt 0.0429 dacc 0.9894 lam 0.1000
+2026-11-16 17:01:56,949   INFO  it 3300/3355 ep 5 5.18 it/s peak 1.7GB det 10.7966 dom_src 0.0250 dom_tgt 0.0332 dacc 0.9881 lam 0.1000
+2026-11-16 17:02:22,287   INFO  epoch 5 done (it 3355)
+2026-11-16 17:02:26,174   INFO  DONE

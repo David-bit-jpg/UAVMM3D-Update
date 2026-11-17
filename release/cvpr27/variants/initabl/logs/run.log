@@ -1,0 +1,12 @@
+11-14 14:13:41 waiting for D:/cmpfull_runs/gupnet_uda_{mt,dann}_s0/.done (poll every 10 min)
+11-14 16:53:42 start initabl (student init: IR+LiDAR teacher vs RGB-only KZ net), runs: s0 s10 s20
+11-14 16:53:47 [s0] start (baseline run E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/in2mav, crops D:/S2MUAV3D/srcx_work/in2mav, SX_SEEDSHIFT=0)
+11-14 17:25:06 [s0] students done
+11-14 17:35:12 [s0] val done (w 0.190282282581008)
+11-14 17:35:13 [s10] start (baseline run E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sup3/run, crops D:/S2MUAV3D/srcx_work/in2mav_seed2, SX_SEEDSHIFT=10)
+11-14 18:08:16 [s10] students done
+11-14 18:16:41 [s10] val done (w 0.17313322450305155)
+11-14 18:16:42 [s20] start (baseline run E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/mav_full_s20, crops D:/S2MUAV3D/srcx_work/in2mav_sd20, SX_SEEDSHIFT=20)
+11-14 18:46:52 [s20] students done
+11-14 18:55:03 [s20] val done (w 0.20502929518556723)
+11-14 18:55:09 ALL DONE: val: mean(b-a) AOE -0.19 UDS -0.10 over 3 runs [s0 AOE 21.11->20.99 UDS 59.71->59.87; s10 AOE 21.13->21.09 UDS 59.54->59.24; s20 AOE 21.25->20.86 UDS 59.87->59.73] || test: mean(b-a) AOE -0.24 UDS +0.21 over 3 runs [s0 AOE 14.48->14.31 UDS 60.81->61.37; s10 AOE 14.87->14.75 UDS 59.28->59.30; s20 AOE 15.15->14.70 UDS 62.70->62.73] || a = IR+LiDAR-teacher init (PST), b = RGB-only KZ init; AOE deg (lower better), UDS higher better

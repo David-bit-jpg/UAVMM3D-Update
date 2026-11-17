@@ -1,0 +1,3 @@
+11-16 16:37:27 [out2antifs] train out2antifs_dann batch 8 (waiting for gpu slot)
+11-16 17:02:28 [out2antifs] trained out2antifs_dann
+11-16 17:04:51 [out2antifs] out2antifs_dann: all      AOE 23.497  ATE 0.568  ASE 20.393  AP 0.005  UDS 13.969  mDR 52.744

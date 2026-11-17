@@ -1,0 +1,19 @@
+11-16 11:26:33 [prep mav sd30] start shared stage-1 outputs (re-seeded sim detectors of seed set 30)
+ok prep mav 30 mav_sd30 E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/shared/mav_sd30/lib
+11-16 11:26:34 [prep mav sd30] waiting for stage-1 in sd30 det:0 -> E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/release/in_sd30/ramp_s30.pth
+11-16 12:06:35 [prep mav sd30] waiting for stage-1 in sd30 det:1 -> E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/release/in_sd30/ramp_s31.pth
+11-16 12:41:36 [prep mav sd30] waiting for stage-1 in sd30 det:2 -> E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/release/in_sd30/ramp_s32.pth
+configs cfgs/models/uavdet_3d/camnorm/srcx/real_in2mav_s1prepsd30.yaml cfgs/models/uavdet_3d/camnorm/srcx/st_in2mav_s1prepsd30.yaml
+s_bar (val unlabeled, 172 boxes conf>=0.7 of 1168) = [0.3448 0.3452 0.1971]
+train: 12866 frames, conf median 0.384, >=0.5 38.3%, >=0.3 93.7%
+val: 2336 frames, conf median 0.364, >=0.5 34.6%, >=0.3 91.8%
+test: 4800 frames, conf median 0.629, >=0.5 65.4%, >=0.3 97.2%
+2336 preds -> E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/shared/mav_sd30/preds/srconly_val.pkl
+4800 preds -> E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/shared/mav_sd30/preds/srconly_test.pkl
+sim samples 9121 (with IR silhouette 9119), delta* median +0.134 |.| median 0.146
+hull check {"n": 9121, "ir_sil_mass_inside_hull": 0.9958594580344511, "hull_area_frac_mean": 0.1529523148739002, "ir_sil_area_frac_mean": 0.0650320723317927, "hull_empty_frac": 0.10086613309944086, "ir_sil_empty_frac": 0.10393597193290209}
+11-16 14:08:49 [prep mav sd30] hull check {"n": 9121, "ir_sil_mass_inside_hull": 0.9958594580344511, "hull_area_frac_mean": 0.1529523148739002, "ir_sil_area_frac_mean": 0.0650320723317927, "hull_empty_frac": 0.10086613309944086, "i
+bank: 4680 windows from 12866 frames, kept 4680
+real crops d0/train: 4927 of 12866 frames
+11-16 14:18:54 [prep mav sd30] shared stage-1 outputs done
+11-17 01:11:01 [prep mav sd30] already done

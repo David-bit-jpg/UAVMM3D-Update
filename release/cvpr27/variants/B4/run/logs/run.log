@@ -1,0 +1,103 @@
+11-14 05:02:39 start B4 naive self-training (REST=1)
+ok E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/B4/lib
+configs cfgs/models/uavdet_3d/camnorm/srcx/real_in2mav_naive.yaml cfgs/models/uavdet_3d/camnorm/srcx/st_in2mav_naive.yaml
+{'tag': 'srcx_in2mav_naive', 'refiner': 'none', 'n': 5227, 'n_corrected': 0, 'c_bar': 0.0, 'lam': 0.75, 'n_train': 12866}
+{
+ "tag": "srcx_in2mav_naive",
+ "refiner": "none",
+ "n": 5227,
+ "n_corrected": 0,
+ "c_bar": 0.0,
+ "lam": 0.75,
+ "n_train": 12866
+}
+s_bar (val unlabeled, 468 boxes conf>=0.7 of 1168) = [0.3477 0.3486 0.1953]
+train: 12866 frames, conf median 0.648, >=0.5 61.7%, >=0.3 74.9%
+val: 2336 frames, conf median 0.607, >=0.5 58.6%, >=0.3 72.6%
+test: 4800 frames, conf median 0.791, >=0.5 76.3%, >=0.3 82.6%
+2336 preds -> E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/B4/run/preds/naive_det1_val.pkl
+4800 preds -> E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/B4/run/preds/naive_det1_test.pkl
+all      AOE 34.865  ATE 0.484  ASE 3.513  AP 28.355  UDS 45.680  mDR 96.447
+0-3      AOE 34.164  ATE 0.311  ASE 3.500  AP 43.678  UDS 55.567  mDR 95.564
+3-4      AOE 35.652  ATE 0.491  ASE 3.661  AP 27.223  UDS 44.648  mDR 96.256
+4-99     AOE 34.608  ATE 0.684  ASE 3.323  AP 17.636  UDS 38.291  mDR 97.809
+all      AOE 25.492  ATE 0.338  ASE 2.523  AP 36.649  UDS 54.841  mDR 95.667
+0-3      AOE 29.942  ATE 0.312  ASE 3.274  AP 40.340  UDS 55.304  mDR 97.267
+3-4      AOE 24.393  ATE 0.334  ASE 2.261  AP 36.126  UDS 55.090  mDR 94.817
+4-99     AOE 20.865  ATE 0.385  ASE 1.891  AP 33.112  UDS 54.191  mDR 94.940
+11-14 06:17:24 ROW_B DONE: row (b) naive self-trained detector: test UDS 54.84 AP 36.65 ATE 0.338 ASE 2.52 AOE 25.49 mDR 95.67 | val UDS 45.68 AP 28.35 ATE 0.484 ASE 3.51 AOE 34.86 mDR 96.45 || PST row (b): test 53.38 / val 51.29
+crops tr1: 12866 (train every 1); zoom median 1.63, clipped at ZMAX 0.1%
+crops val1: 2336 (val every 1); zoom median 1.58, clipped at ZMAX 0.1%
+crops te1: 4800 (test every 1); zoom median 1.67, clipped at ZMAX 0.0%
+orientation bank ou_bank: 3373 windows
+pseudo pseudo_tr1: 12866 / 12866 crops have a pseudo-orientation; gate (IR vs LiDAR <= 10 deg) passes 4219 (32.8%); d_il median 16.0
+11-14 09:00:43 orientation branch done
+avg_inf E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/B4/run/ref/inf_st2_det1_train.pkl: 12865 keys from 2 files
+11-14 10:22:12 w (sim val inverse variance) = 0.18568242436633736   (PST: 0.1903)
+targets {'w': 0.18568242436633736, 'col_centres': [55.998742157111906, 157.75186321380733], 'b_train': {0: 0.35871906291948735, 1: 0.21047389616377182}, 'n_zL': 12866, 'n_dd': 4585, 'n_crops': 5227, 'n_target': 4751, 'n_fused': 4461}
+avg_inf E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/B4/run/ref/inf_fin_det1_train.pkl: 12865 keys from 2 files
+avg_inf E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/B4/run/ref/inf_fin_det1_val.pkl: 2336 keys from 2 files
+avg_inf E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/B4/run/ref/inf_fin_det1_test.pkl: 4799 keys from 2 files
+{
+ "w": 0.18568242436633736,
+ "s_bar": [
+  0.3477025479078293,
+  0.3486257642507553,
+  0.19533323496580124
+ ],
+ "col_centres": [
+  56.52877940692835,
+  156.02057075243607
+ ],
+ "c_k": {
+  "0": 0.07022655382752419,
+  "1": 0.13607346080243587,
+  "-1": 0.10119939967989922
+ },
+ "r_k": {
+  "0": 0.37959498167037964,
+  "1": 0.701090544462204
+ },
+ "b_k_val_images": {
+  "0": 0.5373115778084336,
+  "1": 0.42773299688511274
+ },
+ "alpha": 0.5,
+ "fused_val": {
+  "n": 2336,
+  "n_fused": 2334,
+  "n_rot_student": 2336,
+  "file": "E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/B4/run/preds/pcmd_fused_val.pkl"
+ },
+ "nofuse_val": {
+  "n": 2336,
+  "n_fused": 0,
+  "n_rot_student": 2336,
+  "file": "E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/B4/run/preds/pcmd_nofuse_val.pkl"
+ },
+ "fused_test": {
+  "n": 4800,
+  "n_fused": 4799,
+  "n_rot_student": 4800,
+  "file": "E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/B4/run/preds/pcmd_fused_test.pkl"
+ },
+ "nofuse_test": {
+  "n": 4800,
+  "n_fused": 0,
+  "n_rot_student": 4800,
+  "file": "E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/B4/run/preds/pcmd_nofuse_test.pkl"
+ }
+}
+all      AOE 21.676  ATE 0.408  ASE 2.313  AP 35.438  UDS 54.576  mDR 96.618
+0-3      AOE 19.879  ATE 0.270  ASE 2.165  AP 49.229  UDS 63.605  mDR 95.311
+3-4      AOE 22.467  ATE 0.410  ASE 2.343  AP 33.208  UDS 53.177  mDR 96.256
+4-99     AOE 22.723  ATE 0.569  ASE 2.447  AP 26.204  UDS 47.820  mDR 98.748
+all      AOE 21.677  ATE 0.424  ASE 2.312  AP 34.998  UDS 54.171  mDR 96.747
+0-3      AOE 19.901  ATE 0.263  ASE 2.166  AP 50.234  UDS 64.228  mDR 95.564
+3-4      AOE 22.467  ATE 0.434  ASE 2.343  AP 32.328  UDS 52.447  mDR 96.256
+4-99     AOE 22.704  ATE 0.604  ASE 2.444  AP 25.239  UDS 46.927  mDR 98.905
+all      AOE 15.257  ATE 0.290  ASE 1.664  AP 41.425  UDS 61.128  mDR 95.625
+0-3      AOE 15.686  ATE 0.265  ASE 2.160  AP 47.253  UDS 63.832  mDR 97.143
+3-4      AOE 14.151  ATE 0.290  ASE 1.455  AP 40.364  UDS 61.005  mDR 94.817
+4-99     AOE 16.747  ATE 0.329  ASE 1.314  AP 36.894  UDS 58.400  mDR 94.940
+11-14 12:55:37 ALL DONE: test row(b) UDS 54.84 AP 36.65 ATE 0.338 ASE 2.52 AOE 25.49 mDR 95.67 / full chain UDS 61.13 AP 41.43 ATE 0.290 ASE 1.66 AOE 15.26 mDR 95.62 | val row(b) UDS 45.68 AP 28.35 ATE 0.484 ASE 3.51 AOE 34.86 mDR 96.45 / full chain UDS 54.58 AP 35.44 ATE 0.408 ASE 2.31 AOE 21.68 mDR 96.62 || PST: row(b) 53.38/51.29, full 60.81/59.71 (test/val), naive w 0.18568242436633736

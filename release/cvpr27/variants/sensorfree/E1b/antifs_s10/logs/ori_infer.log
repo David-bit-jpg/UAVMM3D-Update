@@ -1,0 +1,127 @@
+[infer_wrap] memory fraction 0.20 -> E:\Open3DUAVDet\output\camnorm\geo1004\gproto\review1113\sensorfree\E1b\antifs_s10\lib\ori_x.py adabn E:/Open3DUAVDet/output/models/uavdet_3d/camnorm/sim_out_r34_kp_w12_zoom_out/OKZrgb_s0/ckpt/checkpoint_epoch_30.pth tr1 E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1b/antifs_s10/ou/T_rgb0.pth 80
+2026-11-15 14:43:47,310   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-15 14:43:47,310   INFO  MMCache[test]: 1818 帧, 模态 ['rgb'] -> 3 通道, 缓存 D:\S2MUAV3D\sim_outdoor_carla\cache\test
+2026-11-15 14:43:53,995   INFO  loading weights: 载入 289/289 个张量, 27.95M/27.95M 参数 (100.0%)
+adabn checkpoint_epoch_30.pth: 44 BN layers on 402 crops -> E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1b/antifs_s10/ou/T_rgb0.pth
+[infer_wrap] memory fraction 0.20 -> E:\Open3DUAVDet\output\camnorm\geo1004\gproto\review1113\sensorfree\E1b\antifs_s10\lib\ori_x.py adabn E:/Open3DUAVDet/output/models/uavdet_3d/camnorm/sim_out_r34_kp_w12_zoom_out/OKZrgb_s1/ckpt/checkpoint_epoch_30.pth tr1 E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1b/antifs_s10/ou/T_rgb1.pth 80
+2026-11-15 14:44:24,695   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-15 14:44:24,696   INFO  MMCache[test]: 1818 帧, 模态 ['rgb'] -> 3 通道, 缓存 D:\S2MUAV3D\sim_outdoor_carla\cache\test
+2026-11-15 14:44:31,515   INFO  loading weights: 载入 289/289 个张量, 27.95M/27.95M 参数 (100.0%)
+adabn checkpoint_epoch_30.pth: 44 BN layers on 402 crops -> E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1b/antifs_s10/ou/T_rgb1.pth
+[infer_wrap] memory fraction 0.20 -> E:\Open3DUAVDet\output\camnorm\geo1004\gproto\review1113\sensorfree\E1b\antifs_s10\lib\ori_x.py read tr1 E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1b/antifs_s10/ou/read_tr1_teach.pkl E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1b/antifs_s10/ou/T_rgb0.pth,E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1b/antifs_s10/ou/T_rgb1.pth
+2026-11-15 14:45:00,080   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-15 14:45:00,080   INFO  MMCache[test]: 1818 帧, 模态 ['rgb'] -> 3 通道, 缓存 D:\S2MUAV3D\sim_outdoor_carla\cache\test
+2026-11-15 14:45:00,340   INFO  loading weights: 载入 289/289 个张量, 27.95M/27.95M 参数 (100.0%)
+2026-11-15 14:45:24,914   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-15 14:45:24,914   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-15 14:45:24,914   INFO  MMCache[test]: 1818 帧, 模态 ['rgb'] -> 3 通道, 缓存 D:\S2MUAV3D\sim_outdoor_carla\cache\test
+2026-11-15 14:45:24,914   INFO  MMCache[test]: 1818 帧, 模态 ['rgb'] -> 3 通道, 缓存 D:\S2MUAV3D\sim_outdoor_carla\cache\test
+2026-11-15 14:45:25,533   INFO  loading weights: 载入 289/289 个张量, 27.95M/27.95M 参数 (100.0%)
+2026-11-15 14:45:25,533   INFO  loading weights: 载入 289/289 个张量, 27.95M/27.95M 参数 (100.0%)
+read 2 nets on 3293 crops -> E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1b/antifs_s10/ou/read_tr1_teach.pkl
+[infer_wrap] memory fraction 0.20 -> E:\Open3DUAVDet\output\camnorm\geo1004\gproto\review1113\sensorfree\E1b\antifs_s10\lib\ori_x.py adabn E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1b/antifs_s10/ou/runs/S6I_s0/ckpt_last.pth tr1 E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1b/antifs_s10/ou/S_ab0.pth 0
+2026-11-15 15:38:48,002   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-15 15:38:48,003   INFO  MMCache[test]: 1818 帧, 模态 ['rgb'] -> 3 通道, 缓存 D:\S2MUAV3D\sim_outdoor_carla\cache\test
+2026-11-15 15:38:54,841   INFO  loading weights: 载入 289/289 个张量, 27.95M/27.95M 参数 (100.0%)
+adabn ckpt_last.pth: 44 BN layers on 994 crops -> E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1b/antifs_s10/ou/S_ab0.pth
+[infer_wrap] memory fraction 0.20 -> E:\Open3DUAVDet\output\camnorm\geo1004\gproto\review1113\sensorfree\E1b\antifs_s10\lib\ori_x.py adabn E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1b/antifs_s10/ou/runs/S6I_s1/ckpt_last.pth tr1 E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1b/antifs_s10/ou/S_ab1.pth 0
+2026-11-15 15:39:48,777   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-15 15:39:48,777   INFO  MMCache[test]: 1818 帧, 模态 ['rgb'] -> 3 通道, 缓存 D:\S2MUAV3D\sim_outdoor_carla\cache\test
+2026-11-15 15:39:49,067   INFO  loading weights: 载入 289/289 个张量, 27.95M/27.95M 参数 (100.0%)
+adabn ckpt_last.pth: 44 BN layers on 994 crops -> E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1b/antifs_s10/ou/S_ab1.pth
+[infer_wrap] memory fraction 0.20 -> E:\Open3DUAVDet\output\camnorm\geo1004\gproto\review1113\sensorfree\E1b\antifs_s10\lib\ori_x.py read tr1 E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1b/antifs_s10/ou/read_tr1_stu.pkl E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1b/antifs_s10/ou/S_ab0.pth,E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1b/antifs_s10/ou/S_ab1.pth
+2026-11-15 15:40:19,225   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-15 15:40:19,225   INFO  MMCache[test]: 1818 帧, 模态 ['rgb'] -> 3 通道, 缓存 D:\S2MUAV3D\sim_outdoor_carla\cache\test
+2026-11-15 15:40:19,529   INFO  loading weights: 载入 289/289 个张量, 27.95M/27.95M 参数 (100.0%)
+2026-11-15 15:40:57,285   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-15 15:40:57,285   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-15 15:40:57,285   INFO  MMCache[test]: 1818 帧, 模态 ['rgb'] -> 3 通道, 缓存 D:\S2MUAV3D\sim_outdoor_carla\cache\test
+2026-11-15 15:40:57,285   INFO  MMCache[test]: 1818 帧, 模态 ['rgb'] -> 3 通道, 缓存 D:\S2MUAV3D\sim_outdoor_carla\cache\test
+2026-11-15 15:40:57,605   INFO  loading weights: 载入 289/289 个张量, 27.95M/27.95M 参数 (100.0%)
+2026-11-15 15:40:57,605   INFO  loading weights: 载入 289/289 个张量, 27.95M/27.95M 参数 (100.0%)
+2026-11-15 15:41:17,498   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-15 15:41:17,498   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-15 15:41:17,498   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-15 15:41:17,498   INFO  MMCache[test]: 1818 帧, 模态 ['rgb'] -> 3 通道, 缓存 D:\S2MUAV3D\sim_outdoor_carla\cache\test
+2026-11-15 15:41:17,498   INFO  MMCache[test]: 1818 帧, 模态 ['rgb'] -> 3 通道, 缓存 D:\S2MUAV3D\sim_outdoor_carla\cache\test
+2026-11-15 15:41:17,498   INFO  MMCache[test]: 1818 帧, 模态 ['rgb'] -> 3 通道, 缓存 D:\S2MUAV3D\sim_outdoor_carla\cache\test
+2026-11-15 15:41:17,764   INFO  loading weights: 载入 289/289 个张量, 27.95M/27.95M 参数 (100.0%)
+2026-11-15 15:41:17,764   INFO  loading weights: 载入 289/289 个张量, 27.95M/27.95M 参数 (100.0%)
+2026-11-15 15:41:17,764   INFO  loading weights: 载入 289/289 个张量, 27.95M/27.95M 参数 (100.0%)
+2026-11-15 15:41:38,641   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-15 15:41:38,641   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-15 15:41:38,641   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-15 15:41:38,641   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-15 15:41:38,641   INFO  MMCache[test]: 1818 帧, 模态 ['rgb'] -> 3 通道, 缓存 D:\S2MUAV3D\sim_outdoor_carla\cache\test
+2026-11-15 15:41:38,641   INFO  MMCache[test]: 1818 帧, 模态 ['rgb'] -> 3 通道, 缓存 D:\S2MUAV3D\sim_outdoor_carla\cache\test
+2026-11-15 15:41:38,641   INFO  MMCache[test]: 1818 帧, 模态 ['rgb'] -> 3 通道, 缓存 D:\S2MUAV3D\sim_outdoor_carla\cache\test
+2026-11-15 15:41:38,641   INFO  MMCache[test]: 1818 帧, 模态 ['rgb'] -> 3 通道, 缓存 D:\S2MUAV3D\sim_outdoor_carla\cache\test
+2026-11-15 15:41:38,889   INFO  loading weights: 载入 289/289 个张量, 27.95M/27.95M 参数 (100.0%)
+2026-11-15 15:41:38,889   INFO  loading weights: 载入 289/289 个张量, 27.95M/27.95M 参数 (100.0%)
+2026-11-15 15:41:38,889   INFO  loading weights: 载入 289/289 个张量, 27.95M/27.95M 参数 (100.0%)
+2026-11-15 15:41:38,889   INFO  loading weights: 载入 289/289 个张量, 27.95M/27.95M 参数 (100.0%)
+read 2 nets on 3293 crops -> E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1b/antifs_s10/ou/read_tr1_stu.pkl
+[infer_wrap] memory fraction 0.20 -> E:\Open3DUAVDet\output\camnorm\geo1004\gproto\review1113\sensorfree\E1b\antifs_s10\lib\ori_x.py read val1 E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1b/antifs_s10/ou/read_val1_stu.pkl E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1b/antifs_s10/ou/S_ab0.pth,E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1b/antifs_s10/ou/S_ab1.pth
+2026-11-15 16:27:57,587   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-15 16:27:57,587   INFO  MMCache[test]: 1818 帧, 模态 ['rgb'] -> 3 通道, 缓存 D:\S2MUAV3D\sim_outdoor_carla\cache\test
+2026-11-15 16:28:00,425   INFO  loading weights: 载入 289/289 个张量, 27.95M/27.95M 参数 (100.0%)
+2026-11-15 16:28:13,846   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-15 16:28:13,846   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-15 16:28:13,846   INFO  MMCache[test]: 1818 帧, 模态 ['rgb'] -> 3 通道, 缓存 D:\S2MUAV3D\sim_outdoor_carla\cache\test
+2026-11-15 16:28:13,846   INFO  MMCache[test]: 1818 帧, 模态 ['rgb'] -> 3 通道, 缓存 D:\S2MUAV3D\sim_outdoor_carla\cache\test
+2026-11-15 16:28:16,801   INFO  loading weights: 载入 289/289 个张量, 27.95M/27.95M 参数 (100.0%)
+2026-11-15 16:28:16,801   INFO  loading weights: 载入 289/289 个张量, 27.95M/27.95M 参数 (100.0%)
+2026-11-15 16:28:24,228   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-15 16:28:24,228   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-15 16:28:24,228   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-15 16:28:24,228   INFO  MMCache[test]: 1818 帧, 模态 ['rgb'] -> 3 通道, 缓存 D:\S2MUAV3D\sim_outdoor_carla\cache\test
+2026-11-15 16:28:24,228   INFO  MMCache[test]: 1818 帧, 模态 ['rgb'] -> 3 通道, 缓存 D:\S2MUAV3D\sim_outdoor_carla\cache\test
+2026-11-15 16:28:24,228   INFO  MMCache[test]: 1818 帧, 模态 ['rgb'] -> 3 通道, 缓存 D:\S2MUAV3D\sim_outdoor_carla\cache\test
+2026-11-15 16:28:24,440   INFO  loading weights: 载入 289/289 个张量, 27.95M/27.95M 参数 (100.0%)
+2026-11-15 16:28:24,440   INFO  loading weights: 载入 289/289 个张量, 27.95M/27.95M 参数 (100.0%)
+2026-11-15 16:28:24,440   INFO  loading weights: 载入 289/289 个张量, 27.95M/27.95M 参数 (100.0%)
+2026-11-15 16:28:30,587   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-15 16:28:30,587   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-15 16:28:30,587   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-15 16:28:30,587   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-15 16:28:30,587   INFO  MMCache[test]: 1818 帧, 模态 ['rgb'] -> 3 通道, 缓存 D:\S2MUAV3D\sim_outdoor_carla\cache\test
+2026-11-15 16:28:30,587   INFO  MMCache[test]: 1818 帧, 模态 ['rgb'] -> 3 通道, 缓存 D:\S2MUAV3D\sim_outdoor_carla\cache\test
+2026-11-15 16:28:30,587   INFO  MMCache[test]: 1818 帧, 模态 ['rgb'] -> 3 通道, 缓存 D:\S2MUAV3D\sim_outdoor_carla\cache\test
+2026-11-15 16:28:30,587   INFO  MMCache[test]: 1818 帧, 模态 ['rgb'] -> 3 通道, 缓存 D:\S2MUAV3D\sim_outdoor_carla\cache\test
+2026-11-15 16:28:30,785   INFO  loading weights: 载入 289/289 个张量, 27.95M/27.95M 参数 (100.0%)
+2026-11-15 16:28:30,785   INFO  loading weights: 载入 289/289 个张量, 27.95M/27.95M 参数 (100.0%)
+2026-11-15 16:28:30,785   INFO  loading weights: 载入 289/289 个张量, 27.95M/27.95M 参数 (100.0%)
+2026-11-15 16:28:30,785   INFO  loading weights: 载入 289/289 个张量, 27.95M/27.95M 参数 (100.0%)
+read 2 nets on 1148 crops -> E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1b/antifs_s10/ou/read_val1_stu.pkl
+[infer_wrap] memory fraction 0.20 -> E:\Open3DUAVDet\output\camnorm\geo1004\gproto\review1113\sensorfree\E1b\antifs_s10\lib\ori_x.py read te1 E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1b/antifs_s10/ou/read_te1_stu.pkl E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1b/antifs_s10/ou/S_ab0.pth,E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1b/antifs_s10/ou/S_ab1.pth
+2026-11-15 16:28:52,841   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-15 16:28:52,841   INFO  MMCache[test]: 1818 帧, 模态 ['rgb'] -> 3 通道, 缓存 D:\S2MUAV3D\sim_outdoor_carla\cache\test
+2026-11-15 16:28:53,058   INFO  loading weights: 载入 289/289 个张量, 27.95M/27.95M 参数 (100.0%)
+2026-11-15 16:29:23,392   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-15 16:29:23,392   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-15 16:29:23,392   INFO  MMCache[test]: 1818 帧, 模态 ['rgb'] -> 3 通道, 缓存 D:\S2MUAV3D\sim_outdoor_carla\cache\test
+2026-11-15 16:29:23,392   INFO  MMCache[test]: 1818 帧, 模态 ['rgb'] -> 3 通道, 缓存 D:\S2MUAV3D\sim_outdoor_carla\cache\test
+2026-11-15 16:29:23,635   INFO  loading weights: 载入 289/289 个张量, 27.95M/27.95M 参数 (100.0%)
+2026-11-15 16:29:23,635   INFO  loading weights: 载入 289/289 个张量, 27.95M/27.95M 参数 (100.0%)
+2026-11-15 16:29:41,821   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-15 16:29:41,821   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-15 16:29:41,821   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-15 16:29:41,821   INFO  MMCache[test]: 1818 帧, 模态 ['rgb'] -> 3 通道, 缓存 D:\S2MUAV3D\sim_outdoor_carla\cache\test
+2026-11-15 16:29:41,821   INFO  MMCache[test]: 1818 帧, 模态 ['rgb'] -> 3 通道, 缓存 D:\S2MUAV3D\sim_outdoor_carla\cache\test
+2026-11-15 16:29:41,821   INFO  MMCache[test]: 1818 帧, 模态 ['rgb'] -> 3 通道, 缓存 D:\S2MUAV3D\sim_outdoor_carla\cache\test
+2026-11-15 16:29:42,043   INFO  loading weights: 载入 289/289 个张量, 27.95M/27.95M 参数 (100.0%)
+2026-11-15 16:29:42,043   INFO  loading weights: 载入 289/289 个张量, 27.95M/27.95M 参数 (100.0%)
+2026-11-15 16:29:42,043   INFO  loading weights: 载入 289/289 个张量, 27.95M/27.95M 参数 (100.0%)
+2026-11-15 16:30:00,538   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-15 16:30:00,538   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-15 16:30:00,538   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-15 16:30:00,538   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-15 16:30:00,538   INFO  MMCache[test]: 1818 帧, 模态 ['rgb'] -> 3 通道, 缓存 D:\S2MUAV3D\sim_outdoor_carla\cache\test
+2026-11-15 16:30:00,538   INFO  MMCache[test]: 1818 帧, 模态 ['rgb'] -> 3 通道, 缓存 D:\S2MUAV3D\sim_outdoor_carla\cache\test
+2026-11-15 16:30:00,538   INFO  MMCache[test]: 1818 帧, 模态 ['rgb'] -> 3 通道, 缓存 D:\S2MUAV3D\sim_outdoor_carla\cache\test
+2026-11-15 16:30:00,538   INFO  MMCache[test]: 1818 帧, 模态 ['rgb'] -> 3 通道, 缓存 D:\S2MUAV3D\sim_outdoor_carla\cache\test
+2026-11-15 16:30:00,782   INFO  loading weights: 载入 289/289 个张量, 27.95M/27.95M 参数 (100.0%)
+2026-11-15 16:30:00,782   INFO  loading weights: 载入 289/289 个张量, 27.95M/27.95M 参数 (100.0%)
+2026-11-15 16:30:00,782   INFO  loading weights: 载入 289/289 个张量, 27.95M/27.95M 参数 (100.0%)
+2026-11-15 16:30:00,782   INFO  loading weights: 载入 289/289 个张量, 27.95M/27.95M 参数 (100.0%)
+read 2 nets on 2624 crops -> E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1b/antifs_s10/ou/read_te1_stu.pkl

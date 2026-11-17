@@ -1,0 +1,102 @@
+11-13 14:31:03 start in2mav seed run 2 (SX_SEEDSHIFT=10, COPY_FIXED=1)
+ok E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sup3/lib
+configs cfgs/models/uavdet_3d/camnorm/srcx/real_in2mav_seed2.yaml cfgs/models/uavdet_3d/camnorm/srcx/st_in2mav_seed2.yaml
+11-13 14:34:56 copied fixed stage-1 outputs from srcx/in2mav (det0, srconly preds, refiner sim samples / bank / real d0 crops, wsim cache)
+11-13 15:10:46 refiners stage 1-2 done
+avg_inf E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sup3/run/ref/inf_st2_det0_train.pkl: 12865 keys from 2 files
+{'tag': 'srcx_in2mav_seed2', 'n': 5227, 'n_corrected': 5007, 'c_bar': 0.09588358551263809, 'lam': 0.75, 'n_train': 12866}
+{
+ "tag": "srcx_in2mav_seed2",
+ "n": 5227,
+ "n_corrected": 5007,
+ "c_bar": 0.09588358551263809,
+ "lam": 0.75,
+ "n_train": 12866
+}s_bar (val unlabeled, 476 boxes conf>=0.7 of 1168) = [0.3473 0.3486 0.1954]
+train: 12866 frames, conf median 0.664, >=0.5 63.3%, >=0.3 75.8%
+val: 2336 frames, conf median 0.633, >=0.5 61.8%, >=0.3 74.4%
+test: 4800 frames, conf median 0.795, >=0.5 76.9%, >=0.3 83.5%
+11-13 15:46:04 detectors done
+crops tr1: 12866 (train every 1); zoom median 1.71, clipped at ZMAX 0.1%
+crops val1: 2336 (val every 1); zoom median 1.69, clipped at ZMAX 0.2%
+crops te1: 4800 (test every 1); zoom median 1.82, clipped at ZMAX 0.0%
+orientation bank ou_bank: 4332 windows
+pseudo pseudo_tr1: 12866 / 12866 crops have a pseudo-orientation; gate (IR vs LiDAR <= 10 deg) passes 4352 (33.8%); d_il median 15.6
+11-13 16:52:56 orientation branch done
+avg_inf E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sup3/run/ref/inf_st2_det1_train.pkl: 12865 keys from 2 files
+11-13 17:06:51 w (sim val inverse variance) = 0.17313322450305155   (reported run: 0.1903)
+targets {'w': 0.17313322450305155, 'col_centres': [57.54165236585766, 149.9040086159578], 'b_train': {0: 0.4025427512375246, 1: 0.20490735439683647}, 'n_zL': 12866, 'n_dd': 5169, 'n_crops': 5227, 'n_target': 4208, 'n_fused': 4184}
+avg_inf E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sup3/run/ref/inf_fin_det1_train.pkl: 12865 keys from 2 files
+avg_inf E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sup3/run/ref/inf_fin_det1_val.pkl: 2336 keys from 2 files
+avg_inf E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sup3/run/ref/inf_fin_det1_test.pkl: 4800 keys from 2 files
+{
+ "w": 0.17313322450305155,
+ "s_bar": [
+  0.3473264127969742,
+  0.3485652804374695,
+  0.19537626206874847
+ ],
+ "col_centres": [
+  57.747762032697004,
+  150.16186019976143
+ ],
+ "c_k": {
+  "0": 0.04518000967800617,
+  "1": 0.09816978871822357,
+  "-1": 0.06953538209199905
+ },
+ "r_k": {
+  "0": 0.3788255453109741,
+  "1": 0.709150493144989
+ },
+ "b_k_val_images": {
+  "1": 0.272213421955501,
+  "0": 0.5312601196824795
+ },
+ "alpha": 0.5,
+ "fused_val": {
+  "n": 2336,
+  "n_fused": 2217,
+  "n_rot_student": 2336,
+  "file": "E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sup3/run/preds/pcmd_fused_val.pkl"
+ },
+ "nofuse_val": {
+  "n": 2336,
+  "n_fused": 0,
+  "n_rot_student": 2336,
+  "file": "E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sup3/run/preds/pcmd_nofuse_val.pkl"
+ },
+ "fused_test": {
+  "n": 4800,
+  "n_fused": 4619,
+  "n_rot_student": 4800,
+  "file": "E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sup3/run/preds/pcmd_fused_test.pkl"
+ },
+ "nofuse_test": {
+  "n": 4800,
+  "n_fused": 0,
+  "n_rot_student": 4800,
+  "file": "E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sup3/run/preds/pcmd_nofuse_test.pkl"
+ }
+}
+all      AOE 27.841  ATE 0.368  ASE 2.200  AP 11.847  UDS 35.534  mDR 44.264
+0-3      AOE 28.741  ATE 0.218  ASE 2.423  AP 25.192  UDS 44.827  mDR 53.992
+3-4      AOE 29.087  ATE 0.377  ASE 2.104  AP 7.972  UDS 31.585  mDR 30.286
+4-99     AOE 25.662  ATE 0.553  ASE 1.994  AP 6.857  UDS 32.444  mDR 52.113
+all      AOE 21.133  ATE 0.312  ASE 2.310  AP 43.192  UDS 59.543  mDR 94.777
+0-3      AOE 19.710  ATE 0.230  ASE 2.183  AP 60.401  UDS 69.759  mDR 95.691
+3-4      AOE 21.869  ATE 0.308  ASE 2.404  AP 41.980  UDS 58.617  mDR 94.053
+4-99     AOE 21.868  ATE 0.420  ASE 2.335  AP 31.152  UDS 51.967  mDR 94.679
+all      AOE 21.133  ATE 0.308  ASE 2.310  AP 42.688  UDS 59.337  mDR 94.777
+0-3      AOE 19.710  ATE 0.210  ASE 2.183  AP 61.335  UDS 70.475  mDR 95.691
+3-4      AOE 21.869  ATE 0.318  ASE 2.404  AP 39.160  UDS 57.089  mDR 94.053
+4-99     AOE 21.868  ATE 0.418  ASE 2.335  AP 31.297  UDS 52.064  mDR 94.679
+all      AOE 20.318  ATE 0.283  ASE 1.737  AP 26.873  UDS 49.513  mDR 69.771
+0-3      AOE 22.049  ATE 0.269  ASE 1.919  AP 21.124  UDS 44.494  mDR 56.025
+3-4      AOE 21.470  ATE 0.280  ASE 1.680  AP 31.414  UDS 52.594  mDR 77.413
+4-99     AOE 16.120  ATE 0.305  ASE 1.650  AP 27.191  UDS 51.125  mDR 75.345
+all      AOE 14.869  ATE 0.313  ASE 1.777  AP 38.405  UDS 59.278  mDR 95.646
+0-3      AOE 15.558  ATE 0.211  ASE 2.089  AP 61.310  UDS 71.642  mDR 97.019
+3-4      AOE 13.826  ATE 0.291  ASE 1.584  AP 40.295  UDS 60.870  mDR 94.864
+4-99     AOE 15.842  ATE 0.511  ASE 1.676  AP 19.767  UDS 47.338  mDR 95.124
+11-13 17:37:41 ALL DONE: seed run 2 (shift 10) test UDS 59.28 AP 38.40 ATE 0.313 AOE 14.87 ASE 1.777 mDR 95.65 | val UDS 59.54 | w 0.1731 | run 1: test 60.81 / val 59.71

@@ -1,0 +1,1 @@
+E1 mav_s10 vs RGB-only mav_s10 [mav, 1 pair(s)] arm UDS 61.70 AP 45.09 ATE 0.278 ASE 2.61 AOE 16.45 mDR 95.85 | ref UDS 58.01 AP 39.06 ATE 0.333 ASE 2.59 AOE 15.95 mDR 94.92 | diff UDS +3.69 [+2.48, +5.11] AP +6.03 [+3.90, +8.55] ATE -0.055 [-0.075, -0.036] ASE +0.02 AOE +0.50 [-0.02, +0.94] mDR +0.94

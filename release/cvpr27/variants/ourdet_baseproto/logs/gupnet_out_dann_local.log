@@ -1,0 +1,3 @@
+11-16 15:32:43 [gupnet_out_dann] start
+11-16 15:32:43 [gupnet_out_dann] step 1 GUPNet sim-only outdoor (140 ep)
+11-16 15:34:18 [gupnet_out_dann] !! sim training failed

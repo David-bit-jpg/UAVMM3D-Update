@@ -1,0 +1,17 @@
+11-17 08:30:50 [E4 mav_s20] SKIPPED: machine time 11170830 is past the latest start 11170800
+11-17 09:32:54 [E4 mav_s20] start (mode STU, SX_TEACH=none, SX_SEEDSHIFT=20, PST ref E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/mav_full_s20, RGB-only ref E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/mav_none_s20)
+ok E4 mav 20 STU none E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E4/mav_s20/lib
+11-17 09:33:05 [E4 mav_s20] lib ok: W D:/S2MUAV3D/srcx_work/sf_E4_in2mav_none_s20, pseudo tag srcx_in2mav_none_sd20
+11-17 09:44:28 [E4 mav_s20] upstream of the students from the same-seed RGB-only run E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/mav_none_s20 (det0/det1, refiner st2, crops, gated pseudo-orientations [hard links], constant height)
+11-17 09:44:31 [E4 mav_s20] reference: pseudo pseudo_tr1: 12866 / 12866 crops have a pseudo-orientation; gate (IR vs LiDAR <= 10 deg) passes 3601 (28.0%); d_il median 17.8
+2026-11-17 09:54:56,299   INFO  init E:/Open3DUAVDet/output/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom/KZs0/ckpt/checkpoint_epoch_30.pth
+11-17 10:45:35 [E4 mav_s20] student s0: 'paste_tried': 0, 'paste_done': 0
+2026-11-17 09:52:46,840   INFO  init E:/Open3DUAVDet/output/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom/KZs1/ckpt/checkpoint_epoch_30.pth
+11-17 10:48:14 [E4 mav_s20] student s1: 'paste_tried': 0, 'paste_done': 0
+11-17 11:05:42 [E4 mav_s20] students done
+11-17 11:14:44 [E4 mav_s20] w (sim val inverse variance) = 0.21358688553533342
+avg_inf E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E4/mav_s20/ref/inf_fin_det1_train.pkl: 12866 keys from 2 files
+avg_inf E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E4/mav_s20/ref/inf_fin_det1_val.pkl: 2336 keys from 2 files
+avg_inf E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E4/mav_s20/ref/inf_fin_det1_test.pkl: 4800 keys from 2 files
+11-17 12:12:14 [E4 mav_s20] deploy constants: "col_centres":[0.0,0.0],"c_k":{"0":0.09893052652478218,"1":NaN,"-1":0.09893052652478218--"r_k":{"0":0.5612462759750858,"1":NaN},
+11-17 12:12:30 [E4 mav_s20] ALL DONE: E4 mav_s20 vs PST mav_s20 [mav, 1 pair(s)] arm UDS 60.65 AP 43.88 ATE 0.293 ASE 2.54 AOE 17.56 mDR 94.90 | ref UDS 62.70 AP 44.38 ATE 0.280 ASE 1.62 AOE 15.15 mDR 94.67 | diff UDS -2.06 [-3.32, -0.62] AP -0.49 [-2.53, +1.77] ATE +0.013 [-0.011, +0.034] ASE +0.92 AOE +2.41 [+0.40, +4.52] mDR +0.23 || vs RGB-only: diff UDS +1.79 [+0.28, +3.96] AP +2.74 [+0.87, +5.35] ATE -0.026 [-0.054, -0.005] ASE -0.05 AOE -0.16 [-2.72, +1.66] mDR +0.00 || recipe deviations: 0

@@ -1,0 +1,4 @@
+11-16 11:28:32 [lane A] lane start (6 steps)
+11-16 11:28:33 [lane A] step: train_stage1.sh in 30 det:0 det:1 det:2 rgb:0 rgb:1 irT:0 kdir:0 kdir:1
+11-17 01:09:41 [lane A] lane start (6 steps)
+11-17 01:09:41 [lane A] step: train_stage1.sh in 30 det:0 det:1 det:2 rgb:0 rgb:1 irT:0 kdir:0 kdir:1

@@ -1,0 +1,71 @@
+11-16 14:36:11 [out2antifs] train out2antifs_pst batch 8 (waiting for gpu slot)
+11-16 14:56:17 [in2mav] train in2mav_pst batch 8 (waiting for gpu slot)
+11-16 14:58:11 [in2mav] train in2mav_dann batch 8 (waiting for gpu slot)
+11-16 14:59:19 [in2mav] train in2mav_pst batch 8 (waiting for gpu slot)
+11-16 14:59:24 [in2mav] train in2mav_dann batch 8 (waiting for gpu slot)
+11-16 15:06:16 [in2mav] train in2mav_pst batch 8 (waiting for gpu slot)
+11-16 15:06:18 [in2mav] train in2mav_dann batch 8 (waiting for gpu slot)
+11-16 15:11:02 [out2antifs] train out2antifs_pst batch 8 (waiting for gpu slot)
+11-16 15:11:04 [out2antifs] train out2antifs_dann batch 8 (waiting for gpu slot)
+11-16 15:27:52 [out2antifs] !! train infer
+11-16 15:27:52 [in2mav] !! train infer
+11-16 15:27:54 [out2antifs] !! train out2antifs_dann failed
+11-16 15:27:55 [in2mav] !! train in2mav_dann failed
+11-16 15:27:55 [out2antifs] !! train out2antifs_pst failed
+11-16 15:27:55 [in2mav] !! train in2mav_pst failed
+11-16 15:29:11 [in2mav] train in2mav_pst batch 8 (waiting for gpu slot)
+11-16 15:29:13 [in2mav] train in2mav_dann batch 8 (waiting for gpu slot)
+11-16 15:31:56 [out2antifs] train out2antifs_pst batch 8 (waiting for gpu slot)
+11-16 15:40:03 [out2antifs] killed own out2antifs_pst (host RAM thrash, paging); relaunch after MAV6D +PST
+11-16 16:34:19 [seq] launch train_eval.sh out2antifs pst
+11-16 16:34:20 [out2antifs] train out2antifs_pst batch 8 (waiting for gpu slot)
+11-16 16:34:27 [in2mav] trained in2mav_pst
+11-16 16:37:05 [in2mav] in2mav_pst: all      AOE 20.888  ATE 0.485  ASE 2.943  AP 23.835  UDS 47.101  mDR 95.875
+11-16 16:37:27 [seq] launch dann_eval.sh out2antifs
+11-16 16:37:27 [out2antifs] train out2antifs_dann batch 8 (waiting for gpu slot)
+11-16 16:37:30 [in2mav] trained in2mav_dann
+11-16 16:39:28 [in2mav] in2mav_dann: all      AOE 23.746  ATE 0.894  ASE 6.793  AP 7.326  UDS 26.387  mDR 80.604
+11-16 16:42:10 [in2mav] row1 sim-only s0: all      AOE 20.420  ATE 0.666  ASE 5.920  AP 13.088  UDS 32.588  mDR 69.792
+11-16 16:42:45 [in2mav] train in2mav_ub batch 8 epochs 7 (waiting for gpu slot)
+11-16 16:42:56 [in2mav] train in2mav_ub batch 8 epochs 7 (waiting for gpu slot)
+11-16 16:59:24 [out2antifs] trained out2antifs_pst
+11-16 17:02:26 [out2antifs] out2antifs_pst: all      AOE 23.210  ATE 0.128  ASE 15.279  AP 14.772  UDS 30.009  mDR 72.828
+11-16 17:02:28 [out2antifs] trained out2antifs_dann
+11-16 17:02:49 [seq] launch ub_eval.sh out2antifs
+11-16 17:02:49 [out2antifs] train out2antifs_ub batch 8 epochs 8 (waiting for gpu slot)
+11-16 17:04:51 [out2antifs] out2antifs_dann: all      AOE 23.497  ATE 0.568  ASE 20.393  AP 0.005  UDS 13.969  mDR 52.744
+11-16 17:07:43 [out2antifs] st labels: {"combo":"out2antifs","mode":"st","n":2634,"n_train":3293,"index":"D:/S2MUAV3D/ourdet_baseproto_cache/outdoor_real_fs/train/index_st.pkl","roundtrip_max_px":0.0,"roundtrip_float32_max_px":7.497
+11-16 17:08:56 [out2antifs] row1 sim-only s0: all      AOE 26.309  ATE 0.470  ASE 36.975  AP 2.933  UDS 17.220  mDR 71.951
+11-16 17:09:20 [out2antifs] train out2antifs_st batch 8 (waiting for gpu slot)
+11-16 17:12:03 [out2antifs] trained out2antifs_ub
+11-16 17:12:21 [seq] launch row1.sh in2mav
+11-16 17:12:27 [seq] launch train_eval.sh in2mav st
+11-16 17:12:32 [seq] all launched
+11-16 17:14:13 [in2mav] train in2mav_ub batch 8 epochs 7 (waiting for gpu slot)
+11-16 17:14:31 [seq] sequencer stopped; in2mav row1 (train pass) + st launched by hand
+11-16 17:24:10 [out2antifs] out2antifs_ub: all      AOE 24.422  ATE 0.402  ASE 1.678  AP 0.614  UDS 26.556  mDR 69.398
+11-16 17:24:42 [in2mav] st labels: {"combo":"in2mav","mode":"st","n":10293,"n_train":12866,"index":"F:/ourdet_baseproto_cache/mav6d_cn_obj/train/index_st.pkl","roundtrip_max_px":0.0,"roundtrip_float32_max_px":2.3732913662755095e
+11-16 17:24:44 [in2mav] row1 sim-only s0: all      AOE 20.420  ATE 0.666  ASE 5.920  AP 13.088  UDS 32.588  mDR 69.792
+11-16 17:26:28 [in2mav] train in2mav_st batch 8 (waiting for gpu slot)
+11-16 17:26:32 [in2mav] train in2mav_st batch 8 (waiting for gpu slot)
+11-16 17:34:59 [in2mav] killed own duplicate in2mav_st training (PID 62520, second copy started 17:29:52; copy PID 9704 kept; no checkpoint yet)
+11-16 17:40:36 [out2antifs] trained out2antifs_st
+11-16 17:43:43 [out2antifs] out2antifs_st: all      AOE 23.062  ATE 0.253  ASE 26.160  AP 5.474  UDS 17.666  mDR 59.680
+11-16 17:52:49 [in2mav] trained in2mav_ub
+11-16 17:58:10 [in2mav] in2mav_ub: all      AOE 17.624  ATE 0.276  ASE 0.053  AP 45.458  UDS 65.357  mDR 99.938
+11-16 18:26:39 [in2mav] trained in2mav_st
+11-16 18:29:41 [in2mav] in2mav_st: all      AOE 20.164  ATE 0.564  ASE 4.170  AP 14.878  UDS 37.518  mDR 73.958
+11-17 01:25:53 [out2antifs] train out2antifs_ubzoom batch 8 epochs 8 (waiting for gpu slot)
+11-17 01:26:17 [out2antifs] train out2antifs_ubzoom batch 8 epochs 8 (waiting for gpu slot)
+11-17 01:26:26 [out2antifs] !! train out2antifs_ubzoom failed
+11-17 01:34:46 [out2antifs] trained out2antifs_ubzoom
+11-17 01:36:04 [out2antifs] out2antifs_ubzoom: all      AOE 24.733  ATE 0.195  ASE 1.155  AP 5.730  UDS 34.388  mDR 84.909
+11-17 09:52:56 [out2antifs] train out2antifs_pstu batch 8 (waiting for gpu slot)
+11-17 10:16:29 [out2antifs] trained out2antifs_pstu
+11-17 10:21:34 [out2antifs] out2antifs_pstu: all      AOE 19.655  ATE 0.201  ASE 14.202  AP 4.294  UDS 23.389  mDR 84.642
+11-17 12:13:29 [in2mav] train in2mav_pstg batch 8 (waiting for gpu slot)
+11-17 12:57:00 [in2mav] trained in2mav_pstg
+11-17 13:02:43 [in2mav] in2mav_pstg: all      AOE 21.197  ATE 0.558  ASE 2.841  AP 18.682  UDS 43.598  mDR 95.312
+11-17 14:42:19 [in2mav] train in2mav_pstgs batch 8 (waiting for gpu slot)
+11-17 15:34:33 [in2mav] trained in2mav_pstgs
+11-17 15:38:47 [in2mav] in2mav_pstgs: all      AOE 20.988  ATE 0.558  ASE 3.061  AP 21.088  UDS 45.023  mDR 98.917

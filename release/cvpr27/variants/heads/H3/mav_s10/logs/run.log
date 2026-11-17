@@ -1,0 +1,13 @@
+11-16 17:27:51 [H3 mav_s10] start (mode FULL, SX_SEEDSHIFT=10, reference run E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sup3/run)
+ok H3 mav 10 FULL E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H3/mav_s10/lib
+11-16 17:27:56 [H3 mav_s10] lib ok: W D:/S2MUAV3D/srcx_work/heads_H3_in2mav_s10, pseudo tag srcx_in2mav_hdH3s10
+configs cfgs/models/uavdet_3d/camnorm/srcx/real_in2mav_hdH3s10.yaml cfgs/models/uavdet_3d/camnorm/srcx/st_in2mav_hdH3s10.yaml
+11-16 17:32:46 [H3 mav_s10] fixed stage-1 outputs from srcx/in2mav (det0, refiner sim samples / bank / real d0 crops [hard links], wsim cache)
+11-17 09:56:38 [H3 mav_s10] start (mode FULL, SX_SEEDSHIFT=10, reference run E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sup3/run)
+ok H3 mav 10 FULL E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H3/mav_s10/lib
+11-17 09:56:39 [H3 mav_s10] lib ok: W D:/S2MUAV3D/srcx_work/heads_H3_in2mav_s10, pseudo tag srcx_in2mav_hdH3s10
+configs cfgs/models/uavdet_3d/camnorm/srcx/real_in2mav_hdH3s10.yaml cfgs/models/uavdet_3d/camnorm/srcx/st_in2mav_hdH3s10.yaml
+11-17 09:56:41 [H3 mav_s10] fixed stage-1 outputs from srcx/in2mav (det0, refiner sim samples / bank / real d0 crops [hard links], wsim cache)
+11-17 12:13:11 FAILED (not OOM or 4 retries used): bash /e/Open3DUAVDet/output/camnorm/geo1004/gproto/gpu_slot.sh light D:/Miniconda3/envs/city/python.exe E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H3/mav_s10/lib/refiner_x.py train 1 6  see logs/ref_st1_s6.log
+11-17 12:15:02 FAILED (not OOM or 4 retries used): bash /e/Open3DUAVDet/output/camnorm/geo1004/gproto/gpu_slot.sh light D:/Miniconda3/envs/city/python.exe E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H3/mav_s10/lib/refiner_x.py train 2 5  see logs/ref_st2_s5.log
+11-17 12:15:02 [H3 mav_s10] !! refiner st2 s5

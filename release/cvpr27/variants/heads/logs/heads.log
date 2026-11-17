@@ -1,0 +1,290 @@
+11-14 17:28:19 [H4 mav_s0] waiting for review1113/initabl/.done and D:/cmpfull_runs/gupnet_uda_mtstrict_s0/.done (poll 10 min)
+11-14 17:30:20 [H6 mav_s0] waiting for review1113/initabl/.done and D:/cmpfull_runs/gupnet_uda_mtstrict_s0/.done (poll 10 min)
+11-14 17:32:21 [H5 mav_s0] waiting for review1113/initabl/.done and D:/cmpfull_runs/gupnet_uda_mtstrict_s0/.done (poll 10 min)
+11-14 17:34:23 [H2 mav_s0] waiting for review1113/initabl/.done and D:/cmpfull_runs/gupnet_uda_mtstrict_s0/.done (poll 10 min)
+11-14 18:16:27 [H1 mav_s0] waiting for review1113/initabl/.done and D:/cmpfull_runs/gupnet_uda_mtstrict_s0/.done (poll 10 min)
+11-14 18:48:31 [H3 mav_s0] waiting for review1113/initabl/.done and D:/cmpfull_runs/gupnet_uda_mtstrict_s0/.done (poll 10 min)
+11-14 18:50:33 [H7 mav_s10] waiting for review1113/initabl/.done and D:/cmpfull_runs/gupnet_uda_mtstrict_s0/.done (poll 10 min)
+11-14 18:52:34 [seeds] waiting for single run H4/mav_s0
+11-14 18:54:36 [anti] waiting for heads/logs/seeds.done
+11-14 21:38:24 [H4 mav_s0] start (mode ORI, SX_SEEDSHIFT=0, reference run E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/in2mav)
+11-14 21:38:25 [H4 mav_s0] lib ok: W D:/S2MUAV3D/srcx_work/heads_H4_in2mav_s0, pseudo tag srcx_in2mav
+11-14 21:38:28 [H4 mav_s0] reference inputs: det1, frozen stage-3 depth students, height readings, w; crops / bank hard-linked from /d/S2MUAV3D/srcx_work/in2mav
+11-14 21:38:32 [H3 mav_s0] waiting for predecessor H1/mav_s0
+11-14 21:40:21 [H6 mav_s0] start (mode HGT, SX_SEEDSHIFT=0, reference run E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/in2mav)
+11-14 21:40:22 [H6 mav_s0] lib ok: W D:/S2MUAV3D/srcx_work/heads_H6_in2mav_s0, pseudo tag srcx_in2mav
+11-14 21:40:33 [H7 mav_s10] waiting for predecessor H3/mav_s0
+11-14 21:42:22 [H5 mav_s0] waiting for predecessor H4/mav_s0
+11-14 21:44:23 [H2 mav_s0] waiting for predecessor H5/mav_s0
+11-14 21:46:33 [H1 mav_s0] waiting for predecessor H2/mav_s0
+11-14 21:46:35 [H4 mav_s0] pseudo pseudo_tr1: 12866 / 12866 crops have a pseudo-orientation; gate (IR vs LiDAR <= 10 deg) passes 4405 (34.2%); d_il median 15.3 | reference: pseudo pseudo_tr1: 12866 / 12866 crops have a pseudo-orientation; gate (IR vs LiDAR <= 10 deg) passes 4301 (33.4%); d_il median 15.2
+11-14 21:48:34 [H6 mav_s0] kpsbox checkpoint_epoch_8.pth on tr1: 12866 / 12866 crops (fit failed 0), box-corner height ratio median 0.495, s_bar ratio 0.561
+11-14 21:48:34 [H6 mav_s0] kpsbox checkpoint_epoch_8.pth on val1: 2336 / 2336 crops (fit failed 0), box-corner height ratio median 0.491, s_bar ratio 0.561
+11-14 21:48:34 [H6 mav_s0] kpsbox checkpoint_epoch_8.pth on te1: 4800 / 4800 crops (fit failed 0), box-corner height ratio median 0.563, s_bar ratio 0.561
+11-14 21:48:41 [H6 mav_s0] height ratio tr1: box corners median 0.495 (IQR 0.293) | LiDAR structure points median 0.451 (IQR 0.343) | Spearman 0.62, n 12866
+11-14 21:48:41 [H6 mav_s0] height ratio val1: box corners median 0.491 (IQR 0.310) | LiDAR structure points median 0.440 (IQR 0.319) | Spearman 0.61, n 2336
+11-14 21:48:41 [H6 mav_s0] height ratio te1: box corners median 0.563 (IQR 0.234) | LiDAR structure points median 0.695 (IQR 0.346) | Spearman 0.49, n 4800
+11-14 21:48:45 [H6 mav_s0] deploy constants: "col_centres":[56.28651814129036,156.96024897525456],"c_k":{"0":0.06154533661901951,"1":0.09074003621935844,"-1":0.07811899483203888--"r_k":{"0":0.3710561038629274,"1":0.5682108264641187},
+11-14 21:48:54 [H6 mav_s0] ALL DONE: H6 mav_s0 vs PST mav_s0 [mav, 1 pair(s)] arm UDS 60.38 AP 40.93 ATE 0.306 ASE 2.10 AOE 14.48 mDR 96.17 | ref UDS 60.81 AP 40.93 ATE 0.306 ASE 1.75 AOE 14.48 mDR 96.17 | diff UDS -0.43 [-0.62, -0.21] AP +0.00 [+0.00, +0.00] ATE +0.000 [+0.000, +0.000] ASE +0.34 AOE +0.00 [+0.00, +0.00] mDR +0.00
+11-14 21:48:54 [H1c mav_s0] start (mode DEP, SX_SEEDSHIFT=0, reference run E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/in2mav)
+11-14 21:48:55 [H1c mav_s0] lib ok: W E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H1c/mav_s0/work, pseudo tag srcx_in2mav
+11-14 21:49:00 [H1c mav_s0] deploy constants: "col_centres":[0.0,0.0],"c_k":{"0":0.07811899483203888,"1":NaN,"-1":0.07811899483203888--"r_k":{"0":0.4511459171772003,"1":NaN},
+11-14 21:49:09 [H1c mav_s0] ALL DONE: H1c mav_s0 vs PST mav_s0 [mav, 1 pair(s)] arm UDS 60.70 AP 44.22 ATE 0.286 ASE 3.35 AOE 14.48 mDR 96.17 | ref UDS 60.81 AP 40.93 ATE 0.306 ASE 1.75 AOE 14.48 mDR 96.17 | diff UDS -0.11 [-0.84, +0.33] AP +3.29 [+1.60, +4.33] ATE -0.020 [-0.030, -0.008] ASE +1.60 AOE +0.00 [+0.00, +0.00] mDR +0.00
+11-14 22:16:48 [H4 mav_s0] students done
+11-14 22:16:53 [H4 mav_s0] deploy constants: "col_centres":[56.28651814129036,156.96024897525456],"c_k":{"0":0.06154533661901951,"1":0.09074003621935844,"-1":0.07811899483203888--"r_k":{"0":0.3793414235115051,"1":0.7049553990364075},
+11-14 22:17:06 [H4 mav_s0] ALL DONE: H4 mav_s0 vs PST mav_s0 [mav, 1 pair(s)] arm UDS 60.01 AP 39.58 ATE 0.317 ASE 1.75 AOE 14.44 mDR 96.17 | ref UDS 60.81 AP 40.93 ATE 0.306 ASE 1.75 AOE 14.48 mDR 96.17 | diff UDS -0.80 [-1.21, -0.40] AP -1.35 [-1.99, -0.69] ATE +0.011 [+0.005, +0.017] ASE +0.00 AOE -0.04 [-0.30, +0.19] mDR +0.00
+11-14 22:22:22 [H5 mav_s0] start (mode ORI, SX_SEEDSHIFT=0, reference run E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/in2mav)
+11-14 22:22:24 [H5 mav_s0] lib ok: W D:/S2MUAV3D/srcx_work/heads_H5_in2mav_s0, pseudo tag srcx_in2mav
+11-14 22:22:29 [H5 mav_s0] reference inputs: det1, frozen stage-3 depth students, height readings, w; crops / bank hard-linked from /d/S2MUAV3D/srcx_work/in2mav
+11-14 22:22:39 [seeds] waiting for single run H5/mav_s0
+11-14 22:22:46 [H5 mav_s0] pseudo pseudo_tr1: 12866 / 12866 crops have a pseudo-orientation; gate (IR vs LiDAR <= 10 deg) passes 4301 (33.4%); d_il median 15.2 | reference: pseudo pseudo_tr1: 12866 / 12866 crops have a pseudo-orientation; gate (IR vs LiDAR <= 10 deg) passes 4301 (33.4%); d_il median 15.2
+11-14 22:52:04 [H5 mav_s0] students done
+11-14 22:52:16 [H5 mav_s0] deploy constants: "col_centres":[56.28651814129036,156.96024897525456],"c_k":{"0":0.06154533661901951,"1":0.09074003621935844,"-1":0.07811899483203888--"r_k":{"0":0.3793414235115051,"1":0.7049553990364075},
+11-14 22:52:30 [H5 mav_s0] ALL DONE: H5 mav_s0 vs PST mav_s0 [mav, 1 pair(s)] arm UDS 61.54 AP 42.55 ATE 0.296 ASE 1.75 AOE 15.41 mDR 96.17 | ref UDS 60.81 AP 40.93 ATE 0.306 ASE 1.75 AOE 14.48 mDR 96.17 | diff UDS +0.73 [-0.04, +1.44] AP +1.62 [+0.31, +2.78] ATE -0.009 [-0.020, +0.000] ASE +0.00 AOE +0.93 [+0.23, +1.69] mDR +0.00
+11-14 22:52:39 [seeds] waiting for single run H2/mav_s0
+11-14 22:54:24 [H2 mav_s0] start (mode FULL, SX_SEEDSHIFT=0, reference run E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/in2mav)
+11-14 22:54:30 [H2 mav_s0] lib ok: W D:/S2MUAV3D/srcx_work/heads_H2_in2mav_s0, pseudo tag srcx_in2mav_hdH2s0
+11-14 22:58:37 [H2 mav_s0] fixed stage-1 outputs from srcx/in2mav (det0, refiner sim samples / bank / real d0 crops [hard links], wsim cache)
+11-14 23:25:58 [H2 mav_s0] refiners stage 1-2 done
+11-14 23:42:54 [H2 mav_s0] pseudo-labels: {"tag":"srcx_in2mav_hdH2s0","n":5227,"n_corrected":5227,"c_bar":0.0890694186091423,"lam":0.75,"n_train":12866}
+11-15 00:06:37 [H2 mav_s0] detectors done
+11-15 00:32:56 [H1 mav_s0] start (mode FULL, SX_SEEDSHIFT=0, reference run E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/in2mav)
+11-15 00:32:57 [H1 mav_s0] lib ok: W D:/S2MUAV3D/srcx_work/heads_H1_in2mav_s0, pseudo tag srcx_in2mav_hdH1s0
+11-15 00:37:15 [H1 mav_s0] fixed stage-1 outputs from srcx/in2mav (det0, refiner sim samples / bank / real d0 crops [hard links], wsim cache)
+11-15 00:51:28 [H2 mav_s0] pseudo pseudo_tr1: 12866 / 12866 crops have a pseudo-orientation; gate (IR vs LiDAR <= 10 deg) passes 4333 (33.7%); d_il median 15.5
+11-15 01:15:50 [H1 mav_s0] refiners stage 1-2 done
+11-15 01:51:12 [H2 mav_s0] students done
+11-15 02:03:16 [H1 mav_s0] pseudo-labels: {"tag":"srcx_in2mav_hdH1s0","n":5227,"n_corrected":5227,"c_bar":0.12199321389198303,"lam":0.75,"n_train":12866}
+11-15 02:35:16 [H1 mav_s0] detectors done
+11-15 13:26:03 [H2 mav_s0] start (mode FULL, SX_SEEDSHIFT=0, reference run E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/in2mav)
+11-15 13:26:07 [H2 mav_s0] lib ok: W D:/S2MUAV3D/srcx_work/heads_H2_in2mav_s0, pseudo tag srcx_in2mav_hdH2s0
+11-15 13:26:13 [H2 mav_s0] fixed stage-1 outputs from srcx/in2mav (det0, refiner sim samples / bank / real d0 crops [hard links], wsim cache)
+11-15 13:27:20 [H2 mav_s0] refiners stage 1-2 done
+11-15 13:27:25 [H2 mav_s0] pseudo-labels: {"tag":"srcx_in2mav_hdH2s0","n":5227,"n_corrected":5227,"c_bar":0.0890694186091423,"lam":0.75,"n_train":12866}
+11-15 13:31:46 [H1 mav_s0] start (mode FULL, SX_SEEDSHIFT=0, reference run E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/in2mav)
+11-15 13:31:49 [H1 mav_s0] lib ok: W D:/S2MUAV3D/srcx_work/heads_H1_in2mav_s0, pseudo tag srcx_in2mav_hdH1s0
+11-15 13:31:56 [H1 mav_s0] fixed stage-1 outputs from srcx/in2mav (det0, refiner sim samples / bank / real d0 crops [hard links], wsim cache)
+11-15 13:32:33 [H2 mav_s0] detectors done
+11-15 13:32:42 [H2 mav_s0] 11-15 00:51:28 [H2 mav_s0] pseudo pseudo_tr1: 12866 / 12866 crops have a pseudo-orientation; gate (IR vs LiDAR <= 10 deg) passes 4333 (33.7%); d_il median 15.5
+11-15 13:32:56 [H1 mav_s0] refiners stage 1-2 done
+11-15 13:32:57 [H1 mav_s0] pseudo-labels: {"tag":"srcx_in2mav_hdH1s0","n":5227,"n_corrected":5227,"c_bar":0.12199321389198303,"lam":0.75,"n_train":12866}
+11-15 13:36:32 [H2 mav_s0] students done
+11-15 13:38:26 [H1 mav_s0] detectors done
+11-15 15:04:51 [H2 mav_s0] w (sim val inverse variance) = 0.17406220148342935
+11-15 15:30:26 [H1 mav_s0] pseudo pseudo_tr1: 12866 / 12866 crops have a pseudo-orientation; gate (IR vs LiDAR <= 10 deg) passes 4360 (33.9%); d_il median 15.3
+11-15 17:05:25 [H1 mav_s0] students done
+11-15 17:17:07 [H2 mav_s0] deploy constants: "col_centres":[53.93462443466273,155.6948385163921],"c_k":{"0":0.053075700998306274,"1":0.09818543121218681,"-1":0.07600465603172779--"r_k":{"0":0.3790241628885269,"1":0.7078376412391663},
+11-15 17:17:16 [H2 mav_s0] ALL DONE: H2 mav_s0 vs PST mav_s0 [mav, 1 pair(s)] arm UDS 57.63 AP 35.82 ATE 0.345 ASE 1.84 AOE 14.82 mDR 96.54 | ref UDS 60.81 AP 40.93 ATE 0.306 ASE 1.75 AOE 14.48 mDR 96.17 | diff UDS -3.18 [-5.32, -0.38] AP -5.11 [-8.63, -0.37] ATE +0.039 [+0.005, +0.071] ASE +0.09 AOE +0.34 [+0.08, +0.69] mDR +0.38
+11-15 17:35:28 [H1 mav_s0] w (sim val inverse variance) = 0.1955640487357422
+11-15 18:43:09 [H1 mav_s0] deploy constants: "col_centres":[0.0,0.0],"c_k":{"0":0.07853207364678383,"1":NaN,"-1":0.07853207364678383--"r_k":{"0":0.46283718943595886,"1":NaN},
+11-15 18:43:18 [H1 mav_s0] ALL DONE: H1 mav_s0 vs PST mav_s0 [mav, 1 pair(s)] arm UDS 63.28 AP 48.42 ATE 0.262 ASE 3.25 AOE 14.53 mDR 96.60 | ref UDS 60.81 AP 40.93 ATE 0.306 ASE 1.75 AOE 14.48 mDR 96.17 | diff UDS +2.47 [+0.48, +4.16] AP +7.49 [+3.77, +10.39] ATE -0.044 [-0.070, -0.015] ASE +1.49 AOE +0.05 [-0.35, +0.50] mDR +0.44
+11-15 18:49:09 [H3 mav_s0] start (mode FULL, SX_SEEDSHIFT=0, reference run E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/in2mav)
+11-15 18:50:11 [H3 mav_s0] lib ok: W D:/S2MUAV3D/srcx_work/heads_H3_in2mav_s0, pseudo tag srcx_in2mav_hdH3s0
+11-15 19:11:31 [H3 mav_s0] fixed stage-1 outputs from srcx/in2mav (det0, refiner sim samples / bank / real d0 crops [hard links], wsim cache)
+11-15 20:22:35 [H3 mav_s0] refiners stage 1-2 done
+11-15 20:35:50 [H3 mav_s0] pseudo-labels: {"tag":"srcx_in2mav_hdH3s0","n":5227,"n_corrected":5227,"c_bar":0.07716052234172821,"lam":0.75,"n_train":12866}
+11-15 21:30:33 [H3 mav_s0] detectors done
+11-15 23:13:16 [H3 mav_s0] pseudo pseudo_tr1: 12866 / 12866 crops have a pseudo-orientation; gate (IR vs LiDAR <= 10 deg) passes 4160 (32.3%); d_il median 16.2
+11-15 23:56:06 [H3 mav_s0] students done
+11-16 01:00:52 [H3 mav_s0] w (sim val inverse variance) = 0.20496159241969863
+11-16 02:21:18 [H3 mav_s0] deploy constants: "col_centres":[61.075828546864344,152.25025128893847],"c_k":{"0":0.08325105905532837,"1":0.1155082955956459,"-1":0.09665469266474247--"r_k":{"0":0.3813139796257019,"1":0.7010207772254944},
+11-16 02:21:30 [H3 mav_s0] ALL DONE: H3 mav_s0 vs PST mav_s0 [mav, 1 pair(s)] arm UDS 55.32 AP 31.97 ATE 0.375 ASE 1.66 AOE 15.19 mDR 95.31 | ref UDS 60.81 AP 40.93 ATE 0.306 ASE 1.75 AOE 14.48 mDR 96.17 | diff UDS -5.49 [-7.38, -3.18] AP -8.96 [-12.23, -4.98] ATE +0.069 [+0.033, +0.108] ASE -0.09 AOE +0.71 [+0.25, +1.23] mDR -0.85
+11-16 02:23:16 [H7 mav_s10] start (mode BH, SX_SEEDSHIFT=10, reference run E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sup3/run)
+11-16 02:23:20 [H7 mav_s10] lib ok: W E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H7/mav_s10/work, pseudo tag srcx_in2mav_seed2
+11-16 02:34:47 [H7 mav_s10] box hull at seed shift 10; frozen w of the reference run = 0.17313322450305155
+11-16 04:33:56 [H7 mav_s10] deploy constants: "col_centres":[83.72299671814395,138.3060564961662],"c_k":{"0":0.08517802506685257,"1":0.09615355357527733,"-1":0.09151620417833328--"r_k":{"0":0.3886231333017349,"1":0.6951382160186768},
+11-16 04:34:20 [H7 mav_s10] ALL DONE: H7 mav_s10 vs PST mav_s10 [mav, 1 pair(s)] arm UDS 60.01 AP 39.99 ATE 0.304 ASE 1.91 AOE 14.87 mDR 95.67 | ref UDS 59.28 AP 38.40 ATE 0.313 ASE 1.78 AOE 14.87 mDR 95.65 | diff UDS +0.74 [-1.35, +2.20] AP +1.58 [-1.57, +3.64] ATE -0.009 [-0.025, +0.008] ASE +0.14 AOE +0.00 [+0.00, +0.01] mDR +0.02 || H7 pooled (2 seed pairs) [mav, 2 pair(s)] arm UDS 61.34 AP 42.30 ATE 0.296 ASE 1.92 AOE 14.68 mDR 95.92 | ref UDS 60.04 AP 39.67 ATE 0.310 ASE 1.77 AOE 14.67 mDR 95.91 | diff UDS +1.29 [-0.41, +2.48] AP +2.63 [+0.12, +4.25] ATE -0.014 [-0.027, +0.002] ASE +0.16 AOE +0.00 [+0.00, +0.00] mDR +0.01
+11-16 04:34:21 [H7 mav_s20] start (mode BH, SX_SEEDSHIFT=20, reference run E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/mav_full_s20)
+11-16 04:34:22 [H7 mav_s20] lib ok: W E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H7/mav_s20/work, pseudo tag srcx_in2mav_sd20
+11-16 04:38:59 [H7 mav_s20] box hull at seed shift 20; frozen w of the reference run = 0.20502929518556723
+11-16 06:21:37 [H7 mav_s20] deploy constants: "col_centres":[88.51780404814407,146.45285745441163],"c_k":{"0":0.09932880848646164,"1":0.11231135204434395,"-1":0.10437528975307941--"r_k":{"0":0.39229145646095276,"1":0.6777125597000122},
+11-16 06:22:07 [H7 mav_s20] ALL DONE: H7 mav_s20 vs PST mav_s20 [mav, 1 pair(s)] arm UDS 63.28 AP 45.40 ATE 0.267 ASE 1.69 AOE 15.15 mDR 94.67 | ref UDS 62.70 AP 44.38 ATE 0.280 ASE 1.62 AOE 15.15 mDR 94.67 | diff UDS +0.58 [-1.08, +1.99] AP +1.02 [-1.40, +3.05] ATE -0.013 [-0.029, +0.001] ASE +0.08 AOE +0.00 [+0.00, +0.00] mDR +0.00 || H7 pooled (3 seed pairs) [mav, 3 pair(s)] arm UDS 61.99 AP 43.33 ATE 0.286 ASE 1.85 AOE 14.83 mDR 95.50 | ref UDS 60.93 AP 41.24 ATE 0.300 ASE 1.72 AOE 14.83 mDR 95.49 | diff UDS +1.06 [-0.45, +2.13] AP +2.10 [+0.14, +3.48] ATE -0.014 [-0.026, -0.000] ASE +0.13 AOE +0.00 [+0.00, +0.00] mDR +0.01
+11-16 06:31:24 [seeds] all single runs finished; starting seed-shift runs
+11-16 06:31:24 [anti] waiting for heads/logs/seeds.done
+11-16 06:31:25 [H4 mav_s10] start (mode ORI, SX_SEEDSHIFT=10, reference run E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sup3/run)
+11-16 06:31:27 [H4 mav_s10] lib ok: W D:/S2MUAV3D/srcx_work/heads_H4_in2mav_s10, pseudo tag srcx_in2mav
+11-16 06:31:31 [H4 mav_s10] reference inputs: det1, frozen stage-3 depth students, height readings, w; crops / bank hard-linked from /d/S2MUAV3D/srcx_work/in2mav_seed2
+11-16 06:37:22 [H4 mav_s10] pseudo pseudo_tr1: 12866 / 12866 crops have a pseudo-orientation; gate (IR vs LiDAR <= 10 deg) passes 4391 (34.1%); d_il median 15.5 | reference: pseudo pseudo_tr1: 12866 / 12866 crops have a pseudo-orientation; gate (IR vs LiDAR <= 10 deg) passes 4352 (33.8%); d_il median 15.6
+11-16 07:06:00 [H4 mav_s10] students done
+11-16 07:06:09 [H4 mav_s10] deploy constants: "col_centres":[57.747762032697004,150.16186019976143],"c_k":{"0":0.04518000967800617,"1":0.09816978871822357,"-1":0.06953538209199905--"r_k":{"0":0.3788255453109741,"1":0.709150493144989},
+11-16 07:06:31 [H4 mav_s10] ALL DONE: H4 mav_s10 vs PST mav_s10 [mav, 1 pair(s)] arm UDS 59.44 AP 38.43 ATE 0.315 ASE 1.78 AOE 14.06 mDR 95.65 | ref UDS 59.28 AP 38.40 ATE 0.313 ASE 1.78 AOE 14.87 mDR 95.65 | diff UDS +0.16 [-0.20, +0.65] AP +0.03 [-0.46, +0.58] ATE +0.002 [-0.002, +0.007] ASE -0.00 AOE -0.81 [-1.77, -0.19] mDR +0.00 || H4 pooled (2 seed pairs) [mav, 2 pair(s)] arm UDS 59.72 AP 39.01 ATE 0.316 ASE 1.77 AOE 14.25 mDR 95.91 | ref UDS 60.04 AP 39.67 ATE 0.310 ASE 1.77 AOE 14.67 mDR 95.91 | diff UDS -0.32 [-0.64, +0.07] AP -0.66 [-1.13, -0.17] ATE +0.007 [+0.003, +0.010] ASE -0.00 AOE -0.42 [-1.01, -0.04] mDR +0.00
+11-16 07:06:32 [H6 mav_s10] start (mode HGT, SX_SEEDSHIFT=10, reference run E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sup3/run)
+11-16 07:06:34 [H6 mav_s10] lib ok: W D:/S2MUAV3D/srcx_work/heads_H6_in2mav_s10, pseudo tag srcx_in2mav
+11-16 07:10:06 [H6 mav_s10] kpsbox checkpoint_epoch_8.pth on tr1: 12866 / 12866 crops (fit failed 0), box-corner height ratio median 0.494, s_bar ratio 0.562
+11-16 07:10:06 [H6 mav_s10] kpsbox checkpoint_epoch_8.pth on val1: 2336 / 2336 crops (fit failed 0), box-corner height ratio median 0.498, s_bar ratio 0.562
+11-16 07:10:06 [H6 mav_s10] kpsbox checkpoint_epoch_8.pth on te1: 4800 / 4800 crops (fit failed 0), box-corner height ratio median 0.562, s_bar ratio 0.562
+11-16 07:10:14 [H6 mav_s10] height ratio tr1: box corners median 0.494 (IQR 0.293) | LiDAR structure points median 0.460 (IQR 0.341) | Spearman 0.63, n 12866
+11-16 07:10:14 [H6 mav_s10] height ratio val1: box corners median 0.498 (IQR 0.318) | LiDAR structure points median 0.472 (IQR 0.329) | Spearman 0.64, n 2336
+11-16 07:10:14 [H6 mav_s10] height ratio te1: box corners median 0.562 (IQR 0.218) | LiDAR structure points median 0.700 (IQR 0.339) | Spearman 0.51, n 4800
+11-16 07:10:19 [H6 mav_s10] deploy constants: "col_centres":[57.747762032697004,150.16186019976143],"c_k":{"0":0.04518000967800617,"1":0.09816978871822357,"-1":0.06953538209199905--"r_k":{"0":0.3687846740882282,"1":0.5618819386611159},
+11-16 07:10:40 [H6 mav_s10] ALL DONE: H6 mav_s10 vs PST mav_s10 [mav, 1 pair(s)] arm UDS 58.81 AP 38.40 ATE 0.313 ASE 2.15 AOE 14.87 mDR 95.65 | ref UDS 59.28 AP 38.40 ATE 0.313 ASE 1.78 AOE 14.87 mDR 95.65 | diff UDS -0.47 [-0.68, -0.22] AP +0.00 [+0.00, +0.00] ATE +0.000 [+0.000, +0.000] ASE +0.38 AOE +0.00 [+0.00, +0.00] mDR +0.00 || H6 pooled (2 seed pairs) [mav, 2 pair(s)] arm UDS 59.59 AP 39.67 ATE 0.310 ASE 2.13 AOE 14.67 mDR 95.91 | ref UDS 60.04 AP 39.67 ATE 0.310 ASE 1.77 AOE 14.67 mDR 95.91 | diff UDS -0.45 [-0.65, -0.22] AP +0.00 [+0.00, +0.00] ATE +0.000 [+0.000, +0.000] ASE +0.36 AOE +0.00 [+0.00, +0.00] mDR +0.00
+11-16 07:10:41 [H1c mav_s10] start (mode DEP, SX_SEEDSHIFT=10, reference run E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sup3/run)
+11-16 07:10:42 [H1c mav_s10] lib ok: W E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H1c/mav_s10/work, pseudo tag srcx_in2mav
+11-16 07:10:49 [H1c mav_s10] deploy constants: "col_centres":[0.0,0.0],"c_k":{"0":0.06953538209199905,"1":NaN,"-1":0.06953538209199905--"r_k":{"0":0.46045300364494324,"1":NaN},
+11-16 07:11:10 [H1c mav_s10] ALL DONE: H1c mav_s10 vs PST mav_s10 [mav, 1 pair(s)] arm UDS 58.62 AP 40.66 ATE 0.298 ASE 3.35 AOE 14.87 mDR 95.67 | ref UDS 59.28 AP 38.40 ATE 0.313 ASE 1.78 AOE 14.87 mDR 95.65 | diff UDS -0.65 [-1.22, -0.31] AP +2.26 [+1.21, +2.88] ATE -0.015 [-0.020, -0.008] ASE +1.58 AOE +0.00 [+0.00, +0.01] mDR +0.02 || H1c pooled (2 seed pairs) [mav, 2 pair(s)] arm UDS 59.66 AP 42.44 ATE 0.292 ASE 3.35 AOE 14.68 mDR 95.92 | ref UDS 60.04 AP 39.67 ATE 0.310 ASE 1.77 AOE 14.67 mDR 95.91 | diff UDS -0.38 [-0.97, -0.08] AP +2.77 [+1.50, +3.50] ATE -0.017 [-0.025, -0.009] ASE +1.59 AOE +0.00 [+0.00, +0.00] mDR +0.01
+11-16 07:11:11 [H5 mav_s10] start (mode ORI, SX_SEEDSHIFT=10, reference run E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sup3/run)
+11-16 07:11:13 [H5 mav_s10] lib ok: W D:/S2MUAV3D/srcx_work/heads_H5_in2mav_s10, pseudo tag srcx_in2mav
+11-16 07:11:15 [H5 mav_s10] reference inputs: det1, frozen stage-3 depth students, height readings, w; crops / bank hard-linked from /d/S2MUAV3D/srcx_work/in2mav_seed2
+11-16 07:11:31 [H5 mav_s10] pseudo pseudo_tr1: 12866 / 12866 crops have a pseudo-orientation; gate (IR vs LiDAR <= 10 deg) passes 4352 (33.8%); d_il median 15.6 | reference: pseudo pseudo_tr1: 12866 / 12866 crops have a pseudo-orientation; gate (IR vs LiDAR <= 10 deg) passes 4352 (33.8%); d_il median 15.6
+11-16 07:38:05 [H5 mav_s10] students done
+11-16 07:38:09 [H5 mav_s10] deploy constants: "col_centres":[57.747762032697004,150.16186019976143],"c_k":{"0":0.04518000967800617,"1":0.09816978871822357,"-1":0.06953538209199905--"r_k":{"0":0.3788255453109741,"1":0.709150493144989},
+11-16 07:38:31 [H5 mav_s10] ALL DONE: H5 mav_s10 vs PST mav_s10 [mav, 1 pair(s)] arm UDS 60.33 AP 40.36 ATE 0.302 ASE 1.78 AOE 15.17 mDR 95.65 | ref UDS 59.28 AP 38.40 ATE 0.313 ASE 1.78 AOE 14.87 mDR 95.65 | diff UDS +1.06 [+0.22, +1.62] AP +1.95 [+0.60, +2.82] ATE -0.012 [-0.021, -0.001] ASE -0.00 AOE +0.30 [-0.01, +0.70] mDR +0.00 || H5 pooled (2 seed pairs) [mav, 2 pair(s)] arm UDS 60.94 AP 41.46 ATE 0.299 ASE 1.77 AOE 15.29 mDR 95.91 | ref UDS 60.04 AP 39.67 ATE 0.310 ASE 1.77 AOE 14.67 mDR 95.91 | diff UDS +0.89 [+0.19, +1.47] AP +1.79 [+0.55, +2.72] ATE -0.010 [-0.020, -0.001] ASE -0.00 AOE +0.62 [+0.29, +0.98] mDR +0.00
+11-16 07:38:31 [H2 mav_s10] start (mode FULL, SX_SEEDSHIFT=10, reference run E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sup3/run)
+11-16 07:38:33 [H2 mav_s10] lib ok: W D:/S2MUAV3D/srcx_work/heads_H2_in2mav_s10, pseudo tag srcx_in2mav_hdH2s10
+11-16 07:42:40 [H2 mav_s10] fixed stage-1 outputs from srcx/in2mav (det0, refiner sim samples / bank / real d0 crops [hard links], wsim cache)
+11-16 08:09:45 [H2 mav_s10] refiners stage 1-2 done
+11-16 08:26:46 [H2 mav_s10] pseudo-labels: {"tag":"srcx_in2mav_hdH2s10","n":5227,"n_corrected":5227,"c_bar":0.09496788308024406,"lam":0.75,"n_train":12866}
+11-16 08:56:02 [H2 mav_s10] detectors done
+11-16 09:32:06 [H4 mav_s20] start (mode ORI, SX_SEEDSHIFT=20, reference run E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/mav_full_s20)
+11-16 09:32:08 [H4 mav_s20] lib ok: W D:/S2MUAV3D/srcx_work/heads_H4_in2mav_s20, pseudo tag srcx_in2mav
+11-16 09:32:12 [H4 mav_s20] reference inputs: det1, frozen stage-3 depth students, height readings, w; crops / bank hard-linked from /d/S2MUAV3D/srcx_work/in2mav_sd20
+11-16 09:40:41 [H4 mav_s20] pseudo pseudo_tr1: 12866 / 12866 crops have a pseudo-orientation; gate (IR vs LiDAR <= 10 deg) passes 4321 (33.6%); d_il median 15.6 | reference: pseudo pseudo_tr1: 12866 / 12866 crops have a pseudo-orientation; gate (IR vs LiDAR <= 10 deg) passes 4216 (32.8%); d_il median 15.8
+11-16 10:21:25 [H4 mav_s20] students done
+11-16 10:21:26 [H2 mav_s10] pseudo pseudo_tr1: 12866 / 12866 crops have a pseudo-orientation; gate (IR vs LiDAR <= 10 deg) passes 4328 (33.6%); d_il median 15.5
+11-16 10:21:31 [H4 mav_s20] deploy constants: "col_centres":[58.03122691646699,157.33829408980662],"c_k":{"0":0.06982352957129478,"1":0.09592818096280098,"-1":0.08347011730074883--"r_k":{"0":0.3794829994440079,"1":0.7015576958656311},
+11-16 10:22:01 [H4 mav_s20] ALL DONE: H4 mav_s20 vs PST mav_s20 [mav, 1 pair(s)] arm UDS 63.03 AP 44.70 ATE 0.273 ASE 1.62 AOE 14.77 mDR 94.71 | ref UDS 62.70 AP 44.38 ATE 0.280 ASE 1.62 AOE 15.15 mDR 94.67 | diff UDS +0.33 [-0.09, +0.98] AP +0.32 [-0.41, +1.50] ATE -0.007 [-0.012, -0.001] ASE +0.00 AOE -0.38 [-1.17, +0.14] mDR +0.04 || H4 pooled (3 seed pairs) [mav, 3 pair(s)] arm UDS 60.83 AP 40.90 ATE 0.302 ASE 1.72 AOE 14.42 mDR 95.51 | ref UDS 60.93 AP 41.24 ATE 0.300 ASE 1.72 AOE 14.83 mDR 95.49 | diff UDS -0.10 [-0.27, +0.12] AP -0.33 [-0.61, -0.00] ATE +0.002 [-0.001, +0.005] ASE +0.00 AOE -0.41 [-0.81, -0.13] mDR +0.01
+11-16 10:22:01 [H6 mav_s20] start (mode HGT, SX_SEEDSHIFT=20, reference run E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/mav_full_s20)
+11-16 10:22:04 [H6 mav_s20] lib ok: W D:/S2MUAV3D/srcx_work/heads_H6_in2mav_s20, pseudo tag srcx_in2mav
+11-16 10:27:12 [H6 mav_s20] kpsbox checkpoint_epoch_8.pth on tr1: 12866 / 12866 crops (fit failed 0), box-corner height ratio median 0.501, s_bar ratio 0.561
+11-16 10:27:12 [H6 mav_s20] kpsbox checkpoint_epoch_8.pth on val1: 2336 / 2336 crops (fit failed 0), box-corner height ratio median 0.495, s_bar ratio 0.561
+11-16 10:27:12 [H6 mav_s20] kpsbox checkpoint_epoch_8.pth on te1: 4800 / 4800 crops (fit failed 0), box-corner height ratio median 0.563, s_bar ratio 0.561
+11-16 10:27:17 [H6 mav_s20] height ratio tr1: box corners median 0.501 (IQR 0.306) | LiDAR structure points median 0.458 (IQR 0.340) | Spearman 0.63, n 12866
+11-16 10:27:17 [H6 mav_s20] height ratio val1: box corners median 0.495 (IQR 0.315) | LiDAR structure points median 0.448 (IQR 0.320) | Spearman 0.65, n 2336
+11-16 10:27:17 [H6 mav_s20] height ratio te1: box corners median 0.563 (IQR 0.221) | LiDAR structure points median 0.694 (IQR 0.344) | Spearman 0.51, n 4800
+11-16 10:27:22 [H6 mav_s20] deploy constants: "col_centres":[58.03122691646699,157.33829408980662],"c_k":{"0":0.06982352957129478,"1":0.09592818096280098,"-1":0.08347011730074883--"r_k":{"0":0.37177039269029355,"1":0.573982093974248},
+11-16 10:27:52 [H6 mav_s20] ALL DONE: H6 mav_s20 vs PST mav_s20 [mav, 1 pair(s)] arm UDS 62.26 AP 44.38 ATE 0.280 ASE 1.97 AOE 15.15 mDR 94.67 | ref UDS 62.70 AP 44.38 ATE 0.280 ASE 1.62 AOE 15.15 mDR 94.67 | diff UDS -0.44 [-0.60, -0.22] AP +0.00 [+0.00, +0.00] ATE +0.000 [+0.000, +0.000] ASE +0.35 AOE +0.00 [+0.00, +0.00] mDR +0.00 || H6 pooled (3 seed pairs) [mav, 3 pair(s)] arm UDS 60.48 AP 41.24 ATE 0.300 ASE 2.07 AOE 14.83 mDR 95.49 | ref UDS 60.93 AP 41.24 ATE 0.300 ASE 1.72 AOE 14.83 mDR 95.49 | diff UDS -0.45 [-0.63, -0.22] AP +0.00 [+0.00, +0.00] ATE +0.000 [+0.000, +0.000] ASE +0.36 AOE +0.00 [+0.00, +0.00] mDR +0.00
+11-16 10:27:52 [H1c mav_s20] start (mode DEP, SX_SEEDSHIFT=20, reference run E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/mav_full_s20)
+11-16 10:27:54 [H1c mav_s20] lib ok: W E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H1c/mav_s20/work, pseudo tag srcx_in2mav
+11-16 10:28:09 [H1c mav_s20] deploy constants: "col_centres":[0.0,0.0],"c_k":{"0":0.08347011730074883,"1":NaN,"-1":0.08347011730074883--"r_k":{"0":0.4584782123565674,"1":NaN},
+11-16 10:28:39 [H1c mav_s20] ALL DONE: H1c mav_s20 vs PST mav_s20 [mav, 1 pair(s)] arm UDS 61.14 AP 45.17 ATE 0.274 ASE 3.24 AOE 15.15 mDR 94.71 | ref UDS 62.70 AP 44.38 ATE 0.280 ASE 1.62 AOE 15.15 mDR 94.67 | diff UDS -1.56 [-2.35, -0.82] AP +0.79 [-0.70, +2.27] ATE -0.005 [-0.014, +0.005] ASE +1.62 AOE +0.00 [-0.00, +0.00] mDR +0.04 || H1c pooled (3 seed pairs) [mav, 3 pair(s)] arm UDS 60.16 AP 43.35 ATE 0.286 ASE 3.32 AOE 14.83 mDR 95.51 | ref UDS 60.93 AP 41.24 ATE 0.300 ASE 1.72 AOE 14.83 mDR 95.49 | diff UDS -0.77 [-1.32, -0.40] AP +2.11 [+0.94, +2.95] ATE -0.013 [-0.021, -0.004] ASE +1.60 AOE +0.00 [+0.00, +0.00] mDR +0.02
+11-16 10:28:40 [H5 mav_s20] start (mode ORI, SX_SEEDSHIFT=20, reference run E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/mav_full_s20)
+11-16 10:28:41 [H5 mav_s20] lib ok: W D:/S2MUAV3D/srcx_work/heads_H5_in2mav_s20, pseudo tag srcx_in2mav
+11-16 10:28:44 [H5 mav_s20] reference inputs: det1, frozen stage-3 depth students, height readings, w; crops / bank hard-linked from /d/S2MUAV3D/srcx_work/in2mav_sd20
+11-16 10:29:10 [H5 mav_s20] pseudo pseudo_tr1: 12866 / 12866 crops have a pseudo-orientation; gate (IR vs LiDAR <= 10 deg) passes 4216 (32.8%); d_il median 15.8 | reference: pseudo pseudo_tr1: 12866 / 12866 crops have a pseudo-orientation; gate (IR vs LiDAR <= 10 deg) passes 4216 (32.8%); d_il median 15.8
+11-16 11:02:35 [H2 mav_s10] students done
+11-16 11:19:21 [H5 mav_s20] students done
+11-16 11:19:30 [H5 mav_s20] deploy constants: "col_centres":[58.03122691646699,157.33829408980662],"c_k":{"0":0.06982352957129478,"1":0.09592818096280098,"-1":0.08347011730074883--"r_k":{"0":0.3794829994440079,"1":0.7015576958656311},
+11-16 11:20:01 [H5 mav_s20] ALL DONE: H5 mav_s20 vs PST mav_s20 [mav, 1 pair(s)] arm UDS 63.35 AP 45.26 ATE 0.271 ASE 1.62 AOE 14.66 mDR 94.69 | ref UDS 62.70 AP 44.38 ATE 0.280 ASE 1.62 AOE 15.15 mDR 94.67 | diff UDS +0.65 [+0.12, +1.14] AP +0.88 [-0.05, +1.72] ATE -0.008 [-0.013, -0.003] ASE +0.00 AOE -0.49 [-1.25, +0.01] mDR +0.02 || H5 pooled (3 seed pairs) [mav, 3 pair(s)] arm UDS 61.74 AP 42.72 ATE 0.290 ASE 1.72 AOE 15.08 mDR 95.50 | ref UDS 60.93 AP 41.24 ATE 0.300 ASE 1.72 AOE 14.83 mDR 95.49 | diff UDS +0.81 [+0.29, +1.32] AP +1.49 [+0.52, +2.34] ATE -0.010 [-0.018, -0.002] ASE +0.00 AOE +0.25 [-0.10, +0.58] mDR +0.01
+11-16 11:38:34 [H2 mav_s10] w (sim val inverse variance) = 0.15520147540122378
+11-16 12:23:21 [H2 mav_s10] deploy constants: "col_centres":[56.194767610629455,150.2726012997787],"c_k":{"0":0.06009502522647381,"1":0.09821907244622707,"-1":0.07770584896206856--"r_k":{"0":0.38002288341522217,"1":0.7069202959537506},
+11-16 12:23:46 [H2 mav_s10] ALL DONE: H2 mav_s10 vs PST mav_s10 [mav, 1 pair(s)] arm UDS 58.53 AP 36.95 ATE 0.326 ASE 1.75 AOE 14.81 mDR 96.40 | ref UDS 59.28 AP 38.40 ATE 0.313 ASE 1.78 AOE 14.87 mDR 95.65 | diff UDS -0.75 [-2.49, +0.50] AP -1.45 [-4.42, +0.62] ATE +0.013 [-0.003, +0.031] ASE -0.03 AOE -0.05 [-0.47, +0.32] mDR +0.75 || H2 pooled (2 seed pairs) [mav, 2 pair(s)] arm UDS 58.08 AP 36.39 ATE 0.335 ASE 1.80 AOE 14.82 mDR 96.47 | ref UDS 60.04 AP 39.67 ATE 0.310 ASE 1.77 AOE 14.67 mDR 95.91 | diff UDS -1.96 [-3.47, -0.53] AP -3.28 [-5.70, -0.83] ATE +0.026 [+0.008, +0.044] ASE +0.03 AOE +0.14 [-0.08, +0.35] mDR +0.56
+11-16 12:23:47 [H1 mav_s10] start (mode FULL, SX_SEEDSHIFT=10, reference run E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sup3/run)
+11-16 12:23:50 [H1 mav_s10] lib ok: W D:/S2MUAV3D/srcx_work/heads_H1_in2mav_s10, pseudo tag srcx_in2mav_hdH1s10
+11-16 12:28:09 [H1 mav_s10] fixed stage-1 outputs from srcx/in2mav (det0, refiner sim samples / bank / real d0 crops [hard links], wsim cache)
+11-16 13:08:35 [H1 mav_s10] refiners stage 1-2 done
+11-16 15:08:08 [H1 mav_s10] pseudo-labels: {"tag":"srcx_in2mav_hdH1s10","n":5227,"n_corrected":5227,"c_bar":0.1530512049794197,"lam":0.75,"n_train":12866}
+11-16 16:33:49 [H1 mav_s10] detectors done
+11-16 17:27:49 [H1 mav_s10] !! crops val1
+11-16 17:27:50 [seeds] !! H1 mav s10 failed (see /e/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H1/mav_s10/logs/run.log)
+11-16 17:27:51 [H3 mav_s10] start (mode FULL, SX_SEEDSHIFT=10, reference run E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sup3/run)
+11-16 17:27:56 [H3 mav_s10] lib ok: W D:/S2MUAV3D/srcx_work/heads_H3_in2mav_s10, pseudo tag srcx_in2mav_hdH3s10
+11-16 17:32:46 [H3 mav_s10] fixed stage-1 outputs from srcx/in2mav (det0, refiner sim samples / bank / real d0 crops [hard links], wsim cache)
+11-17 01:11:41 [anti] waiting for heads/logs/seeds.done
+11-17 01:11:41 [seeds] all single runs finished; starting seed-shift runs
+11-17 01:11:42 [H4 mav_s10] already done: 11-16 07:06:31 [H4 mav_s10] ALL DONE: H4 mav_s10 vs PST mav_s10 [mav, 1 pair(s)] arm UDS 59.44 AP 38.43 ATE 0.315 ASE 1.78 AOE 14.06 mDR 95.65 | ref UDS 59.28 AP 38.40 ATE 0.313 ASE 1.78 AOE 14.87 mDR 95.65 | diff UDS +0.16 [-0.20, +0.65] AP +0.03 [-0.46, +0.58] ATE +0.002 [-0.002, +0.007] ASE -0.00 AOE -0.81 [-1.77, -0.19] mDR +0.00 || H4 pooled (2 seed pairs) [mav, 2 pair(s)] arm UDS 59.72 AP 39
+11-17 01:11:43 [H6 mav_s10] already done: 11-16 07:10:40 [H6 mav_s10] ALL DONE: H6 mav_s10 vs PST mav_s10 [mav, 1 pair(s)] arm UDS 58.81 AP 38.40 ATE 0.313 ASE 2.15 AOE 14.87 mDR 95.65 | ref UDS 59.28 AP 38.40 ATE 0.313 ASE 1.78 AOE 14.87 mDR 95.65 | diff UDS -0.47 [-0.68, -0.22] AP +0.00 [+0.00, +0.00] ATE +0.000 [+0.000, +0.000] ASE +0.38 AOE +0.00 [+0.00, +0.00] mDR +0.00 || H6 pooled (2 seed pairs) [mav, 2 pair(s)] arm UDS 59.59 AP 39
+11-17 01:11:43 [H1c mav_s10] already done: 11-16 07:11:10 [H1c mav_s10] ALL DONE: H1c mav_s10 vs PST mav_s10 [mav, 1 pair(s)] arm UDS 58.62 AP 40.66 ATE 0.298 ASE 3.35 AOE 14.87 mDR 95.67 | ref UDS 59.28 AP 38.40 ATE 0.313 ASE 1.78 AOE 14.87 mDR 95.65 | diff UDS -0.65 [-1.22, -0.31] AP +2.26 [+1.21, +2.88] ATE -0.015 [-0.020, -0.008] ASE +1.58 AOE +0.00 [+0.00, +0.01] mDR +0.02 || H1c pooled (2 seed pairs) [mav, 2 pair(s)] arm UDS 59.66 AP
+11-17 01:11:44 [H5 mav_s10] already done: 11-16 07:38:31 [H5 mav_s10] ALL DONE: H5 mav_s10 vs PST mav_s10 [mav, 1 pair(s)] arm UDS 60.33 AP 40.36 ATE 0.302 ASE 1.78 AOE 15.17 mDR 95.65 | ref UDS 59.28 AP 38.40 ATE 0.313 ASE 1.78 AOE 14.87 mDR 95.65 | diff UDS +1.06 [+0.22, +1.62] AP +1.95 [+0.60, +2.82] ATE -0.012 [-0.021, -0.001] ASE -0.00 AOE +0.30 [-0.01, +0.70] mDR +0.00 || H5 pooled (2 seed pairs) [mav, 2 pair(s)] arm UDS 60.94 AP 41
+11-17 01:11:44 [H2 mav_s10] already done: 11-16 12:23:46 [H2 mav_s10] ALL DONE: H2 mav_s10 vs PST mav_s10 [mav, 1 pair(s)] arm UDS 58.53 AP 36.95 ATE 0.326 ASE 1.75 AOE 14.81 mDR 96.40 | ref UDS 59.28 AP 38.40 ATE 0.313 ASE 1.78 AOE 14.87 mDR 95.65 | diff UDS -0.75 [-2.49, +0.50] AP -1.45 [-4.42, +0.62] ATE +0.013 [-0.003, +0.031] ASE -0.03 AOE -0.05 [-0.47, +0.32] mDR +0.75 || H2 pooled (2 seed pairs) [mav, 2 pair(s)] arm UDS 58.08 AP 36
+11-17 01:11:45 [H1 mav_s10] start (mode FULL, SX_SEEDSHIFT=10, reference run E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sup3/run)
+11-17 01:11:46 [H1 mav_s10] lib ok: W D:/S2MUAV3D/srcx_work/heads_H1_in2mav_s10, pseudo tag srcx_in2mav_hdH1s10
+11-17 01:11:49 [H1 mav_s10] fixed stage-1 outputs from srcx/in2mav (det0, refiner sim samples / bank / real d0 crops [hard links], wsim cache)
+11-17 01:12:50 [H1 mav_s10] refiners stage 1-2 done
+11-17 01:12:51 [H1 mav_s10] pseudo-labels: {"tag":"srcx_in2mav_hdH1s10","n":5227,"n_corrected":5227,"c_bar":0.1530512049794197,"lam":0.75,"n_train":12866}
+11-17 01:17:59 [H1 mav_s10] detectors done
+11-17 04:16:35 [H1 mav_s10] pseudo pseudo_tr1: 12866 / 12866 crops have a pseudo-orientation; gate (IR vs LiDAR <= 10 deg) passes 4331 (33.7%); d_il median 15.5
+11-17 04:39:53 [H6 antifs_s0] start (mode HGT, SX_SEEDSHIFT=0, reference run E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/out2antifs)
+11-17 04:39:53 [H4 antifs_s0] start (mode ORI, SX_SEEDSHIFT=0, reference run E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/out2antifs)
+11-17 04:39:55 [H6 antifs_s0] lib ok: W D:/S2MUAV3D/srcx_work/heads_H6_out2antifs_s0, pseudo tag srcx_out2antifs
+11-17 04:39:55 [H4 antifs_s0] lib ok: W D:/S2MUAV3D/srcx_work/heads_H4_out2antifs_s0, pseudo tag srcx_out2antifs
+11-17 04:40:00 [H4 antifs_s0] reference inputs: det1, frozen stage-3 depth students, height readings, w; crops / bank hard-linked from /d/S2MUAV3D/srcx_work/out2antifs
+11-17 04:46:21 [H6 antifs_s0] kpsbox checkpoint_epoch_8.pth on tr1: 3292 / 3293 crops (fit failed 1), box-corner height ratio median 0.664, s_bar ratio 0.443
+11-17 04:46:21 [H6 antifs_s0] kpsbox checkpoint_epoch_8.pth on val1: 1148 / 1148 crops (fit failed 0), box-corner height ratio median 0.396, s_bar ratio 0.443
+11-17 04:46:23 [H6 antifs_s0] kpsbox checkpoint_epoch_8.pth on te1: 2624 / 2624 crops (fit failed 0), box-corner height ratio median 0.427, s_bar ratio 0.443
+11-17 04:46:29 [H6 antifs_s0] height ratio tr1: box corners median 0.664 (IQR 0.500) | LiDAR structure points median 0.462 (IQR 0.055) | Spearman 0.32, n 3292
+11-17 04:46:30 [H6 antifs_s0] height ratio val1: box corners median 0.396 (IQR 0.246) | LiDAR structure points median 0.428 (IQR 0.067) | Spearman 0.62, n 1148
+11-17 04:46:30 [H6 antifs_s0] height ratio te1: box corners median 0.427 (IQR 0.196) | LiDAR structure points median 0.425 (IQR 0.048) | Spearman 0.63, n 2624
+11-17 04:46:52 [H6 antifs_s0] deploy constants: "col_centres":[80.05685610392877,140.1501581922849],"c_k":{"0":0.027637775987386703,"1":0.0183065515011549,"-1":0.01932554319500923--"r_k":{"0":0.5208519592983512,"1":0.7639518221923038},
+11-17 04:46:59 [H6 antifs_s0] ALL DONE: H6 antifs_s0 vs PST antifs_s0 [antifs, 1 pair(s)] arm UDS 41.73 AP 27.89 ATE 0.099 ASE 17.31 AOE 17.11 mDR 91.92 | ref UDS 41.73 AP 27.89 ATE 0.099 ASE 16.30 AOE 17.11 mDR 91.92 | diff UDS +0.00 [+0.00, +0.00] AP +0.00 [+0.00, +0.00] ATE +0.000 [+0.000, +0.000] ASE +1.02 AOE +0.00 [+0.00, +0.00] mDR +0.00
+11-17 04:46:59 [H6 antifs_s10] start (mode HGT, SX_SEEDSHIFT=10, reference run E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/antifs_full_s10)
+11-17 04:47:01 [H6 antifs_s10] lib ok: W D:/S2MUAV3D/srcx_work/heads_H6_out2antifs_s10, pseudo tag srcx_out2antifs
+11-17 04:47:34 [H4 antifs_s0] pseudo pseudo_tr1: 3293 / 3293 crops have a pseudo-orientation; gate (IR vs LiDAR <= 10 deg) passes 914 (27.8%); d_il median 17.7 | reference: pseudo pseudo_tr1: 3293 / 3293 crops have a pseudo-orientation; gate (IR vs LiDAR <= 10 deg) passes 865 (26.3%); d_il median 17.9
+11-17 04:50:17 [H6 antifs_s10] kpsbox checkpoint_epoch_8.pth on tr1: 3292 / 3293 crops (fit failed 1), box-corner height ratio median 0.670, s_bar ratio 0.445
+11-17 04:50:17 [H6 antifs_s10] kpsbox checkpoint_epoch_8.pth on val1: 1148 / 1148 crops (fit failed 0), box-corner height ratio median 0.396, s_bar ratio 0.445
+11-17 04:50:18 [H6 antifs_s10] kpsbox checkpoint_epoch_8.pth on te1: 2624 / 2624 crops (fit failed 0), box-corner height ratio median 0.425, s_bar ratio 0.445
+11-17 04:50:24 [H6 antifs_s10] height ratio tr1: box corners median 0.670 (IQR 0.492) | LiDAR structure points median 0.462 (IQR 0.055) | Spearman 0.29, n 3292
+11-17 04:50:25 [H6 antifs_s10] height ratio val1: box corners median 0.396 (IQR 0.239) | LiDAR structure points median 0.433 (IQR 0.065) | Spearman 0.60, n 1148
+11-17 04:50:25 [H6 antifs_s10] height ratio te1: box corners median 0.425 (IQR 0.199) | LiDAR structure points median 0.425 (IQR 0.047) | Spearman 0.63, n 2624
+11-17 04:50:29 [H6 antifs_s10] deploy constants: "col_centres":[51.0703785328116,138.35272703170776],"c_k":{"0":0.020920603070408106,"1":0.010614250786602497,"-1":0.005965970456600189--"r_k":{"0":0.46275402481135985,"1":0.7420672798283214},
+11-17 04:50:49 [H6 antifs_s10] ALL DONE: H6 antifs_s10 vs PST antifs_s10 [antifs, 1 pair(s)] arm UDS 41.38 AP 27.25 ATE 0.101 ASE 16.84 AOE 16.58 mDR 91.20 | ref UDS 41.38 AP 27.25 ATE 0.101 ASE 16.72 AOE 16.58 mDR 91.20 | diff UDS +0.00 [+0.00, +0.00] AP +0.00 [+0.00, +0.00] ATE +0.000 [+0.000, +0.000] ASE +0.13 AOE +0.00 [+0.00, +0.00] mDR +0.00 || H6 pooled (2 seed pairs) [antifs, 2 pair(s)] arm UDS 41.56 AP 27.57 ATE 0.100 ASE 17.08 AOE 16.84 mDR 91.56 | ref UDS 41.56 AP 27.57 ATE 0.100 ASE 16.51 AOE 16.84 mDR 91.56 | diff UDS +0.00 [+0.00, +0.00] AP +0.00 [+0.00, +0.00] ATE +0.000 [+0.000, +0.000] ASE +0.57 AOE +0.00 [+0.00, +0.00] mDR +0.00
+11-17 04:50:50 [H6 antifs_s20] start (mode HGT, SX_SEEDSHIFT=20, reference run E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/antifs_full_s20)
+11-17 04:50:52 [H6 antifs_s20] lib ok: W D:/S2MUAV3D/srcx_work/heads_H6_out2antifs_s20, pseudo tag srcx_out2antifs
+11-17 05:14:23 [H6 antifs_s20] kpsbox checkpoint_epoch_8.pth on tr1: 3290 / 3293 crops (fit failed 3), box-corner height ratio median 0.671, s_bar ratio 0.444
+11-17 05:14:24 [H6 antifs_s20] kpsbox checkpoint_epoch_8.pth on val1: 1148 / 1148 crops (fit failed 0), box-corner height ratio median 0.396, s_bar ratio 0.444
+11-17 05:14:25 [H6 antifs_s20] kpsbox checkpoint_epoch_8.pth on te1: 2624 / 2624 crops (fit failed 0), box-corner height ratio median 0.426, s_bar ratio 0.444
+11-17 05:14:36 [H6 antifs_s20] height ratio tr1: box corners median 0.671 (IQR 0.489) | LiDAR structure points median 0.462 (IQR 0.053) | Spearman 0.31, n 3290
+11-17 05:14:37 [H6 antifs_s20] height ratio val1: box corners median 0.396 (IQR 0.229) | LiDAR structure points median 0.430 (IQR 0.064) | Spearman 0.62, n 1148
+11-17 05:14:37 [H6 antifs_s20] height ratio te1: box corners median 0.426 (IQR 0.198) | LiDAR structure points median 0.425 (IQR 0.049) | Spearman 0.64, n 2624
+11-17 05:15:05 [H6 antifs_s20] deploy constants: "col_centres":[55.12266276629416,132.67874075367627],"c_k":{"0":0.0366083225235343,"1":0.003010157495737076,"-1":0.008993083611130714--"r_k":{"0":0.47045281031497355,"1":0.7343155962233223},
+11-17 05:15:30 [H6 antifs_s20] ALL DONE: H6 antifs_s20 vs PST antifs_s20 [antifs, 1 pair(s)] arm UDS 42.01 AP 28.27 ATE 0.098 ASE 17.08 AOE 16.85 mDR 91.58 | ref UDS 42.01 AP 28.27 ATE 0.098 ASE 16.65 AOE 16.85 mDR 91.58 | diff UDS +0.00 [+0.00, +0.00] AP +0.00 [+0.00, +0.00] ATE +0.000 [+0.000, +0.000] ASE +0.43 AOE +0.00 [+0.00, +0.00] mDR +0.00 || H6 pooled (3 seed pairs) [antifs, 3 pair(s)] arm UDS 41.71 AP 27.80 ATE 0.099 ASE 17.08 AOE 16.84 mDR 91.57 | ref UDS 41.71 AP 27.80 ATE 0.099 ASE 16.55 AOE 16.84 mDR 91.57 | diff UDS +0.00 [+0.00, +0.00] AP +0.00 [+0.00, +0.00] ATE +0.000 [+0.000, +0.000] ASE +0.52 AOE +0.00 [+0.00, +0.00] mDR +0.00
+11-17 05:15:31 [H5 antifs_s0] start (mode ORI, SX_SEEDSHIFT=0, reference run E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/out2antifs)
+11-17 05:15:35 [H5 antifs_s0] lib ok: W D:/S2MUAV3D/srcx_work/heads_H5_out2antifs_s0, pseudo tag srcx_out2antifs
+11-17 05:15:39 [H5 antifs_s0] reference inputs: det1, frozen stage-3 depth students, height readings, w; crops / bank hard-linked from /d/S2MUAV3D/srcx_work/out2antifs
+11-17 05:16:01 [H5 antifs_s0] pseudo pseudo_tr1: 3293 / 3293 crops have a pseudo-orientation; gate (IR vs LiDAR <= 10 deg) passes 865 (26.3%); d_il median 17.9 | reference: pseudo pseudo_tr1: 3293 / 3293 crops have a pseudo-orientation; gate (IR vs LiDAR <= 10 deg) passes 865 (26.3%); d_il median 17.9
+11-17 05:36:52 [H4 antifs_s0] students done
+11-17 05:37:04 [H4 antifs_s0] deploy constants: "col_centres":[80.05685610392877,140.1501581922849],"c_k":{"0":0.027637775987386703,"1":0.0183065515011549,"-1":0.01932554319500923--"r_k":{"0":0.46206194162368774,"1":0.4663720428943634},
+11-17 05:37:11 [H4 antifs_s0] ALL DONE: H4 antifs_s0 vs PST antifs_s0 [antifs, 1 pair(s)] arm UDS 41.83 AP 27.74 ATE 0.100 ASE 16.30 AOE 16.26 mDR 91.92 | ref UDS 41.73 AP 27.89 ATE 0.099 ASE 16.30 AOE 17.11 mDR 91.92 | diff UDS +0.10 [-0.14, +0.35] AP -0.14 [-0.57, +0.31] ATE +0.000 [-0.000, +0.001] ASE +0.00 AOE -0.84 [-1.10, -0.60] mDR +0.00
+11-17 05:37:11 [H4 antifs_s10] start (mode ORI, SX_SEEDSHIFT=10, reference run E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/antifs_full_s10)
+11-17 05:37:13 [H4 antifs_s10] lib ok: W D:/S2MUAV3D/srcx_work/heads_H4_out2antifs_s10, pseudo tag srcx_out2antifs
+11-17 05:37:16 [H4 antifs_s10] reference inputs: det1, frozen stage-3 depth students, height readings, w; crops / bank hard-linked from /d/S2MUAV3D/srcx_work/out2antifs_sd10
+11-17 05:40:01 [H4 antifs_s10] pseudo pseudo_tr1: 3293 / 3293 crops have a pseudo-orientation; gate (IR vs LiDAR <= 10 deg) passes 884 (26.8%); d_il median 17.9 | reference: pseudo pseudo_tr1: 3293 / 3293 crops have a pseudo-orientation; gate (IR vs LiDAR <= 10 deg) passes 812 (24.7%); d_il median 18.5
+11-17 05:58:01 [H5 antifs_s0] !! student s1
+11-17 05:58:02 [H5 antifs_s10] start (mode ORI, SX_SEEDSHIFT=10, reference run E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/antifs_full_s10)
+11-17 05:58:05 [H5 antifs_s10] lib ok: W D:/S2MUAV3D/srcx_work/heads_H5_out2antifs_s10, pseudo tag srcx_out2antifs
+11-17 05:58:12 [H5 antifs_s10] reference inputs: det1, frozen stage-3 depth students, height readings, w; crops / bank hard-linked from /d/S2MUAV3D/srcx_work/out2antifs_sd10
+11-17 05:58:52 [H5 antifs_s10] pseudo pseudo_tr1: 3293 / 3293 crops have a pseudo-orientation; gate (IR vs LiDAR <= 10 deg) passes 812 (24.7%); d_il median 18.5 | reference: pseudo pseudo_tr1: 3293 / 3293 crops have a pseudo-orientation; gate (IR vs LiDAR <= 10 deg) passes 812 (24.7%); d_il median 18.5
+11-17 06:35:57 [H4 antifs_s10] students done
+11-17 06:36:02 [H4 antifs_s10] deploy constants: "col_centres":[51.0703785328116,138.35272703170776],"c_k":{"0":0.020920603070408106,"1":0.010614250786602497,"-1":0.005965970456600189--"r_k":{"0":0.4587579667568207,"1":0.4716946929693222},
+11-17 06:36:26 [H4 antifs_s10] ALL DONE: H4 antifs_s10 vs PST antifs_s10 [antifs, 1 pair(s)] arm UDS 41.48 AP 27.23 ATE 0.101 ASE 16.72 AOE 16.08 mDR 91.20 | ref UDS 41.38 AP 27.25 ATE 0.101 ASE 16.72 AOE 16.58 mDR 91.20 | diff UDS +0.10 [-0.12, +0.29] AP -0.02 [-0.40, +0.29] ATE -0.000 [-0.001, +0.001] ASE +0.00 AOE -0.49 [-0.79, -0.24] mDR +0.00 || H4 pooled (2 seed pairs) [antifs, 2 pair(s)] arm UDS 41.66 AP 27.49 ATE 0.100 ASE 16.51 AOE 16.17 mDR 91.56 | ref UDS 41.56 AP 27.57 ATE 0.100 ASE 16.51 AOE 16.84 mDR 91.56 | diff UDS +0.10 [-0.09, +0.28] AP -0.08 [-0.42, +0.23] ATE +0.000 [-0.000, +0.001] ASE +0.00 AOE -0.67 [-0.94, -0.43] mDR +0.00
+11-17 06:36:27 [H4 antifs_s20] start (mode ORI, SX_SEEDSHIFT=20, reference run E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/antifs_full_s20)
+11-17 06:36:29 [H4 antifs_s20] lib ok: W D:/S2MUAV3D/srcx_work/heads_H4_out2antifs_s20, pseudo tag srcx_out2antifs
+11-17 06:36:32 [H4 antifs_s20] reference inputs: det1, frozen stage-3 depth students, height readings, w; crops / bank hard-linked from /d/S2MUAV3D/srcx_work/out2antifs_sd20
+11-17 06:40:45 [H4 antifs_s20] pseudo pseudo_tr1: 3293 / 3293 crops have a pseudo-orientation; gate (IR vs LiDAR <= 10 deg) passes 806 (24.5%); d_il median 17.9 | reference: pseudo pseudo_tr1: 3293 / 3293 crops have a pseudo-orientation; gate (IR vs LiDAR <= 10 deg) passes 826 (25.1%); d_il median 18.0
+11-17 06:43:38 [H5 antifs_s10] students done
+11-17 06:43:42 [H5 antifs_s10] deploy constants: "col_centres":[51.0703785328116,138.35272703170776],"c_k":{"0":0.020920603070408106,"1":0.010614250786602497,"-1":0.005965970456600189--"r_k":{"0":0.4587579667568207,"1":0.4716946929693222},
+11-17 06:43:48 [H5 antifs_s10] ALL DONE: H5 antifs_s10 vs PST antifs_s10 [antifs, 1 pair(s)] arm UDS 41.83 AP 28.06 ATE 0.099 ASE 16.72 AOE 16.65 mDR 91.20 | ref UDS 41.38 AP 27.25 ATE 0.101 ASE 16.72 AOE 16.58 mDR 91.20 | diff UDS +0.45 [+0.12, +0.62] AP +0.81 [+0.28, +1.02] ATE -0.001 [-0.002, -0.001] ASE +0.00 AOE +0.07 [-0.36, +0.47] mDR +0.00
+11-17 06:43:48 [H5 antifs_s20] start (mode ORI, SX_SEEDSHIFT=20, reference run E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/antifs_full_s20)
+11-17 06:43:56 [H5 antifs_s20] lib ok: W D:/S2MUAV3D/srcx_work/heads_H5_out2antifs_s20, pseudo tag srcx_out2antifs
+11-17 06:43:59 [H5 antifs_s20] reference inputs: det1, frozen stage-3 depth students, height readings, w; crops / bank hard-linked from /d/S2MUAV3D/srcx_work/out2antifs_sd20
+11-17 06:44:08 [H5 antifs_s20] pseudo pseudo_tr1: 3293 / 3293 crops have a pseudo-orientation; gate (IR vs LiDAR <= 10 deg) passes 826 (25.1%); d_il median 18.0 | reference: pseudo pseudo_tr1: 3293 / 3293 crops have a pseudo-orientation; gate (IR vs LiDAR <= 10 deg) passes 826 (25.1%); d_il median 18.0
+11-17 07:32:07 [H4 antifs_s20] students done
+11-17 07:32:11 [H4 antifs_s20] deploy constants: "col_centres":[55.12266276629416,132.67874075367627],"c_k":{"0":0.0366083225235343,"1":0.003010157495737076,"-1":0.008993083611130714--"r_k":{"0":0.4554774910211563,"1":0.46926629543304443},
+11-17 07:32:26 [H4 antifs_s20] ALL DONE: H4 antifs_s20 vs PST antifs_s20 [antifs, 1 pair(s)] arm UDS 42.24 AP 28.44 ATE 0.098 ASE 16.65 AOE 16.11 mDR 91.58 | ref UDS 42.01 AP 28.27 ATE 0.098 ASE 16.65 AOE 16.85 mDR 91.58 | diff UDS +0.23 [-0.10, +0.32] AP +0.17 [-0.44, +0.26] ATE +0.000 [-0.000, +0.001] ASE +0.00 AOE -0.73 [-1.02, -0.46] mDR +0.00 || H4 pooled (3 seed pairs) [antifs, 3 pair(s)] arm UDS 41.85 AP 27.80 ATE 0.099 ASE 16.55 AOE 16.15 mDR 91.57 | ref UDS 41.71 AP 27.80 ATE 0.099 ASE 16.55 AOE 16.84 mDR 91.57 | diff UDS +0.14 [-0.07, +0.27] AP +0.00 [-0.39, +0.20] ATE +0.000 [-0.000, +0.001] ASE +0.00 AOE -0.69 [-0.96, -0.45] mDR +0.00
+11-17 07:32:37 [H5 antifs_s0] start (mode ORI, SX_SEEDSHIFT=0, reference run E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/out2antifs)
+11-17 07:32:39 [H5 antifs_s0] lib ok: W D:/S2MUAV3D/srcx_work/heads_H5_out2antifs_s0, pseudo tag srcx_out2antifs
+11-17 07:32:41 [H5 antifs_s0] reference inputs: det1, frozen stage-3 depth students, height readings, w; crops / bank hard-linked from /d/S2MUAV3D/srcx_work/out2antifs
+11-17 07:32:42 [H5 antifs_s0] 11-17 05:16:01 [H5 antifs_s0] pseudo pseudo_tr1: 3293 / 3293 crops have a pseudo-orientation; gate (IR vs LiDAR <= 10 deg) passes 865 (26.3%); d_il median 17.9 | reference: pseudo pseudo_tr1: 3293 / 3293 crops have a pseudo-orientation; gate (IR vs LiDAR <= 10 deg) passes 865 (26.3%); d_il median 17.9 | reference: pseudo pseudo_tr1: 3293 / 3293 crops have a pseudo-orientation; gate (IR vs LiDAR <= 10 deg) passes 865 (26.3%); d_il median 17.9
+11-17 07:38:09 [H5 antifs_s20] students done
+11-17 07:38:15 [H5 antifs_s20] deploy constants: "col_centres":[55.12266276629416,132.67874075367627],"c_k":{"0":0.0366083225235343,"1":0.003010157495737076,"-1":0.008993083611130714--"r_k":{"0":0.4554774910211563,"1":0.46926629543304443},
+11-17 07:38:28 [H5 antifs_s20] ALL DONE: H5 antifs_s20 vs PST antifs_s20 [antifs, 1 pair(s)] arm UDS 42.50 AP 29.08 ATE 0.097 ASE 16.65 AOE 16.77 mDR 91.58 | ref UDS 42.01 AP 28.27 ATE 0.098 ASE 16.65 AOE 16.85 mDR 91.58 | diff UDS +0.50 [+0.16, +0.68] AP +0.81 [+0.28, +1.03] ATE -0.001 [-0.002, -0.001] ASE +0.00 AOE -0.07 [-0.43, +0.26] mDR +0.00 || H5 pooled (2 seed pairs) [antifs, 2 pair(s)] arm UDS 42.17 AP 28.57 ATE 0.098 ASE 16.68 AOE 16.71 mDR 91.39 | ref UDS 41.69 AP 27.76 ATE 0.099 ASE 16.68 AOE 16.71 mDR 91.39 | diff UDS +0.47 [+0.16, +0.62] AP +0.81 [+0.34, +0.97] ATE -0.001 [-0.002, -0.001] ASE +0.00 AOE -0.00 [-0.38, +0.36] mDR +0.00
+11-17 07:42:43 [H5 antifs_s0] students done
+11-17 07:42:47 [H5 antifs_s0] deploy constants: "col_centres":[80.05685610392877,140.1501581922849],"c_k":{"0":0.027637775987386703,"1":0.0183065515011549,"-1":0.01932554319500923--"r_k":{"0":0.46206194162368774,"1":0.4663720428943634},
+11-17 07:43:07 [H5 antifs_s0] ALL DONE: H5 antifs_s0 vs PST antifs_s0 [antifs, 1 pair(s)] arm UDS 42.16 AP 28.45 ATE 0.098 ASE 16.30 AOE 16.89 mDR 91.92 | ref UDS 41.73 AP 27.89 ATE 0.099 ASE 16.30 AOE 17.11 mDR 91.92 | diff UDS +0.42 [+0.13, +0.89] AP +0.57 [+0.15, +1.35] ATE -0.002 [-0.003, -0.001] ASE +0.00 AOE -0.22 [-0.67, +0.22] mDR +0.00 || H5 pooled (3 seed pairs) [antifs, 3 pair(s)] arm UDS 42.16 AP 28.53 ATE 0.098 ASE 16.55 AOE 16.77 mDR 91.57 | ref UDS 41.71 AP 27.80 ATE 0.099 ASE 16.55 AOE 16.84 mDR 91.57 | diff UDS +0.46 [+0.18, +0.68] AP +0.73 [+0.34, +1.03] ATE -0.001 [-0.002, -0.001] ASE +0.00 AOE -0.07 [-0.48, +0.31] mDR +0.00
+11-17 09:18:54 [H1 mav_s10] students done
+11-17 09:56:37 [H1 mav_s10] !! inf st2 det1 5
+11-17 09:56:37 [seeds] !! H1 mav s10 failed (see /e/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H1/mav_s10/logs/run.log)
+11-17 09:56:38 [H3 mav_s10] start (mode FULL, SX_SEEDSHIFT=10, reference run E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sup3/run)
+11-17 09:56:39 [H3 mav_s10] lib ok: W D:/S2MUAV3D/srcx_work/heads_H3_in2mav_s10, pseudo tag srcx_in2mav_hdH3s10
+11-17 09:56:41 [H3 mav_s10] fixed stage-1 outputs from srcx/in2mav (det0, refiner sim samples / bank / real d0 crops [hard links], wsim cache)
+11-17 12:15:02 [H3 mav_s10] !! refiner st2 s5
+11-17 12:15:02 [seeds] !! H3 mav s10 failed (see /e/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H3/mav_s10/logs/run.log)
+11-17 12:15:03 [H4 mav_s20] already done: 11-16 10:22:01 [H4 mav_s20] ALL DONE: H4 mav_s20 vs PST mav_s20 [mav, 1 pair(s)] arm UDS 63.03 AP 44.70 ATE 0.273 ASE 1.62 AOE 14.77 mDR 94.71 | ref UDS 62.70 AP 44.38 ATE 0.280 ASE 1.62 AOE 15.15 mDR 94.67 | diff UDS +0.33 [-0.09, +0.98] AP +0.32 [-0.41, +1.50] ATE -0.007 [-0.012, -0.001] ASE +0.00 AOE -0.38 [-1.17, +0.14] mDR +0.04 || H4 pooled (3 seed pairs) [mav, 3 pair(s)] arm UDS 60.83 AP 40
+11-17 12:15:03 [H6 mav_s20] already done: 11-16 10:27:52 [H6 mav_s20] ALL DONE: H6 mav_s20 vs PST mav_s20 [mav, 1 pair(s)] arm UDS 62.26 AP 44.38 ATE 0.280 ASE 1.97 AOE 15.15 mDR 94.67 | ref UDS 62.70 AP 44.38 ATE 0.280 ASE 1.62 AOE 15.15 mDR 94.67 | diff UDS -0.44 [-0.60, -0.22] AP +0.00 [+0.00, +0.00] ATE +0.000 [+0.000, +0.000] ASE +0.35 AOE +0.00 [+0.00, +0.00] mDR +0.00 || H6 pooled (3 seed pairs) [mav, 3 pair(s)] arm UDS 60.48 AP 41
+11-17 12:15:04 [H1c mav_s20] already done: 11-16 10:28:39 [H1c mav_s20] ALL DONE: H1c mav_s20 vs PST mav_s20 [mav, 1 pair(s)] arm UDS 61.14 AP 45.17 ATE 0.274 ASE 3.24 AOE 15.15 mDR 94.71 | ref UDS 62.70 AP 44.38 ATE 0.280 ASE 1.62 AOE 15.15 mDR 94.67 | diff UDS -1.56 [-2.35, -0.82] AP +0.79 [-0.70, +2.27] ATE -0.005 [-0.014, +0.005] ASE +1.62 AOE +0.00 [-0.00, +0.00] mDR +0.04 || H1c pooled (3 seed pairs) [mav, 3 pair(s)] arm UDS 60.16 AP
+11-17 12:15:04 [H5 mav_s20] already done: 11-16 11:20:01 [H5 mav_s20] ALL DONE: H5 mav_s20 vs PST mav_s20 [mav, 1 pair(s)] arm UDS 63.35 AP 45.26 ATE 0.271 ASE 1.62 AOE 14.66 mDR 94.69 | ref UDS 62.70 AP 44.38 ATE 0.280 ASE 1.62 AOE 15.15 mDR 94.67 | diff UDS +0.65 [+0.12, +1.14] AP +0.88 [-0.05, +1.72] ATE -0.008 [-0.013, -0.003] ASE +0.00 AOE -0.49 [-1.25, +0.01] mDR +0.02 || H5 pooled (3 seed pairs) [mav, 3 pair(s)] arm UDS 61.74 AP 42
+11-17 12:15:05 [H2 mav_s20] start (mode FULL, SX_SEEDSHIFT=20, reference run E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/mav_full_s20)
+11-17 12:15:06 [H2 mav_s20] lib ok: W D:/S2MUAV3D/srcx_work/heads_H2_in2mav_s20, pseudo tag srcx_in2mav_hdH2s20
+11-17 12:19:35 [H2 mav_s20] fixed stage-1 outputs from srcx/in2mav (det0, refiner sim samples / bank / real d0 crops [hard links], wsim cache)
+11-17 15:35:40 [H2 mav_s20] refiners stage 1-2 done
+11-17 17:26:45 [H2 mav_s20] pseudo-labels: {"tag":"srcx_in2mav_hdH2s20","n":5227,"n_corrected":5227,"c_bar":0.11521300673484802,"lam":0.75,"n_train":12866}
+11-17 20:37:07 [H2 mav_s20] detectors done

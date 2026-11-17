@@ -1,0 +1,17 @@
+2026-11-13 10:02:58,426   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-13 10:02:58,427   INFO  MMCache[test]: 4800 帧, 模态 ['rgb'] -> 3 通道, 缓存 E:\mmcache\mav6d_cn_obj\test
+2026-11-13 10:03:04,047   INFO  loading weights: 载入 289/289 个张量, 27.93M/27.93M 参数 (100.0%)
+2026-11-13 10:03:04,512   INFO  loading weights: 载入 289/289 个张量, 27.93M/27.93M 参数 (100.0%)
+2026-11-13 10:03:04,962   INFO  loading weights: 载入 289/289 个张量, 27.93M/27.93M 参数 (100.0%)
+2026-11-13 10:03:04,996   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-13 10:03:04,996   INFO  MMCache[test]: 1168 帧, 模态 ['rgb'] -> 3 通道, 缓存 E:\mmcache\mav6d_cn_obj\val
+2026-11-13 10:04:02,144   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-13 10:04:02,144   INFO  MMCache[test]: 12866 帧, 模态 ['rgb'] -> 3 通道, 缓存 E:\mmcache\mav6d_cn_obj\train
+s_bar (val unlabeled, 471 boxes conf>=0.7 of 1168) = [0.3476 0.3486 0.1954]
+train: 12866 frames, conf median 0.667, >=0.5 64.6%, >=0.3 77.1%
+2026-11-13 10:10:11,143   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-13 10:10:11,143   INFO  MMCache[test]: 2336 帧, 模态 ['rgb'] -> 3 通道, 缓存 E:\mmcache\mav6d_cn_obj\val
+val: 2336 frames, conf median 0.630, >=0.5 60.8%, >=0.3 74.1%
+2026-11-13 10:11:27,423   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-13 10:11:27,423   INFO  MMCache[test]: 4800 帧, 模态 ['rgb'] -> 3 通道, 缓存 E:\mmcache\mav6d_cn_obj\test
+test: 4800 frames, conf median 0.792, >=0.5 77.4%, >=0.3 84.0%

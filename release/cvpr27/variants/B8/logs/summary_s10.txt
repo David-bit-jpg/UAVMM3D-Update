@@ -1,0 +1,1 @@
+s10 IR-only(w0) test UDS 58.22 AP 36.68 ATE 0.324 | val UDS 58.96 || PST test 59.28 val 59.54 || fused - IR-only: test +1.06 val +0.58 (w 0.1731)

@@ -1,0 +1,53 @@
+D:\Miniconda3\envs\city\lib\site-packages\numpy\core\fromnumeric.py:3504: RuntimeWarning: Mean of empty slice.
+  return _methods._mean(a, axis=axis, dtype=dtype,
+D:\Miniconda3\envs\city\lib\site-packages\numpy\core\_methods.py:129: RuntimeWarning: invalid value encountered in scalar divide
+  ret = ret.dtype.type(ret / rcount)
+{
+ "w": 0.07971028021889691,
+ "s_bar": [
+  0.5307080149650574,
+  0.5269094705581665,
+  0.23503288626670837
+ ],
+ "col_centres": [
+  0.0,
+  0.0
+ ],
+ "c_k": {
+  "0": -0.002613564021885395,
+  "1": NaN,
+  "-1": -0.002613564021885395
+ },
+ "r_k": {
+  "0": 0.4444572626376975,
+  "1": NaN
+ },
+ "b_k_val_images": {
+  "0": 0.49053929682508535
+ },
+ "alpha": 0.5,
+ "fused_val": {
+  "n": 1148,
+  "n_fused": 1147,
+  "n_rot_student": 1148,
+  "file": "E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E4/antifs_s0/preds/e4_fused_val.pkl"
+ },
+ "nofuse_val": {
+  "n": 1148,
+  "n_fused": 0,
+  "n_rot_student": 1148,
+  "file": "E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E4/antifs_s0/preds/e4_nofuse_val.pkl"
+ },
+ "fused_test": {
+  "n": 2624,
+  "n_fused": 2621,
+  "n_rot_student": 2624,
+  "file": "E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E4/antifs_s0/preds/e4_fused_test.pkl"
+ },
+ "nofuse_test": {
+  "n": 2624,
+  "n_fused": 0,
+  "n_rot_student": 2624,
+  "file": "E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E4/antifs_s0/preds/e4_nofuse_test.pkl"
+ }
+}

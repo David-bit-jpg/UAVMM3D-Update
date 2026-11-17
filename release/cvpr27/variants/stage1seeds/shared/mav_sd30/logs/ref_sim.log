@@ -1,0 +1,6 @@
+[infer_wrap] memory fraction 0.20 -> E:\Open3DUAVDet\output\camnorm\geo1004\gproto\review1113\stage1seeds\shared\mav_sd30\lib\refiner_x.py sim E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/stage1seeds/release/in_sd30/ramp_s30.pth
+2026-11-16 13:59:50,990   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-16 13:59:51,100   INFO  MMCache[test]: RGB 可见度 >= 5.0 过滤 19490 -> 18101 帧
+2026-11-16 13:59:51,100   INFO  MMCache[test]: 9051 帧, 模态 ['rgb'] -> 3 通道, 缓存 E:\mmcache\full_v2\train
+2026-11-16 14:00:14,628   INFO  loading weights: 载入 289/289 个张量, 27.93M/27.93M 参数 (100.0%)
+sim samples 9121 (with IR silhouette 9119), delta* median +0.134 |.| median 0.146

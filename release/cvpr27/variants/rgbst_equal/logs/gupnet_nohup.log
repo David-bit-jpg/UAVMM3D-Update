@@ -1,0 +1,3 @@
+11-17 08:54:17 [gupnet] train GUPNet naive-ST batch 8  (waiting for gpu slot)
+11-17 09:18:16 [gupnet] !! OOM -> batch 4 (RECIPE DEVIATION)
+11-17 09:18:16 [gupnet] train GUPNet naive-ST batch 4  (waiting for gpu slot)

@@ -1,0 +1,17 @@
+11-17 04:33:18 [E4 mav_s10] start (mode STU, SX_TEACH=none, SX_SEEDSHIFT=10, PST ref E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sup3/run, RGB-only ref E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/mav_none_s10)
+ok E4 mav 10 STU none E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E4/mav_s10/lib
+11-17 04:33:19 [E4 mav_s10] lib ok: W D:/S2MUAV3D/srcx_work/sf_E4_in2mav_none_s10, pseudo tag srcx_in2mav_none_sd10
+11-17 04:37:45 [E4 mav_s10] upstream of the students from the same-seed RGB-only run E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/mav_none_s10 (det0/det1, refiner st2, crops, gated pseudo-orientations [hard links], constant height)
+11-17 04:37:46 [E4 mav_s10] reference: pseudo pseudo_tr1: 12866 / 12866 crops have a pseudo-orientation; gate (IR vs LiDAR <= 10 deg) passes 3485 (27.1%); d_il median 18.1
+2026-11-17 04:38:10,760   INFO  init E:/Open3DUAVDet/output/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom/KZs0/ckpt/checkpoint_epoch_30.pth
+11-17 05:13:47 [E4 mav_s10] student s0: 'paste_tried': 0, 'paste_done': 0
+2026-11-17 04:39:46,640   INFO  init E:/Open3DUAVDet/output/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom/KZs1/ckpt/checkpoint_epoch_30.pth
+11-17 05:17:01 [E4 mav_s10] student s1: 'paste_tried': 0, 'paste_done': 0
+11-17 05:44:32 [E4 mav_s10] students done
+11-17 05:46:58 [E4 mav_s10] w (sim val inverse variance) = 0.24456762957118647
+avg_inf E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E4/mav_s10/ref/inf_fin_det1_train.pkl: 12865 keys from 2 files
+avg_inf E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E4/mav_s10/ref/inf_fin_det1_val.pkl: 2336 keys from 2 files
+avg_inf E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E4/mav_s10/ref/inf_fin_det1_test.pkl: 4800 keys from 2 files
+11-17 08:30:44 [E4 mav_s10] deploy constants: "col_centres":[0.0,0.0],"c_k":{"0":0.099425558000803,"1":NaN,"-1":0.099425558000803--"r_k":{"0":0.5612070791587711,"1":NaN},
+11-17 08:30:49 [E4 mav_s10] !! bootstrap vs PST
+11-17 09:33:58 [E4 mav_s10] ALL DONE: E4 mav_s10 vs PST mav_s10 [mav, 1 pair(s)] arm UDS 56.97 AP 37.58 ATE 0.343 ASE 2.58 AOE 16.81 mDR 94.94 | ref UDS 59.28 AP 38.40 ATE 0.313 ASE 1.78 AOE 14.87 mDR 95.65 | diff UDS -2.30 [-7.81, +1.78] AP -0.82 [-9.63, +5.51] ATE +0.030 [-0.012, +0.088] ASE +0.80 AOE +1.94 [+0.88, +3.23] mDR -0.71 || vs RGB-only: diff UDS -1.04 [-1.78, -0.38] AP -1.48 [-2.45, -0.54] ATE +0.010 [-0.001, +0.021] ASE -0.01 AOE +0.86 [+0.22, +1.79] mDR +0.02 || recipe deviations: 0 (bootstrap via sensorfree/heads_boot_tol.py: tie-order tolerance)

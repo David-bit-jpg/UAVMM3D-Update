@@ -1,0 +1,10 @@
+s_bar (val unlabeled, 297 boxes conf>=0.7 of 574) = [0.5275 0.5272 0.2364]
+train: 3293 frames, conf median 0.292, >=0.5 32.2%, >=0.3 49.0%
+val: 1148 frames, conf median 0.712, >=0.5 65.9%, >=0.3 75.5%
+test: 2624 frames, conf median 0.736, >=0.5 76.9%, >=0.3 87.1%
+11-13 04:36:45 w (deployed) = 0.09641904940855338
+all      AOE 17.196  ATE 0.103  ASE 16.214  AP 30.069  UDS 42.849  mDR 93.864
+0-25     AOE 15.506  ATE 0.110  ASE 17.479  AP 29.253  UDS 41.767  mDR 88.241
+25-50    AOE 17.959  ATE 0.103  ASE 15.920  AP 31.013  UDS 43.523  mDR 96.794
+50-999   AOE 18.716  ATE 0.092  ASE 14.599  AP 30.669  UDS 44.065  mDR 99.290
+11-13 04:36:49 ALL DONE

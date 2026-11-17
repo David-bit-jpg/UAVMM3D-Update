@@ -1,0 +1,4 @@
+11-14 15:09:51 waiting for D:/cmpfull_runs/gupnet_uda_mt_s0/.done and review1113/initabl/.done (poll every 10 min)
+11-14 18:59:53 start B3 (teachers read on test crops, MIRVIEW=1)
+11-14 19:53:30 E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/cleanfix/B3_noself/arm: test "AOE": 16.423661544976692 "UDS": 60.59118954508661  (PST reported: AOE 14.48 UDS 60.81)
+11-14 19:53:30 ALL DONE (test, 4,800 frames, MIRVIEW=1): PST (students) AOE 14.48 UDS 60.81 AP 40.93 -> teachers read directly AOE 16.42 UDS 60.59 AP 41.30

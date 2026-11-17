@@ -1,0 +1,44 @@
+[infer_wrap] memory fraction 0.20 -> E:\Open3DUAVDet\output\camnorm\geo1004\gproto\review1113\heads\H2\mav_s10\lib\wsim_x.py E:/Open3DUAVDet/output/release_20260920/ramp_s0.pth E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H2/mav_s10/ref/ref_st2_s5.pt,E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H2/mav_s10/ref/ref_st2_s6.pt E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H2/mav_s10/ou/runs/S6I_s0/ckpt_last.pth,E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H2/mav_s10/ou/runs/S6I_s1/ckpt_last.pth E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H2/mav_s10/w_sim.json
+2026-11-16 11:37:53,626   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-16 11:37:53,627   INFO  MMCache[test]: RGB 可见度 >= 5.0 过滤 4924 -> 4646 帧
+2026-11-16 11:37:53,627   INFO  MMCache[test]: 4646 帧, 模态 ['rgb'] -> 3 通道, 缓存 E:\mmcache\full_v2\test
+2026-11-16 11:37:55,942   INFO  loading weights: 载入 289/289 个张量, 27.95M/27.95M 参数 (100.0%)
+2026-11-16 11:38:05,550   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-16 11:38:05,550   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-16 11:38:05,551   INFO  MMCache[test]: RGB 可见度 >= 5.0 过滤 4924 -> 4646 帧
+2026-11-16 11:38:05,551   INFO  MMCache[test]: RGB 可见度 >= 5.0 过滤 4924 -> 4646 帧
+2026-11-16 11:38:05,551   INFO  MMCache[test]: 4646 帧, 模态 ['rgb'] -> 3 通道, 缓存 E:\mmcache\full_v2\test
+2026-11-16 11:38:05,551   INFO  MMCache[test]: 4646 帧, 模态 ['rgb'] -> 3 通道, 缓存 E:\mmcache\full_v2\test
+2026-11-16 11:38:07,411   INFO  loading weights: 载入 289/289 个张量, 27.95M/27.95M 参数 (100.0%)
+2026-11-16 11:38:07,411   INFO  loading weights: 载入 289/289 个张量, 27.95M/27.95M 参数 (100.0%)
+2026-11-16 11:38:15,327   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-16 11:38:15,327   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-16 11:38:15,327   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-16 11:38:15,327   INFO  MMCache[test]: RGB 可见度 >= 5.0 过滤 4924 -> 4646 帧
+2026-11-16 11:38:15,327   INFO  MMCache[test]: RGB 可见度 >= 5.0 过滤 4924 -> 4646 帧
+2026-11-16 11:38:15,327   INFO  MMCache[test]: RGB 可见度 >= 5.0 过滤 4924 -> 4646 帧
+2026-11-16 11:38:15,327   INFO  MMCache[test]: 4646 帧, 模态 ['rgb'] -> 3 通道, 缓存 E:\mmcache\full_v2\test
+2026-11-16 11:38:15,327   INFO  MMCache[test]: 4646 帧, 模态 ['rgb'] -> 3 通道, 缓存 E:\mmcache\full_v2\test
+2026-11-16 11:38:15,327   INFO  MMCache[test]: 4646 帧, 模态 ['rgb'] -> 3 通道, 缓存 E:\mmcache\full_v2\test
+2026-11-16 11:38:15,603   INFO  loading weights: 载入 289/289 个张量, 27.95M/27.95M 参数 (100.0%)
+2026-11-16 11:38:15,603   INFO  loading weights: 载入 289/289 个张量, 27.95M/27.95M 参数 (100.0%)
+2026-11-16 11:38:15,603   INFO  loading weights: 载入 289/289 个张量, 27.95M/27.95M 参数 (100.0%)
+2026-11-16 11:38:23,703   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-16 11:38:23,703   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-16 11:38:23,703   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-16 11:38:23,703   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-16 11:38:23,703   INFO  MMCache[test]: RGB 可见度 >= 5.0 过滤 4924 -> 4646 帧
+2026-11-16 11:38:23,703   INFO  MMCache[test]: RGB 可见度 >= 5.0 过滤 4924 -> 4646 帧
+2026-11-16 11:38:23,703   INFO  MMCache[test]: RGB 可见度 >= 5.0 过滤 4924 -> 4646 帧
+2026-11-16 11:38:23,703   INFO  MMCache[test]: RGB 可见度 >= 5.0 过滤 4924 -> 4646 帧
+2026-11-16 11:38:23,703   INFO  MMCache[test]: 4646 帧, 模态 ['rgb'] -> 3 通道, 缓存 E:\mmcache\full_v2\test
+2026-11-16 11:38:23,703   INFO  MMCache[test]: 4646 帧, 模态 ['rgb'] -> 3 通道, 缓存 E:\mmcache\full_v2\test
+2026-11-16 11:38:23,703   INFO  MMCache[test]: 4646 帧, 模态 ['rgb'] -> 3 通道, 缓存 E:\mmcache\full_v2\test
+2026-11-16 11:38:23,703   INFO  MMCache[test]: 4646 帧, 模态 ['rgb'] -> 3 通道, 缓存 E:\mmcache\full_v2\test
+2026-11-16 11:38:23,939   INFO  loading weights: 载入 289/289 个张量, 27.95M/27.95M 参数 (100.0%)
+2026-11-16 11:38:23,939   INFO  loading weights: 载入 289/289 个张量, 27.95M/27.95M 参数 (100.0%)
+2026-11-16 11:38:23,939   INFO  loading weights: 载入 289/289 个张量, 27.95M/27.95M 参数 (100.0%)
+2026-11-16 11:38:23,939   INFO  loading weights: 载入 289/289 个张量, 27.95M/27.95M 参数 (100.0%)
+sim val boxes 1344
+read 2 nets on 1344 crops -> E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H2/mav_s10/wsim_read.pkl
+{'w': 0.15520147540122378, 's_ir': 0.053128666548965114, 's_kp': 0.12395314960289613, 'n': 1344, 'n_boxes': 1344, 'bias_ir': -0.02186743228559001, 'bias_kp': 0.07072885434037482, 'corr': 0.30367122840015826}

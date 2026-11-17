@@ -1,0 +1,7 @@
+2026-11-17 01:11:11,522   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-17 01:11:11,522   INFO  MMCache[test]: 2624 帧, 模态 ['rgb'] -> 3 通道, 缓存 D:\mmcache\outdoor_real_fs\test
+2026-11-17 01:11:15,679   INFO  loading weights: 载入 289/289 个张量, 27.93M/27.93M 参数 (100.0%)
+2026-11-17 01:11:15,918   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-17 01:11:15,918   INFO  MMCache[test]: 2624 帧, 模态 ['rgb'] -> 3 通道, 缓存 D:\mmcache\outdoor_real_fs\test
+test: 2624 frames, conf median 0.279, no box 0
+2624 test preds -> E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/xdomain_1117/preds/in_sim_s0_ON_antifs_test.pkl

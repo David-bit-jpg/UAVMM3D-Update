@@ -1,0 +1,28 @@
+11-16 07:38:31 [H2 mav_s10] start (mode FULL, SX_SEEDSHIFT=10, reference run E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sup3/run)
+ok H2 mav 10 FULL E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H2/mav_s10/lib
+11-16 07:38:33 [H2 mav_s10] lib ok: W D:/S2MUAV3D/srcx_work/heads_H2_in2mav_s10, pseudo tag srcx_in2mav_hdH2s10
+configs cfgs/models/uavdet_3d/camnorm/srcx/real_in2mav_hdH2s10.yaml cfgs/models/uavdet_3d/camnorm/srcx/st_in2mav_hdH2s10.yaml
+11-16 07:42:40 [H2 mav_s10] fixed stage-1 outputs from srcx/in2mav (det0, refiner sim samples / bank / real d0 crops [hard links], wsim cache)
+11-16 08:09:45 [H2 mav_s10] refiners stage 1-2 done
+avg_inf E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H2/mav_s10/ref/inf_st2_det0_train.pkl: 12865 keys from 2 files
+{'tag': 'srcx_in2mav_hdH2s10', 'n': 5227, 'n_corrected': 5227, 'c_bar': 0.09496788308024406, 'lam': 0.75, 'n_train': 12866}
+11-16 08:26:46 [H2 mav_s10] pseudo-labels: {"tag":"srcx_in2mav_hdH2s10","n":5227,"n_corrected":5227,"c_bar":0.09496788308024406,"lam":0.75,"n_train":12866}
+11-16 08:56:02 [H2 mav_s10] detectors done
+crops tr1: 12866 (train every 1); zoom median 1.73, clipped at ZMAX 0.2%
+crops val1: 2336 (val every 1); zoom median 1.73, clipped at ZMAX 0.6%
+crops te1: 4800 (test every 1); zoom median 1.85, clipped at ZMAX 0.1%
+orientation bank ou_bank: 4410 windows
+pseudo pseudo_tr1: 12866 / 12866 crops have a pseudo-orientation; gate (IR vs LiDAR <= 10 deg) passes 4328 (33.6%); d_il median 15.5
+11-16 10:21:26 [H2 mav_s10] pseudo pseudo_tr1: 12866 / 12866 crops have a pseudo-orientation; gate (IR vs LiDAR <= 10 deg) passes 4328 (33.6%); d_il median 15.5
+2026-11-16 10:21:36,275   INFO  init E:/Open3DUAVDet/output/camnorm/geo1004/lidar/irlid/release/kzm_s0.pth
+2026-11-16 10:23:15,852   INFO  init E:/Open3DUAVDet/output/camnorm/geo1004/lidar/irlid/release/kzm_s1.pth
+11-16 11:02:35 [H2 mav_s10] students done
+avg_inf E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H2/mav_s10/ref/inf_st2_det1_train.pkl: 12866 keys from 2 files
+11-16 11:38:34 [H2 mav_s10] w (sim val inverse variance) = 0.15520147540122378
+targets {'w': 0.15520147540122378, 'col_centres': [57.77495345011004, 150.45737897458284], 'b_train': {0: 0.39213839452285926, 1: 0.19570470879996124}, 'n_zL': 12866, 'n_dd': 5210, 'n_crops': 5227, 'n_target': 4432, 'n_fused': 4417}
+avg_inf E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H2/mav_s10/ref/inf_fin_det1_train.pkl: 12866 keys from 2 files
+avg_inf E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H2/mav_s10/ref/inf_fin_det1_val.pkl: 2336 keys from 2 files
+avg_inf E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H2/mav_s10/ref/inf_fin_det1_test.pkl: 4800 keys from 2 files
+11-16 12:23:21 [H2 mav_s10] deploy constants: "col_centres":[56.194767610629455,150.2726012997787],"c_k":{"0":0.06009502522647381,"1":0.09821907244622707,"-1":0.07770584896206856--"r_k":{"0":0.38002288341522217,"1":0.7069202959537506},
+11-16 12:23:46 [H2 mav_s10] ALL DONE: H2 mav_s10 vs PST mav_s10 [mav, 1 pair(s)] arm UDS 58.53 AP 36.95 ATE 0.326 ASE 1.75 AOE 14.81 mDR 96.40 | ref UDS 59.28 AP 38.40 ATE 0.313 ASE 1.78 AOE 14.87 mDR 95.65 | diff UDS -0.75 [-2.49, +0.50] AP -1.45 [-4.42, +0.62] ATE +0.013 [-0.003, +0.031] ASE -0.03 AOE -0.05 [-0.47, +0.32] mDR +0.75 || H2 pooled (2 seed pairs) [mav, 2 pair(s)] arm UDS 58.08 AP 36.39 ATE 0.335 ASE 1.80 AOE 14.82 mDR 96.47 | ref UDS 60.04 AP 39.67 ATE 0.310 ASE 1.77 AOE 14.67 mDR 95.91 | diff UDS -1.96 [-3.47, -0.53] AP -3.28 [-5.70, -0.83] ATE +0.026 [+0.008, +0.044] ASE +0.03 AOE +0.14 [-0.08, +0.35] mDR +0.56
+11-17 01:11:44 [H2 mav_s10] already done: 11-16 12:23:46 [H2 mav_s10] ALL DONE: H2 mav_s10 vs PST mav_s10 [mav, 1 pair(s)] arm UDS 58.53 AP 36.95 ATE 0.326 ASE 1.75 AOE 14.81 mDR 96.40 | ref UDS 59.28 AP 38.40 ATE 0.313 ASE 1.78 AOE 14.87 mDR 95.65 | diff UDS -0.75 [-2.49, +0.50] AP -1.45 [-4.42, +0.62] ATE +0.013 [-0.003, +0.031] ASE -0.03 AOE -0.05 [-0.47, +0.32] mDR +0.75 || H2 pooled (2 seed pairs) [mav, 2 pair(s)] arm UDS 58.08 AP 36

@@ -1,0 +1,8 @@
+11-14 15:11:53 waiting for D:/cmpfull_runs/gupnet_uda_mt_s0/.done and review1113/initabl/.done (poll every 10 min)
+11-14 19:01:53 arm nocomp (--paste 0) start
+11-14 20:10:24 E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/cleanfix/B4_orient/nocomp: test "AOE": 15.072049215760758 "UDS": 61.72036388207971  (PST reported: AOE 14.48 UDS 60.81)
+2026-11-14 19:04:02,727   INFO  args {'seed': 0, 'tag': 'nocomp', 'tgt': 'gate', 'proto': 0.0, 'proto_metric': 'cos', 'ring_tau': 0.04, 'ring_sigw': 30.0, 'ring_shrink': 0.3, 'ring_mom': 0.99, 'runs_dir': 'E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/cleanfix/B4_orient/nocomp/ou/runs', 'pseudo': 'pseudo_tr1', 'tgt_w': False, 'no_sym': False, 'paste': 0.0, 'realcut': 0.0, 'realcut_dir':
+11-14 20:10:24 arm nosym (--no-sym) start
+11-14 20:45:20 E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/cleanfix/B4_orient/nosym: test "AOE": 15.491489142443372 "UDS": 59.39778488382827  (PST reported: AOE 14.48 UDS 60.81)
+2026-11-14 20:10:32,864   INFO  args {'seed': 0, 'tag': 'nosym', 'tgt': 'gate', 'proto': 0.0, 'proto_metric': 'cos', 'ring_tau': 0.04, 'ring_sigw': 30.0, 'ring_shrink': 0.3, 'ring_mom': 0.99, 'runs_dir': 'E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/cleanfix/B4_orient/nosym/ou/runs', 'pseudo': 'pseudo_tr1', 'tgt_w': False, 'no_sym': True, 'paste': 0.5, 'realcut': 0.0, 'realcut_dir': 'E
+11-14 20:45:20 ALL DONE (test, n = 4,800 test frames): PST AOE 14.48 UDS 60.81 AP 40.93 | nocomp AOE 15.07 UDS 61.72 AP 42.70 | nosym AOE 15.49 UDS 59.40 AP 38.92

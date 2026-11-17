@@ -1,0 +1,19 @@
+11-14 00:06:15 waiting for 'run_all_seeds end' in /e/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/logs/run_all_seeds.log
+ok E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/boxhull/lib
+11-14 02:42:29 start boxhull in2mav
+11-14 02:42:29 !! w_sim
+11-14 02:42:29 !! boxhull mav failed (see /e/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/boxhull/*2mav/logs/run.log)
+11-14 02:42:30 start boxhull out2antifs
+11-14 02:42:30 !! w_sim
+11-14 02:42:30 !! boxhull antifs failed (see /e/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/boxhull/*2antifs/logs/run.log)
+11-14 02:42:30 boxhull end; failed: mav antifs
+ok E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/boxhull/lib
+11-14 02:47:06 start boxhull in2mav
+11-14 02:47:06 frozen w (clean chain sim-val inverse variance) = 0.190282282581008; sim detector s0 = E:/Open3DUAVDet/output/release_20260920/ramp_s0.pth
+11-14 03:13:03 sample alignment: ALIGNED
+11-14 06:42:12 ALL DONE: in2mav 
+11-14 06:42:13 start boxhull out2antifs
+11-14 06:42:15 frozen w (clean chain sim-val inverse variance) = 0.09641904940855338; sim detector s0 = E:/Open3DUAVDet/output/models/uavdet_3d/camnorm/sim_out_r34_geo_ramp_out/DET_s0/ckpt/checkpoint_epoch_5.pth
+11-14 06:57:10 sample alignment: ALIGNED
+11-14 09:39:19 ALL DONE: out2antifs 
+11-14 09:39:19 boxhull end; failed: none

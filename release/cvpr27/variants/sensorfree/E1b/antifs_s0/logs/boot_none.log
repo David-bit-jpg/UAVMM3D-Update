@@ -1,0 +1,1 @@
+E1b antifs_s0 vs RGB-only antifs_s0 [antifs, 1 pair(s)] arm UDS 43.71 AP 31.24 ATE 0.095 ASE 16.92 AOE 16.99 mDR 92.53 | ref UDS 38.92 AP 23.39 ATE 0.111 ASE 15.97 AOE 16.45 mDR 90.93 | diff UDS +4.79 [+2.44, +6.80] AP +7.86 [+4.22, +10.87] ATE -0.016 [-0.028, -0.003] ASE +0.95 AOE +0.54 [+0.30, +0.80] mDR +1.60

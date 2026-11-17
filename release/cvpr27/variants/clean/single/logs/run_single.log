@@ -1,0 +1,96 @@
+11-13 09:09:17 start
+s_bar (val unlabeled, 519 boxes conf>=0.7 of 1168) = [0.3474 0.3483 0.1953]
+train: 12866 frames, conf median 0.689, >=0.5 65.2%, >=0.3 75.6%
+val: 2336 frames, conf median 0.642, >=0.5 60.3%, >=0.3 72.3%
+test: 4800 frames, conf median 0.808, >=0.5 79.6%, >=0.3 84.4%
+crops val1: 2336 (val every 1); zoom median 1.74, clipped at ZMAX 2.6%
+crops te1: 4800 (test every 1); zoom median 1.80, clipped at ZMAX 1.2%
+2026-11-13 09:37:44,543   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-13 09:37:44,601   INFO  MMCache[test]: RGB 可见度 >= 5.0 过滤 4924 -> 4646 帧
+2026-11-13 09:37:44,601   INFO  MMCache[test]: 4646 帧, 模态 ['rgb'] -> 3 通道, 缓存 E:\mmcache\full_v2\test
+2026-11-13 09:37:46,912   INFO  loading weights: 载入 289/289 个张量, 27.95M/27.95M 参数 (100.0%)
+read 1 nets on 2336 crops -> E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/clean/single/ou/read_val1_stu.pkl
+2026-11-13 09:39:10,010   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-13 09:39:10,010   INFO  MMCache[test]: RGB 可见度 >= 5.0 过滤 4924 -> 4646 帧
+2026-11-13 09:39:10,010   INFO  MMCache[test]: 4646 帧, 模态 ['rgb'] -> 3 通道, 缓存 E:\mmcache\full_v2\test
+2026-11-13 09:39:10,249   INFO  loading weights: 载入 289/289 个张量, 27.95M/27.95M 参数 (100.0%)
+read 1 nets on 4800 crops -> E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/clean/single/ou/read_te1_stu.pkl
+2026-11-13 09:40:47,246   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-13 09:40:47,247   INFO  MMCache[test]: RGB 可见度 >= 5.0 过滤 4924 -> 4646 帧
+2026-11-13 09:40:47,247   INFO  MMCache[test]: 4646 帧, 模态 ['rgb', 'ir', 'depth', 'tag'] -> 6 通道, 缓存 E:\mmcache\full_v2\test
+2026-11-13 09:40:54,606   INFO  loading weights: 载入 297/297 个张量, 28.54M/28.54M 参数 (100.0%)
+kps adabn on 3695 crops
+kps checkpoint_epoch_8.pth on tr1: 12866 crops, ratio median 0.447
+kps checkpoint_epoch_8.pth on val1: 2336 crops, ratio median 0.447
+kps checkpoint_epoch_8.pth on te1: 4800 crops, ratio median 0.692
+infer ref_st3_s5.pt val: 2336 crops / 2336 frames, delta_hat median +0.078, |.|<=log1.4 100.0%
+infer ref_st3_s5.pt test: 4800 crops / 4800 frames, delta_hat median +0.093, |.|<=log1.4 100.0%
+infer ref_st3_s5.pt train: 12864 crops / 12866 frames, delta_hat median +0.070, |.|<=log1.4 100.0%
+11-13 09:53:20 w (deployed) = 0.190282282581008
+{
+ "w": 0.190282282581008,
+ "s_bar": [
+  0.34743061661720276,
+  0.34825819730758667,
+  0.1953149139881134
+ ],
+ "col_centres": [
+  57.463640329892854,
+  157.26405472455156
+ ],
+ "c_k": {
+  "0": 0.050025951117277145,
+  "1": 0.08632372319698334,
+  "-1": 0.06983397156000137
+ },
+ "r_k": {
+  "0": 0.3784988075494766,
+  "1": 0.7024561166763306
+ },
+ "b_k_val_images": {
+  "1": 0.2920179133545042,
+  "0": 0.5112797499231082
+ },
+ "alpha": 0.5,
+ "fused_val": {
+  "n": 2336,
+  "n_fused": 2275,
+  "n_rot_student": 2336,
+  "file": "E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/clean/single/preds/single_fused_val.pkl"
+ },
+ "nofuse_val": {
+  "n": 2336,
+  "n_fused": 0,
+  "n_rot_student": 2336,
+  "file": "E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/clean/single/preds/single_nofuse_val.pkl"
+ },
+ "fused_test": {
+  "n": 4800,
+  "n_fused": 4741,
+  "n_rot_student": 4800,
+  "file": "E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/clean/single/preds/single_fused_test.pkl"
+ },
+ "nofuse_test": {
+  "n": 4800,
+  "n_fused": 0,
+  "n_rot_student": 4800,
+  "file": "E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/clean/single/preds/single_nofuse_test.pkl"
+ }
+}
+all      AOE 22.475  ATE 0.352  ASE 2.304  AP 41.304  UDS 57.734  mDR 94.135
+0-3      AOE 21.093  ATE 0.262  ASE 2.023  AP 56.004  UDS 66.738  mDR 93.156
+3-4      AOE 23.606  ATE 0.355  ASE 2.412  AP 38.856  UDS 55.985  mDR 93.282
+4-99     AOE 22.569  ATE 0.455  ASE 2.490  AP 32.248  UDS 51.964  mDR 96.557
+all      AOE 22.481  ATE 0.345  ASE 2.305  AP 40.478  UDS 57.412  mDR 94.178
+0-3      AOE 21.113  ATE 0.251  ASE 2.027  AP 54.904  UDS 66.341  mDR 93.283
+3-4      AOE 23.606  ATE 0.362  ASE 2.412  AP 36.131  UDS 54.533  mDR 93.282
+4-99     AOE 22.569  ATE 0.434  ASE 2.490  AP 33.389  UDS 52.798  mDR 96.557
+all      AOE 15.200  ATE 0.325  ASE 1.745  AP 38.206  UDS 58.821  mDR 94.229
+0-3      AOE 15.837  ATE 0.250  ASE 2.019  AP 52.659  UDS 66.630  mDR 95.217
+3-4      AOE 13.875  ATE 0.294  ASE 1.563  AP 39.717  UDS 60.363  mDR 93.248
+4-99     AOE 16.776  ATE 0.497  ASE 1.685  AP 23.450  UDS 49.082  mDR 94.664
+all      AOE 15.213  ATE 0.368  ASE 1.747  AP 32.297  UDS 55.338  mDR 94.312
+0-3      AOE 15.851  ATE 0.272  ASE 2.020  AP 45.737  UDS 62.900  mDR 95.280
+3-4      AOE 13.883  ATE 0.347  ASE 1.563  AP 32.955  UDS 56.317  mDR 93.295
+4-99     AOE 16.794  ATE 0.550  ASE 1.689  AP 19.512  UDS 46.460  mDR 94.848
+11-13 09:53:29 ALL DONE

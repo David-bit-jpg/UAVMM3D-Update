@@ -1,0 +1,11 @@
+11-17 04:39:53 [H6 antifs_s0] start (mode HGT, SX_SEEDSHIFT=0, reference run E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/out2antifs)
+ok H6 antifs 0 HGT E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H6/antifs_s0/lib
+11-17 04:39:55 [H6 antifs_s0] lib ok: W D:/S2MUAV3D/srcx_work/heads_H6_out2antifs_s0, pseudo tag srcx_out2antifs
+11-17 04:46:21 [H6 antifs_s0] kpsbox checkpoint_epoch_8.pth on tr1: 3292 / 3293 crops (fit failed 1), box-corner height ratio median 0.664, s_bar ratio 0.443
+11-17 04:46:21 [H6 antifs_s0] kpsbox checkpoint_epoch_8.pth on val1: 1148 / 1148 crops (fit failed 0), box-corner height ratio median 0.396, s_bar ratio 0.443
+11-17 04:46:23 [H6 antifs_s0] kpsbox checkpoint_epoch_8.pth on te1: 2624 / 2624 crops (fit failed 0), box-corner height ratio median 0.427, s_bar ratio 0.443
+11-17 04:46:29 [H6 antifs_s0] height ratio tr1: box corners median 0.664 (IQR 0.500) | LiDAR structure points median 0.462 (IQR 0.055) | Spearman 0.32, n 3292
+11-17 04:46:30 [H6 antifs_s0] height ratio val1: box corners median 0.396 (IQR 0.246) | LiDAR structure points median 0.428 (IQR 0.067) | Spearman 0.62, n 1148
+11-17 04:46:30 [H6 antifs_s0] height ratio te1: box corners median 0.427 (IQR 0.196) | LiDAR structure points median 0.425 (IQR 0.048) | Spearman 0.63, n 2624
+11-17 04:46:52 [H6 antifs_s0] deploy constants: "col_centres":[80.05685610392877,140.1501581922849],"c_k":{"0":0.027637775987386703,"1":0.0183065515011549,"-1":0.01932554319500923--"r_k":{"0":0.5208519592983512,"1":0.7639518221923038},
+11-17 04:46:59 [H6 antifs_s0] ALL DONE: H6 antifs_s0 vs PST antifs_s0 [antifs, 1 pair(s)] arm UDS 41.73 AP 27.89 ATE 0.099 ASE 17.31 AOE 17.11 mDR 91.92 | ref UDS 41.73 AP 27.89 ATE 0.099 ASE 16.30 AOE 17.11 mDR 91.92 | diff UDS +0.00 [+0.00, +0.00] AP +0.00 [+0.00, +0.00] ATE +0.000 [+0.000, +0.000] ASE +1.02 AOE +0.00 [+0.00, +0.00] mDR +0.00

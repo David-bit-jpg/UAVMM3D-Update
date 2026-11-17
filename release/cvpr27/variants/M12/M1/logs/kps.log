@@ -1,0 +1,11 @@
+2026-11-13 05:02:48,491   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-13 05:02:48,535   INFO  MMCache[test]: RGB 可见度 >= 5.0 过滤 4924 -> 4646 帧
+2026-11-13 05:02:48,535   INFO  MMCache[test]: 4646 帧, 模态 ['rgb', 'ir', 'depth', 'tag'] -> 6 通道, 缓存 E:\mmcache\full_v2\test
+nl075 val 关键点高度比中位 0.454，帧数 2336，60 s
+2026-11-13 05:03:50,976   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-13 05:03:50,976   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-13 05:03:50,977   INFO  MMCache[test]: RGB 可见度 >= 5.0 过滤 4924 -> 4646 帧
+2026-11-13 05:03:50,977   INFO  MMCache[test]: RGB 可见度 >= 5.0 过滤 4924 -> 4646 帧
+2026-11-13 05:03:50,977   INFO  MMCache[test]: 4646 帧, 模态 ['rgb', 'ir', 'depth', 'tag'] -> 6 通道, 缓存 E:\mmcache\full_v2\test
+2026-11-13 05:03:50,977   INFO  MMCache[test]: 4646 帧, 模态 ['rgb', 'ir', 'depth', 'tag'] -> 6 通道, 缓存 E:\mmcache\full_v2\test
+nl075 test 关键点高度比中位 0.702，帧数 4800，127 s

@@ -1,0 +1,12 @@
+11-15 21:32:00 [E2b mav_s0] start (mode BH, SX_TEACH=full, SX_SEEDSHIFT=0, PST ref E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/in2mav, RGB-only ref E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/in2mav_none)
+ok E2b mav 0 BH full E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E2b/mav_s0/lib
+11-15 21:32:02 [E2b mav_s0] lib ok: W E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E2b/mav_s0/work, pseudo tag srcx_in2mav
+11-15 21:37:46 [E2b mav_s0] silhouette target = IR silhouette, composite matte = box hull
+11-15 22:29:55 [E2b mav_s0] refiner: [sensorfree] composites ON; alpha = E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E2b/mav_s0/ref/sim_matte.npy
+avg_inf E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E2b/mav_s0/ref/inf_st2_det1_train.pkl: 12863 keys from 2 files
+11-15 23:00:11 [E2b mav_s0] frozen w of the reference run = 0.190282282581008
+avg_inf E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E2b/mav_s0/ref/inf_fin_det1_train.pkl: 12863 keys from 2 files
+avg_inf E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E2b/mav_s0/ref/inf_fin_det1_val.pkl: 2336 keys from 2 files
+avg_inf E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E2b/mav_s0/ref/inf_fin_det1_test.pkl: 4800 keys from 2 files
+11-15 23:56:41 [E2b mav_s0] deploy constants: "col_centres":[59.17840467844394,160.58518065201952],"c_k":{"0":0.08529498800635338,"1":0.09849197044968605,"-1":0.09231818467378616--"r_k":{"0":0.3796245902776718,"1":0.7052029967308044},
+11-15 23:56:51 [E2b mav_s0] ALL DONE: E2b mav_s0 vs PST mav_s0 [mav, 1 pair(s)] arm UDS 61.85 AP 42.59 ATE 0.300 ASE 1.64 AOE 14.48 mDR 96.19 | ref UDS 60.81 AP 40.93 ATE 0.306 ASE 1.75 AOE 14.48 mDR 96.17 | diff UDS +1.04 [+0.27, +1.44] AP +1.66 [+0.26, +2.36] ATE -0.005 [-0.010, +0.001] ASE -0.11 AOE +0.01 [+0.00, +0.01] mDR +0.02 || recipe deviations: 0

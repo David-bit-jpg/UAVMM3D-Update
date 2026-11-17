@@ -1,0 +1,41 @@
+11-14 17:34:23 [H2 mav_s0] waiting for review1113/initabl/.done and D:/cmpfull_runs/gupnet_uda_mtstrict_s0/.done (poll 10 min)
+11-14 21:44:23 [H2 mav_s0] waiting for predecessor H5/mav_s0
+11-14 22:54:24 [H2 mav_s0] start (mode FULL, SX_SEEDSHIFT=0, reference run E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/in2mav)
+ok H2 mav 0 FULL E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H2/mav_s0/lib
+11-14 22:54:30 [H2 mav_s0] lib ok: W D:/S2MUAV3D/srcx_work/heads_H2_in2mav_s0, pseudo tag srcx_in2mav_hdH2s0
+configs cfgs/models/uavdet_3d/camnorm/srcx/real_in2mav_hdH2s0.yaml cfgs/models/uavdet_3d/camnorm/srcx/st_in2mav_hdH2s0.yaml
+11-14 22:58:37 [H2 mav_s0] fixed stage-1 outputs from srcx/in2mav (det0, refiner sim samples / bank / real d0 crops [hard links], wsim cache)
+11-14 23:25:58 [H2 mav_s0] refiners stage 1-2 done
+avg_inf E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H2/mav_s0/ref/inf_st2_det0_train.pkl: 12865 keys from 2 files
+{'tag': 'srcx_in2mav_hdH2s0', 'n': 5227, 'n_corrected': 5227, 'c_bar': 0.0890694186091423, 'lam': 0.75, 'n_train': 12866}
+11-14 23:42:54 [H2 mav_s0] pseudo-labels: {"tag":"srcx_in2mav_hdH2s0","n":5227,"n_corrected":5227,"c_bar":0.0890694186091423,"lam":0.75,"n_train":12866}
+11-15 00:06:37 [H2 mav_s0] detectors done
+crops tr1: 12866 (train every 1); zoom median 1.72, clipped at ZMAX 0.2%
+crops val1: 2336 (val every 1); zoom median 1.71, clipped at ZMAX 0.1%
+crops te1: 4800 (test every 1); zoom median 1.83, clipped at ZMAX 0.0%
+orientation bank ou_bank: 4435 windows
+pseudo pseudo_tr1: 12866 / 12866 crops have a pseudo-orientation; gate (IR vs LiDAR <= 10 deg) passes 4333 (33.7%); d_il median 15.5
+11-15 00:51:28 [H2 mav_s0] pseudo pseudo_tr1: 12866 / 12866 crops have a pseudo-orientation; gate (IR vs LiDAR <= 10 deg) passes 4333 (33.7%); d_il median 15.5
+2026-11-15 00:51:40,709   INFO  init E:/Open3DUAVDet/output/camnorm/geo1004/lidar/irlid/release/kzm_s0.pth
+2026-11-15 01:14:27,985   INFO  init E:/Open3DUAVDet/output/camnorm/geo1004/lidar/irlid/release/kzm_s1.pth
+11-15 01:51:12 [H2 mav_s0] students done
+11-15 13:26:03 [H2 mav_s0] start (mode FULL, SX_SEEDSHIFT=0, reference run E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/in2mav)
+ok H2 mav 0 FULL E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H2/mav_s0/lib
+11-15 13:26:07 [H2 mav_s0] lib ok: W D:/S2MUAV3D/srcx_work/heads_H2_in2mav_s0, pseudo tag srcx_in2mav_hdH2s0
+configs cfgs/models/uavdet_3d/camnorm/srcx/real_in2mav_hdH2s0.yaml cfgs/models/uavdet_3d/camnorm/srcx/st_in2mav_hdH2s0.yaml
+11-15 13:26:13 [H2 mav_s0] fixed stage-1 outputs from srcx/in2mav (det0, refiner sim samples / bank / real d0 crops [hard links], wsim cache)
+11-15 13:27:20 [H2 mav_s0] refiners stage 1-2 done
+11-15 13:27:25 [H2 mav_s0] pseudo-labels: {"tag":"srcx_in2mav_hdH2s0","n":5227,"n_corrected":5227,"c_bar":0.0890694186091423,"lam":0.75,"n_train":12866}
+11-15 13:32:33 [H2 mav_s0] detectors done
+11-15 13:32:42 [H2 mav_s0] 11-15 00:51:28 [H2 mav_s0] pseudo pseudo_tr1: 12866 / 12866 crops have a pseudo-orientation; gate (IR vs LiDAR <= 10 deg) passes 4333 (33.7%); d_il median 15.5
+2026-11-15 00:51:40,709   INFO  init E:/Open3DUAVDet/output/camnorm/geo1004/lidar/irlid/release/kzm_s0.pth
+2026-11-15 01:14:27,985   INFO  init E:/Open3DUAVDet/output/camnorm/geo1004/lidar/irlid/release/kzm_s1.pth
+11-15 13:36:32 [H2 mav_s0] students done
+avg_inf E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H2/mav_s0/ref/inf_st2_det1_train.pkl: 12864 keys from 2 files
+11-15 15:04:51 [H2 mav_s0] w (sim val inverse variance) = 0.17406220148342935
+targets {'w': 0.17406220148342935, 'col_centres': [53.306900749298435, 154.89697649821872], 'b_train': {0: 0.3721997352224201, 1: 0.196472885960043}, 'n_zL': 12866, 'n_dd': 5214, 'n_crops': 5227, 'n_target': 4205, 'n_fused': 4193}
+avg_inf E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H2/mav_s0/ref/inf_fin_det1_train.pkl: 12864 keys from 2 files
+avg_inf E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H2/mav_s0/ref/inf_fin_det1_val.pkl: 2336 keys from 2 files
+avg_inf E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H2/mav_s0/ref/inf_fin_det1_test.pkl: 4800 keys from 2 files
+11-15 17:17:07 [H2 mav_s0] deploy constants: "col_centres":[53.93462443466273,155.6948385163921],"c_k":{"0":0.053075700998306274,"1":0.09818543121218681,"-1":0.07600465603172779--"r_k":{"0":0.3790241628885269,"1":0.7078376412391663},
+11-15 17:17:16 [H2 mav_s0] ALL DONE: H2 mav_s0 vs PST mav_s0 [mav, 1 pair(s)] arm UDS 57.63 AP 35.82 ATE 0.345 ASE 1.84 AOE 14.82 mDR 96.54 | ref UDS 60.81 AP 40.93 ATE 0.306 ASE 1.75 AOE 14.48 mDR 96.17 | diff UDS -3.18 [-5.32, -0.38] AP -5.11 [-8.63, -0.37] ATE +0.039 [+0.005, +0.071] ASE +0.09 AOE +0.34 [+0.08, +0.69] mDR +0.38

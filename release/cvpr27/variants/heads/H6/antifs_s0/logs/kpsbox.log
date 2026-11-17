@@ -1,0 +1,8 @@
+[infer_wrap] memory fraction 0.20 -> E:\Open3DUAVDet\output\camnorm\geo1004\gproto\review1113\heads\H6\antifs_s0\lib\kpsbox_x.py E:/Open3DUAVDet/output/models/uavdet_3d/camnorm/sim_out_r34_kp_w12_zoom_irlid_kps_out/OKZkps_s0/ckpt/checkpoint_epoch_8.pth tr1,val1,te1 E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H6/antifs_s0/kps_%s.pkl 80
+2026-11-17 04:43:35,009   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-17 04:43:35,115   INFO  MMCache[test]: 1818 帧, 模态 ['rgb', 'ir', 'depth', 'tag'] -> 6 通道, 缓存 D:\S2MUAV3D\sim_outdoor_carla\cache\test
+2026-11-17 04:43:41,820   INFO  loading weights: 载入 297/297 个张量, 28.54M/28.54M 参数 (100.0%)
+kpsbox adabn on 389 crops
+kpsbox checkpoint_epoch_8.pth on tr1: 3292 / 3293 crops (fit failed 1), box-corner height ratio median 0.664, s_bar ratio 0.443
+kpsbox checkpoint_epoch_8.pth on val1: 1148 / 1148 crops (fit failed 0), box-corner height ratio median 0.396, s_bar ratio 0.443
+kpsbox checkpoint_epoch_8.pth on te1: 2624 / 2624 crops (fit failed 0), box-corner height ratio median 0.427, s_bar ratio 0.443

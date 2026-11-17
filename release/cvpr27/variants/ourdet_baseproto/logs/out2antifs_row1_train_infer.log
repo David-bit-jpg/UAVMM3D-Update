@@ -1,0 +1,7 @@
+2026-11-16 17:06:07,433   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-16 17:06:07,433   INFO  MMCache[test]: 3293 帧, 模态 ['rgb'] -> 3 通道, 缓存 D:\S2MUAV3D\ourdet_baseproto_cache\outdoor_real_fs\train
+2026-11-16 17:06:20,444   INFO  loading weights: 载入 289/289 个张量, 27.93M/27.93M 参数 (100.0%)
+2026-11-16 17:06:20,681   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-16 17:06:20,681   INFO  MMCache[test]: 3293 帧, 模态 ['rgb'] -> 3 通道, 缓存 D:\S2MUAV3D\ourdet_baseproto_cache\outdoor_real_fs\train
+train: 3293 frames, conf median 0.423, no box 0
+{'combo': 'out2antifs', 'mode': 'st', 'n': 2634, 'n_train': 3293, 'index': 'D:/S2MUAV3D/ourdet_baseproto_cache/outdoor_real_fs/train/index_st.pkl', 'roundtrip_max_px': 0.0, 'roundtrip_float32_max_px': 7.497990719684822e-05, 'K_in_vs_labels_K_max': 0.0, 'source': 'E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/ourdet_baseproto/preds/out2antifs_sim_s0_train_recs.pkl', 'score_threshold': 0.33270756602287294, 'keep': 0.8, 'n_no_box': 0}

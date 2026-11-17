@@ -1,0 +1,20 @@
+11-14 17:28:19 [H4 mav_s0] waiting for review1113/initabl/.done and D:/cmpfull_runs/gupnet_uda_mtstrict_s0/.done (poll 10 min)
+11-14 21:38:24 [H4 mav_s0] start (mode ORI, SX_SEEDSHIFT=0, reference run E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/in2mav)
+ok H4 mav 0 ORI E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H4/mav_s0/lib
+11-14 21:38:25 [H4 mav_s0] lib ok: W D:/S2MUAV3D/srcx_work/heads_H4_in2mav_s0, pseudo tag srcx_in2mav
+11-14 21:38:28 [H4 mav_s0] reference inputs: det1, frozen stage-3 depth students, height readings, w; crops / bank hard-linked from /d/S2MUAV3D/srcx_work/in2mav
+E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H4/mav_s0/ou/T_irlid0.pth <- ref reading of T_irlid0.pth
+E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H4/mav_s0/ou/T_irlid1.pth <- ref reading of T_irlid1.pth
+E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H4/mav_s0/ou/T_kdir0.pth <- ref reading of T_kdir0.pth
+E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H4/mav_s0/ou/T_kdir1.pth <- ref reading of T_kdir1.pth
+E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H4/mav_s0/ou/T_kz0.pth <- new reading of T_kz0.pth
+E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H4/mav_s0/ou/T_kz1.pth <- new reading of T_kz1.pth
+merged 6 teacher readings on 12866 crops -> E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H4/mav_s0/ou/read_tr1_teach.pkl
+teacher groups: {"T": ["E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H4/mav_s0/ou/T_irlid0.pth", "E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H4/mav_s0/ou/T_irlid1.pth", "E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H4/mav_s0/ou/T_kdir0.pth", "E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H4/mav_s0/ou/T_kdir1.pth", "E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H4/mav_s0/ou/T_kz0.pth", "E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H4/mav_s0/ou/T_kz1.pth"], "IR": ["E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H4/mav_s0/ou/T_kdir0.pth", "E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H4/mav_s0/ou/T_kdir1.pth"], "LiD": ["E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H4/mav_s0/ou/T_kz0.pth", "E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H4/mav_s0/ou/T_kz1.pth"]}
+pseudo pseudo_tr1: 12866 / 12866 crops have a pseudo-orientation; gate (IR vs LiDAR <= 10 deg) passes 4405 (34.2%); d_il median 15.3
+11-14 21:46:35 [H4 mav_s0] pseudo pseudo_tr1: 12866 / 12866 crops have a pseudo-orientation; gate (IR vs LiDAR <= 10 deg) passes 4405 (34.2%); d_il median 15.3 | reference: pseudo pseudo_tr1: 12866 / 12866 crops have a pseudo-orientation; gate (IR vs LiDAR <= 10 deg) passes 4301 (33.4%); d_il median 15.2
+2026-11-14 21:46:44,229   INFO  init E:/Open3DUAVDet/output/camnorm/geo1004/lidar/irlid/release/kzm_s0.pth
+2026-11-14 21:48:24,130   INFO  init E:/Open3DUAVDet/output/camnorm/geo1004/lidar/irlid/release/kzm_s1.pth
+11-14 22:16:48 [H4 mav_s0] students done
+11-14 22:16:53 [H4 mav_s0] deploy constants: "col_centres":[56.28651814129036,156.96024897525456],"c_k":{"0":0.06154533661901951,"1":0.09074003621935844,"-1":0.07811899483203888--"r_k":{"0":0.3793414235115051,"1":0.7049553990364075},
+11-14 22:17:06 [H4 mav_s0] ALL DONE: H4 mav_s0 vs PST mav_s0 [mav, 1 pair(s)] arm UDS 60.01 AP 39.58 ATE 0.317 ASE 1.75 AOE 14.44 mDR 96.17 | ref UDS 60.81 AP 40.93 ATE 0.306 ASE 1.75 AOE 14.48 mDR 96.17 | diff UDS -0.80 [-1.21, -0.40] AP -1.35 [-1.99, -0.69] ATE +0.011 [+0.005, +0.017] ASE +0.00 AOE -0.04 [-0.30, +0.19] mDR +0.00

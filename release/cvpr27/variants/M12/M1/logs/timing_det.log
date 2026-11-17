@@ -1,0 +1,26 @@
+2026-11-13 05:11:20,007   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-13 05:11:20,007   INFO  MMCache[test]: 4800 帧, 模态 ['rgb'] -> 3 通道, 缓存 E:\mmcache\mav6d_cn_obj\test
+2026-11-13 05:11:21,673   INFO  loading weights: 载入 289/289 个张量, 27.93M/27.93M 参数 (100.0%)
+[timing] mode det: models loaded, allocated 107.5 MB
+{
+ "load": {
+  "mean": 17.57059833384119,
+  "median": 14.62054999137763,
+  "p90": 33.15740000107326
+ },
+ "det": {
+  "mean": 39.50171999856442,
+  "median": 29.630599994561635,
+  "p90": 98.67025999410545
+ },
+ "total_gpu_chain": {
+  "mean": 39.50171999856442,
+  "median": 29.630599994561635,
+  "p90": 98.67025999410545
+ },
+ "n_frames": 300,
+ "warmup": 30,
+ "peak_mem_MB_inference": 150.4599609375,
+ "gpu": "NVIDIA GeForce RTX 5090 Laptop GPU",
+ "mode": "det"
+}

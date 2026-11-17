@@ -1,0 +1,6 @@
+[infer_wrap] memory fraction 0.20 -> E:\Open3DUAVDet\output\camnorm\geo1004\gproto\review1113\B3\lib\ori_x.py adabn E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/B3/feat/ou/runs/ROUTE_FEAT_s1/ckpt_last.pth tr1 E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/B3/feat/ou/S_ab1.pth 0
+2026-11-14 05:13:10,724   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-14 05:13:10,724   INFO  MMCache[test]: RGB 可见度 >= 5.0 过滤 4924 -> 4646 帧
+2026-11-14 05:13:10,724   INFO  MMCache[test]: 4646 帧, 模态 ['rgb'] -> 3 通道, 缓存 E:\mmcache\full_v2\test
+2026-11-14 05:13:13,516   INFO  loading weights: 载入 289/289 个张量, 27.95M/27.95M 参数 (100.0%)
+adabn ckpt_last.pth: 44 BN layers on 8261 crops -> E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/B3/feat/ou/S_ab1.pth

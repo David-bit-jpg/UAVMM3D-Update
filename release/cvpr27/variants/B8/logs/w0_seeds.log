@@ -1,0 +1,2 @@
+11-14 03:50:33 start B8 runs: s10 s20
+11-14 10:22:40 ALL DONE: test mean fused-IRonly +1.29 over 3 runs [s0 (reported) 60.81 vs 59.37 (+1.44), s10 59.28 vs 58.22 (+1.06), s20 62.70 vs 61.33 (+1.37)] | val mean fused-IRonly +0.53 over 3 runs [s0 (reported) 59.71 vs 58.77 (+0.95), s10 59.54 vs 58.96 (+0.58), s20 59.87 vs 59.82 (+0.05)]

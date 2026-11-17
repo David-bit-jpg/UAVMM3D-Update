@@ -1,0 +1,1 @@
+H2 pooled (2 seed pairs) [mav, 2 pair(s)] arm UDS 58.08 AP 36.39 ATE 0.335 ASE 1.80 AOE 14.82 mDR 96.47 | ref UDS 60.04 AP 39.67 ATE 0.310 ASE 1.77 AOE 14.67 mDR 95.91 | diff UDS -1.96 [-3.47, -0.53] AP -3.28 [-5.70, -0.83] ATE +0.026 [+0.008, +0.044] ASE +0.03 AOE +0.14 [-0.08, +0.35] mDR +0.56

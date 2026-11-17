@@ -1,0 +1,50 @@
+{
+ "w": 0.09788050388120345,
+ "s_bar": [
+  0.5336753129959106,
+  0.5309314727783203,
+  0.2291063889861107
+ ],
+ "col_centres": [
+  79.09253864340444,
+  144.31974319626715
+ ],
+ "c_k": {
+  "0": 0.046196273528039455,
+  "1": 0.015797650441527367,
+  "-1": 0.025090236216783524
+ },
+ "r_k": {
+  "0": 0.46338488161563873,
+  "1": 0.46075016260147095
+ },
+ "b_k_val_images": {
+  "0": 0.5761783225623716,
+  "1": 1.0188669447885437
+ },
+ "alpha": 0.5,
+ "fused_val": {
+  "n": 1148,
+  "n_fused": 1134,
+  "n_rot_student": 1148,
+  "file": "E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/out2antifs_k249/preds/pcmd_fused_val.pkl"
+ },
+ "nofuse_val": {
+  "n": 1148,
+  "n_fused": 0,
+  "n_rot_student": 1148,
+  "file": "E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/out2antifs_k249/preds/pcmd_nofuse_val.pkl"
+ },
+ "fused_test": {
+  "n": 2624,
+  "n_fused": 2558,
+  "n_rot_student": 2624,
+  "file": "E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/out2antifs_k249/preds/pcmd_fused_test.pkl"
+ },
+ "nofuse_test": {
+  "n": 2624,
+  "n_fused": 0,
+  "n_rot_student": 2624,
+  "file": "E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/out2antifs_k249/preds/pcmd_nofuse_test.pkl"
+ }
+}

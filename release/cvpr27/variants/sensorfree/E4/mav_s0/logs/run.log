@@ -1,0 +1,16 @@
+11-15 21:55:53 [E4 mav_s0] start (mode STU, SX_TEACH=none, SX_SEEDSHIFT=0, PST ref E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/in2mav, RGB-only ref E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/in2mav_none)
+ok E4 mav 0 STU none E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E4/mav_s0/lib
+11-15 21:56:36 [E4 mav_s0] lib ok: W D:/S2MUAV3D/srcx_work/sf_E4_in2mav_none_s0, pseudo tag srcx_in2mav_none
+11-15 22:07:34 [E4 mav_s0] upstream of the students from the same-seed RGB-only run E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/in2mav_none (det0/det1, refiner st2, crops, gated pseudo-orientations [hard links], constant height)
+11-15 22:07:41 [E4 mav_s0] reference: pseudo pseudo_tr1: 12866 / 12866 crops have a pseudo-orientation; gate (IR vs LiDAR <= 10 deg) passes 3527 (27.4%); d_il median 18.1
+2026-11-15 22:08:48,848   INFO  init E:/Open3DUAVDet/output/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom/KZs0/ckpt/checkpoint_epoch_30.pth
+11-15 22:43:01 [E4 mav_s0] student s0: 'paste_tried': 0, 'paste_done': 0
+2026-11-15 22:19:21,209   INFO  init E:/Open3DUAVDet/output/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom/KZs1/ckpt/checkpoint_epoch_30.pth
+11-15 22:44:48 [E4 mav_s0] student s1: 'paste_tried': 0, 'paste_done': 0
+11-15 22:56:27 [E4 mav_s0] students done
+11-15 22:58:03 [E4 mav_s0] w (sim val inverse variance) = 0.21231978167485177
+avg_inf E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E4/mav_s0/ref/inf_fin_det1_train.pkl: 12865 keys from 2 files
+avg_inf E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E4/mav_s0/ref/inf_fin_det1_val.pkl: 2336 keys from 2 files
+avg_inf E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E4/mav_s0/ref/inf_fin_det1_test.pkl: 4800 keys from 2 files
+11-15 23:58:03 [E4 mav_s0] deploy constants: "col_centres":[0.0,0.0],"c_k":{"0":0.10495641082525253,"1":NaN,"-1":0.10495641082525253--"r_k":{"0":0.5613338615903767,"1":NaN},
+11-15 23:58:19 [E4 mav_s0] ALL DONE: E4 mav_s0 vs PST mav_s0 [mav, 1 pair(s)] arm UDS 56.37 AP 36.31 ATE 0.358 ASE 2.59 AOE 16.41 mDR 96.00 | ref UDS 60.81 AP 40.93 ATE 0.306 ASE 1.75 AOE 14.48 mDR 96.17 | diff UDS -4.45 [-6.22, -2.98] AP -4.62 [-7.20, -2.27] ATE +0.052 [+0.033, +0.070] ASE +0.84 AOE +1.93 [+0.85, +3.15] mDR -0.17 || vs RGB-only: diff UDS -1.01 [-1.56, -0.16] AP -1.72 [-2.68, -0.33] ATE +0.010 [-0.001, +0.017] ASE +0.01 AOE +0.09 [-0.30, +0.40] mDR +0.02 || recipe deviations: 0

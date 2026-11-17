@@ -1,0 +1,5 @@
+2026-11-13 08:42:05,972   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-13 08:42:06,111   INFO  MMCache[test]: RGB 可见度 >= 5.0 过滤 19490 -> 18101 帧
+2026-11-13 08:42:06,111   INFO  MMCache[test]: 9051 帧, 模态 ['rgb'] -> 3 通道, 缓存 E:\mmcache\full_v2\train
+2026-11-13 08:42:06,333   INFO  loading weights: 载入 289/289 个张量, 27.93M/27.93M 参数 (100.0%)
+sim samples 8965 (with IR silhouette 8964), delta* median +0.127 |.| median 0.141

@@ -1,0 +1,84 @@
+s_bar (val unlabeled, 297 boxes conf>=0.7 of 574) = [0.5275 0.5272 0.2364]
+train: 3293 frames, conf median 0.292, >=0.5 32.2%, >=0.3 49.0%
+val: 1148 frames, conf median 0.712, >=0.5 65.9%, >=0.3 75.5%
+test: 2624 frames, conf median 0.736, >=0.5 76.9%, >=0.3 87.1%
+crops val1: 1148 (val every 1); zoom median 8.73, clipped at ZMAX 0.0%
+crops te1: 2624 (test every 1); zoom median 6.69, clipped at ZMAX 0.0%
+2026-11-13 04:31:31,580   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-13 04:31:31,580   INFO  MMCache[test]: 1818 帧, 模态 ['rgb'] -> 3 通道, 缓存 D:\S2MUAV3D\sim_outdoor_carla\cache\test
+2026-11-13 04:31:33,889   INFO  loading weights: 载入 289/289 个张量, 27.95M/27.95M 参数 (100.0%)
+read 1 nets on 1148 crops -> E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/M12/anti/single/ou/read_val1_stu.pkl
+2026-11-13 04:31:51,329   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-13 04:31:51,330   INFO  MMCache[test]: 1818 帧, 模态 ['rgb'] -> 3 通道, 缓存 D:\S2MUAV3D\sim_outdoor_carla\cache\test
+2026-11-13 04:31:51,564   INFO  loading weights: 载入 289/289 个张量, 27.95M/27.95M 参数 (100.0%)
+read 1 nets on 2624 crops -> E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/M12/anti/single/ou/read_te1_stu.pkl
+2026-11-13 04:32:23,727   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-13 04:32:23,782   INFO  MMCache[test]: 1818 帧, 模态 ['rgb', 'ir', 'depth', 'tag'] -> 6 通道, 缓存 D:\S2MUAV3D\sim_outdoor_carla\cache\test
+2026-11-13 04:32:31,901   INFO  loading weights: 载入 297/297 个张量, 28.54M/28.54M 参数 (100.0%)
+kps adabn on 389 crops
+kps checkpoint_epoch_8.pth on tr1: 3293 crops, ratio median 0.461
+kps checkpoint_epoch_8.pth on val1: 1148 crops, ratio median 0.427
+kps checkpoint_epoch_8.pth on te1: 2624 crops, ratio median 0.424
+infer ref_st3_s5.pt train: 3193 crops / 3293 frames, delta_hat median +0.022, |.|<=log1.4 100.0%
+infer ref_st3_s5.pt val: 1147 crops / 1148 frames, delta_hat median +0.079, |.|<=log1.4 100.0%
+infer ref_st3_s5.pt test: 2610 crops / 2624 frames, delta_hat median +0.051, |.|<=log1.4 100.0%
+11-13 04:36:45 w (deployed) = 0.09641904940855338
+{
+ "w": 0.09641904940855338,
+ "s_bar": [
+  0.5275067090988159,
+  0.5271808505058289,
+  0.23639734089374542
+ ],
+ "col_centres": [
+  71.55069240212563,
+  134.032904884053
+ ],
+ "c_k": {
+  "0": 0.026351813226938248,
+  "1": 0.038524288684129715,
+  "-1": 0.022444233298301697
+ },
+ "r_k": {
+  "0": 0.45667505264282227,
+  "1": 0.4718645513057709
+ },
+ "b_k_val_images": {
+  "0": 0.4869744990632508,
+  "1": 1.1672523954145215
+ },
+ "alpha": 0.5,
+ "fused_val": {
+  "n": 1148,
+  "n_fused": 1047,
+  "n_rot_student": 1148,
+  "file": "E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/M12/anti/single/preds/single_fused_val.pkl"
+ },
+ "nofuse_val": {
+  "n": 1148,
+  "n_fused": 0,
+  "n_rot_student": 1148,
+  "file": "E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/M12/anti/single/preds/single_nofuse_val.pkl"
+ },
+ "fused_test": {
+  "n": 2624,
+  "n_fused": 2541,
+  "n_rot_student": 2624,
+  "file": "E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/M12/anti/single/preds/single_fused_test.pkl"
+ },
+ "nofuse_test": {
+  "n": 2624,
+  "n_fused": 0,
+  "n_rot_student": 2624,
+  "file": "E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/M12/anti/single/preds/single_nofuse_test.pkl"
+ }
+}
+all      AOE 20.583  ATE 0.102  ASE 15.699  AP 18.142  UDS 33.435  mDR 71.603
+0-25     AOE 31.408  ATE 0.097  ASE 17.414  AP 6.299  UDS 21.045  mDR 36.983
+25-50    AOE 14.027  ATE 0.102  ASE 15.973  AP 23.638  UDS 39.295  mDR 85.213
+50-999   AOE 22.353  ATE 0.104  ASE 14.625  AP 26.751  UDS 40.526  mDR 97.633
+all      AOE 17.196  ATE 0.103  ASE 16.214  AP 30.069  UDS 42.849  mDR 93.864
+0-25     AOE 15.506  ATE 0.110  ASE 17.479  AP 29.253  UDS 41.767  mDR 88.241
+25-50    AOE 17.959  ATE 0.103  ASE 15.920  AP 31.013  UDS 43.523  mDR 96.794
+50-999   AOE 18.716  ATE 0.092  ASE 14.599  AP 30.669  UDS 44.065  mDR 99.290
+11-13 04:36:49 ALL DONE

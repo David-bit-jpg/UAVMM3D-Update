@@ -1,0 +1,7 @@
+11-14 16:53:47 [s0] start (baseline run E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/in2mav, crops D:/S2MUAV3D/srcx_work/in2mav, SX_SEEDSHIFT=0)
+ok s0 E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/initabl/s0/lib
+[initabl] O E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/initabl/s0 | W (read only) D:/S2MUAV3D/srcx_work/in2mav
+[s0 s0] 2026-11-14 16:53:57,471   INFO  init E:/Open3DUAVDet/output/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom/KZs0/ckpt/checkpoint_epoch_30.pth
+[s0 s1] 2026-11-14 16:55:40,073   INFO  init E:/Open3DUAVDet/output/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom/KZs1/ckpt/checkpoint_epoch_30.pth
+11-14 17:25:06 [s0] students done
+11-14 17:35:12 [s0] val done (w 0.190282282581008)

@@ -1,0 +1,11 @@
+11-17 04:50:50 [H6 antifs_s20] start (mode HGT, SX_SEEDSHIFT=20, reference run E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/antifs_full_s20)
+ok H6 antifs 20 HGT E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H6/antifs_s20/lib
+11-17 04:50:52 [H6 antifs_s20] lib ok: W D:/S2MUAV3D/srcx_work/heads_H6_out2antifs_s20, pseudo tag srcx_out2antifs
+11-17 05:14:23 [H6 antifs_s20] kpsbox checkpoint_epoch_8.pth on tr1: 3290 / 3293 crops (fit failed 3), box-corner height ratio median 0.671, s_bar ratio 0.444
+11-17 05:14:24 [H6 antifs_s20] kpsbox checkpoint_epoch_8.pth on val1: 1148 / 1148 crops (fit failed 0), box-corner height ratio median 0.396, s_bar ratio 0.444
+11-17 05:14:25 [H6 antifs_s20] kpsbox checkpoint_epoch_8.pth on te1: 2624 / 2624 crops (fit failed 0), box-corner height ratio median 0.426, s_bar ratio 0.444
+11-17 05:14:36 [H6 antifs_s20] height ratio tr1: box corners median 0.671 (IQR 0.489) | LiDAR structure points median 0.462 (IQR 0.053) | Spearman 0.31, n 3290
+11-17 05:14:37 [H6 antifs_s20] height ratio val1: box corners median 0.396 (IQR 0.229) | LiDAR structure points median 0.430 (IQR 0.064) | Spearman 0.62, n 1148
+11-17 05:14:37 [H6 antifs_s20] height ratio te1: box corners median 0.426 (IQR 0.198) | LiDAR structure points median 0.425 (IQR 0.049) | Spearman 0.64, n 2624
+11-17 05:15:05 [H6 antifs_s20] deploy constants: "col_centres":[55.12266276629416,132.67874075367627],"c_k":{"0":0.0366083225235343,"1":0.003010157495737076,"-1":0.008993083611130714--"r_k":{"0":0.47045281031497355,"1":0.7343155962233223},
+11-17 05:15:30 [H6 antifs_s20] ALL DONE: H6 antifs_s20 vs PST antifs_s20 [antifs, 1 pair(s)] arm UDS 42.01 AP 28.27 ATE 0.098 ASE 17.08 AOE 16.85 mDR 91.58 | ref UDS 42.01 AP 28.27 ATE 0.098 ASE 16.65 AOE 16.85 mDR 91.58 | diff UDS +0.00 [+0.00, +0.00] AP +0.00 [+0.00, +0.00] ATE +0.000 [+0.000, +0.000] ASE +0.43 AOE +0.00 [+0.00, +0.00] mDR +0.00 || H6 pooled (3 seed pairs) [antifs, 3 pair(s)] arm UDS 41.71 AP 27.80 ATE 0.099 ASE 17.08 AOE 16.84 mDR 91.57 | ref UDS 41.71 AP 27.80 ATE 0.099 ASE 16.55 AOE 16.84 mDR 91.57 | diff UDS +0.00 [+0.00, +0.00] AP +0.00 [+0.00, +0.00] ATE +0.000 [+0.000, +0.000] ASE +0.52 AOE +0.00 [+0.00, +0.00] mDR +0.00

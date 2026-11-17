@@ -1,0 +1,39 @@
+2026-11-16 15:07:58,863   INFO  MMCache[train]: 标签索引 index.pkl（label_fix=None）
+2026-11-16 15:07:58,963   INFO  MMCache[train]: RGB 可见度 >= 5.0 过滤 19490 -> 18101 帧
+2026-11-16 15:07:58,963   INFO  MMCache[train]: 18101 帧, 模态 ['rgb'] -> 3 通道, 缓存 F:\mmcache\full_v2\train
+2026-11-16 15:08:02,527   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-16 15:08:02,527   INFO  MMCache[test]: 12866 帧, 模态 ['rgb'] -> 3 通道, 缓存 D:\S2MUAV3D\ourdet_baseproto_cache\mav6d_cn_obj\train
+2026-11-16 15:08:05,520   INFO  loading weights: 载入 289/289 个张量, 27.93M/27.93M 参数 (100.0%)
+2026-11-16 15:08:05,812   INFO  loss weights (end of sim-only training): {'hm': 1.0, 'center_res': 2.0, 'center_dis': 8.0, 'dim': 2.0, 'rot': 16.0, 'size2d': 4.0}
+2026-11-16 15:08:07,843   INFO  {'combo': 'in2mav', 'out': 'D:/S2MUAV3D/ourdet_baseproto_models/dann/in2mav_dann', 'batch': 8, 'epochs': 5, 'seed': 0, 'grl_max': 0.1, 'disc_lr_mult': 10.0, 'lr_mult': 0.1, 'log_every': 100, 'init': 'E:/Open3DUAVDet/output/release_20260920/ramp_s0.pth', 'sim_cfg': 'cfgs/models/uavdet_3d/camnorm/sim_full_r34_geo_tr_mix_sym8_mblur_ramp.yaml', 'sim_path': 'F:/mmcache/full_v2', 'real_path': 'D:/S2MUAV3D/ourdet_baseproto_cache/mav6d_cn_obj', 'lr': 0.0001, 'disc_lr': 0.001, 'feat_channels': 512, 'iters_per_epoch': 2263, 'total_iters': 11315, 'n_src': 18101, 'n_tgt': 12866, 'loss_weights': {'hm': 1.0, 'center_res': 2.0, 'center_dis': 8.0, 'dim': 2.0, 'rot': 16.0, 'size2d': 4.0}, 'bn': 'frozen', 'grad_clip': 35.0}
+2026-11-16 15:09:28,572   INFO  it 100/11315 ep 1 1.24 it/s peak 1.7GB det 7.4228 dom_src 0.1794 dom_tgt 0.1452 dacc 0.9256 lam 0.0022
+2026-11-16 15:10:41,263   INFO  it 200/11315 ep 1 1.38 it/s peak 1.7GB det 7.6060 dom_src 0.0440 dom_tgt 0.0209 dacc 0.9900 lam 0.0066
+2026-11-16 15:11:38,789   INFO  it 300/11315 ep 1 1.74 it/s peak 1.7GB det 7.5891 dom_src 0.0387 dom_tgt 0.0169 dacc 0.9956 lam 0.0110
+2026-11-16 15:12:45,347   INFO  it 400/11315 ep 1 1.50 it/s peak 1.7GB det 7.5962 dom_src 0.0006 dom_tgt 0.0004 dacc 1.0000 lam 0.0153
+2026-11-16 15:15:24,697   INFO  it 500/11315 ep 1 0.63 it/s peak 1.7GB det 7.2234 dom_src 0.0001 dom_tgt 0.0000 dacc 1.0000 lam 0.0196
+2026-11-16 15:18:52,999   INFO  it 600/11315 ep 1 0.48 it/s peak 1.7GB det 7.3675 dom_src 0.0000 dom_tgt 0.0000 dacc 1.0000 lam 0.0238
+2026-11-16 15:20:35,007   INFO  it 700/11315 ep 1 0.98 it/s peak 1.7GB det 7.3560 dom_src 0.0608 dom_tgt 0.0355 dacc 0.9906 lam 0.0279
+2026-11-16 15:23:11,166   INFO  it 800/11315 ep 1 0.64 it/s peak 1.7GB det 7.5420 dom_src 0.0008 dom_tgt 0.0008 dacc 1.0000 lam 0.0320
+2026-11-16 15:26:59,874   INFO  it 900/11315 ep 1 0.44 it/s peak 1.7GB det 7.4125 dom_src 0.0000 dom_tgt 0.0001 dacc 1.0000 lam 0.0359
+Traceback (most recent call last):
+  File "E:\Open3DUAVDet\output\camnorm\geo1004\gproto\review1113\ourdet_baseproto\ourdet_dann_train.py", line 163, in <module>
+    main()
+  File "E:\Open3DUAVDet\output\camnorm\geo1004\gproto\review1113\ourdet_baseproto\ourdet_dann_train.py", line 138, in main
+    tb = next(tit)
+  File "E:\Open3DUAVDet\output\camnorm\geo1004\gproto\review1113\ourdet_baseproto\lib\thread_loader.py", line 46, in __iter__
+    raise b
+  File "E:\Open3DUAVDet\output\camnorm\geo1004\gproto\review1113\ourdet_baseproto\lib\thread_loader.py", line 36, in prod
+    q.put(self.collate_fn(list(self.pool.map(self.dataset.__getitem__, ids))))
+  File "D:\Miniconda3\envs\city\lib\concurrent\futures\_base.py", line 621, in result_iterator
+    yield _result_or_cancel(fs.pop())
+  File "D:\Miniconda3\envs\city\lib\concurrent\futures\_base.py", line 319, in _result_or_cancel
+    return fut.result(timeout)
+  File "D:\Miniconda3\envs\city\lib\concurrent\futures\_base.py", line 458, in result
+    return self.__get_result()
+  File "D:\Miniconda3\envs\city\lib\concurrent\futures\_base.py", line 403, in __get_result
+    raise self._exception
+  File "D:\Miniconda3\envs\city\lib\concurrent\futures\thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "E:\Open3DUAVDet\uavdet3d\datasets\mmcache\mmcache_det_dataset.py", line 276, in __getitem__
+    image[:3] = (image[:3] - self.norm_mean[:, None, None]) / self.norm_std[:, None, None]
+numpy.core._exceptions._ArrayMemoryError: Unable to allocate 1.69 MiB for an array with shape (3, 288, 512) and data type float32

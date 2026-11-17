@@ -1,0 +1,3 @@
+height ratio tr1: box corners median 0.670 (IQR 0.492) | LiDAR structure points median 0.462 (IQR 0.055) | Spearman 0.29, n 3292
+height ratio val1: box corners median 0.396 (IQR 0.239) | LiDAR structure points median 0.433 (IQR 0.065) | Spearman 0.60, n 1148
+height ratio te1: box corners median 0.425 (IQR 0.199) | LiDAR structure points median 0.425 (IQR 0.047) | Spearman 0.63, n 2624

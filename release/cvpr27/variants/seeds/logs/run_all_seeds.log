@@ -1,0 +1,17 @@
+11-13 15:53:17 waiting for ALL DONE in /e/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sup3/run/logs/run_seed2.log
+11-13 17:38:18 run_all_seeds start (7 runs, sequential)
+11-13 17:38:20 launch mav_none_s10 (none in mav 10)
+11-13 20:04:27 finished mav_none_s10: ALL DONE: test UDS 58.01 AP 39.06 ATE 0.333 ASE 2.59 AOE 15.95 mDR 94.92 | val UDS 51.44 AP 34.08 ATE 0.439 ASE 3.57 AOE 22.73 mDR 94.48 | mav_none_s10 w 0.2433 | reported (shift 0): test 57.38 / val 53.52
+11-13 20:04:27 launch mav_full_s20 (full in mav 20)
+11-13 22:51:17 finished mav_full_s20: ALL DONE: test UDS 62.70 AP 44.38 ATE 0.280 ASE 1.62 AOE 15.15 mDR 94.67 | val UDS 59.87 AP 44.29 ATE 0.316 ASE 2.28 AOE 21.25 mDR 93.15 | mav_full_s20 w 0.2050 | reported (shift 0): test 60.81 / val 59.71
+11-13 22:51:17 launch mav_none_s20 (none in mav 20)
+11-14 01:26:16 finished mav_none_s20: ALL DONE: test UDS 58.85 AP 41.14 ATE 0.318 ASE 2.59 AOE 17.72 mDR 94.90 | val UDS 50.87 AP 33.20 ATE 0.418 ASE 3.56 AOE 24.30 mDR 94.01 | mav_none_s20 w 0.2139 | reported (shift 0): test 57.38 / val 53.52
+11-14 01:26:16 launch antifs_full_s10 (full out antifs 10)
+11-14 03:14:47 finished antifs_full_s10: ALL DONE: test UDS 41.38 AP 27.25 ATE 0.101 ASE 16.72 AOE 16.58 mDR 91.20 | val UDS 32.23 AP 15.98 ATE 0.110 ASE 16.30 AOE 20.00 mDR 72.91 | antifs_full_s10 w 0.0817 | reported (shift 0): test 41.74 / val 34.98
+11-14 03:14:47 launch antifs_none_s10 (none out antifs 10)
+11-14 05:57:10 finished antifs_none_s10: ALL DONE: test UDS 33.49 AP 15.09 ATE 0.140 ASE 15.28 AOE 15.78 mDR 91.27 | val UDS 29.05 AP 11.48 ATE 0.130 ASE 15.00 AOE 20.09 mDR 73.69 | antifs_none_s10 w 0.0770 | reported (shift 0): test 38.92 / val 32.95
+11-14 05:57:10 launch antifs_full_s20 (full out antifs 20)
+11-14 13:05:28 finished antifs_full_s20: ALL DONE: test UDS 42.01 AP 28.27 ATE 0.098 ASE 16.65 AOE 16.85 mDR 91.58 | val UDS 34.13 AP 19.18 ATE 0.103 ASE 16.16 AOE 20.48 mDR 73.26 | antifs_full_s20 w 0.0978 | reported (shift 0): test 41.74 / val 34.98
+11-14 13:05:28 launch antifs_none_s20 (none out antifs 20)
+11-14 15:41:41 finished antifs_none_s20: ALL DONE: test UDS 32.08 AP 12.91 ATE 0.148 ASE 14.82 AOE 16.22 mDR 92.45 | val UDS 28.83 AP 11.17 ATE 0.130 ASE 14.58 AOE 20.87 mDR 74.22 | antifs_none_s20 w 0.0996 | reported (shift 0): test 38.92 / val 32.95
+11-14 15:41:41 run_all_seeds end; failed: none

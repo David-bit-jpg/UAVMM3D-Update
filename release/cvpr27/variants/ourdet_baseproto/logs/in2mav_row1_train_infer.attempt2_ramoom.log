@@ -1,0 +1,23 @@
+2026-11-16 15:12:14,670   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-16 15:12:14,670   INFO  MMCache[test]: 12866 帧, 模态 ['rgb'] -> 3 通道, 缓存 D:\S2MUAV3D\ourdet_baseproto_cache\mav6d_cn_obj\train
+2026-11-16 15:12:14,992   INFO  loading weights: 载入 289/289 个张量, 27.93M/27.93M 参数 (100.0%)
+2026-11-16 15:12:15,288   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-16 15:12:15,288   INFO  MMCache[test]: 12866 帧, 模态 ['rgb'] -> 3 通道, 缓存 D:\S2MUAV3D\ourdet_baseproto_cache\mav6d_cn_obj\train
+Traceback (most recent call last):
+  File "E:\Open3DUAVDet\output\camnorm\geo1004\gproto\review1113\ourdet_baseproto\lib\ourdet_infer.py", line 56, in <module>
+    main()
+  File "E:\Open3DUAVDet\output\camnorm\geo1004\gproto\review1113\ourdet_baseproto\lib\ourdet_infer.py", line 45, in main
+    R[sp] = DI.run(cfg, model, logger, sp)
+  File "E:\Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/lib\det_infer_x.py", line 59, in run
+    for batch in loader:
+  File "D:\Miniconda3\envs\city\lib\site-packages\torch\utils\data\dataloader.py", line 741, in __next__
+    data = self._next_data()
+  File "D:\Miniconda3\envs\city\lib\site-packages\torch\utils\data\dataloader.py", line 801, in _next_data
+    data = self._dataset_fetcher.fetch(index)  # may raise StopIteration
+  File "D:\Miniconda3\envs\city\lib\site-packages\torch\utils\data\_utils\fetch.py", line 54, in fetch
+    data = [self.dataset[idx] for idx in possibly_batched_index]
+  File "D:\Miniconda3\envs\city\lib\site-packages\torch\utils\data\_utils\fetch.py", line 54, in <listcomp>
+    data = [self.dataset[idx] for idx in possibly_batched_index]
+  File "E:\Open3DUAVDet\uavdet3d\datasets\mmcache\mmcache_det_dataset.py", line 220, in __getitem__
+    chans.append(img8.astype(np.float32).transpose(2, 0, 1) / 255.0)
+numpy.core._exceptions._ArrayMemoryError: Unable to allocate 1.69 MiB for an array with shape (3, 288, 512) and data type float32

@@ -1,0 +1,11 @@
+2026-11-16 15:13:20,911   INFO  MMCache[train]: 标签索引 index.pkl（label_fix=None）
+2026-11-16 15:13:20,911   INFO  MMCache[train]: 5367 帧, 模态 ['rgb'] -> 3 通道, 缓存 D:\S2MUAV3D\sim_outdoor_carla\cache\train
+2026-11-16 15:13:22,013   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-16 15:13:22,099   INFO  MMCache[test]: 3293 帧, 模态 ['rgb'] -> 3 通道, 缓存 D:\S2MUAV3D\ourdet_baseproto_cache\outdoor_real_fs\train
+2026-11-16 15:13:32,619   INFO  loading weights: 载入 289/289 个张量, 27.93M/27.93M 参数 (100.0%)
+2026-11-16 15:13:32,689   INFO  loss weights (end of sim-only training): {'hm': 1.0, 'center_res': 2.0, 'center_dis': 8.0, 'dim': 2.0, 'rot': 16.0, 'size2d': 4.0}
+2026-11-16 15:13:36,643   INFO  {'combo': 'out2antifs', 'out': 'D:/S2MUAV3D/ourdet_baseproto_models/dann/out2antifs_dann', 'batch': 8, 'epochs': 5, 'seed': 0, 'grl_max': 0.1, 'disc_lr_mult': 10.0, 'lr_mult': 0.1, 'log_every': 100, 'init': 'E:/Open3DUAVDet/output/models/uavdet_3d/camnorm/sim_out_r34_geo_ramp_out/DET_s0/ckpt/checkpoint_epoch_5.pth', 'sim_cfg': 'cfgs/models/uavdet_3d/camnorm/sim_out_r34_geo_ramp_out.yaml', 'sim_path': 'D:/S2MUAV3D/sim_outdoor_carla/cache', 'real_path': 'D:/S2MUAV3D/ourdet_baseproto_cache/outdoor_real_fs', 'lr': 0.0001, 'disc_lr': 0.001, 'feat_channels': 512, 'iters_per_epoch': 671, 'total_iters': 3355, 'n_src': 5367, 'n_tgt': 3293, 'loss_weights': {'hm': 1.0, 'center_res': 2.0, 'center_dis': 8.0, 'dim': 2.0, 'rot': 16.0, 'size2d': 4.0}, 'bn': 'frozen', 'grad_clip': 35.0}
+2026-11-16 15:18:12,332   INFO  it 100/3355 ep 1 0.36 it/s peak 1.7GB det 11.4439 dom_src 0.5948 dom_tgt 0.6383 dacc 0.6975 lam 0.0074
+2026-11-16 15:20:33,793   INFO  it 200/3355 ep 1 0.71 it/s peak 1.7GB det 11.1605 dom_src 0.2723 dom_tgt 0.2374 dacc 0.9025 lam 0.0219
+2026-11-16 15:25:09,789   INFO  it 300/3355 ep 1 0.36 it/s peak 1.7GB det 11.1144 dom_src 0.0847 dom_tgt 0.1102 dacc 0.9712 lam 0.0355
+/e/Open3DUAVDet/output/camnorm/geo1004/gproto/gpu_slot.sh: line 28: 178961 Segmentation fault         "$@"

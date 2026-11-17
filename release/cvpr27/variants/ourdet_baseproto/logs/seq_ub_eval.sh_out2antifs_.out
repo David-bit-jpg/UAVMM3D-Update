@@ -1,0 +1,3 @@
+11-16 17:02:49 [out2antifs] train out2antifs_ub batch 8 epochs 8 (waiting for gpu slot)
+11-16 17:12:03 [out2antifs] trained out2antifs_ub
+11-16 17:24:10 [out2antifs] out2antifs_ub: all      AOE 24.422  ATE 0.402  ASE 1.678  AP 0.614  UDS 26.556  mDR 69.398

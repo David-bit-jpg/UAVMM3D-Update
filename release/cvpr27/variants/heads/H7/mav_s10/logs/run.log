@@ -1,0 +1,12 @@
+11-14 18:50:33 [H7 mav_s10] waiting for review1113/initabl/.done and D:/cmpfull_runs/gupnet_uda_mtstrict_s0/.done (poll 10 min)
+11-14 21:40:33 [H7 mav_s10] waiting for predecessor H3/mav_s0
+11-16 02:23:16 [H7 mav_s10] start (mode BH, SX_SEEDSHIFT=10, reference run E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sup3/run)
+ok H7 mav 10 BH E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H7/mav_s10/lib
+11-16 02:23:20 [H7 mav_s10] lib ok: W E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H7/mav_s10/work, pseudo tag srcx_in2mav_seed2
+11-16 02:34:47 [H7 mav_s10] box hull at seed shift 10; frozen w of the reference run = 0.17313322450305155
+avg_inf E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H7/mav_s10/ref/inf_st2_det1_train.pkl: 12865 keys from 2 files
+avg_inf E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H7/mav_s10/ref/inf_fin_det1_train.pkl: 12865 keys from 2 files
+avg_inf E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H7/mav_s10/ref/inf_fin_det1_val.pkl: 2336 keys from 2 files
+avg_inf E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H7/mav_s10/ref/inf_fin_det1_test.pkl: 4800 keys from 2 files
+11-16 04:33:56 [H7 mav_s10] deploy constants: "col_centres":[83.72299671814395,138.3060564961662],"c_k":{"0":0.08517802506685257,"1":0.09615355357527733,"-1":0.09151620417833328--"r_k":{"0":0.3886231333017349,"1":0.6951382160186768},
+11-16 04:34:20 [H7 mav_s10] ALL DONE: H7 mav_s10 vs PST mav_s10 [mav, 1 pair(s)] arm UDS 60.01 AP 39.99 ATE 0.304 ASE 1.91 AOE 14.87 mDR 95.67 | ref UDS 59.28 AP 38.40 ATE 0.313 ASE 1.78 AOE 14.87 mDR 95.65 | diff UDS +0.74 [-1.35, +2.20] AP +1.58 [-1.57, +3.64] ATE -0.009 [-0.025, +0.008] ASE +0.14 AOE +0.00 [+0.00, +0.01] mDR +0.02 || H7 pooled (2 seed pairs) [mav, 2 pair(s)] arm UDS 61.34 AP 42.30 ATE 0.296 ASE 1.92 AOE 14.68 mDR 95.92 | ref UDS 60.04 AP 39.67 ATE 0.310 ASE 1.77 AOE 14.67 mDR 95.91 | diff UDS +1.29 [-0.41, +2.48] AP +2.63 [+0.12, +4.25] ATE -0.014 [-0.027, +0.002] ASE +0.16 AOE +0.00 [+0.00, +0.00] mDR +0.01

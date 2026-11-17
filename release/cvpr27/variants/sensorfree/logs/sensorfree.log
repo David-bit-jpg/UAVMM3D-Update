@@ -1,0 +1,390 @@
+11-15 01:24:42 [lane A] waiting for heads H3/mav_s0 (poll 5 min)
+11-15 01:24:45 [lane B] waiting for heads H3/mav_s0 (poll 5 min)
+11-15 02:34:49 [lane C] waiting for heads H3/mav_s0 (poll 5 min)
+11-15 02:36:48 [prio P1] start (mav): E1 s0 -> s10 -> s20 -> pooled -> E1b s0
+11-15 02:36:49 [E1 mav_s0] start (mode FULLNONE, SX_TEACH=none, SX_SEEDSHIFT=0, PST ref E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/in2mav, RGB-only ref E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/in2mav_none)
+11-15 02:36:50 [E1 mav_s0] lib ok: W D:/S2MUAV3D/srcx_work/sf_E1_in2mav_none_s0, pseudo tag srcx_in2mav_none_sfE1s0
+11-15 02:37:35 [prio P2] start (antifs): E1 s0 -> s10 -> s20 -> pooled -> E1b s0
+11-15 02:37:35 [E1 antifs_s0] start (mode FULLNONE, SX_TEACH=none, SX_SEEDSHIFT=0, PST ref E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/out2antifs, RGB-only ref E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/out2antifs_none)
+11-15 02:38:08 [E1 antifs_s0] lib ok: W D:/S2MUAV3D/srcx_work/sf_E1_out2antifs_none_s0, pseudo tag srcx_out2antifs_none_sfE1s0
+11-15 02:39:04 [prio2 P1] waiting for the running E1 mav s0
+11-15 02:39:04 [prio2 P2] waiting for the running E1 antifs s0
+11-15 02:40:01 [E1 antifs_s0] fixed stage-1 outputs from srcx/out2antifs_none (det0, sim samples / bank / real d0 crops [hard links], wsim cache); refiner matte = box hull of review1113/boxhull/out2antifs
+11-15 02:44:30 [E1 mav_s0] fixed stage-1 outputs from srcx/in2mav_none (det0, sim samples / bank / real d0 crops [hard links], wsim cache); refiner matte = box hull of review1113/boxhull/in2mav
+11-15 02:46:18 [prio2 P1] waiting for the running E1 mav s0
+11-15 02:46:19 [prio2 P2] waiting for the running E1 antifs s0
+11-15 02:54:50 [E1geo] driver started (pid 119161): waiting for E1/mav_s{0,10,20}/.done, poll 10 min; CPU only
+11-15 03:17:19 [E1 antifs_s0] refiner: [sensorfree] composites ON; alpha = ref/sim_sil.npy
+11-15 03:17:19 [E1 antifs_s0] refiners stage 1-2 done
+11-15 03:20:40 [E1 antifs_s0] pseudo-labels: {"tag":"srcx_out2antifs_none_sfE1s0","n":909,"n_corrected":862,"c_bar":0.033489564433693886,"lam":0.75,"n_train":3293}
+11-15 03:31:18 [E1 mav_s0] refiner: [sensorfree] composites ON; alpha = ref/sim_sil.npy
+11-15 03:31:18 [E1 mav_s0] refiners stage 1-2 done
+11-15 03:31:27 [E1 antifs_s0] detectors done
+11-15 03:39:07 [E1 antifs_s0] pseudo pseudo_tr1: 3293 / 3293 crops have a pseudo-orientation; gate (IR vs LiDAR <= 10 deg) passes 620 (18.8%); d_il median 21.2
+11-15 03:51:01 [E1 mav_s0] pseudo-labels: {"tag":"srcx_in2mav_none_sfE1s0","n":5227,"n_corrected":5227,"c_bar":0.06208853982388973,"lam":0.75,"n_train":12866}
+11-15 04:08:41 [E1 antifs_s0] student s0: 'paste_tried': 8807, 'paste_done': 8807
+11-15 04:10:12 [E1 antifs_s0] student s1: 'paste_tried': 8689, 'paste_done': 8689
+11-15 04:16:42 [E1 antifs_s0] students done
+11-15 04:16:48 [E1 antifs_s0] constant height aspect 0.4430550659907123
+11-15 04:19:49 [E1 mav_s0] detectors done
+11-15 04:21:29 [E1 antifs_s0] w (sim val inverse variance) = 0.0692664988459608
+11-15 04:48:38 [E1 antifs_s0] deploy constants: "col_centres":[0.0,0.0],"c_k":{"0":0.02410143055021763,"1":NaN,"-1":0.02410143055021763--"r_k":{"0":0.4430550659907123,"1":NaN},
+11-15 04:48:49 [E1 antifs_s0] ALL DONE: E1 antifs_s0 vs PST antifs_s0 [antifs, 1 pair(s)] arm UDS 40.93 AP 26.58 ATE 0.103 ASE 16.05 AOE 17.00 mDR 92.15 | ref UDS 41.73 AP 27.89 ATE 0.099 ASE 16.30 AOE 17.11 mDR 91.92 | diff UDS -0.80 [-2.21, +0.69] AP -1.31 [-3.50, +1.00] ATE +0.004 [-0.002, +0.010] ASE -0.25 AOE -0.11 [-0.51, +0.34] mDR +0.23 || vs RGB-only: diff UDS +2.01 [+0.34, +3.71] AP +3.19 [+0.53, +5.92] ATE -0.008 [-0.015, +0.000] ASE +0.08 AOE +0.55 [+0.21, +0.89] mDR +1.22 || recipe deviations: 0
+11-15 04:48:54 [POOLED] E1 antifs pooled vs PST (1 seed pairs) [antifs, 1 pair(s)] arm UDS 40.93 AP 26.58 ATE 0.103 ASE 16.05 AOE 17.00 mDR 92.15 | ref UDS 41.73 AP 27.89 ATE 0.099 ASE 16.30 AOE 17.11 mDR 91.92 | diff UDS -0.80 [-2.21, +0.69] AP -1.31 [-3.50, +1.00] ATE +0.004 [-0.002, +0.010] ASE -0.25 AOE -0.11 [-0.51, +0.34] mDR +0.23
+11-15 04:48:59 [POOLED] E1 antifs pooled vs RGB-only none (1 seed pairs) [antifs, 1 pair(s)] arm UDS 40.93 AP 26.58 ATE 0.103 ASE 16.05 AOE 17.00 mDR 92.15 | ref UDS 38.92 AP 23.39 ATE 0.111 ASE 15.97 AOE 16.45 mDR 90.93 | diff UDS +2.01 [+0.34, +3.71] AP +3.19 [+0.53, +5.92] ATE -0.008 [-0.015, +0.000] ASE +0.08 AOE +0.55 [+0.21, +0.89] mDR +1.22
+11-15 04:50:26 [E1 antifs_s10] start (mode FULLNONE, SX_TEACH=none, SX_SEEDSHIFT=10, PST ref E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/antifs_full_s10, RGB-only ref E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/antifs_none_s10)
+11-15 04:50:39 [E1 antifs_s10] lib ok: W D:/S2MUAV3D/srcx_work/sf_E1_out2antifs_none_s10, pseudo tag srcx_out2antifs_none_sfE1s10
+11-15 04:51:48 [E1 antifs_s10] fixed stage-1 outputs from srcx/out2antifs_none (det0, sim samples / bank / real d0 crops [hard links], wsim cache); refiner matte = box hull of review1113/boxhull/out2antifs
+11-15 04:54:54 [E1 mav_s0] pseudo pseudo_tr1: 12866 / 12866 crops have a pseudo-orientation; gate (IR vs LiDAR <= 10 deg) passes 3502 (27.2%); d_il median 18.4
+11-15 05:21:52 [E1 antifs_s10] refiner: [sensorfree] composites ON; alpha = ref/sim_sil.npy
+11-15 05:21:52 [E1 antifs_s10] refiners stage 1-2 done
+11-15 05:22:30 [E1 mav_s0] student s0: 'paste_tried': 8962, 'paste_done': 8962
+11-15 05:25:02 [E1 antifs_s10] pseudo-labels: {"tag":"srcx_out2antifs_none_sfE1s10","n":909,"n_corrected":862,"c_bar":0.028268098831176758,"lam":0.75,"n_train":3293}
+11-15 05:26:32 [E1 mav_s0] student s1: 'paste_tried': 8815, 'paste_done': 8815
+11-15 05:39:09 [E1 mav_s0] students done
+11-15 05:39:10 [E1 mav_s0] constant height aspect 0.5611324252760256
+11-15 05:41:50 [E1 antifs_s10] detectors done
+11-15 05:48:34 [E1 antifs_s10] pseudo pseudo_tr1: 3293 / 3293 crops have a pseudo-orientation; gate (IR vs LiDAR <= 10 deg) passes 611 (18.6%); d_il median 20.4
+11-15 05:59:17 [E1 mav_s0] w (sim val inverse variance) = 0.1679490924489914
+11-15 06:18:26 [E1 antifs_s10] student s0: 'paste_tried': 8690, 'paste_done': 8690
+11-15 06:21:34 [E1 antifs_s10] student s1: 'paste_tried': 8680, 'paste_done': 8680
+11-15 06:27:46 [E1 antifs_s10] students done
+11-15 06:27:47 [E1 antifs_s10] constant height aspect 0.4451876466103617
+11-15 06:32:23 [E1 antifs_s10] w (sim val inverse variance) = 0.06411206043630115
+11-15 06:46:38 [E1b mav_s0] start (mode FULLNONE, SX_TEACH=none, SX_SEEDSHIFT=0, PST ref E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/in2mav, RGB-only ref E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/in2mav_none)
+11-15 06:46:38 [E1b antifs_s0] start (mode FULLNONE, SX_TEACH=none, SX_SEEDSHIFT=0, PST ref E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/out2antifs, RGB-only ref E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/out2antifs_none)
+11-15 06:46:43 [E1b antifs_s0] lib ok: W D:/S2MUAV3D/srcx_work/sf_E1b_out2antifs_none_s0, pseudo tag srcx_out2antifs_none_sfE1bs0
+11-15 06:46:44 [E1b mav_s0] lib ok: W D:/S2MUAV3D/srcx_work/sf_E1b_in2mav_none_s0, pseudo tag srcx_in2mav_none_sfE1bs0
+11-15 06:48:01 [E1b antifs_s0] fixed stage-1 outputs from srcx/out2antifs_none (det0, sim samples / bank / real d0 crops [hard links], wsim cache); refiner matte = box hull of review1113/boxhull/out2antifs
+11-15 06:51:47 [E1b mav_s0] fixed stage-1 outputs from srcx/in2mav_none (det0, sim samples / bank / real d0 crops [hard links], wsim cache); refiner matte = box hull of review1113/boxhull/in2mav
+11-15 06:54:15 [E1 antifs_s10] deploy constants: "col_centres":[0.0,0.0],"c_k":{"0":0.019125824328511953,"1":NaN,"-1":0.019125824328511953--"r_k":{"0":0.4451876466103617,"1":NaN},
+11-15 06:54:25 [E1 antifs_s10] ALL DONE: E1 antifs_s10 vs PST antifs_s10 [antifs, 1 pair(s)] arm UDS 38.61 AP 22.93 ATE 0.113 ASE 15.90 AOE 16.59 mDR 91.39 | ref UDS 41.38 AP 27.25 ATE 0.101 ASE 16.72 AOE 16.58 mDR 91.20 | diff UDS -2.76 [-4.58, -0.74] AP -4.32 [-7.05, -1.10] ATE +0.012 [+0.003, +0.022] ASE -0.82 AOE +0.01 [-0.31, +0.36] mDR +0.19 || vs RGB-only: diff UDS +5.12 [+3.24, +6.93] AP +7.84 [+5.15, +10.59] ATE -0.027 [-0.037, -0.015] ASE +0.61 AOE +0.81 [+0.52, +1.07] mDR +0.11 || recipe deviations: 0
+11-15 06:54:34 [POOLED] E1 antifs pooled vs PST (2 seed pairs) [antifs, 2 pair(s)] arm UDS 39.77 AP 24.76 ATE 0.108 ASE 15.97 AOE 16.79 mDR 91.77 | ref UDS 41.56 AP 27.57 ATE 0.100 ASE 16.51 AOE 16.84 mDR 91.56 | diff UDS -1.78 [-3.27, -0.17] AP -2.81 [-5.05, -0.32] ATE +0.008 [+0.001, +0.016] ASE -0.53 AOE -0.05 [-0.40, +0.33] mDR +0.21
+11-15 06:54:44 [POOLED] E1 antifs pooled vs RGB-only none (2 seed pairs) [antifs, 2 pair(s)] arm UDS 39.77 AP 24.76 ATE 0.108 ASE 15.97 AOE 16.79 mDR 91.77 | ref UDS 36.21 AP 19.24 ATE 0.126 ASE 15.63 AOE 16.12 mDR 91.10 | diff UDS +3.57 [+1.92, +5.17] AP +5.52 [+3.01, +7.99] ATE -0.017 [-0.026, -0.008] ASE +0.34 AOE +0.68 [+0.41, +0.92] mDR +0.67
+11-15 06:54:44 [E1 antifs_s20] start (mode FULLNONE, SX_TEACH=none, SX_SEEDSHIFT=20, PST ref E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/antifs_full_s20, RGB-only ref E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/antifs_none_s20)
+11-15 06:54:48 [E1 antifs_s20] lib ok: W D:/S2MUAV3D/srcx_work/sf_E1_out2antifs_none_s20, pseudo tag srcx_out2antifs_none_sfE1s20
+11-15 06:55:05 [E1 antifs_s20] fixed stage-1 outputs from srcx/out2antifs_none (det0, sim samples / bank / real d0 crops [hard links], wsim cache); refiner matte = box hull of review1113/boxhull/out2antifs
+11-15 06:55:51 [E1 mav_s0] deploy constants: "col_centres":[0.0,0.0],"c_k":{"0":0.10020405799150467,"1":NaN,"-1":0.10020405799150467--"r_k":{"0":0.5611324252760256,"1":NaN},
+11-15 06:56:09 [E1 mav_s0] ALL DONE: E1 mav_s0 vs PST mav_s0 [mav, 1 pair(s)] arm UDS 53.48 AP 31.38 ATE 0.401 ASE 2.65 AOE 15.83 mDR 96.56 | ref UDS 60.81 AP 40.93 ATE 0.306 ASE 1.75 AOE 14.48 mDR 96.17 | diff UDS -7.33 [-9.93, -5.15] AP -9.55 [-13.48, -6.45] ATE +0.095 [+0.059, +0.141] ASE +0.90 AOE +1.35 [+0.33, +2.33] mDR +0.40 || vs RGB-only: diff UDS -3.90 [-6.01, -2.03] AP -6.65 [-10.10, -3.74] ATE +0.053 [+0.022, +0.091] ASE +0.07 AOE -0.49 [-1.32, -0.03] mDR +0.58 || recipe deviations: 0
+11-15 06:56:17 [POOLED] E1 mav pooled vs PST (1 seed pairs) [mav, 1 pair(s)] arm UDS 53.48 AP 31.38 ATE 0.401 ASE 2.65 AOE 15.83 mDR 96.56 | ref UDS 60.81 AP 40.93 ATE 0.306 ASE 1.75 AOE 14.48 mDR 96.17 | diff UDS -7.33 [-9.93, -5.15] AP -9.55 [-13.48, -6.45] ATE +0.095 [+0.059, +0.141] ASE +0.90 AOE +1.35 [+0.33, +2.33] mDR +0.40
+11-15 06:56:27 [POOLED] E1 mav pooled vs RGB-only none (1 seed pairs) [mav, 1 pair(s)] arm UDS 53.48 AP 31.38 ATE 0.401 ASE 2.65 AOE 15.83 mDR 96.56 | ref UDS 57.38 AP 38.04 ATE 0.348 ASE 2.58 AOE 16.32 mDR 95.98 | diff UDS -3.90 [-6.01, -2.03] AP -6.65 [-10.10, -3.74] ATE +0.053 [+0.022, +0.091] ASE +0.07 AOE -0.49 [-1.32, -0.03] mDR +0.58
+11-15 06:56:30 [E1 mav_s10] start (mode FULLNONE, SX_TEACH=none, SX_SEEDSHIFT=10, PST ref E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sup3/run, RGB-only ref E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/mav_none_s10)
+11-15 06:56:57 [E1 mav_s10] lib ok: W D:/S2MUAV3D/srcx_work/sf_E1_in2mav_none_s10, pseudo tag srcx_in2mav_none_sfE1s10
+11-15 07:03:53 [E1 mav_s10] fixed stage-1 outputs from srcx/in2mav_none (det0, sim samples / bank / real d0 crops [hard links], wsim cache); refiner matte = box hull of review1113/boxhull/in2mav
+11-15 07:05:01 [E1geo] mav_s0: E1 done -> deploy-only variant
+11-15 07:09:12 [E1geo] mav_s0 run E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1/mav_s0 | lib copy E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1geo/mav_s0/lib | W D:/S2MUAV3D/srcx_work/sf_E1_in2mav_none_s0
+11-15 07:09:14 [E1geo] mav_s0 box-corner ratios tr1 from read_tr1_teach.pkl (2 nets): 12866 / 12866 crops (failed 0), median 0.467, s_bar aspect 0.561
+11-15 07:09:14 [E1geo] mav_s0 box-corner ratios tr1 from read_tr1_stu.pkl (4 nets): 12866 / 12866 crops (failed 0), median 0.535, s_bar aspect 0.561
+11-15 07:09:16 [E1geo] mav_s0 box-corner ratios val1 from read_val1_stu.pkl (4 nets): 2336 / 2336 crops (failed 0), median 0.552, s_bar aspect 0.561
+11-15 07:09:18 [E1geo] mav_s0 box-corner ratios te1 from read_te1_stu.pkl (4 nets): 4800 / 4800 crops (failed 0), median 0.547, s_bar aspect 0.561
+11-15 07:09:18 [E1geo] mav_s0 faithfulness: patched chain with switches OFF reproduces E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1/mav_s0/preds/e1_fused_test.pkl (max |diff| 0.0e+00, 4800 frames)
+11-15 07:09:22 [E1geo] mav_s0 constants E1 (one class): c_k {-1: 0.100, 0: 0.100, 1: nan} r_k {0: 0.561, 1: nan} beta'_k {0: 0.328}
+11-15 07:09:24 [E1geo] mav_s0 constants E1geo: centres [84.3, 138.4] (train bright frac 0.43) c_k {-1: 0.100, 0: 0.100, 1: 0.101} r_k(teachers) {0: 0.402, 1: 0.543} beta'_k {0: 0.363, 1: 0.267} | r_k(students, diag) {0: 0.524, 1: 0.548} | test frames w/o class 75
+11-15 07:09:26 [E1geo] mav_s0 scored test once: E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1geo/mav_s0/preds/e1geo_fused_test.pkl.score_real_test.json
+11-15 07:09:53 [E1geo] mav_s0 E1geo mav_s0 vs E1 mav_s0 [mav, 1 pair(s)] arm UDS 52.54 AP 29.52 ATE 0.413 ASE 2.54 AOE 15.82 mDR 96.52 | ref UDS 53.48 AP 31.38 ATE 0.401 ASE 2.65 AOE 15.83 mDR 96.56 | diff UDS -0.94 [-2.03, +0.73] AP -1.86 [-2.76, -0.38] ATE +0.012 [-0.004, +0.025] ASE -0.12 AOE -0.01 [-0.02, +0.00] mDR -0.04
+11-15 07:09:55 [E1geo] mav_s0 E1geo mav_s0 vs PST mav_s0 [mav, 1 pair(s)] arm UDS 52.54 AP 29.52 ATE 0.413 ASE 2.54 AOE 15.82 mDR 96.52 | ref UDS 60.81 AP 40.93 ATE 0.306 ASE 1.75 AOE 14.48 mDR 96.17 | diff UDS -8.28 [-10.60, -6.45] AP -11.41 [-14.75, -8.67] ATE +0.108 [+0.078, +0.145] ASE +0.78 AOE +1.34 [+0.32, +2.33] mDR +0.35
+11-15 07:10:08 [E1geo] POOLED E1geo mav pooled vs E1 (1 seed pairs) [mav, 1 pair(s)] arm UDS 52.54 AP 29.52 ATE 0.413 ASE 2.54 AOE 15.82 mDR 96.52 | ref UDS 53.48 AP 31.38 ATE 0.401 ASE 2.65 AOE 15.83 mDR 96.56 | diff UDS -0.94 [-2.03, +0.73] AP -1.86 [-2.76, -0.38] ATE +0.012 [-0.004, +0.025] ASE -0.12 AOE -0.01 [-0.02, +0.00] mDR -0.04
+11-15 07:10:47 [E1geo] POOLED E1geo mav pooled vs PST (1 seed pairs) [mav, 1 pair(s)] arm UDS 52.54 AP 29.52 ATE 0.413 ASE 2.54 AOE 15.82 mDR 96.52 | ref UDS 60.81 AP 40.93 ATE 0.306 ASE 1.75 AOE 14.48 mDR 96.17 | diff UDS -8.28 [-10.60, -6.45] AP -11.41 [-14.75, -8.67] ATE +0.108 [+0.078, +0.145] ASE +0.78 AOE +1.34 [+0.32, +2.33] mDR +0.35
+11-15 07:41:55 [E1b mav_s0] refiner: [sensorfree] composites ON; alpha = ref/sim_sil.npy
+11-15 07:41:56 [E1b mav_s0] refiners stage 1-2 done
+11-15 07:58:26 [E1b antifs_s0] refiner: [sensorfree] composites ON; alpha = ref/sim_sil.npy
+11-15 07:58:27 [E1b antifs_s0] refiners stage 1-2 done
+11-15 07:59:59 [E1b antifs_s0] pseudo-labels: {"tag":"srcx_out2antifs_none_sfE1bs0","n":909,"n_corrected":862,"c_bar":0.02314954623579979,"lam":0.75,"n_train":3293}
+11-15 08:14:51 [E1 antifs_s20] refiner: [sensorfree] composites ON; alpha = ref/sim_sil.npy
+11-15 08:14:51 [E1 antifs_s20] refiners stage 1-2 done
+11-15 08:16:44 [E1 antifs_s20] pseudo-labels: {"tag":"srcx_out2antifs_none_sfE1s20","n":909,"n_corrected":818,"c_bar":0.034516447223722935,"lam":0.75,"n_train":3293}
+11-15 08:16:54 [E1b antifs_s0] detectors done
+11-15 08:22:06 [E1 mav_s10] refiner: [sensorfree] composites ON; alpha = ref/sim_sil.npy
+11-15 08:22:07 [E1 mav_s10] refiners stage 1-2 done
+11-15 08:26:33 [E1b antifs_s0] pseudo pseudo_tr1: 3293 / 3293 crops have a pseudo-orientation; gate (IR vs LiDAR <= 10 deg) passes 682 (20.7%); d_il median 20.1
+11-15 08:31:32 [E1 antifs_s20] detectors done
+11-15 08:37:14 [E1 antifs_s20] pseudo pseudo_tr1: 3293 / 3293 crops have a pseudo-orientation; gate (IR vs LiDAR <= 10 deg) passes 695 (21.1%); d_il median 20.7
+11-15 08:46:00 [E1b mav_s0] pseudo-labels: {"tag":"srcx_in2mav_none_sfE1bs0","n":5227,"n_corrected":5227,"c_bar":0.08145435154438019,"lam":0.75,"n_train":12866}
+11-15 09:30:33 [E1 mav_s10] pseudo-labels: {"tag":"srcx_in2mav_none_sfE1s10","n":5227,"n_corrected":5227,"c_bar":0.1163310669362545,"lam":0.75,"n_train":12866}
+11-15 09:41:47 [E1 antifs_s20] student s0: 'paste_tried': 8647, 'paste_done': 8647
+11-15 09:44:50 [E1 antifs_s20] student s1: 'paste_tried': 8866, 'paste_done': 8866
+11-15 09:44:55 [E1b antifs_s0] student s0: 'paste_tried': 8807, 'paste_done': 8807
+11-15 09:45:37 [E1b antifs_s0] student s1: 'paste_tried': 8689, 'paste_done': 8689
+11-15 09:48:44 [E1b mav_s0] detectors done
+11-15 09:50:47 [E1b antifs_s0] students done
+11-15 09:50:48 [E1b antifs_s0] constant height aspect 0.4443134295772112
+11-15 09:54:08 [E1b antifs_s0] w (sim val inverse variance) = 0.06357926416399623
+11-15 09:57:43 [E1 antifs_s20] students done
+11-15 09:57:45 [E1 antifs_s20] constant height aspect 0.4435740159815306
+11-15 10:15:15 [E1 antifs_s20] w (sim val inverse variance) = 0.07071489367434522
+11-15 10:18:33 [E1 mav_s10] detectors done
+11-15 10:22:43 [E1b antifs_s0] deploy constants: "col_centres":[0.0,0.0],"c_k":{"0":0.016435851342976093,"1":NaN,"-1":0.016435851342976093--"r_k":{"0":0.4443134295772112,"1":NaN},
+11-15 10:22:53 [E1b antifs_s0] ALL DONE: E1b antifs_s0 vs PST antifs_s0 [antifs, 1 pair(s)] arm UDS 43.71 AP 31.24 ATE 0.095 ASE 16.92 AOE 16.99 mDR 92.53 | ref UDS 41.73 AP 27.89 ATE 0.099 ASE 16.30 AOE 17.11 mDR 91.92 | diff UDS +1.98 [-0.01, +3.60] AP +3.36 [+0.33, +5.79] ATE -0.004 [-0.012, +0.006] ASE +0.63 AOE -0.12 [-0.58, +0.41] mDR +0.61 || vs RGB-only: diff UDS +4.79 [+2.44, +6.80] AP +7.86 [+4.22, +10.87] ATE -0.016 [-0.028, -0.003] ASE +0.95 AOE +0.54 [+0.30, +0.80] mDR +1.60 || recipe deviations: 0
+11-15 10:22:57 [POOLED] E1b antifs pooled vs PST (1 seed pairs) [antifs, 1 pair(s)] arm UDS 43.71 AP 31.24 ATE 0.095 ASE 16.92 AOE 16.99 mDR 92.53 | ref UDS 41.73 AP 27.89 ATE 0.099 ASE 16.30 AOE 17.11 mDR 91.92 | diff UDS +1.98 [-0.01, +3.60] AP +3.36 [+0.33, +5.79] ATE -0.004 [-0.012, +0.006] ASE +0.63 AOE -0.12 [-0.58, +0.41] mDR +0.61
+11-15 10:23:02 [POOLED] E1b antifs pooled vs RGB-only none (1 seed pairs) [antifs, 1 pair(s)] arm UDS 43.71 AP 31.24 ATE 0.095 ASE 16.92 AOE 16.99 mDR 92.53 | ref UDS 38.92 AP 23.39 ATE 0.111 ASE 15.97 AOE 16.45 mDR 90.93 | diff UDS +4.79 [+2.44, +6.80] AP +7.86 [+4.22, +10.87] ATE -0.016 [-0.028, -0.003] ASE +0.95 AOE +0.54 [+0.30, +0.80] mDR +1.60
+11-15 10:41:49 [E1 antifs_s20] deploy constants: "col_centres":[0.0,0.0],"c_k":{"0":0.025993524119257927,"1":NaN,"-1":0.025993524119257927--"r_k":{"0":0.4435740159815306,"1":NaN},
+11-15 10:41:58 [E1 antifs_s20] ALL DONE: E1 antifs_s20 vs PST antifs_s20 [antifs, 1 pair(s)] arm UDS 38.16 AP 22.37 ATE 0.118 ASE 15.85 AOE 16.33 mDR 91.31 | ref UDS 42.01 AP 28.27 ATE 0.098 ASE 16.65 AOE 16.85 mDR 91.58 | diff UDS -3.85 [-5.36, -2.08] AP -5.90 [-8.31, -3.20] ATE +0.020 [+0.010, +0.028] ASE -0.80 AOE -0.52 [-0.92, -0.05] mDR -0.27 || vs RGB-only: diff UDS +6.08 [+3.79, +7.95] AP +9.46 [+6.45, +11.93] ATE -0.030 [-0.042, -0.017] ASE +1.03 AOE +0.11 [-0.21, +0.43] mDR -1.14 || recipe deviations: 0
+11-15 10:42:10 [POOLED] E1 antifs pooled vs PST (3 seed pairs) [antifs, 3 pair(s)] arm UDS 39.23 AP 23.96 ATE 0.111 ASE 15.93 AOE 16.64 mDR 91.62 | ref UDS 41.71 AP 27.80 ATE 0.099 ASE 16.55 AOE 16.84 mDR 91.57 | diff UDS -2.47 [-3.72, -1.13] AP -3.84 [-5.78, -1.78] ATE +0.012 [+0.005, +0.019] ASE -0.62 AOE -0.21 [-0.55, +0.19] mDR +0.05
+11-15 10:42:21 [POOLED] E1 antifs pooled vs RGB-only none (3 seed pairs) [antifs, 3 pair(s)] arm UDS 39.23 AP 23.96 ATE 0.111 ASE 15.93 AOE 16.64 mDR 91.62 | ref UDS 34.83 AP 17.13 ATE 0.133 ASE 15.36 AOE 16.15 mDR 91.55 | diff UDS +4.40 [+2.98, +5.72] AP +6.83 [+4.72, +8.81] ATE -0.022 [-0.030, -0.013] ASE +0.57 AOE +0.49 [+0.23, +0.72] mDR +0.06
+11-15 10:42:31 [POOLED] E1 antifs pooled vs PST (3 seed pairs) [antifs, 3 pair(s)] arm UDS 39.23 AP 23.96 ATE 0.111 ASE 15.93 AOE 16.64 mDR 91.62 | ref UDS 41.71 AP 27.80 ATE 0.099 ASE 16.55 AOE 16.84 mDR 91.57 | diff UDS -2.47 [-3.72, -1.13] AP -3.84 [-5.78, -1.78] ATE +0.012 [+0.005, +0.019] ASE -0.62 AOE -0.21 [-0.55, +0.19] mDR +0.05
+11-15 10:42:42 [POOLED] E1 antifs pooled vs RGB-only none (3 seed pairs) [antifs, 3 pair(s)] arm UDS 39.23 AP 23.96 ATE 0.111 ASE 15.93 AOE 16.64 mDR 91.62 | ref UDS 34.83 AP 17.13 ATE 0.133 ASE 15.36 AOE 16.15 mDR 91.55 | diff UDS +4.40 [+2.98, +5.72] AP +6.83 [+4.72, +8.81] ATE -0.022 [-0.030, -0.013] ASE +0.57 AOE +0.49 [+0.23, +0.72] mDR +0.06
+11-15 10:42:42 [E1b antifs_s0] already done: 11-15 10:22:53 [E1b antifs_s0] ALL DONE: E1b antifs_s0 vs PST antifs_s0 [antifs, 1 pair(s)] arm UDS 43.71 AP 31.24 ATE 0.095 ASE 16.92 AOE 16.99 mDR 92.53 | ref UDS 41.73 AP 27.89 ATE 0.099 ASE 16.30 AOE 17.11 mDR 91.92 | diff UDS +1.98 [-0.01, +3.60] AP +3.36 [+0.33, +5.79] ATE -0.004 [-0.012, +0.0
+11-15 10:42:42 [prio2 P2] done
+11-15 10:55:40 [E1b mav_s0] pseudo pseudo_tr1: 12866 / 12866 crops have a pseudo-orientation; gate (IR vs LiDAR <= 10 deg) passes 3504 (27.2%); d_il median 18.3
+11-15 11:07:52 [E1 mav_s10] pseudo pseudo_tr1: 12866 / 12866 crops have a pseudo-orientation; gate (IR vs LiDAR <= 10 deg) passes 3521 (27.4%); d_il median 18.0
+11-15 11:22:19 [E1b mav_s0] student s0: 'paste_tried': 8962, 'paste_done': 8962
+11-15 11:24:10 [E1b mav_s0] student s1: 'paste_tried': 8815, 'paste_done': 8815
+11-15 11:33:25 [E1 mav_s10] student s0: 'paste_tried': 8842, 'paste_done': 8842
+11-15 11:35:04 [E1 mav_s10] student s1: 'paste_tried': 8863, 'paste_done': 8863
+11-15 11:35:51 [E1b mav_s0] students done
+11-15 11:35:57 [E1b mav_s0] constant height aspect 0.5611353118033053
+11-15 11:46:49 [E1 mav_s10] students done
+11-15 11:46:50 [E1 mav_s10] constant height aspect 0.5608635505079362
+11-15 11:53:12 [E1b mav_s0] w (sim val inverse variance) = 0.18194894218736127
+11-15 11:55:24 [E1 mav_s10] w (sim val inverse variance) = 0.1797021885467604
+11-15 12:24:34 [E1 mav_s10] deploy constants: "col_centres":[0.0,0.0],"c_k":{"0":0.08783301338553429,"1":NaN,"-1":0.08783301338553429--"r_k":{"0":0.5608635505079362,"1":NaN},
+11-15 12:24:50 [E1 mav_s10] ALL DONE: E1 mav_s10 vs PST mav_s10 [mav, 1 pair(s)] arm UDS 61.70 AP 45.09 ATE 0.278 ASE 2.61 AOE 16.45 mDR 95.85 | ref UDS 59.28 AP 38.40 ATE 0.313 ASE 1.78 AOE 14.87 mDR 95.65 | diff UDS +2.43 [-2.72, +6.39] AP +6.68 [-1.68, +12.83] ATE -0.035 [-0.087, +0.024] ASE +0.83 AOE +1.58 [+0.72, +2.46] mDR +0.21 || vs RGB-only: diff UDS +3.69 [+2.48, +5.11] AP +6.03 [+3.90, +8.55] ATE -0.055 [-0.075, -0.036] ASE +0.02 AOE +0.50 [-0.02, +0.94] mDR +0.94 || recipe deviations: 0
+11-15 12:25:03 [POOLED] E1 mav pooled vs PST (2 seed pairs) [mav, 2 pair(s)] arm UDS 57.59 AP 38.24 ATE 0.339 ASE 2.63 AOE 16.14 mDR 96.21 | ref UDS 60.04 AP 39.67 ATE 0.310 ASE 1.77 AOE 14.67 mDR 95.91 | diff UDS -2.45 [-6.06, +0.58] AP -1.43 [-7.03, +2.97] ATE +0.030 [-0.010, +0.077] ASE +0.86 AOE +1.46 [+0.54, +2.38] mDR +0.30
+11-15 12:25:17 [POOLED] E1 mav pooled vs RGB-only none (2 seed pairs) [mav, 2 pair(s)] arm UDS 57.59 AP 38.24 ATE 0.339 ASE 2.63 AOE 16.14 mDR 96.21 | ref UDS 57.70 AP 38.55 ATE 0.340 ASE 2.59 AOE 16.14 mDR 95.45 | diff UDS -0.10 [-1.55, +1.21] AP -0.31 [-2.70, +1.86] ATE -0.001 [-0.020, +0.023] ASE +0.04 AOE +0.00 [-0.58, +0.34] mDR +0.76
+11-15 12:25:17 [E1 mav_s20] start (mode FULLNONE, SX_TEACH=none, SX_SEEDSHIFT=20, PST ref E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/mav_full_s20, RGB-only ref E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/mav_none_s20)
+11-15 12:25:21 [E1 mav_s20] lib ok: W D:/S2MUAV3D/srcx_work/sf_E1_in2mav_none_s20, pseudo tag srcx_in2mav_none_sfE1s20
+11-15 12:25:32 [E1b mav_s0] deploy constants: "col_centres":[0.0,0.0],"c_k":{"0":0.10136106610298157,"1":NaN,"-1":0.10136106610298157--"r_k":{"0":0.5611353118033053,"1":NaN},
+11-15 12:25:51 [E1b mav_s0] ALL DONE: E1b mav_s0 vs PST mav_s0 [mav, 1 pair(s)] arm UDS 56.25 AP 35.68 ATE 0.355 ASE 2.63 AOE 15.42 mDR 96.08 | ref UDS 60.81 AP 40.93 ATE 0.306 ASE 1.75 AOE 14.48 mDR 96.17 | diff UDS -4.56 [-6.33, -3.01] AP -5.25 [-7.30, -3.42] ATE +0.050 [+0.027, +0.081] ASE +0.88 AOE +0.94 [+0.23, +1.75] mDR -0.08 || vs RGB-only: diff UDS -1.13 [-1.97, +0.04] AP -2.36 [-3.69, -0.32] ATE +0.008 [-0.008, +0.024] ASE +0.05 AOE -0.91 [-1.53, -0.36] mDR +0.10 || recipe deviations: 0
+11-15 12:25:58 [POOLED] E1b mav pooled vs PST (1 seed pairs) [mav, 1 pair(s)] arm UDS 56.25 AP 35.68 ATE 0.355 ASE 2.63 AOE 15.42 mDR 96.08 | ref UDS 60.81 AP 40.93 ATE 0.306 ASE 1.75 AOE 14.48 mDR 96.17 | diff UDS -4.56 [-6.33, -3.01] AP -5.25 [-7.30, -3.42] ATE +0.050 [+0.027, +0.081] ASE +0.88 AOE +0.94 [+0.23, +1.75] mDR -0.08
+11-15 12:26:04 [POOLED] E1b mav pooled vs RGB-only none (1 seed pairs) [mav, 1 pair(s)] arm UDS 56.25 AP 35.68 ATE 0.355 ASE 2.63 AOE 15.42 mDR 96.08 | ref UDS 57.38 AP 38.04 ATE 0.348 ASE 2.58 AOE 16.32 mDR 95.98 | diff UDS -1.13 [-1.97, +0.04] AP -2.36 [-3.69, -0.32] ATE +0.008 [-0.008, +0.024] ASE +0.05 AOE -0.91 [-1.53, -0.36] mDR +0.10
+11-15 12:29:29 [E1 mav_s20] fixed stage-1 outputs from srcx/in2mav_none (det0, sim samples / bank / real d0 crops [hard links], wsim cache); refiner matte = box hull of review1113/boxhull/in2mav
+11-15 12:31:56 [E1geo] mav_s10: E1 done -> deploy-only variant
+11-15 12:33:19 [E1geo] mav_s10 run E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1/mav_s10 | lib copy E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1geo/mav_s10/lib | W D:/S2MUAV3D/srcx_work/sf_E1_in2mav_none_s10
+11-15 12:33:19 [E1geo] mav_s10 box-corner ratios tr1 from read_tr1_teach.pkl (2 nets): 12866 / 12866 crops (failed 0), median 0.472, s_bar aspect 0.561
+11-15 12:33:19 [E1geo] mav_s10 box-corner ratios tr1 from read_tr1_stu.pkl (4 nets): 12866 / 12866 crops (failed 0), median 0.543, s_bar aspect 0.561
+11-15 12:33:19 [E1geo] mav_s10 box-corner ratios val1 from read_val1_stu.pkl (4 nets): 2336 / 2336 crops (failed 0), median 0.562, s_bar aspect 0.561
+11-15 12:33:19 [E1geo] mav_s10 box-corner ratios te1 from read_te1_stu.pkl (4 nets): 4800 / 4800 crops (failed 0), median 0.560, s_bar aspect 0.561
+11-15 12:33:19 [E1geo] mav_s10 faithfulness: patched chain with switches OFF reproduces E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1/mav_s10/preds/e1_fused_test.pkl (max |diff| 0.0e+00, 4800 frames)
+11-15 12:33:19 [E1geo] mav_s10 constants E1 (one class): c_k {-1: 0.088, 0: 0.088, 1: nan} r_k {0: 0.561, 1: nan} beta'_k {0: 0.373}
+11-15 12:33:19 [E1geo] mav_s10 constants E1geo: centres [86.0, 139.0] (train bright frac 0.44) c_k {-1: 0.088, 0: 0.084, 1: 0.090} r_k(teachers) {0: 0.405, 1: 0.546} beta'_k {0: 0.394, 1: 0.326} | r_k(students, diag) {0: 0.534, 1: 0.556} | test frames w/o class 148
+11-15 12:33:19 [E1geo] mav_s10 scored test once: E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1geo/mav_s10/preds/e1geo_fused_test.pkl.score_real_test.json
+11-15 12:33:33 [E1geo] mav_s10 E1geo mav_s10 vs E1 mav_s10 [mav, 1 pair(s)] arm UDS 61.36 AP 44.26 ATE 0.282 ASE 2.50 AOE 16.45 mDR 95.81 | ref UDS 61.70 AP 45.09 ATE 0.278 ASE 2.61 AOE 16.45 mDR 95.85 | diff UDS -0.34 [-1.13, +0.68] AP -0.83 [-1.53, -0.01] ATE +0.004 [-0.003, +0.010] ASE -0.10 AOE -0.00 [-0.00, +0.00] mDR -0.04
+11-15 12:33:33 [E1geo] mav_s10 E1geo mav_s10 vs PST mav_s10 [mav, 1 pair(s)] arm UDS 61.36 AP 44.26 ATE 0.282 ASE 2.50 AOE 16.45 mDR 95.81 | ref UDS 59.28 AP 38.40 ATE 0.313 ASE 1.78 AOE 14.87 mDR 95.65 | diff UDS +2.08 [-2.39, +5.52] AP +5.85 [-1.87, +11.52] ATE -0.031 [-0.078, +0.021] ASE +0.73 AOE +1.58 [+0.71, +2.46] mDR +0.17
+11-15 12:33:47 [E1geo] POOLED E1geo mav pooled vs E1 (2 seed pairs) [mav, 2 pair(s)] arm UDS 56.95 AP 36.89 ATE 0.348 ASE 2.52 AOE 16.13 mDR 96.17 | ref UDS 57.59 AP 38.24 ATE 0.339 ASE 2.63 AOE 16.14 mDR 96.21 | diff UDS -0.64 [-1.54, +0.68] AP -1.35 [-2.02, -0.31] ATE +0.008 [-0.003, +0.017] ASE -0.11 AOE -0.00 [-0.01, +0.00] mDR -0.04
+11-15 12:33:59 [E1geo] POOLED E1geo mav pooled vs PST (2 seed pairs) [mav, 2 pair(s)] arm UDS 56.95 AP 36.89 ATE 0.348 ASE 2.52 AOE 16.13 mDR 96.17 | ref UDS 60.04 AP 39.67 ATE 0.310 ASE 1.77 AOE 14.67 mDR 95.91 | diff UDS -3.10 [-5.84, -0.69] AP -2.78 [-7.42, +1.04] ATE +0.038 [+0.005, +0.076] ASE +0.75 AOE +1.46 [+0.52, +2.38] mDR +0.26
+11-15 12:56:23 [E1 mav_s20] refiner: [sensorfree] composites ON; alpha = ref/sim_sil.npy
+11-15 12:56:23 [E1 mav_s20] refiners stage 1-2 done
+11-15 13:03:59 [E1 mav_s20] pseudo-labels: {"tag":"srcx_in2mav_none_sfE1s20","n":5227,"n_corrected":5227,"c_bar":0.058980878442525864,"lam":0.75,"n_train":12866}
+11-15 13:24:07 [E1 mav_s20] detectors done
+11-15 13:26:03 [E1b antifs_s10] start (mode FULLNONE, SX_TEACH=none, SX_SEEDSHIFT=10, PST ref E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/antifs_full_s10, RGB-only ref E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/antifs_none_s10)
+11-15 13:26:03 [E1b mav_s10] start (mode FULLNONE, SX_TEACH=none, SX_SEEDSHIFT=10, PST ref E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sup3/run, RGB-only ref E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/mav_none_s10)
+11-15 13:26:13 [E1b antifs_s10] lib ok: W D:/S2MUAV3D/srcx_work/sf_E1b_out2antifs_none_s10, pseudo tag srcx_out2antifs_none_sfE1bs10
+11-15 13:26:14 [E1b mav_s10] lib ok: W D:/S2MUAV3D/srcx_work/sf_E1b_in2mav_none_s10, pseudo tag srcx_in2mav_none_sfE1bs10
+11-15 13:27:13 [E1b antifs_s10] fixed stage-1 outputs from srcx/out2antifs_none (det0, sim samples / bank / real d0 crops [hard links], wsim cache); refiner matte = box hull of review1113/boxhull/out2antifs
+11-15 13:32:48 [E1b mav_s10] fixed stage-1 outputs from srcx/in2mav_none (det0, sim samples / bank / real d0 crops [hard links], wsim cache); refiner matte = box hull of review1113/boxhull/in2mav
+11-15 14:17:03 [E1b antifs_s10] refiner: [sensorfree] composites ON; alpha = ref/sim_sil.npy
+11-15 14:17:03 [E1b antifs_s10] refiners stage 1-2 done
+11-15 14:19:28 [E1b antifs_s10] pseudo-labels: {"tag":"srcx_out2antifs_none_sfE1bs10","n":909,"n_corrected":831,"c_bar":0.012692979769781232,"lam":0.75,"n_train":3293}
+11-15 14:37:51 [E1b mav_s10] refiner: [sensorfree] composites ON; alpha = ref/sim_sil.npy
+11-15 14:37:53 [E1b mav_s10] refiners stage 1-2 done
+11-15 14:40:16 [E1b antifs_s10] detectors done
+11-15 14:45:56 [E1b antifs_s10] pseudo pseudo_tr1: 3293 / 3293 crops have a pseudo-orientation; gate (IR vs LiDAR <= 10 deg) passes 668 (20.3%); d_il median 20.5
+11-15 14:47:06 [E1 mav_s20] pseudo pseudo_tr1: 12866 / 12866 crops have a pseudo-orientation; gate (IR vs LiDAR <= 10 deg) passes 3419 (26.6%); d_il median 18.5
+11-15 15:38:38 [E1b antifs_s10] student s0: 'paste_tried': 8690, 'paste_done': 8690
+11-15 15:39:36 [E1b antifs_s10] student s1: 'paste_tried': 8680, 'paste_done': 8680
+11-15 16:06:14 [E1b mav_s10] pseudo-labels: {"tag":"srcx_in2mav_none_sfE1bs10","n":5227,"n_corrected":5227,"c_bar":0.09859495237469673,"lam":0.75,"n_train":12866}
+11-15 16:11:26 [E1 mav_s20] student s0: 'paste_tried': 8806, 'paste_done': 8806
+11-15 16:26:29 [E1 mav_s20] student s1: 'paste_tried': 9011, 'paste_done': 9011
+11-15 16:30:24 [E1b antifs_s10] students done
+11-15 16:30:25 [E1b antifs_s10] constant height aspect 0.4465189198613622
+11-15 16:33:11 [E1b antifs_s10] w (sim val inverse variance) = 0.08601237494510246
+11-15 16:54:13 [E1b mav_s10] detectors done
+11-15 17:16:55 [E1b antifs_s10] deploy constants: "col_centres":[0.0,0.0],"c_k":{"0":0.028425594326108694,"1":NaN,"-1":0.028425594326108694--"r_k":{"0":0.4465189198613622,"1":NaN},
+11-15 17:17:05 [E1b antifs_s10] ALL DONE: E1b antifs_s10 vs PST antifs_s10 [antifs, 1 pair(s)] arm UDS 38.31 AP 22.34 ATE 0.119 ASE 15.86 AOE 16.30 mDR 92.95 | ref UDS 41.38 AP 27.25 ATE 0.101 ASE 16.72 AOE 16.58 mDR 91.20 | diff UDS -3.07 [-5.28, -0.48] AP -4.91 [-8.17, -1.08] ATE +0.018 [+0.007, +0.029] ASE -0.86 AOE -0.28 [-0.79, +0.26] mDR +1.75 || vs RGB-only: diff UDS +4.81 [+3.30, +6.38] AP +7.25 [+5.09, +9.63] ATE -0.022 [-0.029, -0.013] ASE +0.58 AOE +0.51 [+0.26, +0.79] mDR +1.68 || recipe deviations: 0
+11-15 17:17:14 [POOLED] E1b antifs pooled vs PST (2 seed pairs) [antifs, 2 pair(s)] arm UDS 41.01 AP 26.79 ATE 0.107 ASE 16.39 AOE 16.64 mDR 92.74 | ref UDS 41.56 AP 27.57 ATE 0.100 ASE 16.51 AOE 16.84 mDR 91.56 | diff UDS -0.55 [-1.56, +0.60] AP -0.78 [-2.20, +0.83] ATE +0.007 [+0.002, +0.013] ASE -0.12 AOE -0.20 [-0.67, +0.30] mDR +1.18
+11-15 17:17:22 [POOLED] E1b antifs pooled vs RGB-only none (2 seed pairs) [antifs, 2 pair(s)] arm UDS 41.01 AP 26.79 ATE 0.107 ASE 16.39 AOE 16.64 mDR 92.74 | ref UDS 36.21 AP 19.24 ATE 0.126 ASE 15.63 AOE 16.12 mDR 91.10 | diff UDS +4.80 [+3.18, +6.26] AP +7.55 [+5.22, +9.72] ATE -0.019 [-0.027, -0.009] ASE +0.76 AOE +0.53 [+0.31, +0.75] mDR +1.64
+11-15 17:20:44 [E1 mav_s20] students done
+11-15 17:20:51 [E1 mav_s20] constant height aspect 0.5609645802735423
+11-15 17:29:30 [E1b mav_s10] pseudo pseudo_tr1: 12866 / 12866 crops have a pseudo-orientation; gate (IR vs LiDAR <= 10 deg) passes 3553 (27.6%); d_il median 18.1
+11-15 17:34:00 [E1 mav_s20] w (sim val inverse variance) = 0.2044432890310008
+11-15 18:02:32 [E1b mav_s10] student s0: 'paste_tried': 8842, 'paste_done': 8842
+11-15 18:04:27 [E1b mav_s10] student s1: 'paste_tried': 8863, 'paste_done': 8863
+11-15 18:15:27 [E1b mav_s10] students done
+11-15 18:15:34 [E1b mav_s10] constant height aspect 0.5612034279105929
+11-15 18:33:28 [E1b mav_s10] w (sim val inverse variance) = 0.17881488941201473
+11-15 18:43:58 [E1 mav_s20] deploy constants: "col_centres":[0.0,0.0],"c_k":{"0":0.10590806044638157,"1":NaN,"-1":0.10590806044638157--"r_k":{"0":0.5609645802735423,"1":NaN},
+11-15 18:44:14 [E1 mav_s20] ALL DONE: E1 mav_s20 vs PST mav_s20 [mav, 1 pair(s)] arm UDS 54.93 AP 33.70 ATE 0.371 ASE 2.59 AOE 15.60 mDR 94.81 | ref UDS 62.70 AP 44.38 ATE 0.280 ASE 1.62 AOE 15.15 mDR 94.67 | diff UDS -7.77 [-9.08, -5.99] AP -10.68 [-12.48, -7.86] ATE +0.091 [+0.056, +0.132] ASE +0.97 AOE +0.45 [-0.96, +1.76] mDR +0.15 || vs RGB-only: diff UDS -3.92 [-6.71, -0.41] AP -7.44 [-11.35, -2.30] ATE +0.052 [+0.010, +0.092] ASE -0.00 AOE -2.12 [-5.33, -0.19] mDR -0.08 || recipe deviations: 0
+11-15 18:44:36 [POOLED] E1 mav pooled vs PST (3 seed pairs) [mav, 3 pair(s)] arm UDS 56.71 AP 36.72 ATE 0.350 ASE 2.61 AOE 15.96 mDR 95.74 | ref UDS 60.93 AP 41.24 ATE 0.300 ASE 1.72 AOE 14.83 mDR 95.49 | diff UDS -4.22 [-6.67, -2.26] AP -4.51 [-7.89, -1.87] ATE +0.050 [+0.020, +0.091] ASE +0.90 AOE +1.13 [+0.08, +2.15] mDR +0.25
+11-15 18:44:55 [E1geo] mav_s20: E1 done -> deploy-only variant
+11-15 18:44:58 [POOLED] E1 mav pooled vs RGB-only none (3 seed pairs) [mav, 3 pair(s)] arm UDS 56.71 AP 36.72 ATE 0.350 ASE 2.61 AOE 15.96 mDR 95.74 | ref UDS 58.08 AP 39.41 ATE 0.333 ASE 2.59 AOE 16.66 mDR 95.26 | diff UDS -1.38 [-2.34, -0.32] AP -2.69 [-4.25, -0.88] ATE +0.017 [+0.003, +0.034] ASE +0.03 AOE -0.70 [-1.99, +0.09] mDR +0.48
+11-15 18:45:24 [POOLED] E1 mav pooled vs PST (3 seed pairs) [mav, 3 pair(s)] arm UDS 56.71 AP 36.72 ATE 0.350 ASE 2.61 AOE 15.96 mDR 95.74 | ref UDS 60.93 AP 41.24 ATE 0.300 ASE 1.72 AOE 14.83 mDR 95.49 | diff UDS -4.22 [-6.67, -2.26] AP -4.51 [-7.89, -1.87] ATE +0.050 [+0.020, +0.091] ASE +0.90 AOE +1.13 [+0.08, +2.15] mDR +0.25
+11-15 18:45:45 [POOLED] E1 mav pooled vs RGB-only none (3 seed pairs) [mav, 3 pair(s)] arm UDS 56.71 AP 36.72 ATE 0.350 ASE 2.61 AOE 15.96 mDR 95.74 | ref UDS 58.08 AP 39.41 ATE 0.333 ASE 2.59 AOE 16.66 mDR 95.26 | diff UDS -1.38 [-2.34, -0.32] AP -2.69 [-4.25, -0.88] ATE +0.017 [+0.003, +0.034] ASE +0.03 AOE -0.70 [-1.99, +0.09] mDR +0.48
+11-15 18:45:46 [E1b mav_s0] already done: 11-15 12:25:51 [E1b mav_s0] ALL DONE: E1b mav_s0 vs PST mav_s0 [mav, 1 pair(s)] arm UDS 56.25 AP 35.68 ATE 0.355 ASE 2.63 AOE 15.42 mDR 96.08 | ref UDS 60.81 AP 40.93 ATE 0.306 ASE 1.75 AOE 14.48 mDR 96.17 | diff UDS -4.56 [-6.33, -3.01] AP -5.25 [-7.30, -3.42] ATE +0.050 [+0.027, +0.081] ASE +0.88 
+11-15 18:45:46 [prio2 P1] done
+11-15 18:45:46 [post] priority block done; resuming H1 (its H3/H7 waiters follow) and the rest of the block
+11-15 18:45:47 [E2 antifs_s10] start (mode BH, SX_TEACH=full, SX_SEEDSHIFT=10, PST ref E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/antifs_full_s10, RGB-only ref E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/antifs_none_s10)
+11-15 18:45:47 [E2a mav_s0] start (mode BH, SX_TEACH=full, SX_SEEDSHIFT=0, PST ref E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/in2mav, RGB-only ref E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/in2mav_none)
+11-15 18:45:51 [E2a mav_s0] lib ok: W E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E2a/mav_s0/work, pseudo tag srcx_in2mav
+11-15 18:45:51 [E2 antifs_s10] lib ok: W E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E2/antifs_s10/work, pseudo tag srcx_out2antifs_sd10
+11-15 18:46:53 [E1geo] mav_s20 run E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1/mav_s20 | lib copy E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1geo/mav_s20/lib | W D:/S2MUAV3D/srcx_work/sf_E1_in2mav_none_s20
+11-15 18:46:53 [E1geo] mav_s20 box-corner ratios tr1 from read_tr1_teach.pkl (2 nets): 12866 / 12866 crops (failed 0), median 0.468, s_bar aspect 0.561
+11-15 18:46:54 [E1geo] mav_s20 box-corner ratios tr1 from read_tr1_stu.pkl (4 nets): 12866 / 12866 crops (failed 0), median 0.540, s_bar aspect 0.561
+11-15 18:46:54 [E1geo] mav_s20 box-corner ratios val1 from read_val1_stu.pkl (4 nets): 2336 / 2336 crops (failed 0), median 0.559, s_bar aspect 0.561
+11-15 18:46:55 [E1geo] mav_s20 box-corner ratios te1 from read_te1_stu.pkl (4 nets): 4800 / 4800 crops (failed 0), median 0.547, s_bar aspect 0.561
+11-15 18:46:55 [E1geo] mav_s20 faithfulness: patched chain with switches OFF reproduces E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1/mav_s20/preds/e1_fused_test.pkl (max |diff| 0.0e+00, 4800 frames)
+11-15 18:46:55 [E1geo] mav_s20 constants E1 (one class): c_k {-1: 0.106, 0: 0.106, 1: nan} r_k {0: 0.561, 1: nan} beta'_k {0: 0.336}
+11-15 18:46:56 [E1geo] mav_s20 constants E1geo: centres [89.3, 151.1] (train bright frac 0.39) c_k {-1: 0.106, 0: 0.107, 1: 0.105} r_k(teachers) {0: 0.412, 1: 0.541} beta'_k {0: 0.363, 1: 0.295} | r_k(students, diag) {0: 0.534, 1: 0.550} | test frames w/o class 1
+11-15 18:46:57 [E1geo] mav_s20 scored test once: E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1geo/mav_s20/preds/e1geo_fused_test.pkl.score_real_test.json
+11-15 18:47:12 [E1geo] mav_s20 E1geo mav_s20 vs E1 mav_s20 [mav, 1 pair(s)] arm UDS 53.94 AP 31.94 ATE 0.381 ASE 2.57 AOE 15.60 mDR 94.77 | ref UDS 54.93 AP 33.70 ATE 0.371 ASE 2.59 AOE 15.60 mDR 94.81 | diff UDS -1.00 [-2.12, +0.68] AP -1.76 [-2.87, -0.29] ATE +0.010 [-0.007, +0.023] ASE -0.01 AOE -0.00 [-0.00, +0.00] mDR -0.04
+11-15 18:47:12 [E1geo] mav_s20 E1geo mav_s20 vs PST mav_s20 [mav, 1 pair(s)] arm UDS 53.94 AP 31.94 ATE 0.381 ASE 2.57 AOE 15.60 mDR 94.77 | ref UDS 62.70 AP 44.38 ATE 0.280 ASE 1.62 AOE 15.15 mDR 94.67 | diff UDS -8.76 [-10.00, -6.71] AP -12.43 [-14.64, -8.91] ATE +0.101 [+0.067, +0.131] ASE +0.96 AOE +0.45 [-0.96, +1.76] mDR +0.10
+11-15 18:47:35 [E1geo] POOLED E1geo mav pooled vs E1 (3 seed pairs) [mav, 3 pair(s)] arm UDS 55.95 AP 35.24 ATE 0.359 ASE 2.54 AOE 15.96 mDR 95.70 | ref UDS 56.71 AP 36.72 ATE 0.350 ASE 2.61 AOE 15.96 mDR 95.74 | diff UDS -0.76 [-1.72, +0.68] AP -1.48 [-2.26, -0.29] ATE +0.009 [-0.004, +0.019] ASE -0.08 AOE -0.00 [-0.01, +0.00] mDR -0.04
+11-15 18:47:36 [E2 antifs_s10] silhouette target = box hull, composite matte = box hull
+11-15 18:47:57 [E1geo] POOLED E1geo mav pooled vs PST (3 seed pairs) [mav, 3 pair(s)] arm UDS 55.95 AP 35.24 ATE 0.359 ASE 2.54 AOE 15.96 mDR 95.70 | ref UDS 60.93 AP 41.24 ATE 0.300 ASE 1.72 AOE 14.83 mDR 95.49 | diff UDS -4.98 [-6.45, -3.67] AP -6.00 [-8.30, -4.03] ATE +0.059 [+0.036, +0.089] ASE +0.82 AOE +1.12 [+0.07, +2.15] mDR +0.21
+11-15 18:48:00 [E1geo] driver done; see E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1geo/RESULT.md
+11-15 19:01:49 [E2a mav_s0] silhouette target = box hull, composite matte = IR silhouette
+11-15 20:16:04 [E2 antifs_s10] refiner: [sensorfree] composites ON; alpha = ref/sim_sil.npy
+11-15 20:18:42 [E2 antifs_s10] frozen w of the reference run = 0.08167835972819329
+11-15 20:19:52 [E2a mav_s0] refiner: [sensorfree] composites ON; alpha = E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E2a/mav_s0/ref/sim_matte.npy
+11-15 20:30:20 [E2a mav_s0] frozen w of the reference run = 0.190282282581008
+11-15 20:46:33 [E1b mav_s10] deploy constants: "col_centres":[0.0,0.0],"c_k":{"0":0.09520566463470459,"1":NaN,"-1":0.09520566463470459--"r_k":{"0":0.5612034279105929,"1":NaN},
+11-15 20:46:51 [E1b mav_s10] ALL DONE: E1b mav_s10 vs PST mav_s10 [mav, 1 pair(s)] arm UDS 60.48 AP 42.87 ATE 0.291 ASE 2.60 AOE 16.16 mDR 95.69 | ref UDS 59.28 AP 38.40 ATE 0.313 ASE 1.78 AOE 14.87 mDR 95.65 | diff UDS +1.20 [-3.16, +4.67] AP +4.47 [-2.32, +9.77] ATE -0.022 [-0.063, +0.023] ASE +0.83 AOE +1.29 [+0.30, +2.41] mDR +0.04 || vs RGB-only: diff UDS +2.47 [+0.66, +4.70] AP +3.81 [+0.78, +7.56] ATE -0.042 [-0.075, -0.014] ASE +0.01 AOE +0.21 [-0.13, +0.63] mDR +0.77 || recipe deviations: 0
+11-15 20:47:06 [POOLED] E1b mav pooled vs PST (2 seed pairs) [mav, 2 pair(s)] arm UDS 58.37 AP 39.28 ATE 0.323 ASE 2.62 AOE 15.79 mDR 95.89 | ref UDS 60.04 AP 39.67 ATE 0.310 ASE 1.77 AOE 14.67 mDR 95.91 | diff UDS -1.68 [-4.56, +0.72] AP -0.39 [-4.44, +3.00] ATE +0.014 [-0.016, +0.048] ASE +0.85 AOE +1.12 [+0.27, +2.06] mDR -0.02
+11-15 20:48:43 [POOLED] E1b mav pooled vs RGB-only none (2 seed pairs) [mav, 2 pair(s)] arm UDS 58.37 AP 39.28 ATE 0.323 ASE 2.62 AOE 15.79 mDR 95.89 | ref UDS 57.70 AP 38.55 ATE 0.340 ASE 2.59 AOE 16.14 mDR 95.45 | diff UDS +0.67 [-0.42, +2.10] AP +0.73 [-1.13, +3.30] ATE -0.017 [-0.034, +0.000] ASE +0.03 AOE -0.35 [-0.65, -0.09] mDR +0.44
+11-15 20:54:07 [E2 antifs_s10] deploy constants: "col_centres":[106.57842858670296,156.69810027003766],"c_k":{"0":0.0423930985853076,"1":0.010533299762755632,"-1":0.019803689792752266--"r_k":{"0":0.4670475870370865,"1":0.4586593061685562},
+11-15 20:54:12 [E2 antifs_s10] ALL DONE: E2 antifs_s10 vs PST antifs_s10 [antifs, 1 pair(s)] arm UDS 40.55 AP 25.89 ATE 0.104 ASE 16.45 AOE 16.58 mDR 91.20 | ref UDS 41.38 AP 27.25 ATE 0.101 ASE 16.72 AOE 16.58 mDR 91.20 | diff UDS -0.83 [-1.87, +0.15] AP -1.36 [-2.97, +0.11] ATE +0.003 [-0.002, +0.008] ASE -0.26 AOE +0.00 [+0.00, +0.00] mDR +0.00 || recipe deviations: 0
+11-15 20:54:22 [POOLED] E2 antifs pooled vs PST (2 seed pairs) [antifs, 2 pair(s)] arm UDS 40.78 AP 26.32 ATE 0.103 ASE 16.31 AOE 16.84 mDR 91.56 | ref UDS 41.56 AP 27.57 ATE 0.100 ASE 16.51 AOE 16.84 mDR 91.56 | diff UDS -0.78 [-1.39, -0.16] AP -1.25 [-2.21, -0.32] ATE +0.003 [-0.000, +0.006] ASE -0.20 AOE +0.00 [+0.00, +0.00] mDR +0.00
+11-15 20:54:25 [E2 antifs_s20] start (mode BH, SX_TEACH=full, SX_SEEDSHIFT=20, PST ref E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/antifs_full_s20, RGB-only ref E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/antifs_none_s20)
+11-15 20:55:05 [E2 antifs_s20] lib ok: W E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E2/antifs_s20/work, pseudo tag srcx_out2antifs_sd20
+11-15 20:56:31 [E2 antifs_s20] silhouette target = box hull, composite matte = box hull
+11-15 21:31:41 [E2 antifs_s20] refiner: [sensorfree] composites ON; alpha = ref/sim_sil.npy
+11-15 21:31:44 [E2a mav_s0] deploy constants: "col_centres":[92.19977991767618,140.83274235638467],"c_k":{"0":0.05217392276972532,"1":0.079792863689363,"-1":0.06671103835105896--"r_k":{"0":0.3941429406404495,"1":0.6878551244735718},
+11-15 21:31:53 [E2a mav_s0] ALL DONE: E2a mav_s0 vs PST mav_s0 [mav, 1 pair(s)] arm UDS 62.03 AP 43.51 ATE 0.288 ASE 1.99 AOE 14.48 mDR 96.17 | ref UDS 60.81 AP 40.93 ATE 0.306 ASE 1.75 AOE 14.48 mDR 96.17 | diff UDS +1.22 [-0.03, +2.14] AP +2.58 [+0.92, +3.79] ATE -0.018 [-0.030, -0.003] ASE +0.23 AOE +0.00 [+0.00, +0.00] mDR +0.00 || recipe deviations: 0
+11-15 21:32:00 [POOLED] E2a mav pooled vs PST (1 seed pairs) [mav, 1 pair(s)] arm UDS 62.03 AP 43.51 ATE 0.288 ASE 1.99 AOE 14.48 mDR 96.17 | ref UDS 60.81 AP 40.93 ATE 0.306 ASE 1.75 AOE 14.48 mDR 96.17 | diff UDS +1.22 [-0.03, +2.14] AP +2.58 [+0.92, +3.79] ATE -0.018 [-0.030, -0.003] ASE +0.23 AOE +0.00 [+0.00, +0.00] mDR +0.00
+11-15 21:32:00 [E2b mav_s0] start (mode BH, SX_TEACH=full, SX_SEEDSHIFT=0, PST ref E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/in2mav, RGB-only ref E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/in2mav_none)
+11-15 21:32:02 [E2b mav_s0] lib ok: W E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E2b/mav_s0/work, pseudo tag srcx_in2mav
+11-15 21:33:14 [E2 antifs_s20] frozen w of the reference run = 0.09779479741234534
+11-15 21:37:46 [E2b mav_s0] silhouette target = IR silhouette, composite matte = box hull
+11-15 21:55:13 [E2 antifs_s20] deploy constants: "col_centres":[102.21784908291119,155.70043547426184],"c_k":{"0":0.038326562847942114,"1":0.01449592225253582,"-1":0.021656050346791744--"r_k":{"0":0.46619293093681335,"1":0.4637136161327362},
+11-15 21:55:23 [E2 antifs_s20] ALL DONE: E2 antifs_s20 vs PST antifs_s20 [antifs, 1 pair(s)] arm UDS 41.97 AP 28.24 ATE 0.098 ASE 16.77 AOE 16.85 mDR 91.58 | ref UDS 42.01 AP 28.27 ATE 0.098 ASE 16.65 AOE 16.85 mDR 91.58 | diff UDS -0.04 [-0.62, +0.30] AP -0.03 [-1.01, +0.48] ATE +0.000 [-0.001, +0.002] ASE +0.13 AOE +0.00 [+0.00, +0.00] mDR +0.00 || recipe deviations: 0
+11-15 21:55:38 [POOLED] E2 antifs pooled vs PST (3 seed pairs) [antifs, 3 pair(s)] arm UDS 41.18 AP 26.96 ATE 0.101 ASE 16.46 AOE 16.84 mDR 91.57 | ref UDS 41.71 AP 27.80 ATE 0.099 ASE 16.55 AOE 16.84 mDR 91.57 | diff UDS -0.53 [-1.11, -0.06] AP -0.84 [-1.77, -0.16] ATE +0.002 [-0.000, +0.005] ASE -0.09 AOE +0.00 [+0.00, +0.00] mDR +0.00
+11-15 21:55:52 [POOLED] E2 antifs pooled vs PST (3 seed pairs) [antifs, 3 pair(s)] arm UDS 41.18 AP 26.96 ATE 0.101 ASE 16.46 AOE 16.84 mDR 91.57 | ref UDS 41.71 AP 27.80 ATE 0.099 ASE 16.55 AOE 16.84 mDR 91.57 | diff UDS -0.53 [-1.11, -0.06] AP -0.84 [-1.77, -0.16] ATE +0.002 [-0.000, +0.005] ASE -0.09 AOE +0.00 [+0.00, +0.00] mDR +0.00
+11-15 21:55:53 [E4 mav_s0] start (mode STU, SX_TEACH=none, SX_SEEDSHIFT=0, PST ref E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/in2mav, RGB-only ref E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/in2mav_none)
+11-15 21:56:36 [E4 mav_s0] lib ok: W D:/S2MUAV3D/srcx_work/sf_E4_in2mav_none_s0, pseudo tag srcx_in2mav_none
+11-15 22:07:34 [E4 mav_s0] upstream of the students from the same-seed RGB-only run E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/in2mav_none (det0/det1, refiner st2, crops, gated pseudo-orientations [hard links], constant height)
+11-15 22:07:41 [E4 mav_s0] reference: pseudo pseudo_tr1: 12866 / 12866 crops have a pseudo-orientation; gate (IR vs LiDAR <= 10 deg) passes 3527 (27.4%); d_il median 18.1
+11-15 22:29:55 [E2b mav_s0] refiner: [sensorfree] composites ON; alpha = E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E2b/mav_s0/ref/sim_matte.npy
+11-15 22:43:01 [E4 mav_s0] student s0: 'paste_tried': 0, 'paste_done': 0
+11-15 22:44:48 [E4 mav_s0] student s1: 'paste_tried': 0, 'paste_done': 0
+11-15 22:56:27 [E4 mav_s0] students done
+11-15 22:58:03 [E4 mav_s0] w (sim val inverse variance) = 0.21231978167485177
+11-15 23:00:11 [E2b mav_s0] frozen w of the reference run = 0.190282282581008
+11-15 23:56:41 [E2b mav_s0] deploy constants: "col_centres":[59.17840467844394,160.58518065201952],"c_k":{"0":0.08529498800635338,"1":0.09849197044968605,"-1":0.09231818467378616--"r_k":{"0":0.3796245902776718,"1":0.7052029967308044},
+11-15 23:56:51 [E2b mav_s0] ALL DONE: E2b mav_s0 vs PST mav_s0 [mav, 1 pair(s)] arm UDS 61.85 AP 42.59 ATE 0.300 ASE 1.64 AOE 14.48 mDR 96.19 | ref UDS 60.81 AP 40.93 ATE 0.306 ASE 1.75 AOE 14.48 mDR 96.17 | diff UDS +1.04 [+0.27, +1.44] AP +1.66 [+0.26, +2.36] ATE -0.005 [-0.010, +0.001] ASE -0.11 AOE +0.01 [+0.00, +0.01] mDR +0.02 || recipe deviations: 0
+11-15 23:56:58 [POOLED] E2b mav pooled vs PST (1 seed pairs) [mav, 1 pair(s)] arm UDS 61.85 AP 42.59 ATE 0.300 ASE 1.64 AOE 14.48 mDR 96.19 | ref UDS 60.81 AP 40.93 ATE 0.306 ASE 1.75 AOE 14.48 mDR 96.17 | diff UDS +1.04 [+0.27, +1.44] AP +1.66 [+0.26, +2.36] ATE -0.005 [-0.010, +0.001] ASE -0.11 AOE +0.01 [+0.00, +0.01] mDR +0.02
+11-15 23:56:59 [E1b mav_s20] start (mode FULLNONE, SX_TEACH=none, SX_SEEDSHIFT=20, PST ref E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/mav_full_s20, RGB-only ref E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/mav_none_s20)
+11-15 23:57:02 [E1b mav_s20] lib ok: W D:/S2MUAV3D/srcx_work/sf_E1b_in2mav_none_s20, pseudo tag srcx_in2mav_none_sfE1bs20
+11-15 23:58:03 [E4 mav_s0] deploy constants: "col_centres":[0.0,0.0],"c_k":{"0":0.10495641082525253,"1":NaN,"-1":0.10495641082525253--"r_k":{"0":0.5613338615903767,"1":NaN},
+11-15 23:58:19 [E4 mav_s0] ALL DONE: E4 mav_s0 vs PST mav_s0 [mav, 1 pair(s)] arm UDS 56.37 AP 36.31 ATE 0.358 ASE 2.59 AOE 16.41 mDR 96.00 | ref UDS 60.81 AP 40.93 ATE 0.306 ASE 1.75 AOE 14.48 mDR 96.17 | diff UDS -4.45 [-6.22, -2.98] AP -4.62 [-7.20, -2.27] ATE +0.052 [+0.033, +0.070] ASE +0.84 AOE +1.93 [+0.85, +3.15] mDR -0.17 || vs RGB-only: diff UDS -1.01 [-1.56, -0.16] AP -1.72 [-2.68, -0.33] ATE +0.010 [-0.001, +0.017] ASE +0.01 AOE +0.09 [-0.30, +0.40] mDR +0.02 || recipe deviations: 0
+11-15 23:58:27 [POOLED] E4 mav pooled vs PST (1 seed pairs) [mav, 1 pair(s)] arm UDS 56.37 AP 36.31 ATE 0.358 ASE 2.59 AOE 16.41 mDR 96.00 | ref UDS 60.81 AP 40.93 ATE 0.306 ASE 1.75 AOE 14.48 mDR 96.17 | diff UDS -4.45 [-6.22, -2.98] AP -4.62 [-7.20, -2.27] ATE +0.052 [+0.033, +0.070] ASE +0.84 AOE +1.93 [+0.85, +3.15] mDR -0.17
+11-15 23:58:34 [POOLED] E4 mav pooled vs RGB-only none (1 seed pairs) [mav, 1 pair(s)] arm UDS 56.37 AP 36.31 ATE 0.358 ASE 2.59 AOE 16.41 mDR 96.00 | ref UDS 57.38 AP 38.04 ATE 0.348 ASE 2.58 AOE 16.32 mDR 95.98 | diff UDS -1.01 [-1.56, -0.16] AP -1.72 [-2.68, -0.33] ATE +0.010 [-0.001, +0.017] ASE +0.01 AOE +0.09 [-0.30, +0.40] mDR +0.02
+11-15 23:58:35 [E4 antifs_s0] start (mode STU, SX_TEACH=none, SX_SEEDSHIFT=0, PST ref E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/out2antifs, RGB-only ref E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/out2antifs_none)
+11-15 23:59:08 [E4 antifs_s0] lib ok: W D:/S2MUAV3D/srcx_work/sf_E4_out2antifs_none_s0, pseudo tag srcx_out2antifs_none
+11-16 00:02:27 [E4 antifs_s0] upstream of the students from the same-seed RGB-only run E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/out2antifs_none (det0/det1, refiner st2, crops, gated pseudo-orientations [hard links], constant height)
+11-16 00:02:27 [E1b mav_s20] fixed stage-1 outputs from srcx/in2mav_none (det0, sim samples / bank / real d0 crops [hard links], wsim cache); refiner matte = box hull of review1113/boxhull/in2mav
+11-16 00:02:29 [E4 antifs_s0] reference: pseudo pseudo_tr1: 3293 / 3293 crops have a pseudo-orientation; gate (IR vs LiDAR <= 10 deg) passes 686 (20.8%); d_il median 20.5
+11-16 00:46:06 [E1b mav_s20] refiner: [sensorfree] composites ON; alpha = ref/sim_sil.npy
+11-16 00:46:06 [E1b mav_s20] refiners stage 1-2 done
+11-16 00:55:52 [E1b mav_s20] pseudo-labels: {"tag":"srcx_in2mav_none_sfE1bs20","n":5227,"n_corrected":5227,"c_bar":0.059201713651418686,"lam":0.75,"n_train":12866}
+11-16 00:59:03 [E4 antifs_s0] student s0: 'paste_tried': 0, 'paste_done': 0
+11-16 00:59:42 [E4 antifs_s0] student s1: 'paste_tried': 0, 'paste_done': 0
+11-16 01:16:41 [E4 antifs_s0] students done
+11-16 01:17:48 [E4 antifs_s0] w (sim val inverse variance) = 0.07971028021889691
+11-16 01:42:52 [E4 antifs_s0] deploy constants: "col_centres":[0.0,0.0],"c_k":{"0":-0.002613564021885395,"1":NaN,"-1":-0.002613564021885395--"r_k":{"0":0.4444572626376975,"1":NaN},
+11-16 01:43:01 [E4 antifs_s0] ALL DONE: E4 antifs_s0 vs PST antifs_s0 [antifs, 1 pair(s)] arm UDS 38.85 AP 23.40 ATE 0.110 ASE 15.99 AOE 17.01 mDR 90.93 | ref UDS 41.73 AP 27.89 ATE 0.099 ASE 16.30 AOE 17.11 mDR 91.92 | diff UDS -2.89 [-3.95, -1.63] AP -4.49 [-6.09, -2.58] ATE +0.011 [+0.004, +0.017] ASE -0.31 AOE -0.10 [-0.59, +0.38] mDR -0.99 || vs RGB-only: diff UDS -0.08 [-0.28, +0.15] AP +0.01 [-0.31, +0.42] ATE -0.001 [-0.001, -0.000] ASE +0.02 AOE +0.56 [+0.28, +0.85] mDR +0.00 || recipe deviations: 0
+11-16 01:43:05 [POOLED] E4 antifs pooled vs PST (1 seed pairs) [antifs, 1 pair(s)] arm UDS 38.85 AP 23.40 ATE 0.110 ASE 15.99 AOE 17.01 mDR 90.93 | ref UDS 41.73 AP 27.89 ATE 0.099 ASE 16.30 AOE 17.11 mDR 91.92 | diff UDS -2.89 [-3.95, -1.63] AP -4.49 [-6.09, -2.58] ATE +0.011 [+0.004, +0.017] ASE -0.31 AOE -0.10 [-0.59, +0.38] mDR -0.99
+11-16 01:43:09 [POOLED] E4 antifs pooled vs RGB-only none (1 seed pairs) [antifs, 1 pair(s)] arm UDS 38.85 AP 23.40 ATE 0.110 ASE 15.99 AOE 17.01 mDR 90.93 | ref UDS 38.92 AP 23.39 ATE 0.111 ASE 15.97 AOE 16.45 mDR 90.93 | diff UDS -0.08 [-0.28, +0.15] AP +0.01 [-0.31, +0.42] ATE -0.001 [-0.001, -0.000] ASE +0.02 AOE +0.56 [+0.28, +0.85] mDR +0.00
+11-16 01:43:10 [E1b antifs_s20] start (mode FULLNONE, SX_TEACH=none, SX_SEEDSHIFT=20, PST ref E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/antifs_full_s20, RGB-only ref E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/antifs_none_s20)
+11-16 01:43:15 [E1b antifs_s20] lib ok: W D:/S2MUAV3D/srcx_work/sf_E1b_out2antifs_none_s20, pseudo tag srcx_out2antifs_none_sfE1bs20
+11-16 01:44:11 [E1b mav_s20] detectors done
+11-16 01:44:37 [E1b antifs_s20] fixed stage-1 outputs from srcx/out2antifs_none (det0, sim samples / bank / real d0 crops [hard links], wsim cache); refiner matte = box hull of review1113/boxhull/out2antifs
+11-16 02:16:34 [E1b antifs_s20] refiner: [sensorfree] composites ON; alpha = ref/sim_sil.npy
+11-16 02:16:34 [E1b antifs_s20] refiners stage 1-2 done
+11-16 02:17:51 [E1b antifs_s20] pseudo-labels: {"tag":"srcx_out2antifs_none_sfE1bs20","n":909,"n_corrected":862,"c_bar":0.016074812039732933,"lam":0.75,"n_train":3293}
+11-16 02:26:15 [E1b mav_s20] pseudo pseudo_tr1: 12866 / 12866 crops have a pseudo-orientation; gate (IR vs LiDAR <= 10 deg) passes 3548 (27.6%); d_il median 18.0
+11-16 02:32:51 [E1b antifs_s20] detectors done
+11-16 03:04:28 [E1b antifs_s20] pseudo pseudo_tr1: 3293 / 3293 crops have a pseudo-orientation; gate (IR vs LiDAR <= 10 deg) passes 651 (19.8%); d_il median 21.2
+11-16 03:05:29 [E1b mav_s20] student s0: 'paste_tried': 8806, 'paste_done': 8806
+11-16 03:07:20 [E1b mav_s20] student s1: 'paste_tried': 9011, 'paste_done': 9011
+11-16 03:36:01 [E1b mav_s20] students done
+11-16 03:36:02 [E1b mav_s20] constant height aspect 0.5611851470488639
+11-16 03:37:09 [E1b antifs_s20] student s0: 'paste_tried': 8647, 'paste_done': 8647
+11-16 03:37:41 [E1b antifs_s20] student s1: 'paste_tried': 8866, 'paste_done': 8866
+11-16 03:41:53 [E1b antifs_s20] students done
+11-16 03:41:57 [E1b antifs_s20] constant height aspect 0.4443170943925439
+11-16 03:44:28 [E1b antifs_s20] w (sim val inverse variance) = 0.074486664485563
+11-16 04:01:10 [E1b mav_s20] w (sim val inverse variance) = 0.17411281969198067
+11-16 04:04:50 [E1b antifs_s20] deploy constants: "col_centres":[0.0,0.0],"c_k":{"0":0.000614434015005827,"1":NaN,"-1":0.000614434015005827--"r_k":{"0":0.4443170943925439,"1":NaN},
+11-16 04:05:11 [E1b antifs_s20] ALL DONE: E1b antifs_s20 vs PST antifs_s20 [antifs, 1 pair(s)] arm UDS 41.78 AP 28.39 ATE 0.101 ASE 17.06 AOE 16.48 mDR 90.02 | ref UDS 42.01 AP 28.27 ATE 0.098 ASE 16.65 AOE 16.85 mDR 91.58 | diff UDS -0.22 [-2.94, +2.29] AP +0.12 [-4.17, +3.93] ATE +0.003 [-0.008, +0.015] ASE +0.41 AOE -0.37 [-1.01, +0.29] mDR -1.56 || vs RGB-only: diff UDS +9.71 [+4.20, +14.63] AP +15.48 [+7.58, +22.58] ATE -0.046 [-0.075, -0.016] ASE +2.23 AOE +0.26 [-0.22, +0.72] mDR -2.44 || recipe deviations: 0
+11-16 04:05:34 [POOLED] E1b antifs pooled vs PST (3 seed pairs) [antifs, 3 pair(s)] arm UDS 41.27 AP 27.33 ATE 0.105 ASE 16.61 AOE 16.59 mDR 91.83 | ref UDS 41.71 AP 27.80 ATE 0.099 ASE 16.55 AOE 16.84 mDR 91.57 | diff UDS -0.44 [-1.39, +0.47] AP -0.48 [-1.87, +0.84] ATE +0.006 [+0.001, +0.012] ASE +0.06 AOE -0.26 [-0.74, +0.24] mDR +0.27
+11-16 04:05:46 [POOLED] E1b antifs pooled vs RGB-only none (3 seed pairs) [antifs, 3 pair(s)] arm UDS 41.27 AP 27.33 ATE 0.105 ASE 16.61 AOE 16.59 mDR 91.83 | ref UDS 34.83 AP 17.13 ATE 0.133 ASE 15.36 AOE 16.15 mDR 91.55 | diff UDS +6.44 [+3.91, +8.79] AP +10.20 [+6.51, +13.54] ATE -0.028 [-0.042, -0.012] ASE +1.25 AOE +0.44 [+0.22, +0.67] mDR +0.28
+11-16 04:06:00 [POOLED] E1b antifs pooled vs PST (3 seed pairs) [antifs, 3 pair(s)] arm UDS 41.27 AP 27.33 ATE 0.105 ASE 16.61 AOE 16.59 mDR 91.83 | ref UDS 41.71 AP 27.80 ATE 0.099 ASE 16.55 AOE 16.84 mDR 91.57 | diff UDS -0.44 [-1.39, +0.47] AP -0.48 [-1.87, +0.84] ATE +0.006 [+0.001, +0.012] ASE +0.06 AOE -0.26 [-0.74, +0.24] mDR +0.27
+11-16 04:06:12 [POOLED] E1b antifs pooled vs RGB-only none (3 seed pairs) [antifs, 3 pair(s)] arm UDS 41.27 AP 27.33 ATE 0.105 ASE 16.61 AOE 16.59 mDR 91.83 | ref UDS 34.83 AP 17.13 ATE 0.133 ASE 15.36 AOE 16.15 mDR 91.55 | diff UDS +6.44 [+3.91, +8.79] AP +10.20 [+6.51, +13.54] ATE -0.028 [-0.042, -0.012] ASE +1.25 AOE +0.44 [+0.22, +0.67] mDR +0.28
+11-16 04:34:56 [E1b mav_s20] deploy constants: "col_centres":[0.0,0.0],"c_k":{"0":0.1097101029008627,"1":NaN,"-1":0.1097101029008627--"r_k":{"0":0.5611851470488639,"1":NaN},
+11-16 04:35:12 [E1b mav_s20] ALL DONE: E1b mav_s20 vs PST mav_s20 [mav, 1 pair(s)] arm UDS 56.34 AP 35.83 ATE 0.341 ASE 2.57 AOE 15.86 mDR 94.94 | ref UDS 62.70 AP 44.38 ATE 0.280 ASE 1.62 AOE 15.15 mDR 94.67 | diff UDS -6.36 [-7.71, -4.59] AP -8.55 [-10.47, -5.58] ATE +0.062 [+0.039, +0.092] ASE +0.95 AOE +0.71 [-0.69, +2.04] mDR +0.27 || vs RGB-only: diff UDS -2.51 [-5.50, +0.74] AP -5.31 [-9.73, -0.18] ATE +0.023 [-0.007, +0.066] ASE -0.02 AOE -1.86 [-5.44, +0.37] mDR +0.04 || recipe deviations: 0
+11-16 04:35:41 [POOLED] E1b mav pooled vs PST (3 seed pairs) [mav, 3 pair(s)] arm UDS 57.69 AP 38.13 ATE 0.329 ASE 2.60 AOE 15.81 mDR 95.57 | ref UDS 60.93 AP 41.24 ATE 0.300 ASE 1.72 AOE 14.83 mDR 95.49 | diff UDS -3.24 [-5.34, -1.40] AP -3.11 [-5.86, -0.59] ATE +0.030 [+0.006, +0.060] ASE +0.89 AOE +0.98 [+0.02, +2.00] mDR +0.08
+11-16 04:36:07 [POOLED] E1b mav pooled vs RGB-only none (3 seed pairs) [mav, 3 pair(s)] arm UDS 57.69 AP 38.13 ATE 0.329 ASE 2.60 AOE 15.81 mDR 95.57 | ref UDS 58.08 AP 39.41 ATE 0.333 ASE 2.59 AOE 16.66 mDR 95.26 | diff UDS -0.39 [-1.67, +1.28] AP -1.29 [-3.36, +1.65] ATE -0.004 [-0.019, +0.016] ASE +0.01 AOE -0.85 [-2.17, -0.05] mDR +0.31
+11-16 04:36:32 [POOLED] E1b mav pooled vs PST (3 seed pairs) [mav, 3 pair(s)] arm UDS 57.69 AP 38.13 ATE 0.329 ASE 2.60 AOE 15.81 mDR 95.57 | ref UDS 60.93 AP 41.24 ATE 0.300 ASE 1.72 AOE 14.83 mDR 95.49 | diff UDS -3.24 [-5.34, -1.40] AP -3.11 [-5.86, -0.59] ATE +0.030 [+0.006, +0.060] ASE +0.89 AOE +0.98 [+0.02, +2.00] mDR +0.08
+11-16 04:36:58 [POOLED] E1b mav pooled vs RGB-only none (3 seed pairs) [mav, 3 pair(s)] arm UDS 57.69 AP 38.13 ATE 0.329 ASE 2.60 AOE 15.81 mDR 95.57 | ref UDS 58.08 AP 39.41 ATE 0.333 ASE 2.59 AOE 16.66 mDR 95.26 | diff UDS -0.39 [-1.67, +1.28] AP -1.29 [-3.36, +1.65] ATE -0.004 [-0.019, +0.016] ASE +0.01 AOE -0.85 [-2.17, -0.05] mDR +0.31
+11-16 04:36:58 [post] rest of block done; resuming the LiDAR raw-point control
+11-16 04:36:58 [post] waiting for heads H7 s10/s20 (pooled E2 MAV6D)
+11-16 06:27:19 [POOLED] E2 mav pooled vs PST (3 seed pairs) [mav, 3 pair(s)] arm UDS 61.99 AP 43.33 ATE 0.286 ASE 1.85 AOE 14.83 mDR 95.50 | ref UDS 60.93 AP 41.24 ATE 0.300 ASE 1.72 AOE 14.83 mDR 95.49 | diff UDS +1.06 [-0.45, +2.13] AP +2.10 [+0.14, +3.48] ATE -0.014 [-0.026, -0.000] ASE +0.13 AOE +0.00 [+0.00, +0.00] mDR +0.01
+11-16 06:27:20 [post] [BLOCK] sensor-free block done (E.done)
+11-17 04:33:18 [E4 mav_s10] start (mode STU, SX_TEACH=none, SX_SEEDSHIFT=10, PST ref E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sup3/run, RGB-only ref E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/mav_none_s10)
+11-17 04:33:19 [E4 mav_s10] lib ok: W D:/S2MUAV3D/srcx_work/sf_E4_in2mav_none_s10, pseudo tag srcx_in2mav_none_sd10
+11-17 04:37:45 [E4 mav_s10] upstream of the students from the same-seed RGB-only run E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/mav_none_s10 (det0/det1, refiner st2, crops, gated pseudo-orientations [hard links], constant height)
+11-17 04:37:46 [E4 mav_s10] reference: pseudo pseudo_tr1: 12866 / 12866 crops have a pseudo-orientation; gate (IR vs LiDAR <= 10 deg) passes 3485 (27.1%); d_il median 18.1
+11-17 05:13:47 [E4 mav_s10] student s0: 'paste_tried': 0, 'paste_done': 0
+11-17 05:17:01 [E4 mav_s10] student s1: 'paste_tried': 0, 'paste_done': 0
+11-17 05:44:32 [E4 mav_s10] students done
+11-17 05:46:58 [E4 mav_s10] w (sim val inverse variance) = 0.24456762957118647
+11-17 08:30:44 [E4 mav_s10] deploy constants: "col_centres":[0.0,0.0],"c_k":{"0":0.099425558000803,"1":NaN,"-1":0.099425558000803--"r_k":{"0":0.5612070791587711,"1":NaN},
+11-17 08:30:49 [E4 mav_s10] !! bootstrap vs PST
+11-17 08:30:50 [E4 mav_s20] SKIPPED: machine time 11170830 is past the latest start 11170800
+11-17 08:30:52 [E4 antifs_s10] SKIPPED: machine time 11170830 is past the latest start 11170800
+11-17 08:30:53 [E4 antifs_s20] SKIPPED: machine time 11170830 is past the latest start 11170800
+11-17 09:32:54 [E4 antifs_s10] start (mode STU, SX_TEACH=none, SX_SEEDSHIFT=10, PST ref E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/antifs_full_s10, RGB-only ref E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/antifs_none_s10)
+11-17 09:32:54 [E4 mav_s20] start (mode STU, SX_TEACH=none, SX_SEEDSHIFT=20, PST ref E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/mav_full_s20, RGB-only ref E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/mav_none_s20)
+11-17 09:33:05 [E4 antifs_s10] lib ok: W D:/S2MUAV3D/srcx_work/sf_E4_out2antifs_none_s10, pseudo tag srcx_out2antifs_none_sd10
+11-17 09:33:05 [E4 mav_s20] lib ok: W D:/S2MUAV3D/srcx_work/sf_E4_in2mav_none_s20, pseudo tag srcx_in2mav_none_sd20
+11-17 09:33:58 [E4 mav_s10] ALL DONE: E4 mav_s10 vs PST mav_s10 [mav, 1 pair(s)] arm UDS 56.97 AP 37.58 ATE 0.343 ASE 2.58 AOE 16.81 mDR 94.94 | ref UDS 59.28 AP 38.40 ATE 0.313 ASE 1.78 AOE 14.87 mDR 95.65 | diff UDS -2.30 [-7.81, +1.78] AP -0.82 [-9.63, +5.51] ATE +0.030 [-0.012, +0.088] ASE +0.80 AOE +1.94 [+0.88, +3.23] mDR -0.71 || vs RGB-only: diff UDS -1.04 [-1.78, -0.38] AP -1.48 [-2.45, -0.54] ATE +0.010 [-0.001, +0.021] ASE -0.01 AOE +0.86 [+0.22, +1.79] mDR +0.02 || recipe deviations: 0 (bootstrap via sensorfree/heads_boot_tol.py: tie-order tolerance)
+11-17 09:37:06 [E4 antifs_s10] upstream of the students from the same-seed RGB-only run E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/antifs_none_s10 (det0/det1, refiner st2, crops, gated pseudo-orientations [hard links], constant height)
+11-17 09:37:10 [E4 antifs_s10] reference: pseudo pseudo_tr1: 3293 / 3293 crops have a pseudo-orientation; gate (IR vs LiDAR <= 10 deg) passes 637 (19.3%); d_il median 21.3
+11-17 09:44:28 [E4 mav_s20] upstream of the students from the same-seed RGB-only run E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/mav_none_s20 (det0/det1, refiner st2, crops, gated pseudo-orientations [hard links], constant height)
+11-17 09:44:31 [E4 mav_s20] reference: pseudo pseudo_tr1: 12866 / 12866 crops have a pseudo-orientation; gate (IR vs LiDAR <= 10 deg) passes 3601 (28.0%); d_il median 17.8
+11-17 10:14:33 [E4 antifs_s20] start (mode STU, SX_TEACH=none, SX_SEEDSHIFT=20, PST ref E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/antifs_full_s20, RGB-only ref E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/antifs_none_s20)
+11-17 10:15:56 [E4 antifs_s20] lib ok: W D:/S2MUAV3D/srcx_work/sf_E4_out2antifs_none_s20, pseudo tag srcx_out2antifs_none_sd20
+11-17 10:31:52 [E4 antifs_s20] upstream of the students from the same-seed RGB-only run E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/antifs_none_s20 (det0/det1, refiner st2, crops, gated pseudo-orientations [hard links], constant height)
+11-17 10:33:31 [E4 antifs_s20] reference: pseudo pseudo_tr1: 3293 / 3293 crops have a pseudo-orientation; gate (IR vs LiDAR <= 10 deg) passes 691 (21.0%); d_il median 20.8
+11-17 10:43:11 [E4 antifs_s10] student s0: 'paste_tried': 0, 'paste_done': 0
+11-17 10:44:09 [E4 antifs_s10] student s1: 'paste_tried': 0, 'paste_done': 0
+11-17 10:45:35 [E4 mav_s20] student s0: 'paste_tried': 0, 'paste_done': 0
+11-17 10:48:14 [E4 mav_s20] student s1: 'paste_tried': 0, 'paste_done': 0
+11-17 11:00:32 [E4 antifs_s10] students done
+11-17 11:05:42 [E4 mav_s20] students done
+11-17 11:05:44 [E4 antifs_s10] w (sim val inverse variance) = 0.07792112170434926
+11-17 11:09:06 [E4 antifs_s20] student s0: 'paste_tried': 0, 'paste_done': 0
+11-17 11:09:40 [E4 antifs_s20] student s1: 'paste_tried': 0, 'paste_done': 0
+11-17 11:14:44 [E4 mav_s20] w (sim val inverse variance) = 0.21358688553533342
+11-17 11:16:07 [E4 antifs_s20] students done
+11-17 11:16:40 [E4 antifs_s20] w (sim val inverse variance) = 0.0899355344537396
+11-17 11:38:02 [E4 antifs_s10] deploy constants: "col_centres":[0.0,0.0],"c_k":{"0":-0.010844855569303036,"1":NaN,"-1":-0.010844855569303036--"r_k":{"0":0.4454868359440946,"1":NaN},
+11-17 11:38:14 [E4 antifs_s10] ALL DONE: E4 antifs_s10 vs PST antifs_s10 [antifs, 1 pair(s)] arm UDS 32.62 AP 13.99 ATE 0.144 ASE 15.18 AOE 16.51 mDR 91.27 | ref UDS 41.38 AP 27.25 ATE 0.101 ASE 16.72 AOE 16.58 mDR 91.20 | diff UDS -8.76 [-10.97, -6.16] AP -13.27 [-16.42, -9.45] ATE +0.043 [+0.028, +0.057] ASE -1.53 AOE -0.07 [-0.53, +0.42] mDR +0.08 || vs RGB-only: diff UDS -0.88 [-1.16, -0.52] AP -1.11 [-1.50, -0.59] ATE +0.003 [+0.002, +0.005] ASE -0.10 AOE +0.73 [+0.41, +1.10] mDR +0.00 || recipe deviations: 0
+11-17 11:38:24 [POOLED] E4 antifs pooled vs PST (2 seed pairs) [antifs, 2 pair(s)] arm UDS 35.73 AP 18.69 ATE 0.127 ASE 15.59 AOE 16.76 mDR 91.10 | ref UDS 41.56 AP 27.57 ATE 0.100 ASE 16.51 AOE 16.84 mDR 91.56 | diff UDS -5.82 [-7.29, -4.06] AP -8.88 [-10.99, -6.31] ATE +0.027 [+0.017, +0.036] ASE -0.92 AOE -0.08 [-0.54, +0.39] mDR -0.46
+11-17 11:38:33 [POOLED] E4 antifs pooled vs RGB-only none (2 seed pairs) [antifs, 2 pair(s)] arm UDS 35.73 AP 18.69 ATE 0.127 ASE 15.59 AOE 16.76 mDR 91.10 | ref UDS 36.21 AP 19.24 ATE 0.126 ASE 15.63 AOE 16.12 mDR 91.10 | diff UDS -0.48 [-0.68, -0.22] AP -0.55 [-0.83, -0.18] ATE +0.001 [+0.000, +0.002] ASE -0.04 AOE +0.64 [+0.37, +0.95] mDR +0.00
+11-17 11:38:33 [e4_extra] E4 antifs s10 exit 0
+11-17 11:38:33 [E4 antifs_s20] start (mode STU, SX_TEACH=none, SX_SEEDSHIFT=20, PST ref E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/antifs_full_s20, RGB-only ref E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/antifs_none_s20)
+11-17 11:38:36 [E4 antifs_s20] lib ok: W D:/S2MUAV3D/srcx_work/sf_E4_out2antifs_none_s20, pseudo tag srcx_out2antifs_none_sd20
+11-17 11:38:36 [E4 antifs_s20] upstream of the students from the same-seed RGB-only run E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/antifs_none_s20 (det0/det1, refiner st2, crops, gated pseudo-orientations [hard links], constant height)
+11-17 11:38:37 [E4 antifs_s20] reference: pseudo pseudo_tr1: 3293 / 3293 crops have a pseudo-orientation; gate (IR vs LiDAR <= 10 deg) passes 691 (21.0%); d_il median 20.8
+11-17 11:39:18 [e4_extra] E4 antifs s20 exit 0
+11-17 11:43:14 [E4 antifs_s20] deploy constants: "col_centres":[0.0,0.0],"c_k":{"0":-0.005060724914073944,"1":NaN,"-1":-0.005060724914073944--"r_k":{"0":0.44309280294991965,"1":NaN},
+11-17 11:43:24 [E4 antifs_s20] ALL DONE: E4 antifs_s20 vs PST antifs_s20 [antifs, 1 pair(s)] arm UDS 33.88 AP 15.75 ATE 0.137 ASE 15.12 AOE 16.86 mDR 92.45 | ref UDS 42.01 AP 28.27 ATE 0.098 ASE 16.65 AOE 16.85 mDR 91.58 | diff UDS -8.13 [-10.95, -5.10] AP -12.52 [-16.49, -8.17] ATE +0.039 [+0.022, +0.056] ASE -1.52 AOE +0.01 [-0.53, +0.60] mDR +0.88 || vs RGB-only: diff UDS +1.80 [+1.43, +2.10] AP +2.84 [+2.16, +3.36] ATE -0.010 [-0.012, -0.008] ASE +0.30 AOE +0.64 [+0.29, +1.01] mDR +0.00 || recipe deviations: 0
+11-17 11:43:36 [POOLED] E4 antifs pooled vs PST (3 seed pairs) [antifs, 3 pair(s)] arm UDS 35.11 AP 17.71 ATE 0.130 ASE 15.43 AOE 16.79 mDR 91.55 | ref UDS 41.71 AP 27.80 ATE 0.099 ASE 16.55 AOE 16.84 mDR 91.57 | diff UDS -6.59 [-8.43, -4.43] AP -10.09 [-12.75, -6.97] ATE +0.031 [+0.019, +0.043] ASE -1.12 AOE -0.05 [-0.53, +0.44] mDR -0.01
+11-17 11:43:48 [POOLED] E4 antifs pooled vs RGB-only none (3 seed pairs) [antifs, 3 pair(s)] arm UDS 35.11 AP 17.71 ATE 0.130 ASE 15.43 AOE 16.79 mDR 91.55 | ref UDS 34.83 AP 17.13 ATE 0.133 ASE 15.36 AOE 16.15 mDR 91.55 | diff UDS +0.28 [+0.15, +0.42] AP +0.58 [+0.38, +0.79] ATE -0.003 [-0.003, -0.002] ASE +0.07 AOE +0.64 [+0.35, +0.96] mDR +0.00
+11-17 12:12:14 [E4 mav_s20] deploy constants: "col_centres":[0.0,0.0],"c_k":{"0":0.09893052652478218,"1":NaN,"-1":0.09893052652478218--"r_k":{"0":0.5612462759750858,"1":NaN},
+11-17 12:12:30 [E4 mav_s20] ALL DONE: E4 mav_s20 vs PST mav_s20 [mav, 1 pair(s)] arm UDS 60.65 AP 43.88 ATE 0.293 ASE 2.54 AOE 17.56 mDR 94.90 | ref UDS 62.70 AP 44.38 ATE 0.280 ASE 1.62 AOE 15.15 mDR 94.67 | diff UDS -2.06 [-3.32, -0.62] AP -0.49 [-2.53, +1.77] ATE +0.013 [-0.011, +0.034] ASE +0.92 AOE +2.41 [+0.40, +4.52] mDR +0.23 || vs RGB-only: diff UDS +1.79 [+0.28, +3.96] AP +2.74 [+0.87, +5.35] ATE -0.026 [-0.054, -0.005] ASE -0.05 AOE -0.16 [-2.72, +1.66] mDR +0.00 || recipe deviations: 0
+11-17 12:12:35 [POOLED] !! E4 mav pooled vs PST (3 seed pairs) failed, see /e/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E4/pool_mav_vsPST.log
+11-17 12:12:39 [POOLED] !! E4 mav pooled vs RGB-only none (3 seed pairs) failed
+11-17 12:12:39 [e4_extra] E4 mav s20 exit 0
+11-17 12:13:53 [POOLED] E4 mav pooled vs PST (3 seed pairs) [mav, 3 pair(s)] arm UDS 58.00 AP 39.26 ATE 0.331 ASE 2.57 AOE 16.93 mDR 95.28 | ref UDS 60.93 AP 41.24 ATE 0.300 ASE 1.72 AOE 14.83 mDR 95.49 | diff UDS -2.93 [-5.49, -1.13] AP -1.98 [-5.85, +0.71] ATE +0.032 [+0.010, +0.060] ASE +0.85 AOE +2.09 [+0.84, +3.44] mDR -0.22
+11-17 12:14:15 [POOLED] E4 mav pooled vs RGB-only none (3 seed pairs) [mav, 3 pair(s)] arm UDS 58.00 AP 39.26 ATE 0.331 ASE 2.57 AOE 16.93 mDR 95.28 | ref UDS 58.08 AP 39.41 ATE 0.333 ASE 2.59 AOE 16.66 mDR 95.26 | diff UDS -0.09 [-0.71, +0.80] AP -0.15 [-0.97, +0.98] ATE -0.002 [-0.013, +0.008] ASE -0.02 AOE +0.26 [-0.71, +1.00] mDR +0.01

@@ -1,0 +1,30 @@
+11-16 12:23:47 [H1 mav_s10] start (mode FULL, SX_SEEDSHIFT=10, reference run E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sup3/run)
+ok H1 mav 10 FULL E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H1/mav_s10/lib
+11-16 12:23:50 [H1 mav_s10] lib ok: W D:/S2MUAV3D/srcx_work/heads_H1_in2mav_s10, pseudo tag srcx_in2mav_hdH1s10
+configs cfgs/models/uavdet_3d/camnorm/srcx/real_in2mav_hdH1s10.yaml cfgs/models/uavdet_3d/camnorm/srcx/st_in2mav_hdH1s10.yaml
+11-16 12:28:09 [H1 mav_s10] fixed stage-1 outputs from srcx/in2mav (det0, refiner sim samples / bank / real d0 crops [hard links], wsim cache)
+11-16 13:08:35 [H1 mav_s10] refiners stage 1-2 done
+avg_inf E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H1/mav_s10/ref/inf_st2_det0_train.pkl: 12865 keys from 2 files
+{'tag': 'srcx_in2mav_hdH1s10', 'n': 5227, 'n_corrected': 5227, 'c_bar': 0.1530512049794197, 'lam': 0.75, 'n_train': 12866}
+11-16 15:08:08 [H1 mav_s10] pseudo-labels: {"tag":"srcx_in2mav_hdH1s10","n":5227,"n_corrected":5227,"c_bar":0.1530512049794197,"lam":0.75,"n_train":12866}
+11-16 16:33:49 [H1 mav_s10] detectors done
+crops tr1: 12866 (train every 1); zoom median 1.62, clipped at ZMAX 0.0%
+11-16 17:27:49 [H1 mav_s10] !! crops val1
+11-17 01:11:45 [H1 mav_s10] start (mode FULL, SX_SEEDSHIFT=10, reference run E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sup3/run)
+ok H1 mav 10 FULL E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H1/mav_s10/lib
+11-17 01:11:46 [H1 mav_s10] lib ok: W D:/S2MUAV3D/srcx_work/heads_H1_in2mav_s10, pseudo tag srcx_in2mav_hdH1s10
+configs cfgs/models/uavdet_3d/camnorm/srcx/real_in2mav_hdH1s10.yaml cfgs/models/uavdet_3d/camnorm/srcx/st_in2mav_hdH1s10.yaml
+11-17 01:11:49 [H1 mav_s10] fixed stage-1 outputs from srcx/in2mav (det0, refiner sim samples / bank / real d0 crops [hard links], wsim cache)
+11-17 01:12:50 [H1 mav_s10] refiners stage 1-2 done
+11-17 01:12:51 [H1 mav_s10] pseudo-labels: {"tag":"srcx_in2mav_hdH1s10","n":5227,"n_corrected":5227,"c_bar":0.1530512049794197,"lam":0.75,"n_train":12866}
+11-17 01:17:59 [H1 mav_s10] detectors done
+crops val1: 2336 (val every 1); zoom median 1.61, clipped at ZMAX 0.0%
+crops te1: 4800 (test every 1); zoom median 1.74, clipped at ZMAX 0.0%
+orientation bank ou_bank: 3870 windows
+pseudo pseudo_tr1: 12866 / 12866 crops have a pseudo-orientation; gate (IR vs LiDAR <= 10 deg) passes 4331 (33.7%); d_il median 15.5
+11-17 04:16:35 [H1 mav_s10] pseudo pseudo_tr1: 12866 / 12866 crops have a pseudo-orientation; gate (IR vs LiDAR <= 10 deg) passes 4331 (33.7%); d_il median 15.5
+2026-11-17 07:48:44,208   INFO  init E:/Open3DUAVDet/output/camnorm/geo1004/lidar/irlid/release/kzm_s0.pth
+2026-11-17 07:48:10,398   INFO  init E:/Open3DUAVDet/output/camnorm/geo1004/lidar/irlid/release/kzm_s1.pth
+11-17 09:18:54 [H1 mav_s10] students done
+11-17 09:56:36 FAILED (not OOM or 4 retries used): bash /e/Open3DUAVDet/output/camnorm/geo1004/gproto/gpu_slot.sh light D:/Miniconda3/envs/city/python.exe E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H1/mav_s10/lib/infer_wrap.py E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H1/mav_s10/lib/refiner_x.py infer E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H1/mav_s10/ref/ref_st2_s5.pt E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H1/mav_s10/recs/det1.pkl train E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H1/mav_s10/ref/st2_s5_det1_train.pkl  see logs/infer.log
+11-17 09:56:37 [H1 mav_s10] !! inf st2 det1 5

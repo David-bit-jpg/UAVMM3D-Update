@@ -1,0 +1,10 @@
+11-17 01:05:04 [B] attempt 1: bash srcx/run_x.sh out mav
+11-17 01:06:47 [A] in2mav_pst_ON_antifs (cfg srcx/real_in2antifs.yaml): all      AOE 16.660  ATE 0.638  ASE 11.604  AP 0.000  UDS 9.689  mDR 6.593
+11-17 01:10:03 [A] out2antifs_pst_ON_mav (cfg srcx/real_out2mav.yaml): all      AOE 26.441  ATE 3.288  ASE 20.970  AP 0.000  UDS 7.638  mDR 7.250
+11-17 01:12:04 [A] in_sim_s0_ON_antifs (cfg srcx/real_in2antifs.yaml): all      AOE 25.977  ATE 0.640  ASE 11.391  AP 0.000  UDS 7.095  mDR 2.096
+11-17 01:13:42 [A] out_sim_s0_ON_mav (cfg srcx/real_out2mav.yaml): all      AOE 23.910  ATE 2.214  ASE 16.452  AP 0.000  UDS 9.047  mDR 14.104
+11-17 01:13:42 [A] A done
+11-17 15:09:48 [B] ALL DONE
+Traceback (most recent call last):
+  File "<string>", line 4, in <module>
+FileNotFoundError: [Errno 2] No such file or directory: '/e/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/out2mav/preds/srconly_test.pkl.score_real_test.json'

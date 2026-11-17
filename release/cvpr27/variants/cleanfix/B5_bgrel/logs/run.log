@@ -1,0 +1,3 @@
+11-14 15:13:56 waiting for gupnet_uda_mt_s0/.done and initabl/.done (poll 10 min)
+11-14 19:03:57 start B5 background reliance (clean banks)
+11-14 19:38:02 ALL DONE: O 7.89 | I 8.61 | S_v 16.13 | B_ir 18.22 | B_v 18.14 | B_sf 15.46  (dev: O 7.89, I 8.61, S_v 16.13, B_ir 18.61, B_v 18.65, B_sf 14.38)

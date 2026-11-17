@@ -1,0 +1,1 @@
+H5 antifs_s0 vs PST antifs_s0 [antifs, 1 pair(s)] arm UDS 42.16 AP 28.45 ATE 0.098 ASE 16.30 AOE 16.89 mDR 91.92 | ref UDS 41.73 AP 27.89 ATE 0.099 ASE 16.30 AOE 17.11 mDR 91.92 | diff UDS +0.42 [+0.13, +0.89] AP +0.57 [+0.15, +1.35] ATE -0.002 [-0.003, -0.001] ASE +0.00 AOE -0.22 [-0.67, +0.22] mDR +0.00

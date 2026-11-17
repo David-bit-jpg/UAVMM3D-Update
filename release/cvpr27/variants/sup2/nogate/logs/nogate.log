@@ -1,0 +1,7 @@
+ok E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sup2/nogate/lib
+11-13 13:59:03 start nogate FULL=0 MIRVIEW=1 (students on all pseudo-oriented frames, --tgt all, --mir 12)
+pseudo_tr1: 12866 crops with a pseudo-orientation, gate passes 4301 -> students now use all 12866 (bag 0.8)
+2026-11-13 13:59:10,897   INFO  目标域：all，帧池 10293（gate 4301 / 全部 12866），随机 80% → 10293 帧
+11-13 14:30:52 students done
+11-13 14:42:11 readings done
+11-13 14:42:23 ALL DONE: test UDS 62.07 AP 43.17 ATE 0.289 AOE 14.81 ASE 1.754 mDR 96.15 | val UDS 59.50 | vs PST test 60.81 / val 59.71

@@ -1,0 +1,22 @@
+11-13 13:56:58 start AdaBN baseline (sim-only detector ensemble, BN on 12,866 unlabeled MAV6D train frames)
+member 0 AdaBN: 44 BN layers re-estimated on 1609 batches x 8 unlabeled train frames (interval 1), 1136 s
+member 1 AdaBN: 44 BN layers re-estimated on 1609 batches x 8 unlabeled train frames (interval 1), 376 s
+member 2 AdaBN: 44 BN layers re-estimated on 1609 batches x 8 unlabeled train frames (interval 1), 360 s
+s_bar (val unlabeled, 13 boxes conf>=0.7 of 1168) = [0.3466 0.3468 0.1891]
+val: 2336 frames, conf median 0.562, >=0.5 92.8%, >=0.3 99.7%
+test: 4800 frames, conf median 0.564, >=0.5 96.9%, >=0.3 99.6%
+reference (no AdaBN, srcx/in2mav/logs/det0_infer.log):
+s_bar (val unlabeled, 175 boxes conf>=0.7 of 1168) = [0.3474 0.3475 0.1954]
+val: 2336 frames, conf median 0.445, >=0.5 35.7%, >=0.3 100.0%
+test: 4800 frames, conf median 0.621, >=0.5 64.8%, >=0.3 99.6%
+2336 preds -> E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sup1/adabn/preds/adabn_val.pkl
+4800 preds -> E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sup1/adabn/preds/adabn_test.pkl
+all      AOE 26.429  ATE 0.460  ASE 2.222  AP 0.214  UDS 24.582  mDR 10.146
+0-3      AOE 25.954  ATE 0.270  ASE 2.365  AP 2.614  UDS 28.378  mDR 12.548
+3-4      AOE 27.944  ATE 0.680  ASE 2.200  AP 0.000  UDS 20.803  mDR 5.176
+4-99     AOE 26.164  ATE 0.553  ASE 2.079  AP 0.000  UDS 24.065  mDR 14.241
+all      AOE 22.575  ATE 0.330  ASE 1.887  AP 0.791  UDS 28.574  mDR 16.688
+0-3      AOE 25.507  ATE 0.315  ASE 1.997  AP 2.267  UDS 29.182  mDR 20.373
+3-4      AOE 22.089  ATE 0.394  ASE 1.811  AP 0.087  UDS 27.297  mDR 14.123
+4-99     AOE 17.932  ATE 0.249  ASE 1.811  AP 1.288  UDS 30.880  mDR 16.191
+11-13 14:39:18 ALL DONE: AdaBN test UDS 28.57 AP 0.79 ATE 0.330 AOE 22.58 ASE 1.887 mDR 16.69 | val UDS 24.58 | srconly test UDS 49.51, PST test 60.81 / val 59.71

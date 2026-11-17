@@ -1,0 +1,18 @@
+[infer_wrap] memory fraction 0.20 -> E:\Open3DUAVDet\output\camnorm\geo1004\gproto\review1113\lidraw\eval\lib\ori_x.py adabn E:/Open3DUAVDet/output/camnorm/geo1004/lidar/irlid/release/kzl_s0.pth tr1 E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/lidraw/eval/T_a_s0.pth 80
+2026-11-17 21:58:58,490   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-17 21:58:58,545   INFO  MMCache[test]: RGB 可见度 >= 5.0 过滤 4924 -> 4646 帧
+2026-11-17 21:58:58,545   INFO  MMCache[test]: 4646 帧, 模态 ['rgb'] -> 3 通道, 缓存 E:\mmcache\full_v2\test
+2026-11-17 21:59:04,673   INFO  loading weights: 载入 289/289 个张量, 27.95M/27.95M 参数 (100.0%)
+adabn kzl_s0.pth: 44 BN layers on 3695 crops -> E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/lidraw/eval/T_a_s0.pth
+[infer_wrap] memory fraction 0.20 -> E:\Open3DUAVDet\output\camnorm\geo1004\gproto\review1113\lidraw\eval\lib\ori_x.py read te1 E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/lidraw/eval/read_te1_a_s0.pkl E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/lidraw/eval/T_a_s0.pth
+2026-11-17 22:16:09,636   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-17 22:16:09,703   INFO  MMCache[test]: RGB 可见度 >= 5.0 过滤 4924 -> 4646 帧
+2026-11-17 22:16:09,703   INFO  MMCache[test]: 4646 帧, 模态 ['rgb'] -> 3 通道, 缓存 E:\mmcache\full_v2\test
+2026-11-17 22:16:20,666   INFO  loading weights: 载入 289/289 个张量, 27.95M/27.95M 参数 (100.0%)
+read 1 nets on 4800 crops -> E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/lidraw/eval/read_te1_a_s0.pkl
+[infer_wrap] memory fraction 0.20 -> E:\Open3DUAVDet\output\camnorm\geo1004\gproto\review1113\lidraw\eval\lib\ori_x.py adabn E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/lidraw/release/b_s0.pth tr1 E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/lidraw/eval/T_b_s0.pth 80
+2026-11-17 22:20:07,558   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-17 22:20:07,558   INFO  MMCache[test]: RGB 可见度 >= 5.0 过滤 4924 -> 4646 帧
+2026-11-17 22:20:07,558   INFO  MMCache[test]: 4646 帧, 模态 ['rgb'] -> 3 通道, 缓存 E:\mmcache\full_v2\test
+2026-11-17 22:20:10,287   INFO  loading weights: 载入 289/289 个张量, 27.95M/27.95M 参数 (100.0%)
+adabn b_s0.pth: 44 BN layers on 3695 crops -> E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/lidraw/eval/T_b_s0.pth

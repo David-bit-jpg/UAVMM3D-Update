@@ -1,0 +1,106 @@
+11-13 22:51:18 start mav_none_s20 (combo in2mav_none, SX_SEEDSHIFT=20, COPY_FIXED=1, SERIAL=0)
+ok mav_none_s20 in2mav_none_sd20 E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/mav_none_s20/lib
+configs cfgs/models/uavdet_3d/camnorm/srcx/real_in2mav_none_sd20.yaml cfgs/models/uavdet_3d/camnorm/srcx/st_in2mav_none_sd20.yaml
+11-13 22:53:59 copied fixed stage-1 outputs from srcx/in2mav_none (det0, srconly preds, refiner sim samples / bank / real d0 crops, wsim cache)
+11-13 23:18:40 refiners stage 1-2 done
+avg_inf E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/mav_none_s20/ref/inf_st2_det0_train.pkl: 12865 keys from 2 files
+{'tag': 'srcx_in2mav_none_sd20', 'n': 5227, 'n_corrected': 5227, 'c_bar': 0.1447063945233822, 'lam': 0.75, 'n_train': 12866}
+{
+ "tag": "srcx_in2mav_none_sd20",
+ "n": 5227,
+ "n_corrected": 5227,
+ "c_bar": 0.1447063945233822,
+ "lam": 0.75,
+ "n_train": 12866
+}s_bar (val unlabeled, 468 boxes conf>=0.7 of 1168) = [0.3477 0.3487 0.1954]
+train: 12866 frames, conf median 0.657, >=0.5 62.2%, >=0.3 74.7%
+val: 2336 frames, conf median 0.620, >=0.5 59.7%, >=0.3 73.2%
+test: 4800 frames, conf median 0.795, >=0.5 76.1%, >=0.3 83.0%
+11-13 23:45:42 detectors done
+crops tr1: 12866 (train every 1); zoom median 1.69, clipped at ZMAX 0.1%
+crops val1: 2336 (val every 1); zoom median 1.66, clipped at ZMAX 0.1%
+crops te1: 4800 (test every 1); zoom median 1.78, clipped at ZMAX 0.0%
+orientation bank ou_bank: 4042 windows
+pseudo pseudo_tr1: 12866 / 12866 crops have a pseudo-orientation; gate (IR vs LiDAR <= 10 deg) passes 3601 (28.0%); d_il median 17.8
+constant height aspect 0.5612462759750858
+11-14 00:42:23 orientation branch done
+avg_inf E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/mav_none_s20/ref/inf_st2_det1_train.pkl: 12866 keys from 2 files
+11-14 00:55:55 w (sim val inverse variance) = 0.2139196739138177
+targets {'w': 0.2139196739138177, 'col_centres': [0.0, 0.0], 'b_train': {0: 0.19022730988076442}, 'n_zL': 12866, 'n_dd': 5209, 'n_crops': 5227, 'n_target': 5195, 'n_fused': 5180}
+avg_inf E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/mav_none_s20/ref/inf_fin_det1_train.pkl: 12866 keys from 2 files
+avg_inf E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/mav_none_s20/ref/inf_fin_det1_val.pkl: 2336 keys from 2 files
+avg_inf E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/mav_none_s20/ref/inf_fin_det1_test.pkl: 4800 keys from 2 files
+D:\Miniconda3\envs\city\lib\site-packages\numpy\core\fromnumeric.py:3504: RuntimeWarning: Mean of empty slice.
+  return _methods._mean(a, axis=axis, dtype=dtype,
+D:\Miniconda3\envs\city\lib\site-packages\numpy\core\_methods.py:129: RuntimeWarning: invalid value encountered in scalar divide
+  ret = ret.dtype.type(ret / rcount)
+{
+ "w": 0.2139196739138177,
+ "s_bar": [
+  0.3476511836051941,
+  0.34867534041404724,
+  0.19540533423423767
+ ],
+ "col_centres": [
+  0.0,
+  0.0
+ ],
+ "c_k": {
+  "0": 0.09712289832532406,
+  "1": NaN,
+  "-1": 0.09712289832532406
+ },
+ "r_k": {
+  "0": 0.5612462759750858,
+  "1": NaN
+ },
+ "b_k_val_images": {
+  "0": 0.40036603250070046
+ },
+ "alpha": 0.5,
+ "fused_val": {
+  "n": 2336,
+  "n_fused": 2336,
+  "n_rot_student": 2336,
+  "file": "E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/mav_none_s20/preds/pcmd_fused_val.pkl"
+ },
+ "nofuse_val": {
+  "n": 2336,
+  "n_fused": 0,
+  "n_rot_student": 2336,
+  "file": "E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/mav_none_s20/preds/pcmd_nofuse_val.pkl"
+ },
+ "fused_test": {
+  "n": 4800,
+  "n_fused": 4800,
+  "n_rot_student": 4800,
+  "file": "E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/mav_none_s20/preds/pcmd_fused_test.pkl"
+ },
+ "nofuse_test": {
+  "n": 4800,
+  "n_fused": 0,
+  "n_rot_student": 4800,
+  "file": "E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/mav_none_s20/preds/pcmd_nofuse_test.pkl"
+ }
+}
+all      AOE 27.841  ATE 0.368  ASE 2.200  AP 11.847  UDS 35.534  mDR 44.264
+0-3      AOE 28.741  ATE 0.218  ASE 2.423  AP 25.192  UDS 44.827  mDR 53.992
+3-4      AOE 29.087  ATE 0.377  ASE 2.104  AP 7.972  UDS 31.585  mDR 30.286
+4-99     AOE 25.662  ATE 0.553  ASE 1.994  AP 6.857  UDS 32.444  mDR 52.113
+all      AOE 24.301  ATE 0.418  ASE 3.564  AP 33.200  UDS 50.872  mDR 94.007
+0-3      AOE 22.080  ATE 0.294  ASE 3.514  AP 50.374  UDS 61.573  mDR 94.170
+3-4      AOE 27.892  ATE 0.458  ASE 3.646  AP 26.498  UDS 46.034  mDR 93.172
+4-99     AOE 22.015  ATE 0.514  ASE 3.511  AP 26.291  UDS 46.904  mDR 94.992
+all      AOE 24.301  ATE 0.392  ASE 3.564  AP 34.894  UDS 52.046  mDR 94.007
+0-3      AOE 22.080  ATE 0.272  ASE 3.514  AP 50.486  UDS 61.901  mDR 94.170
+3-4      AOE 27.892  ATE 0.430  ASE 3.646  AP 27.987  UDS 47.117  mDR 93.172
+4-99     AOE 22.015  ATE 0.483  ASE 3.511  AP 28.953  UDS 48.617  mDR 94.992
+all      AOE 20.318  ATE 0.283  ASE 1.737  AP 26.873  UDS 49.513  mDR 69.771
+0-3      AOE 22.049  ATE 0.269  ASE 1.919  AP 21.124  UDS 44.494  mDR 56.025
+3-4      AOE 21.470  ATE 0.280  ASE 1.680  AP 31.414  UDS 52.594  mDR 77.413
+4-99     AOE 16.120  ATE 0.305  ASE 1.650  AP 27.191  UDS 51.125  mDR 75.345
+all      AOE 17.717  ATE 0.318  ASE 2.588  AP 41.142  UDS 58.852  mDR 94.896
+0-3      AOE 18.041  ATE 0.278  ASE 3.273  AP 48.666  UDS 62.299  mDR 95.776
+3-4      AOE 17.341  ATE 0.302  ASE 2.325  AP 41.913  UDS 59.740  mDR 94.009
+4-99     AOE 17.952  ATE 0.409  ASE 2.071  AP 32.853  UDS 54.222  mDR 95.308
+11-14 01:26:16 ALL DONE: test UDS 58.85 AP 41.14 ATE 0.318 ASE 2.59 AOE 17.72 mDR 94.90 | val UDS 50.87 AP 33.20 ATE 0.418 ASE 3.56 AOE 24.30 mDR 94.01 | mav_none_s20 w 0.2139 | reported (shift 0): test 57.38 / val 53.52

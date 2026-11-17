@@ -1,0 +1,17 @@
+2026-11-13 04:57:01,382   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-13 04:57:01,382   INFO  MMCache[test]: 2336 帧, 模态 ['rgb'] -> 3 通道, 缓存 E:\mmcache\mav6d_cn_obj\val
+loading weights: 载入 289/289 个张量, 27.95M/27.95M 参数 (100.0%)
+loading weights: 载入 289/289 个张量, 27.95M/27.95M 参数 (100.0%)
+loading weights: 载入 289/289 个张量, 27.95M/27.95M 参数 (100.0%)
+loading weights: 载入 289/289 个张量, 27.95M/27.95M 参数 (100.0%)
+loading weights: 载入 289/289 个张量, 27.95M/27.95M 参数 (100.0%)
+[adabn] replay check (nl075_val_kzt7q, original weights): {'n': 24, 'max_abs_kp': 0.0, 'max_abs_hm': 0.0, 'read_cell_same': 24, 'tol_kp': 0.002, 'tol_hm': 0.0002, 'pass': True}
+[recut] 机身镜像角点重排 [3, 2, 1, 0, 7, 6, 5, 4]
+2026-11-13 04:57:09,171   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-13 04:57:09,171   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-13 04:57:09,171   INFO  MMCache[test]: 2336 帧, 模态 ['rgb'] -> 3 通道, 缓存 E:\mmcache\mav6d_cn_obj\val
+2026-11-13 04:57:09,171   INFO  MMCache[test]: 2336 帧, 模态 ['rgb'] -> 3 通道, 缓存 E:\mmcache\mav6d_cn_obj\val
+loading weights: 载入 289/289 个张量, 27.95M/27.95M 参数 (100.0%)
+[recut]   1280 / 2336, 22 s
+[recut] wrote E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/M12/M1/single/tags\nl075_val_ouS1/kz_members_nl075_val_ouS1.npz
+[recut] done 1 sets x 2336 frames in 49 s

@@ -1,0 +1,10 @@
+11-17 06:10:16 [in2mav] train in2mav_naivest batch 8 (waiting for gpu slot)
+11-17 08:22:47 [in2mav] trained in2mav_naivest (D:/S2MUAV3D/rgbst_equal_models/models/uavdet_3d/camnorm/rgbst_equal/in2mav_naivest/DET_s0/ckpt/checkpoint_epoch_5.pth)
+11-17 08:28:07 [in2mav] in2mav_naivest: all      AOE 22.202  ATE 0.304  ASE 2.727  AP 40.374  UDS 57.683  mDR 96.375
+11-17 08:28:07 [out2antifs] train out2antifs_naivest batch 8 (waiting for gpu slot)
+11-17 08:43:01 [out2antifs] trained out2antifs_naivest (D:/S2MUAV3D/rgbst_equal_models/models/uavdet_3d/camnorm/rgbst_equal/out2antifs_naivest/DET_s0/ckpt/checkpoint_epoch_5.pth)
+11-17 08:44:35 [out2antifs] out2antifs_naivest: all      AOE 22.556  ATE 0.235  ASE 14.244  AP 0.835  UDS 16.058  mDR 58.498
+11-17 08:44:35 [out2antifs] ALL DONE
+11-17 08:54:17 [gupnet] train GUPNet naive-ST batch 8  (waiting for gpu slot)
+11-17 09:18:16 [gupnet] !! OOM -> batch 4 (RECIPE DEVIATION)
+11-17 09:18:16 [gupnet] train GUPNet naive-ST batch 4  (waiting for gpu slot)

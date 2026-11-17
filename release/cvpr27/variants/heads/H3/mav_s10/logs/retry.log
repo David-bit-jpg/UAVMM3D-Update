@@ -1,0 +1,2 @@
+11-17 12:13:11 FAILED (not OOM or 4 retries used): bash /e/Open3DUAVDet/output/camnorm/geo1004/gproto/gpu_slot.sh light D:/Miniconda3/envs/city/python.exe E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H3/mav_s10/lib/refiner_x.py train 1 6  see logs/ref_st1_s6.log
+11-17 12:15:02 FAILED (not OOM or 4 retries used): bash /e/Open3DUAVDet/output/camnorm/geo1004/gproto/gpu_slot.sh light D:/Miniconda3/envs/city/python.exe E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H3/mav_s10/lib/refiner_x.py train 2 5  see logs/ref_st2_s5.log

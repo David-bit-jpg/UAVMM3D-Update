@@ -1,0 +1,31 @@
+11-15 13:26:03 [E1b mav_s10] start (mode FULLNONE, SX_TEACH=none, SX_SEEDSHIFT=10, PST ref E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sup3/run, RGB-only ref E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/mav_none_s10)
+ok E1b mav 10 FULLNONE none E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1b/mav_s10/lib
+11-15 13:26:14 [E1b mav_s10] lib ok: W D:/S2MUAV3D/srcx_work/sf_E1b_in2mav_none_s10, pseudo tag srcx_in2mav_none_sfE1bs10
+configs cfgs/models/uavdet_3d/camnorm/srcx/real_in2mav_none_sfE1bs10.yaml cfgs/models/uavdet_3d/camnorm/srcx/st_in2mav_none_sfE1bs10.yaml
+11-15 13:32:48 [E1b mav_s10] fixed stage-1 outputs from srcx/in2mav_none (det0, sim samples / bank / real d0 crops [hard links], wsim cache); refiner matte = box hull of review1113/boxhull/in2mav
+11-15 14:37:51 [E1b mav_s10] refiner: [sensorfree] composites ON; alpha = ref/sim_sil.npy
+11-15 14:37:53 [E1b mav_s10] refiners stage 1-2 done
+avg_inf E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1b/mav_s10/ref/inf_st2_det0_train.pkl: 12865 keys from 2 files
+{'tag': 'srcx_in2mav_none_sfE1bs10', 'n': 5227, 'n_corrected': 5227, 'c_bar': 0.09859495237469673, 'lam': 0.75, 'n_train': 12866}
+11-15 16:06:14 [E1b mav_s10] pseudo-labels: {"tag":"srcx_in2mav_none_sfE1bs10","n":5227,"n_corrected":5227,"c_bar":0.09859495237469673,"lam":0.75,"n_train":12866}
+11-15 16:54:13 [E1b mav_s10] detectors done
+crops tr1: 12866 (train every 1); zoom median 1.74, clipped at ZMAX 0.0%
+crops val1: 2336 (val every 1); zoom median 1.70, clipped at ZMAX 0.1%
+crops te1: 4800 (test every 1); zoom median 1.84, clipped at ZMAX 0.0%
+orientation bank ou_bank: 4324 windows
+pseudo pseudo_tr1: 12866 / 12866 crops have a pseudo-orientation; gate (IR vs LiDAR <= 10 deg) passes 3553 (27.6%); d_il median 18.1
+11-15 17:29:30 [E1b mav_s10] pseudo pseudo_tr1: 12866 / 12866 crops have a pseudo-orientation; gate (IR vs LiDAR <= 10 deg) passes 3553 (27.6%); d_il median 18.1
+2026-11-15 17:29:37,344   INFO  init E:/Open3DUAVDet/output/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom/KZs0/ckpt/checkpoint_epoch_30.pth
+11-15 18:02:32 [E1b mav_s10] student s0: 'paste_tried': 8842, 'paste_done': 8842
+2026-11-15 17:31:17,679   INFO  init E:/Open3DUAVDet/output/models/uavdet_3d/camnorm/sim_full_r34_kp_w12_zoom/KZs1/ckpt/checkpoint_epoch_30.pth
+11-15 18:04:27 [E1b mav_s10] student s1: 'paste_tried': 8863, 'paste_done': 8863
+11-15 18:15:27 [E1b mav_s10] students done
+constant height aspect 0.5612034279105929
+11-15 18:15:34 [E1b mav_s10] constant height aspect 0.5612034279105929
+avg_inf E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1b/mav_s10/ref/inf_st2_det1_train.pkl: 12864 keys from 2 files
+11-15 18:33:28 [E1b mav_s10] w (sim val inverse variance) = 0.17881488941201473
+avg_inf E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1b/mav_s10/ref/inf_fin_det1_train.pkl: 12864 keys from 2 files
+avg_inf E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1b/mav_s10/ref/inf_fin_det1_val.pkl: 2336 keys from 2 files
+avg_inf E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E1b/mav_s10/ref/inf_fin_det1_test.pkl: 4799 keys from 2 files
+11-15 20:46:33 [E1b mav_s10] deploy constants: "col_centres":[0.0,0.0],"c_k":{"0":0.09520566463470459,"1":NaN,"-1":0.09520566463470459--"r_k":{"0":0.5612034279105929,"1":NaN},
+11-15 20:46:51 [E1b mav_s10] ALL DONE: E1b mav_s10 vs PST mav_s10 [mav, 1 pair(s)] arm UDS 60.48 AP 42.87 ATE 0.291 ASE 2.60 AOE 16.16 mDR 95.69 | ref UDS 59.28 AP 38.40 ATE 0.313 ASE 1.78 AOE 14.87 mDR 95.65 | diff UDS +1.20 [-3.16, +4.67] AP +4.47 [-2.32, +9.77] ATE -0.022 [-0.063, +0.023] ASE +0.83 AOE +1.29 [+0.30, +2.41] mDR +0.04 || vs RGB-only: diff UDS +2.47 [+0.66, +4.70] AP +3.81 [+0.78, +7.56] ATE -0.042 [-0.075, -0.014] ASE +0.01 AOE +0.21 [-0.13, +0.63] mDR +0.77 || recipe deviations: 0

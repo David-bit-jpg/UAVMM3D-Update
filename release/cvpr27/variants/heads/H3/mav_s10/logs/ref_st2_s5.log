@@ -1,0 +1,9 @@
+[sup3] refiner stage 2 nominal seed 5 -> effective seed 15
+Traceback (most recent call last):
+  File "E:\Open3DUAVDet\output\camnorm\geo1004\gproto\review1113\heads\H3\mav_s10\lib\refiner_x.py", line 365, in <module>
+    cmd_train(stage, j, rn, os.environ.get('REF_DP'), tag)
+  File "E:\Open3DUAVDet\output\camnorm\geo1004\gproto\review1113\heads\H3\mav_s10\lib\refiner_x.py", line 277, in cmd_train
+    rng.bit_generator.state = z['rng']; torch.set_rng_state(z['trng']); st0 = z['st']
+  File "D:\Miniconda3\envs\city\lib\site-packages\torch\random.py", line 19, in set_rng_state
+    default_generator.set_state(new_state)
+TypeError: RNG state must be a torch.ByteTensor

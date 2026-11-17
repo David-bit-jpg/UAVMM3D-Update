@@ -1,0 +1,29 @@
+11-14 02:42:29 start boxhull in2mav
+sx ok E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/boxhull/in2mav E:/mmcache/mav6d_cn_obj srcx_in2mav
+11-14 02:42:29 !! w_sim
+11-14 02:47:06 start boxhull in2mav
+sx ok E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/boxhull/in2mav E:/mmcache/mav6d_cn_obj srcx_in2mav
+11-14 02:47:06 frozen w (clean chain sim-val inverse variance) = 0.190282282581008; sim detector s0 = E:/Open3DUAVDet/output/release_20260920/ramp_s0.pth
+align_hull {"n_clean": 8965, "n_regen": 8965, "max_dw_px": 0.0, "max_ddelta": 0.0, "ir_sil_iou_median": 1.0, "ir_sil_identical_frac": 1.0, "mode": "ALIGNED (clean sim_rgb / sim_meta kept, silhouette array = box hull)", "hull_area_frac_mean": 0.15350290054857432, "clean_ir_sil_area_frac_mean": 0.06584670092895985, "clean_ir_sil_empty_frac": 0.10440602342442833, "hull_empty_frac": 0.10139431121026213, "composite_eligible_frac_hull": 0.8986056887897379}
+11-14 03:13:03 sample alignment: ALIGNED
+avg_inf E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/boxhull/in2mav/ref/inf_st2_det1_train.pkl: 12863 keys from 2 files
+avg_inf E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/boxhull/in2mav/ref/inf_fin_det1_train.pkl: 12863 keys from 2 files
+avg_inf E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/boxhull/in2mav/ref/inf_fin_det1_val.pkl: 2336 keys from 2 files
+avg_inf E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/boxhull/in2mav/ref/inf_fin_det1_test.pkl: 4800 keys from 2 files
+all      AOE 21.103  ATE 0.321  ASE 2.826  AP 44.725  UDS 59.565  mDR 94.777
+0-3      AOE 19.898  ATE 0.248  ASE 2.497  AP 56.758  UDS 67.157  mDR 94.677
+3-4      AOE 22.753  ATE 0.326  ASE 2.692  AP 41.923  UDS 57.825  mDR 94.163
+4-99     AOE 20.270  ATE 0.402  ASE 3.414  AP 37.378  UDS 54.443  mDR 95.775
+all      AOE 21.112  ATE 0.322  ASE 2.826  AP 42.484  UDS 58.436  mDR 94.820
+0-3      AOE 19.924  ATE 0.232  ASE 2.497  AP 56.428  UDS 67.197  mDR 94.804
+3-4      AOE 22.753  ATE 0.348  ASE 2.692  AP 37.104  UDS 55.149  mDR 94.163
+4-99     AOE 20.270  ATE 0.395  ASE 3.414  AP 36.551  UDS 54.119  mDR 95.775
+all      AOE 14.479  ATE 0.287  ASE 1.933  AP 44.616  UDS 62.665  mDR 96.167
+0-3      AOE 15.500  ATE 0.243  ASE 2.368  AP 56.771  UDS 68.758  mDR 98.012
+3-4      AOE 12.970  ATE 0.258  ASE 1.748  AP 47.405  UDS 64.865  mDR 95.245
+4-99     AOE 15.843  ATE 0.410  ASE 1.627  AP 29.812  UDS 53.689  mDR 95.216
+all      AOE 14.484  ATE 0.338  ASE 1.933  AP 35.673  UDS 57.563  mDR 96.188
+0-3      AOE 15.515  ATE 0.240  ASE 2.369  AP 52.334  UDS 66.575  mDR 98.075
+3-4      AOE 12.970  ATE 0.329  ASE 1.748  AP 35.835  UDS 58.192  mDR 95.245
+4-99     AOE 15.843  ATE 0.502  ASE 1.627  AP 20.887  UDS 48.079  mDR 95.216
+11-14 06:42:12 ALL DONE: in2mav 

@@ -1,0 +1,3 @@
+11-16 15:29:13 [in2mav] train in2mav_dann batch 8 (waiting for gpu slot)
+11-16 16:37:30 [in2mav] trained in2mav_dann
+11-16 16:39:28 [in2mav] in2mav_dann: all      AOE 23.746  ATE 0.894  ASE 6.793  AP 7.326  UDS 26.387  mDR 80.604

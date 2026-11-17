@@ -1,0 +1,1 @@
+E1 mav_s0 vs RGB-only mav_s0 [mav, 1 pair(s)] arm UDS 53.48 AP 31.38 ATE 0.401 ASE 2.65 AOE 15.83 mDR 96.56 | ref UDS 57.38 AP 38.04 ATE 0.348 ASE 2.58 AOE 16.32 mDR 95.98 | diff UDS -3.90 [-6.01, -2.03] AP -6.65 [-10.10, -3.74] ATE +0.053 [+0.022, +0.091] ASE +0.07 AOE -0.49 [-1.32, -0.03] mDR +0.58

@@ -1,0 +1,7 @@
+2026-11-16 16:38:11,753   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-16 16:38:11,753   INFO  MMCache[test]: 4800 帧, 模态 ['rgb'] -> 3 通道, 缓存 E:\mmcache\mav6d_cn_obj\test
+2026-11-16 16:38:12,301   INFO  loading weights: 载入 289/289 个张量, 27.93M/27.93M 参数 (100.0%)
+2026-11-16 16:38:12,364   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-16 16:38:12,365   INFO  MMCache[test]: 4800 帧, 模态 ['rgb'] -> 3 通道, 缓存 E:\mmcache\mav6d_cn_obj\test
+test: 4800 frames, conf median 0.566, no box 0
+4800 test preds -> E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/ourdet_baseproto/preds/in2mav_dann_test.pkl

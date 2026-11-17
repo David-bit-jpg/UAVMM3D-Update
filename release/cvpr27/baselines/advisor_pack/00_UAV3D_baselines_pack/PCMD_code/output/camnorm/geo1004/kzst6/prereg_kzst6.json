@@ -1,0 +1,6 @@
+{
+ "name": "KZ-ST6 = KZ-ST4 高置信朝向自训练配方，起点换成 KZ-IRLiD + AdaBN",
+ "see": "geo1004/lidar/irlid/PREREG_irlid.md（fb43fbab）B 段；试点结果 pilot_pilot4/pilot6b：IR+LiDAR 胜出",
+ "teacher_gate_recipe": "与 prereg_kzst4.json 逐项相同",
+ "criterion": "真实验证与测试 ADS indoor（在线一致）都高于现最终版且测试 laa 不降（> −0.05）"
+}

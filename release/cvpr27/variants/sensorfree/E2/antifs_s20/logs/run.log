@@ -1,0 +1,12 @@
+11-15 20:54:25 [E2 antifs_s20] start (mode BH, SX_TEACH=full, SX_SEEDSHIFT=20, PST ref E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/antifs_full_s20, RGB-only ref E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/antifs_none_s20)
+ok E2 antifs 20 BH full E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E2/antifs_s20/lib
+11-15 20:55:05 [E2 antifs_s20] lib ok: W E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E2/antifs_s20/work, pseudo tag srcx_out2antifs_sd20
+11-15 20:56:31 [E2 antifs_s20] silhouette target = box hull, composite matte = box hull
+11-15 21:31:41 [E2 antifs_s20] refiner: [sensorfree] composites ON; alpha = ref/sim_sil.npy
+avg_inf E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E2/antifs_s20/ref/inf_st2_det1_train.pkl: 3107 keys from 2 files
+11-15 21:33:14 [E2 antifs_s20] frozen w of the reference run = 0.09779479741234534
+avg_inf E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E2/antifs_s20/ref/inf_fin_det1_train.pkl: 3107 keys from 2 files
+avg_inf E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E2/antifs_s20/ref/inf_fin_det1_val.pkl: 1148 keys from 2 files
+avg_inf E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/sensorfree/E2/antifs_s20/ref/inf_fin_det1_test.pkl: 2608 keys from 2 files
+11-15 21:55:13 [E2 antifs_s20] deploy constants: "col_centres":[102.21784908291119,155.70043547426184],"c_k":{"0":0.038326562847942114,"1":0.01449592225253582,"-1":0.021656050346791744--"r_k":{"0":0.46619293093681335,"1":0.4637136161327362},
+11-15 21:55:23 [E2 antifs_s20] ALL DONE: E2 antifs_s20 vs PST antifs_s20 [antifs, 1 pair(s)] arm UDS 41.97 AP 28.24 ATE 0.098 ASE 16.77 AOE 16.85 mDR 91.58 | ref UDS 42.01 AP 28.27 ATE 0.098 ASE 16.65 AOE 16.85 mDR 91.58 | diff UDS -0.04 [-0.62, +0.30] AP -0.03 [-1.01, +0.48] ATE +0.000 [-0.001, +0.002] ASE +0.13 AOE +0.00 [+0.00, +0.00] mDR +0.00 || recipe deviations: 0

@@ -1,0 +1,5 @@
+11-14 21:48:54 [H1c mav_s0] start (mode DEP, SX_SEEDSHIFT=0, reference run E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/in2mav)
+ok H1c mav 0 DEP E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H1c/mav_s0/lib
+11-14 21:48:55 [H1c mav_s0] lib ok: W E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/heads/H1c/mav_s0/work, pseudo tag srcx_in2mav
+11-14 21:49:00 [H1c mav_s0] deploy constants: "col_centres":[0.0,0.0],"c_k":{"0":0.07811899483203888,"1":NaN,"-1":0.07811899483203888--"r_k":{"0":0.4511459171772003,"1":NaN},
+11-14 21:49:09 [H1c mav_s0] ALL DONE: H1c mav_s0 vs PST mav_s0 [mav, 1 pair(s)] arm UDS 60.70 AP 44.22 ATE 0.286 ASE 3.35 AOE 14.48 mDR 96.17 | ref UDS 60.81 AP 40.93 ATE 0.306 ASE 1.75 AOE 14.48 mDR 96.17 | diff UDS -0.11 [-0.84, +0.33] AP +3.29 [+1.60, +4.33] ATE -0.020 [-0.030, -0.008] ASE +1.60 AOE +0.00 [+0.00, +0.00] mDR +0.00

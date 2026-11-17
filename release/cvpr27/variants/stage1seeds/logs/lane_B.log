@@ -1,0 +1,4 @@
+11-16 14:10:49 [lane B] lane start (6 steps)
+11-16 14:10:50 [lane B] step: train_stage1.sh in 30 irlid:0 irlid:1 kps:0 lid:0 lid:1
+11-17 01:10:21 [lane B] lane start (6 steps)
+11-17 01:10:21 [lane B] step: train_stage1.sh in 30 irlid:0 irlid:1 kps:0 lid:0 lid:1

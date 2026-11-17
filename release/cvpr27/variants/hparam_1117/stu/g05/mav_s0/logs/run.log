@@ -1,0 +1,7 @@
+ok mav_s0 E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/hparam_1117/stu/g05/mav_s0/lib base E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/in2mav
+gate 5 deg: 1854 / 12866 crops pass (deployed 10 deg: 4301)
+11-17 07:35:49 [stu g05 mav_s0] start: base E:/Open3DUAVDet/output/camnorm/geo1004/gproto/srcx/in2mav (w 0.190282282581008, SX_SEEDSHIFT 0) | --tgt gate --mir 12 gate 5 deg gate 5 deg: 1854 / 12866 crops pass (deployed 10 deg: 4301)
+[s0] 2026-11-17 08:57:31,460   INFO  目标域：gate，帧池 1483（gate 1854 / 全部 12866），随机 80% → 1483 帧
+[s1] 2026-11-17 12:15:36,088   INFO  目标域：gate，帧池 1483（gate 1854 / 全部 12866），随机 80% → 1483 帧
+11-17 12:56:22 [stu g05 mav_s0] students done (gate，帧池 1483（gate 1854 / 全部 12866），随机 80% → 1483 帧)
+11-17 16:51:37 [stu g05 mav_s0] ALL DONE: test UDS 60.61 AP 40.76 ATE 0.309 ASE 1.754 AOE 14.81 mDR 96.15 | val UDS 59.45 AP 43.53 ATE 0.323 ASE 2.295 AOE 21.81 mDR 94.82 | base test UDS 60.81 AP 40.93 ATE 0.306 ASE 1.754 AOE 14.48 mDR 96.17

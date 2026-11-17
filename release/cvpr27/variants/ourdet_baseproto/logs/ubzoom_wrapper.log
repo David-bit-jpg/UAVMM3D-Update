@@ -1,0 +1,3 @@
+11-17 01:26:17 [out2antifs] train out2antifs_ubzoom batch 8 epochs 8 (waiting for gpu slot)
+11-17 01:34:46 [out2antifs] trained out2antifs_ubzoom
+11-17 01:36:04 [out2antifs] out2antifs_ubzoom: all      AOE 24.733  ATE 0.195  ASE 1.155  AP 5.730  UDS 34.388  mDR 84.909

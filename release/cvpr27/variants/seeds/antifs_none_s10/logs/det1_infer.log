@@ -1,0 +1,18 @@
+[infer_wrap] memory fraction 0.20 -> E:\Open3DUAVDet\output\camnorm\geo1004\gproto\review1113\seeds\antifs_none_s10\lib\det_infer_x.py --ckpt E:/Open3DUAVDet/output/models/uavdet_3d/camnorm/srcx/st_out2antifs_none_sd10/DET1_s0/ckpt/checkpoint_epoch_3.pth E:/Open3DUAVDet/output/models/uavdet_3d/camnorm/srcx/st_out2antifs_none_sd10/DET1_s1/ckpt/checkpoint_epoch_3.pth E:/Open3DUAVDet/output/models/uavdet_3d/camnorm/srcx/st_out2antifs_none_sd10/DET1_s2/ckpt/checkpoint_epoch_3.pth --splits train val test --out E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/antifs_none_s10/recs/det1.pkl --size-fallback E:/Open3DUAVDet/output/camnorm/geo1004/gproto/review1113/seeds/antifs_none_s10/recs/det0.pkl
+2026-11-14 03:57:34,387   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-14 03:57:34,387   INFO  MMCache[test]: 2624 帧, 模态 ['rgb'] -> 3 通道, 缓存 D:\mmcache\outdoor_real_fs\test
+2026-11-14 03:57:35,221   INFO  loading weights: 载入 289/289 个张量, 27.93M/27.93M 参数 (100.0%)
+2026-11-14 03:57:35,858   INFO  loading weights: 载入 289/289 个张量, 27.93M/27.93M 参数 (100.0%)
+2026-11-14 03:57:36,583   INFO  loading weights: 载入 289/289 个张量, 27.93M/27.93M 参数 (100.0%)
+2026-11-14 03:57:36,727   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-14 03:57:36,727   INFO  MMCache[test]: 574 帧, 模态 ['rgb'] -> 3 通道, 缓存 D:\mmcache\outdoor_real_fs\val
+2026-11-14 03:58:01,189   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-14 03:58:01,189   INFO  MMCache[test]: 3293 帧, 模态 ['rgb'] -> 3 通道, 缓存 D:\mmcache\outdoor_real_fs\train
+s_bar (val unlabeled, 292 boxes conf>=0.7 of 574) = [0.5315 0.5275 0.2359]
+train: 3293 frames, conf median 0.296, >=0.5 31.6%, >=0.3 49.6%
+2026-11-14 04:00:23,547   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-14 04:00:23,548   INFO  MMCache[test]: 1148 帧, 模态 ['rgb'] -> 3 通道, 缓存 D:\mmcache\outdoor_real_fs\val
+val: 1148 frames, conf median 0.705, >=0.5 66.0%, >=0.3 72.7%
+2026-11-14 04:01:17,188   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-14 04:01:17,189   INFO  MMCache[test]: 2624 帧, 模态 ['rgb'] -> 3 通道, 缓存 D:\mmcache\outdoor_real_fs\test
+test: 2624 frames, conf median 0.698, >=0.5 73.7%, >=0.3 87.7%

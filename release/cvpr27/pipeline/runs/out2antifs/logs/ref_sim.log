@@ -1,0 +1,4 @@
+2026-11-12 02:04:54,041   INFO  MMCache[test]: 标签索引 index.pkl（label_fix=None）
+2026-11-12 02:04:54,042   INFO  MMCache[test]: 2684 帧, 模态 ['rgb'] -> 3 通道, 缓存 D:\S2MUAV3D\sim_outdoor_carla\cache\train
+2026-11-12 02:04:55,278   INFO  loading weights: 载入 289/289 个张量, 27.93M/27.93M 参数 (100.0%)
+sim samples 3299 (with IR silhouette 3230), delta* median +0.100 |.| median 0.127
